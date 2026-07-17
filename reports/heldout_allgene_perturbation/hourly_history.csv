@@ -1,0 +1,3 @@
+timestamp,run_active,gpu_utilization_percent,gpu_temperature_c,gpu_power_w,gpu_process_memory_mib,system_used_gib,system_available_gib,lusc_cells,luad_cells,normal_cells,completed_shards
+2026-07-17T21:04:09+09:00,True,4.0,67.0,16.64,701.0,41.488990783691406,78.20438766479492,30,0,0,1
+2026-07-17T21:06:10+09:00,True,93.0,78.0,86.44,1591.0,38.868473052978516,80.82490539550781,35,0,0,1
