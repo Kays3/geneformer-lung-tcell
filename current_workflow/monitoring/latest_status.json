@@ -1,21 +1,21 @@
 {
-  "timestamp": "2026-07-18T07:39:07+09:00",
+  "timestamp": "2026-07-18T08:39:11+09:00",
   "run_active": true,
   "gpu": {
     "name": "NVIDIA GB10",
-    "utilization_percent": 0.0,
-    "temperature_c": 62.0,
-    "power_w": 14.89,
+    "utilization_percent": 91.0,
+    "temperature_c": 80.0,
+    "power_w": 90.07,
     "perturbation_process": {
       "pid": 505973,
       "process": ".venv/bin/python",
-      "memory_mib": 701.0
+      "memory_mib": 1871.0
     }
   },
   "memory": {
     "total_gib": 119.69337844848633,
-    "available_gib": 78.18609237670898,
-    "used_gib": 41.507286071777344,
+    "available_gib": 80.29976272583008,
+    "used_gib": 39.39361572265625,
     "swap_used_gib": 0.0
   },
   "progress": {
@@ -30,14 +30,14 @@
       "raw_files": 1120
     },
     "luad": {
-      "completed_cells": 1017,
+      "completed_cells": 1157,
       "total_cells": 1411,
-      "cell_percent": 72.07654145995748,
-      "completed_shards": 40,
+      "cell_percent": 81.99858256555635,
+      "completed_shards": 46,
       "total_shards": 57,
-      "completed_marker_deletions": 816677,
+      "completed_marker_deletions": 931475,
       "total_deletions": 1150097,
-      "raw_files": 2034
+      "raw_files": 2315
     },
     "normal": {
       "completed_cells": 0,
