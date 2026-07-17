@@ -1,0 +1,7 @@
+state,celltype,cell_count,donor_count
+cancer,T cell CD4,1534,103
+cancer,T cell CD8,1470,104
+cancer,All T cells,3004,110
+normal,T cell CD4,241,40
+normal,T cell CD8,264,40
+normal,All T cells,505,49

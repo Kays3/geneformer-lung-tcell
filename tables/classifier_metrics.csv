@@ -1,0 +1,3 @@
+stage,task,accuracy,macro_f1
+Stage 1,9-class cell type,0.9220610119047619,0.9211374590831309
+Stage 2,4-class disease,0.7359646972297131,0.7423487397574208

@@ -2,8 +2,9 @@
 
 This branch contains the reproducible notebook workflow developed in the local
 `Geneformer/KD` workspace for non-small-cell lung cancer (NSCLC) analysis.
-Notebook outputs are cleared before version control so local paths, generated
-figures, and large embedded results are not stored in Git.
+Selected low-resolution notebook outputs and curated evidence are included for
+review. Large datasets, checkpoints, model weights, and full generated runs
+remain excluded from Git.
 
 ## Workflow
 
@@ -20,12 +21,26 @@ Run the notebooks from the repository root in numerical order:
 The step-three filename is retained from the working directory to preserve its
 provenance.
 
+## Results and evidence
+
+- `tables/` contains compact source and derived CSVs, including the T-cell
+  cancer-versus-normal cohort, classifier metrics, and donor-signal summaries.
+- `figures/embeddings/` contains selected embedding and donor-effect figures.
+- `figures/classifiers/` contains the two held-out confusion matrices.
+- `reports/geneformer_nsclc_progress_summary.html` is a self-contained
+  technical report describing verified progress, limitations, and the proposed
+  T-cell perturbation study.
+- `reports/artifact.json` is the canonical source used to build the HTML.
+
+Step 7 remains a draft synthesis notebook. Its hard-coded placeholder metrics
+and random fallback matrices are not treated as verified evidence in the report.
+
 ## Local assets
 
 The notebooks expect generated data beneath the repository root and a local
 Geneformer base model in a sibling `Geneformer-V2-104M` directory. Large data,
-tokenized datasets, training runs, embeddings, model weights, and figures are
-excluded by `.gitignore` and must be generated or provisioned locally.
+tokenized datasets, training runs, embeddings, and model weights are excluded by
+`.gitignore` and must be generated or provisioned locally.
 
 Create an environment with Python 3.12 and install the packages in
 `requirements.txt`. Geneformer itself must also be installed or otherwise

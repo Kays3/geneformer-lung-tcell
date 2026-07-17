@@ -1,0 +1,525 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Geneformer NSCLC progress and T-cell perturbation roadmap",
+    "generatedAt": "2026-07-16T15:00:00Z",
+    "charts": [
+      {
+        "id": "tcell_counts",
+        "title": "Cancer cohort has about six times more T cells than normal",
+        "type": "bar",
+        "dataset": "tcell_counts",
+        "sourceId": "tcell_csv",
+        "valueFormat": "integer",
+        "encodings": {
+          "x": {
+            "field": "state",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "cell_count",
+            "type": "quantitative"
+          },
+          "color": {
+            "field": "celltype",
+            "type": "nominal"
+          }
+        }
+      },
+      {
+        "id": "classifier_performance",
+        "title": "Held-out performance drops on the disease task",
+        "type": "bar",
+        "dataset": "classifier_metric_long",
+        "sourceId": "classifier_csv",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": {
+            "field": "stage",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "value",
+            "type": "quantitative"
+          },
+          "color": {
+            "field": "metric",
+            "type": "nominal"
+          }
+        }
+      },
+      {
+        "id": "embedding_separation",
+        "title": "Fine-tuning shifts separation from cell identity toward disease",
+        "type": "bar",
+        "dataset": "silhouette_long",
+        "sourceId": "embedding_csv",
+        "valueFormat": "decimal",
+        "encodings": {
+          "x": {
+            "field": "stage",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "silhouette",
+            "type": "quantitative"
+          },
+          "color": {
+            "field": "dimension",
+            "type": "nominal"
+          }
+        }
+      },
+      {
+        "id": "donor_purity",
+        "title": "Observed donor purity is far above chance, especially in Stage 2",
+        "type": "bar",
+        "dataset": "donor_purity_long",
+        "sourceId": "embedding_csv",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": {
+            "field": "stage",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "purity",
+            "type": "quantitative"
+          },
+          "color": {
+            "field": "metric",
+            "type": "nominal"
+          }
+        }
+      }
+    ],
+    "tables": [],
+    "cards": [],
+    "blocks": [
+      {
+        "id": "technical_summary",
+        "type": "markdown",
+        "sourceId": "tcell_csv",
+        "body": "## Technical summary\n\nThe workflow has completed data preparation, a 9-class Geneformer cell-type model, a 4-class disease model, and embedding/donor diagnostics. The next scientific objective\u2014gene perturbation in CD4 and CD8 T cells comparing lung cancer with normal lung\u2014has **not yet been run**. The sampled target cohort contains **3,004 cancer T cells from 110 donors** and **505 normal T cells from 49 donors**. This is adequate for an initial donor-aware study, but the roughly six-to-one cell imbalance and strong donor structure make cell-level random inference unsafe."
+      },
+      {
+        "id": "key_findings",
+        "type": "markdown",
+        "sourceId": "tcell_csv",
+        "body": "## Key findings with visual evidence\n\n1. The balanced Stage 2 disease dataset has 20,000 cells, but its T-cell composition is not balanced. Cancer combines lung adenocarcinoma and squamous cell lung carcinoma; COPD remains a separate inflammatory comparator.\n2. CD4 and CD8 representation is similar within cancer and normal, supporting stratified analyses.\n3. The normal group is the limiting cohort, so matching or weighting should be performed at the donor level."
+      },
+      {
+        "id": "tcell_chart_block",
+        "type": "chart",
+        "chartId": "tcell_counts"
+      },
+      {
+        "id": "completed_results",
+        "type": "markdown",
+        "sourceId": "classifier_csv",
+        "body": "## What has been completed\n\nThe Stage 1 held-out cell-type classifier reached **92.2% accuracy** and **92.1% macro-F1**. The Stage 2 held-out disease classifier reached **73.6% accuracy** and **74.2% macro-F1**. These saved metrics establish that the pipeline is functioning and disease signal is detectable, but they do not establish causal gene effects."
+      },
+      {
+        "id": "classifier_chart_block",
+        "type": "chart",
+        "chartId": "classifier_performance"
+      },
+      {
+        "id": "embedding_findings",
+        "type": "markdown",
+        "sourceId": "embedding_csv",
+        "body": "## Representation and donor structure\n\nStage 1 shows strong cell-type separation (silhouette 0.461) and minimal disease separation (-0.023). Stage 2 shifts toward disease separation (0.241) while cell-type separation becomes weak (-0.062). Donor silhouette values are negative, but local-neighborhood donor purity remains far above its chance baseline: **13.4% observed versus 0.69% expected** in Stage 1 and **29.7% versus 0.78%** in Stage 2. The local donor enrichment means donor-specific structure can still bias perturbation rankings even when global silhouette is low."
+      },
+      {
+        "id": "embedding_chart_block",
+        "type": "chart",
+        "chartId": "embedding_separation"
+      },
+      {
+        "id": "donor_chart_block",
+        "type": "chart",
+        "chartId": "donor_purity"
+      },
+      {
+        "id": "scope_definitions",
+        "type": "markdown",
+        "sourceId": "notebooks",
+        "body": "## Scope, data, and metric definitions\n\n- **Cancer:** lung adenocarcinoma plus squamous cell lung carcinoma.\n- **Normal:** cells labeled normal in the sampled Stage 2 dataset.\n- **COPD:** an inflammatory comparator, not part of normal and not pooled into the primary cancer-versus-normal contrast.\n- **T cells:** current major labels T cell CD4 and T cell CD8. Regulatory and finer state labels are absent from the sampled Stage 2 cell-type field.\n- **Silhouette:** global separation in embedding space; higher positive values indicate stronger clustering by the named label.\n- **Donor purity:** local nearest-neighbor concentration by donor. Chance-adjusted purity subtracts the expected purity under donor frequencies."
+      },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "sourceId": "notebooks",
+        "body": "## Methodology completed so far\n\n1. Curated and sampled lung single-cell data for a 27,000-cell, 9-class primary cell-type task.\n2. Fine-tuned Geneformer V2 and evaluated a held-out cell-type classifier.\n3. Built a balanced 20,000-cell, 4-class disease dataset with 5,000 cells per disease.\n4. Fine-tuned and evaluated the disease classifier.\n5. Extracted Stage 1 and Stage 2 embeddings; evaluated UMAPs, centroid similarities, silhouettes, and donor-neighborhood diagnostics.\n6. Extracted compact evidence tables and figures into reviewable Git directories.\n\nThe figures directory contains the saved UMAP, heatmap, donor-purity, and confusion-matrix outputs. Restored notebook outputs were not recomputed during this packaging pass."
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "sourceId": "notebooks",
+        "body": "## Limitations, uncertainty, and robustness\n\n- No in-silico gene perturbation has been executed yet.\n- Cancer and normal T-cell counts differ by about six-fold, and donor coverage differs as well.\n- Donors are largely disease-specific, so disease, study, batch, and donor may be partially confounded.\n- Stage 2 was balanced by disease at the whole-dataset level, not within each T-cell subtype.\n- Major CD4/CD8 labels do not resolve exhaustion, activation, regulatory, resident-memory, or cytotoxic states.\n- A T-cell-only perturbation measures changes in T-cell state; it does not by itself prove a causal effect on the full multicellular microenvironment.\n- Step 7 is a draft containing placeholder metrics and random fallback matrices; its figures are excluded from verified claims."
+      },
+      {
+        "id": "next_steps",
+        "type": "markdown",
+        "sourceId": "notebooks",
+        "body": "## Recommended perturbation study\n\n1. **Freeze the analysis cohort.** Select CD4 and CD8 T cells; keep cancer, normal, and optionally COPD as separate contrasts. Record donor, study, disease subtype, and sampling weights.\n2. **Create donor-aware splits.** Hold out complete donors and, where possible, complete studies. Match or weight normal and cancer donors; never split cells from one donor across train and test.\n3. **Define baseline T-cell states.** Re-annotate or score exhaustion, cytotoxicity, interferon response, activation, tissue residency, and regulatory programs before perturbation.\n4. **Run Geneformer perturbations.** Start with systematic in-silico gene deletion for expressed genes, then targeted activation/overexpression where supported. Run CD4 and CD8 separately in cancer and normal.\n5. **Measure state shifts.** Quantify cosine or centroid displacement toward cancer and normal reference states, plus changes in pathway/state scores. Preserve per-cell results but aggregate effects by donor.\n6. **Rank differential effects.** For each gene, estimate cancer-minus-normal perturbation effect with donor bootstrap or mixed-effects inference; control false discovery rate.\n7. **Test robustness.** Repeat across disease subtype, CD4/CD8, donor/study holdouts, baseline model versus fine-tuned model, and alternative gene-selection thresholds.\n8. **Interpret the microenvironment carefully.** Enrich ranked genes for immune pathways and add ligand-receptor or cell-cell communication analysis if the goal extends beyond T-cell-intrinsic state.\n9. **Validate top candidates.** Compare with external NSCLC T-cell datasets, perturb-seq/CRISPR evidence, or targeted wet-lab assays."
+      },
+      {
+        "id": "deliverables",
+        "type": "markdown",
+        "sourceId": "notebooks",
+        "body": "## Expected next deliverables\n\n- Cell- and donor-level perturbation effect tables with gene identifiers, direction, magnitude, confidence intervals, and FDR.\n- Cancer-versus-normal differential ranking for CD4 and CD8 T cells.\n- State-shift heatmaps and donor-level effect distributions.\n- Pathway enrichment and ligand-receptor follow-up for prioritized genes.\n- Sensitivity report documenting donor, study, disease subtype, and model dependence."
+      },
+      {
+        "id": "further_questions",
+        "type": "markdown",
+        "sourceId": "notebooks",
+        "body": "## Further questions\n\n- Should cancer be pooled or analyzed separately as adenocarcinoma and squamous carcinoma?\n- Is COPD a required inflammatory comparator or only a quality-control cohort?\n- Which T-cell states are the primary biological endpoints: exhaustion reversal, cytotoxicity, tissue residency, regulatory activity, or tumor-state displacement?\n- Should the first screen cover every expressed gene or a curated immune/therapeutic panel?\n- Are paired tumor/adjacent-normal donors available outside this sampled dataset? Paired donors would materially strengthen causal interpretation.\n- What external dataset or experimental system will be used to validate the highest-ranked genes?"
+      }
+    ],
+    "sources": [
+      {
+        "id": "tcell_csv",
+        "label": "Stage 2 T-cell cohort tables",
+        "path": "tables/tcell_cancer_vs_normal_summary.csv"
+      },
+      {
+        "id": "classifier_csv",
+        "label": "Saved held-out classifier metrics",
+        "path": "tables/classifier_metrics.csv"
+      },
+      {
+        "id": "embedding_csv",
+        "label": "Embedding and donor summary",
+        "path": "tables/embedding_master_table.csv"
+      },
+      {
+        "id": "notebooks",
+        "label": "Geneformer notebooks and curated visual evidence",
+        "path": "README.md"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-07-16T15:00:00Z",
+    "status": "ready",
+    "datasets": {
+      "tcell_counts": [
+        {
+          "state": "cancer",
+          "celltype": "CD4",
+          "cell_count": 1534,
+          "donor_count": 103
+        },
+        {
+          "state": "cancer",
+          "celltype": "CD8",
+          "cell_count": 1470,
+          "donor_count": 104
+        },
+        {
+          "state": "normal",
+          "celltype": "CD4",
+          "cell_count": 241,
+          "donor_count": 40
+        },
+        {
+          "state": "normal",
+          "celltype": "CD8",
+          "cell_count": 264,
+          "donor_count": 40
+        }
+      ],
+      "tcell_all": [
+        {
+          "state": "cancer",
+          "celltype": "T cell CD4",
+          "cell_count": 1534,
+          "donor_count": 103
+        },
+        {
+          "state": "cancer",
+          "celltype": "T cell CD8",
+          "cell_count": 1470,
+          "donor_count": 104
+        },
+        {
+          "state": "cancer",
+          "celltype": "All T cells",
+          "cell_count": 3004,
+          "donor_count": 110
+        },
+        {
+          "state": "normal",
+          "celltype": "T cell CD4",
+          "cell_count": 241,
+          "donor_count": 40
+        },
+        {
+          "state": "normal",
+          "celltype": "T cell CD8",
+          "cell_count": 264,
+          "donor_count": 40
+        },
+        {
+          "state": "normal",
+          "celltype": "All T cells",
+          "cell_count": 505,
+          "donor_count": 49
+        }
+      ],
+      "tcell_disease": [
+        {
+          "celltype": "All T cells",
+          "disease": "chronic obstructive pulmonary disease",
+          "cell_count": 899,
+          "donor_count": 17
+        },
+        {
+          "celltype": "All T cells",
+          "disease": "lung adenocarcinoma",
+          "cell_count": 1994,
+          "donor_count": 84
+        },
+        {
+          "celltype": "All T cells",
+          "disease": "normal",
+          "cell_count": 505,
+          "donor_count": 49
+        },
+        {
+          "celltype": "All T cells",
+          "disease": "squamous cell lung carcinoma",
+          "cell_count": 1010,
+          "donor_count": 26
+        },
+        {
+          "celltype": "T cell CD4",
+          "disease": "chronic obstructive pulmonary disease",
+          "cell_count": 379,
+          "donor_count": 17
+        },
+        {
+          "celltype": "T cell CD4",
+          "disease": "lung adenocarcinoma",
+          "cell_count": 1090,
+          "donor_count": 81
+        },
+        {
+          "celltype": "T cell CD4",
+          "disease": "normal",
+          "cell_count": 241,
+          "donor_count": 40
+        },
+        {
+          "celltype": "T cell CD4",
+          "disease": "squamous cell lung carcinoma",
+          "cell_count": 444,
+          "donor_count": 22
+        },
+        {
+          "celltype": "T cell CD8",
+          "disease": "chronic obstructive pulmonary disease",
+          "cell_count": 520,
+          "donor_count": 17
+        },
+        {
+          "celltype": "T cell CD8",
+          "disease": "lung adenocarcinoma",
+          "cell_count": 904,
+          "donor_count": 80
+        },
+        {
+          "celltype": "T cell CD8",
+          "disease": "normal",
+          "cell_count": 264,
+          "donor_count": 40
+        },
+        {
+          "celltype": "T cell CD8",
+          "disease": "squamous cell lung carcinoma",
+          "cell_count": 566,
+          "donor_count": 24
+        }
+      ],
+      "classifier_metrics": [
+        {
+          "stage": "Stage 1",
+          "task": "9-class cell type",
+          "accuracy": 0.9220610119047619,
+          "macro_f1": 0.9211374590831309
+        },
+        {
+          "stage": "Stage 2",
+          "task": "4-class disease",
+          "accuracy": 0.7359646972297131,
+          "macro_f1": 0.7423487397574208
+        }
+      ],
+      "classifier_metric_long": [
+        {
+          "stage": "Stage 1",
+          "metric": "Accuracy",
+          "value": 0.9220610119047619
+        },
+        {
+          "stage": "Stage 1",
+          "metric": "Macro-F1",
+          "value": 0.9211374590831309
+        },
+        {
+          "stage": "Stage 2",
+          "metric": "Accuracy",
+          "value": 0.7359646972297131
+        },
+        {
+          "stage": "Stage 2",
+          "metric": "Macro-F1",
+          "value": 0.7423487397574208
+        }
+      ],
+      "embedding_summary": [
+        {
+          "model": "Stage 1 Cell-type",
+          "cells": 27000,
+          "classes": 9,
+          "celltype_silhouette": 0.461,
+          "disease_silhouette": -0.023,
+          "donor_silhouette": -0.373,
+          "mean_donor_purity": 0.1336,
+          "expected_donor_purity": 0.0069,
+          "adjusted_donor_purity": 0.1267
+        },
+        {
+          "model": "Stage 2 Disease",
+          "cells": 20000,
+          "classes": 4,
+          "celltype_silhouette": -0.062,
+          "disease_silhouette": 0.241,
+          "donor_silhouette": -0.105,
+          "mean_donor_purity": 0.297,
+          "expected_donor_purity": 0.0078,
+          "adjusted_donor_purity": 0.2892
+        }
+      ],
+      "silhouette_long": [
+        {
+          "stage": "Stage 1 Cell-type",
+          "dimension": "Cell type",
+          "silhouette": 0.461
+        },
+        {
+          "stage": "Stage 1 Cell-type",
+          "dimension": "Disease",
+          "silhouette": -0.023
+        },
+        {
+          "stage": "Stage 1 Cell-type",
+          "dimension": "Donor",
+          "silhouette": -0.373
+        },
+        {
+          "stage": "Stage 2 Disease",
+          "dimension": "Cell type",
+          "silhouette": -0.062
+        },
+        {
+          "stage": "Stage 2 Disease",
+          "dimension": "Disease",
+          "silhouette": 0.241
+        },
+        {
+          "stage": "Stage 2 Disease",
+          "dimension": "Donor",
+          "silhouette": -0.105
+        }
+      ],
+      "donor_purity_long": [
+        {
+          "stage": "Stage 1 Cell-type",
+          "metric": "Observed",
+          "purity": 0.1336
+        },
+        {
+          "stage": "Stage 1 Cell-type",
+          "metric": "Chance expected",
+          "purity": 0.0069
+        },
+        {
+          "stage": "Stage 1 Cell-type",
+          "metric": "Chance-adjusted",
+          "purity": 0.1267
+        },
+        {
+          "stage": "Stage 2 Disease",
+          "metric": "Observed",
+          "purity": 0.297
+        },
+        {
+          "stage": "Stage 2 Disease",
+          "metric": "Chance expected",
+          "purity": 0.0078
+        },
+        {
+          "stage": "Stage 2 Disease",
+          "metric": "Chance-adjusted",
+          "purity": 0.2892
+        }
+      ],
+      "tcell_total": [
+        {
+          "state": "Cancer",
+          "cell_count": 3004
+        },
+        {
+          "state": "Normal",
+          "cell_count": 505
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "tcell_csv",
+      "label": "Stage 2 T-cell cohort tables",
+      "path": "tables/tcell_cancer_vs_normal_summary.csv",
+      "query": {
+        "engine": "duckdb",
+        "sql": "SELECT * FROM read_csv_auto('tables/tcell_cancer_vs_normal_summary.csv')",
+        "description": "Loads the derived cancer-versus-normal T-cell cohort summary."
+      }
+    },
+    {
+      "id": "classifier_csv",
+      "label": "Saved held-out classifier metrics",
+      "path": "tables/classifier_metrics.csv",
+      "query": {
+        "engine": "duckdb",
+        "sql": "SELECT * FROM read_csv_auto('tables/classifier_metrics.csv')",
+        "description": "Loads held-out metrics extracted from saved Geneformer metric dictionaries."
+      }
+    },
+    {
+      "id": "embedding_csv",
+      "label": "Embedding and donor summary",
+      "path": "tables/embedding_master_table.csv",
+      "query": {
+        "engine": "duckdb",
+        "sql": "SELECT * FROM read_csv_auto('tables/embedding_master_table.csv')",
+        "description": "Loads verified embedding separation and donor-purity summaries."
+      }
+    },
+    {
+      "id": "notebooks",
+      "label": "Geneformer notebooks and curated visual evidence",
+      "path": "README.md"
+    }
+  ],
+  "package_info": {
+    "name": "geneformer-nsclc-progress-summary",
+    "version": "1.0.0"
+  }
+}

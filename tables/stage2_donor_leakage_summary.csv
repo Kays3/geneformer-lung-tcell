@@ -1,0 +1,8 @@
+Metric,Value
+Cell type silhouette,-0.062
+Disease silhouette,0.241
+Donor silhouette,-0.105
+Mean donor purity,0.297
+Median donor purity,0.2333
+Number of cells,20000.0
+Number of donors,206.0

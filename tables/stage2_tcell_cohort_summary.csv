@@ -1,0 +1,13 @@
+celltype,disease,cell_count,donor_count
+All T cells,chronic obstructive pulmonary disease,899,17
+All T cells,lung adenocarcinoma,1994,84
+All T cells,normal,505,49
+All T cells,squamous cell lung carcinoma,1010,26
+T cell CD4,chronic obstructive pulmonary disease,379,17
+T cell CD4,lung adenocarcinoma,1090,81
+T cell CD4,normal,241,40
+T cell CD4,squamous cell lung carcinoma,444,22
+T cell CD8,chronic obstructive pulmonary disease,520,17
+T cell CD8,lung adenocarcinoma,904,80
+T cell CD8,normal,264,40
+T cell CD8,squamous cell lung carcinoma,566,24

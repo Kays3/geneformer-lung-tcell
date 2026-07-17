@@ -42,7 +42,7 @@ events.out.tfevents*
 *.pickle
 
 # Generated figures and local archives
-figures/
+# Curated, review-ready evidence is intentionally tracked under figures/.
 plots/
 *.tar
 *.tar.gz

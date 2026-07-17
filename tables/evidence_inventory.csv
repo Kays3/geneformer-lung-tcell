@@ -1,0 +1,10 @@
+evidence_id,artifact,status,use
+stage1_classifier,tables/classifier_metrics.csv,verified,Held-out cell-type performance
+stage2_classifier,tables/classifier_metrics.csv,verified,Held-out disease performance
+stage1_embeddings,tables/embedding_master_table.csv,verified,Cell-type and donor separation
+stage2_embeddings,tables/embedding_master_table.csv,verified,Disease and donor separation
+tcell_cohort,tables/tcell_cancer_vs_normal_summary.csv,derived_verified,Target-cohort feasibility
+disease_tcell_cohort,tables/stage2_tcell_cohort_summary.csv,derived_verified,Disease-specific T-cell coverage
+donor_diagnostics,tables/stage2_chance_adjusted_donor_enrichment.csv,verified,Donor-confounding risk
+embedding_figures,figures/embeddings,verified_saved_output,Visual review
+step7_synthesis,Step7-synthesis-stage1-stage2.ipynb,draft_excluded,Placeholder metrics and random fallback data

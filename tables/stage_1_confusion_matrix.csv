@@ -1,0 +1,10 @@
+actual,Macrophage,T cell CD8,cDC2,T cell CD4,B cell,Macrophage alveolar,Endothelial cell,NK cell,Monocyte
+Macrophage,592,1,19,0,0,18,0,0,15
+T cell CD8,0,578,0,55,0,0,0,9,0
+cDC2,27,0,572,0,0,0,0,0,16
+T cell CD4,2,64,0,613,0,4,1,8,0
+B cell,1,0,1,1,577,0,0,0,2
+Macrophage alveolar,70,0,1,0,0,356,0,0,22
+Endothelial cell,2,0,0,0,0,1,591,0,1
+NK cell,0,19,0,0,0,0,0,598,1
+Monocyte,29,0,22,0,1,6,0,0,480
