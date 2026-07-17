@@ -1,0 +1,69 @@
+# Geneformer NSCLC T-cell fine-tuning and perturbation experiments
+
+**Experiment date:** 17 July 2026  
+**Compute environment:** NVIDIA GB10 (DGX Spark), Geneformer V2 104M  
+**Final disease states:** normal, lung adenocarcinoma (LUAD), and squamous cell lung carcinoma (LUSC)
+
+## Outcome
+
+Today's work produced a donor-disjoint, no-oversampling T-cell dataset containing
+7,000 cells per disease, fine-tuned a three-class Geneformer classifier, measured
+its performance on unseen donors, and launched a genome-wide in silico deletion
+screen on every held-out test cell.
+
+The final classifier reached **0.7834 test accuracy** and **0.7577 macro F1**.
+The all-gene perturbation screen is still running; its live GPU and progress
+report is available in
+[the monitoring directory](../heldout_allgene_perturbation/GPU_PROGRESS_REPORT.md).
+
+## Final workflow
+
+```mermaid
+flowchart LR
+    A[NSCLC integrated atlas<br/>nsclc_integrated.h5ad] --> B[Strict CD4/CD8 T cells<br/>singlets with donor IDs]
+    B --> C[7,000 LUAD<br/>7,000 LUSC<br/>7,000 normal]
+    C --> D[Donor-disjoint<br/>train / eval / test]
+    D --> E[Geneformer V2 tokenization<br/>raw count layer]
+    E --> F[Fine-tune V2-104M<br/>three-class classifier]
+    F --> G[Evaluate unseen test donors]
+    F --> H[Training-donor disease<br/>reference centroids]
+    G --> I[All expressed genes deleted<br/>in every held-out test cell]
+    H --> I
+    I --> J[Six directional shifts<br/>among LUAD, LUSC, normal]
+```
+
+## Experiment sequence
+
+| Phase | Dataset/design | Purpose | Outcome |
+|---|---|---|---|
+| Initial three-state model | LUAD/LUSC/normal; train/eval classes resampled to at least 1,000; test donors untouched | Establish the perturbation classifier workflow | Test accuracy 0.8381; macro F1 0.8634, but the natural test cohort was small and imbalanced |
+| COPD comparison | LUAD/normal/COPD; donor split before within-split oversampling | Test an alternate disease comparison and verify donor leakage controls | Test accuracy 0.7747; macro F1 0.7496; test metrics include duplicate cells and are not independent cell-level validation |
+| Final atlas cohort | Strict CD4/CD8 T cells; 7,000 cells for each LUAD/LUSC/normal; no oversampling | Maximize clean LUSC use while preserving balance | 21,000 cells, 17,764 genes, donor leakage check passed |
+| Final fine-tune | Geneformer V2-104M on the final atlas cohort | Produce the model used for perturbation | Test accuracy 0.7834; macro F1 0.7577 |
+| Held-out deletion | Every gene token in every held-out test cell; training-only disease centroids | Identify deletions that shift cells among the three disease states | Running; 2,937,776 valid cell-gene deletions across 3,379 cells |
+
+## Why the final model was selected
+
+The initial experiments were useful implementation checks but relied on
+oversampling. The final workflow instead uses the original large atlas, keeps
+all three disease totals naturally balanced, prevents donor overlap among
+splits, and leaves all test cells unmodified. This makes its pre-perturbation
+performance and perturbation results easier to interpret as donor-held-out
+evidence.
+
+## Documents
+
+- [Methods and reproducibility](METHODS.md)
+- [Results and interpretation](RESULTS.md)
+- [Machine-readable experiment manifest](experiment_manifest.json)
+- [Live perturbation report](../heldout_allgene_perturbation/GPU_PROGRESS_REPORT.md)
+
+## Status terminology
+
+- **Complete:** dataset construction, leakage audit, tokenization, fine-tuning,
+  pre-perturbation evaluation, training-reference embeddings, and perturbation
+  smoke test.
+- **Running:** full held-out all-gene deletion and the six aggregate directional
+  comparisons.
+- **Pending:** final gene rankings, donor-consistency analysis, pathway
+  interpretation, and validation of top perturbation hits.

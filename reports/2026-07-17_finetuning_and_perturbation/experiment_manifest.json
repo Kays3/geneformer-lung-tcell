@@ -1,0 +1,74 @@
+{
+  "experiment_date": "2026-07-17",
+  "status": {
+    "dataset_construction": "complete",
+    "fine_tuning": "complete",
+    "pre_perturbation_evaluation": "complete",
+    "perturbation_smoke_test": "complete",
+    "heldout_all_gene_perturbation": "running",
+    "final_perturbation_statistics": "pending"
+  },
+  "source_atlas": "KD/data/nsclc/nsclc_integrated.h5ad",
+  "final_dataset": {
+    "cells": 21000,
+    "genes": 17764,
+    "diseases": {
+      "lung adenocarcinoma": 7000,
+      "squamous cell lung carcinoma": 7000,
+      "normal": 7000
+    },
+    "cell_types": [
+      "T cell CD4",
+      "T cell CD8"
+    ],
+    "oversampling": false,
+    "donor_leakage_check": "PASS",
+    "splits": {
+      "train": 14282,
+      "eval": 3339,
+      "test": 3379
+    }
+  },
+  "fine_tuning": {
+    "base_model": "Geneformer-V2-104M",
+    "model_type": "CellClassifier",
+    "epochs": 1,
+    "learning_rate": 0.00005,
+    "train_batch_size": 8,
+    "forward_batch_size": 16,
+    "freeze_layers": 6,
+    "seed": 43,
+    "eval_accuracy": 0.7771787960467206,
+    "eval_macro_f1": 0.7660127155699868,
+    "test_accuracy": 0.7833678603137023,
+    "test_macro_f1": 0.7576645983744948
+  },
+  "heldout_perturbation": {
+    "perturbation_type": "delete",
+    "gene_scope": "all non-special gene tokens present in each held-out cell",
+    "reference_cells": "training split only",
+    "perturbed_cells": "test split only",
+    "embedding_mode": "cls",
+    "test_cells": 3379,
+    "test_donors": 36,
+    "valid_cell_gene_deletions": 2937776,
+    "shard_size_cells": 25,
+    "total_shards": 137,
+    "forward_batch_size": 16,
+    "nproc": 4,
+    "source_order": [
+      "squamous cell lung carcinoma",
+      "lung adenocarcinoma",
+      "normal"
+    ],
+    "directional_comparisons": [
+      "LUAD_to_normal",
+      "LUAD_to_LUSC",
+      "LUSC_to_normal",
+      "LUSC_to_LUAD",
+      "normal_to_LUAD",
+      "normal_to_LUSC"
+    ]
+  },
+  "live_report": "../heldout_allgene_perturbation/GPU_PROGRESS_REPORT.md"
+}
