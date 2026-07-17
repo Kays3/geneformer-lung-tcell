@@ -18,6 +18,15 @@ classifier, and an all-gene in silico deletion screen.
 [Results](current_workflow/RESULTS.md) ·
 [Live run status](current_workflow/monitoring/GPU_PROGRESS_REPORT.md)
 
+## In silico perturbation concept
+
+![Artistic T-cell in silico perturbation concept](current_workflow/visuals/tcell_in_silico_perturbation.png)
+
+Each expressed gene token is deleted once, the fine-tuned model recalculates the
+cell embedding, and movement is scored toward LUAD, LUSC, and normal reference
+states. This image is conceptual; quantitative results come from the held-out
+deletion screen.
+
 ## Key findings
 
 ![Classifier performance context](current_workflow/visuals/model_performance_context.png)
@@ -30,6 +39,16 @@ different tasks; this chart provides context, not a head-to-head ranking.
 The final model detects LUAD strongly. Its main limitation is LUSC recall, with
 249 of 560 held-out LUSC cells called LUAD. This ambiguity is explicitly
 considered when interpreting perturbation directions.
+
+## UMAPs from prior fine-tuned models
+
+| Stage 1: cell-type model | Stage 2: disease model |
+|---|---|
+| ![Stage 1 Geneformer UMAPs](archive/prior_nsclc_workflow/figures/embeddings/stage1_umap_celltype_disease.png) | ![Stage 2 Geneformer UMAPs](archive/prior_nsclc_workflow/figures/embeddings/stage2_umap_celltype_disease.png) |
+
+Stage 1 embeddings organize strongly by cell identity. Stage 2 shifts the
+representation toward disease structure while retaining overlap. These are
+archived models and provide context for today's T-cell-specific workflow.
 
 ## Repository map
 
