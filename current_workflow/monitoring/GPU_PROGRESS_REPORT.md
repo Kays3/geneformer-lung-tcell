@@ -1,5 +1,49 @@
 # Held-out all-gene perturbation status
 
+![Animated overall cell progress](progress_animation.gif)
+
+Newest snapshots appear first. Existing entries are retained below; the machine-readable history is in `hourly_history.csv`.
+
+<!-- NEWEST_SNAPSHOTS_BELOW -->
+
+---
+
+## Snapshot — 2026-07-17T21:37:30+09:00
+
+Run status: **RUNNING**
+
+Overall cell progress: **126 / 3,379 (3.73%)**
+
+### GPU and memory
+
+| Metric | Current value |
+|---|---:|
+| GPU | NVIDIA GB10 |
+| GPU utilization | 4% |
+| GPU temperature | 67 C |
+| GPU power | 16.4 W |
+| Perturbation GPU memory | 701 MiB |
+| System memory used | 41.3 GiB |
+| System memory available | 78.3 GiB |
+| Swap used | 0.0 GiB |
+
+### Perturbation progress
+
+| Source | Cells written | Shards complete | Raw files |
+|---|---:|---:|---:|
+| LUSC | 126 / 560 (22.50%) | 5 / 23 | 252 |
+| LUAD | 0 / 1,411 (0.00%) | 0 / 57 | 0 |
+| NORMAL | 0 / 1,408 (0.00%) | 0 / 57 | 0 |
+
+Statistics are generated after all shards for a source state complete. Cell
+counts include only cells with both raw checkpoint batches present.
+
+
+<details>
+<summary>Earlier report content</summary>
+
+# Held-out all-gene perturbation status
+
 Last updated: **2026-07-17T21:22:30+09:00**
 
 Run status: **RUNNING**
@@ -67,3 +111,6 @@ Run status: **RUNNING**
 
 Statistics are generated after all shards for a source state complete. Cell
 counts include only cells with both raw checkpoint batches present.
+
+
+</details>
