@@ -14,6 +14,39 @@ Newest snapshots appear first. Existing entries are retained below; the machine-
 
 ---
 
+## Snapshot — 2026-07-18T00:38:46+09:00
+
+Run status: **RUNNING**
+
+Overall cell progress: **639 / 3,379 (18.91%)**
+
+### GPU and memory
+
+| Metric | Current value |
+|---|---:|
+| GPU | NVIDIA GB10 |
+| GPU utilization | 91% |
+| GPU temperature | 78 C |
+| GPU power | 93.1 W |
+| Perturbation GPU memory | 2051 MiB |
+| System memory used | 38.9 GiB |
+| System memory available | 80.8 GiB |
+| Swap used | 0.0 GiB |
+
+### Perturbation progress
+
+| Source | Cells written | Shards complete | Raw files |
+|---|---:|---:|---:|
+| LUSC | 560 / 560 (100.00%) | 23 / 23 | 1,120 |
+| LUAD | 79 / 1,411 (5.60%) | 3 / 57 | 159 |
+| NORMAL | 0 / 1,408 (0.00%) | 0 / 57 | 0 |
+
+Statistics are generated after all shards for a source state complete. Cell
+counts include only cells with both raw checkpoint batches present.
+
+
+---
+
 ## Snapshot — 2026-07-17T23:38:42+09:00
 
 Run status: **RUNNING**
