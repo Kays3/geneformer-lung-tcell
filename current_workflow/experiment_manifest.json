@@ -70,5 +70,5 @@
       "normal_to_LUSC"
     ]
   },
-  "live_report": "../heldout_allgene_perturbation/GPU_PROGRESS_REPORT.md"
+  "live_report": "monitoring/GPU_PROGRESS_REPORT.md"
 }

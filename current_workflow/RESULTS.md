@@ -111,7 +111,7 @@ calculation, and smoke testing. It is processing all 3,379 held-out cells and
 2,937,776 eligible cell-gene deletions in resumable 25-cell shards.
 
 Current status, GPU utilization, memory, and hourly history are maintained in
-[the live report](../heldout_allgene_perturbation/GPU_PROGRESS_REPORT.md).
+[the live report](monitoring/GPU_PROGRESS_REPORT.md).
 
 No final perturbation ranking should be reported until all shards for a source
 state have completed and the aggregate statistics have run.

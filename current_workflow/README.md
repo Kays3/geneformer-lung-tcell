@@ -14,7 +14,7 @@ screen on every held-out test cell.
 The final classifier reached **0.7834 test accuracy** and **0.7577 macro F1**.
 The all-gene perturbation screen is still running; its live GPU and progress
 report is available in
-[the monitoring directory](../heldout_allgene_perturbation/GPU_PROGRESS_REPORT.md).
+[the monitoring directory](monitoring/GPU_PROGRESS_REPORT.md).
 
 ## Final workflow
 
@@ -56,7 +56,7 @@ evidence.
 - [Methods and reproducibility](METHODS.md)
 - [Results and interpretation](RESULTS.md)
 - [Machine-readable experiment manifest](experiment_manifest.json)
-- [Live perturbation report](../heldout_allgene_perturbation/GPU_PROGRESS_REPORT.md)
+- [Live perturbation report](monitoring/GPU_PROGRESS_REPORT.md)
 
 ## Status terminology
 

@@ -1,0 +1,7 @@
+model,accuracy,macro_f1
+"Prior: cell type
+9 classes",0.922061011904762,0.9211374590831308
+"Prior: disease
+4 classes",0.7359646972297131,0.7423487397574208
+"Current: T-cell disease
+3 classes",0.7833678603137023,0.7576645983744948
