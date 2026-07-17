@@ -2,9 +2,81 @@
 
 ![Animated overall cell progress](progress_animation.gif)
 
+## GPU monitoring history
+
+![GPU utilization, temperature, power, and memory over time](gpu_statistics.png)
+
+Values are point-in-time monitor samples; brief compute and idle phases may occur between observations.
+
 Newest snapshots appear first. Existing entries are retained below; the machine-readable history is in `hourly_history.csv`.
 
 <!-- NEWEST_SNAPSHOTS_BELOW -->
+
+---
+
+## Snapshot — 2026-07-17T21:43:58+09:00
+
+Run status: **RUNNING**
+
+Overall cell progress: **144 / 3,379 (4.26%)**
+
+### GPU and memory
+
+| Metric | Current value |
+|---|---:|
+| GPU | NVIDIA GB10 |
+| GPU utilization | 4% |
+| GPU temperature | 63 C |
+| GPU power | 16.0 W |
+| Perturbation GPU memory | 701 MiB |
+| System memory used | 41.5 GiB |
+| System memory available | 78.2 GiB |
+| Swap used | 0.0 GiB |
+
+### Perturbation progress
+
+| Source | Cells written | Shards complete | Raw files |
+|---|---:|---:|---:|
+| LUSC | 144 / 560 (25.71%) | 5 / 23 | 288 |
+| LUAD | 0 / 1,411 (0.00%) | 0 / 57 | 0 |
+| NORMAL | 0 / 1,408 (0.00%) | 0 / 57 | 0 |
+
+Statistics are generated after all shards for a source state complete. Cell
+counts include only cells with both raw checkpoint batches present.
+
+
+---
+
+## Snapshot — 2026-07-17T21:42:53+09:00
+
+Run status: **RUNNING**
+
+Overall cell progress: **140 / 3,379 (4.14%)**
+
+### GPU and memory
+
+| Metric | Current value |
+|---|---:|
+| GPU | NVIDIA GB10 |
+| GPU utilization | 93% |
+| GPU temperature | 72 C |
+| GPU power | 86.9 W |
+| Perturbation GPU memory | 1391 MiB |
+| System memory used | 38.8 GiB |
+| System memory available | 80.9 GiB |
+| Swap used | 0.0 GiB |
+
+### Perturbation progress
+
+| Source | Cells written | Shards complete | Raw files |
+|---|---:|---:|---:|
+| LUSC | 140 / 560 (25.00%) | 5 / 23 | 281 |
+| LUAD | 0 / 1,411 (0.00%) | 0 / 57 | 0 |
+| NORMAL | 0 / 1,408 (0.00%) | 0 / 57 | 0 |
+
+Statistics are generated after all shards for a source state complete. Cell
+counts include only cells with both raw checkpoint batches present.
+
 
 ---
 
