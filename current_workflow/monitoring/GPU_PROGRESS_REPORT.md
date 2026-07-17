@@ -36,3 +36,34 @@ timestamp,run_active,gpu_utilization_percent,gpu_temperature_c,gpu_power_w,gpu_p
 2026-07-17T21:06:10+09:00,True,93.0,78.0,86.44,1591.0,38.868473052978516,80.82490539550781,35,0,0,1
 2026-07-17T21:22:30+09:00,True,3.0,68.0,21.39,701.0,40.47722625732422,79.21615219116211,82,0,0,3
 ```
+
+
+---
+
+## Snapshot — 2026-07-17T21:31:12+09:00
+
+Run status: **RUNNING**
+
+### GPU and memory
+
+| Metric | Current value |
+|---|---:|
+| GPU | NVIDIA GB10 |
+| GPU utilization | 91% |
+| GPU temperature | 75 C |
+| GPU power | 67.8 W |
+| Perturbation GPU memory | 1571 MiB |
+| System memory used | 38.8 GiB |
+| System memory available | 80.9 GiB |
+| Swap used | 0.0 GiB |
+
+### Perturbation progress
+
+| Source | Cells written | Shards complete | Raw files |
+|---|---:|---:|---:|
+| LUSC | 106 / 560 (18.93%) | 4 / 23 | 213 |
+| LUAD | 0 / 1,411 (0.00%) | 0 / 57 | 0 |
+| NORMAL | 0 / 1,408 (0.00%) | 0 / 57 | 0 |
+
+Statistics are generated after all shards for a source state complete. Cell
+counts include only cells with both raw checkpoint batches present.
