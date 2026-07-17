@@ -1,18 +1,55 @@
-# This .gitignore is appropriate for repositories deployed to GitHub Pages and using
-# a Gemfile as specified at https://github.com/github/pages-gem#conventional
+# Python and Jupyter
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Basic Jekyll gitignores (synchronize to Jekyll.gitignore)
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
 
-# Additional Ruby/bundler ignore for when you run: bundle install
-/vendor
+# Geneformer inputs and generated datasets
+data/
+input_data/
+tokenized_data/
+*.h5ad
+*.loom
+*.arrow
+*.parquet
 
-# Specific ignore for GitHub Pages
-# GitHub Pages will always use its own deployed version of pages-gem
-# This means GitHub Pages will NOT use your Gemfile.lock and therefore it is
-# counterproductive to check this file into the repository.
-# Details at https://github.com/github/pages-gem/issues/768
-Gemfile.lock
+# Training runs, caches, and experiment tracking
+runs_geneformer_v2/
+embedding_analysis/
+outputs/
+checkpoints/
+checkpoint-*/
+wandb/
+runs/
+events.out.tfevents*
+
+# Model weights and serialized intermediate results
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.pkl
+*.pickle
+
+# Generated figures and local archives
+figures/
+plots/
+*.tar
+*.tar.gz
+*.zip
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
