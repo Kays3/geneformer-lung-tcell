@@ -1,7 +1,10 @@
 # Monitoring Job
 
-`report_generation_job.sh` is the entrypoint for the live perturbation report.
-It reads:
+`refresh_live_report.sh` is the scheduled entrypoint for the live perturbation
+report. It collects a fresh run snapshot, copies the canonical status and
+history into this checkout, and invokes `report_generation_job.sh`.
+
+`report_generation_job.sh` is the render-only entrypoint. It reads:
 
 - `latest_status.json`
 - `hourly_history.csv`
@@ -21,7 +24,7 @@ run's statistics directory by default; set the environment variable to use a
 different run.
 
 
-Run it every 15 minutes from cron, a timer, or the existing workflow wrapper.
+Run `refresh_live_report.sh` every 30 minutes from cron or a timer.
 The cron example is in `report_generation.cron`.
 The history filename is legacy; the report job treats it as the canonical
 monitor timeline.

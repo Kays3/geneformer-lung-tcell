@@ -52,6 +52,10 @@ STATISTICAL_COMPARISONS = (
     ("normal", "lusc"),
 )
 
+SUMMARY_LOG_START = "<!-- JOB_RUN_SUMMARIES_START -->"
+SUMMARY_LOG_END = "<!-- JOB_RUN_SUMMARIES_END -->"
+SUMMARY_LOG_LIMIT = 48
+
 
 
 @dataclass(frozen=True)
@@ -585,11 +589,44 @@ def snapshot_gallery(gallery: list[dict[str, str]], columns: int = 3, limit: int
     return f"<table><thead><tr>{header}</tr></thead><tbody>{''.join(rows)}</tbody></table>"
 
 
+def existing_summary_entries(path: Path) -> list[str]:
+    if not path.exists():
+        return []
+    content = path.read_text()
+    if SUMMARY_LOG_START not in content or SUMMARY_LOG_END not in content:
+        return []
+    block = content.split(SUMMARY_LOG_START, 1)[1].split(SUMMARY_LOG_END, 1)[0]
+    return [line for line in block.splitlines() if line.startswith("- **")]
+
+
+def update_summary_entries(
+    status: dict[str, Any],
+    history: list[dict[str, Any]],
+    sources: dict[str, SourceProgress],
+) -> list[str]:
+    completed, total, percent = overall_progress_from_status(status)
+    timestamp = status["timestamp"]
+    state = "RUNNING" if status["run_active"] else "IDLE"
+    summary = delta_summary(status, history, sources)
+    new_entry = (
+        f"- **{timestamp}** — {state}; {completed:,} / {total:,} cells "
+        f"({percent:.2f}%). {summary}"
+    )
+    retained = [
+        entry
+        for entry in existing_summary_entries(REPORT_PATH)
+        if not entry.startswith(f"- **{timestamp}**")
+    ]
+    return [new_entry, *retained][:SUMMARY_LOG_LIMIT]
+
+
 def build_report(status: dict[str, Any], history: list[dict[str, Any]], generated_at: str) -> str:
     sources = load_sources(status)
     comparisons = load_statistical_comparisons(status, sources)
     completed, total, percent = overall_progress_from_status(status)
     summary = delta_summary(status, history, sources)
+    summary_entries = update_summary_entries(status, history, sources)
+    summary_log = "\n".join(summary_entries)
     gallery_items = render_snapshot_gallery(history, total)
     gallery = snapshot_gallery(gallery_items)
 
@@ -665,13 +702,22 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
 
 ![Animated overall cell progress](progress_animation.gif)
 
-> **15-minute report job:** This report is generated from `latest_status.json`
+> **30-minute report job:** This report is generated from `latest_status.json`
 > and `hourly_history.csv` on each run. Every snapshot includes a short delta
 > summary, and the gallery below shows the recent single-cell snapshots. The
 > thumbnails are orientation aids only; they are not measured ligand-receptor
 > or pathology results.
 
 ![Single-cell-inspired interaction sketch](cell_interaction_diagram.svg)
+
+## Job run summaries
+
+Newest refreshes are appended at the top and retained for the most recent
+{SUMMARY_LOG_LIMIT} runs.
+
+{SUMMARY_LOG_START}
+{summary_log}
+{SUMMARY_LOG_END}
 
 ## Current snapshot
 
@@ -712,10 +758,11 @@ The history table below shows the newest samples first.
 
 ## Job notes
 
-- Job entrypoint: `current_workflow/monitoring/generate_progress_report.py`
+- Scheduled entrypoint: `current_workflow/monitoring/refresh_live_report.sh`
+- Render entrypoint: `current_workflow/monitoring/generate_progress_report.py`
 - Statistics source: `{STATS_DIR}` (override with `PERTURBATION_STATS_DIR`)
 - Output files: `GPU_PROGRESS_REPORT.md`, `progress_animation.gif`, `progress_animation.svg`, `cell_interaction_diagram.svg`, and `snapshot_gallery/*.svg`
-- Cadence: 15 minutes
+- Cadence: 30 minutes
 """
 
 
