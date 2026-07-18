@@ -15,26 +15,27 @@ Newest refreshes are appended at the top and retained for the most recent
 48 runs.
 
 <!-- JOB_RUN_SUMMARIES_START -->
+- **2026-07-18T17:52:31+09:00** — RUNNING; 2,630 / 3,379 cells (77.83%). The run advanced by 5 cells and 0 shards, lifting completion from 77.69% to 77.83%. LUSC remained complete; LUAD remained complete; NORMAL moved from 654 to 659 cells; GPU utilization fell from 91% to 5%.
 - **2026-07-18T17:48:04+09:00** — RUNNING; 2,625 / 3,379 cells (77.69%). The run advanced by 12 cells and 1 shards, lifting completion from 77.33% to 77.69%. LUSC remained complete; LUAD remained complete; NORMAL moved from 642 to 654 cells; GPU utilization rose from 4% to 91%.
 - **2026-07-18T17:41:08+09:00** — RUNNING; 2,613 / 3,379 cells (77.33%). The run advanced by 210 cells and 8 shards, lifting completion from 71.12% to 77.33%. LUSC remained complete; LUAD remained complete; NORMAL moved from 432 to 642 cells; GPU utilization fell from 91% to 4%.
 <!-- JOB_RUN_SUMMARIES_END -->
 
 ## Current snapshot
 
-**What changed since the prior report:** The run advanced by 12 cells and 1 shards, lifting completion from 77.33% to 77.69%. LUSC remained complete; LUAD remained complete; NORMAL moved from 642 to 654 cells; GPU utilization rose from 4% to 91%.
+**What changed since the prior report:** The run advanced by 5 cells and 0 shards, lifting completion from 77.69% to 77.83%. LUSC remained complete; LUAD remained complete; NORMAL moved from 654 to 659 cells; GPU utilization fell from 91% to 5%.
 
 | Metric | Value |
 | --- | --- |
-| Generated | 2026-07-18T17:48:04+09:00 |
+| Generated | 2026-07-18T17:52:31+09:00 |
 | Run status | RUNNING |
-| Overall cell progress | 2,625 / 3,379 (77.69%) |
+| Overall cell progress | 2,630 / 3,379 (77.83%) |
 | GPU | NVIDIA GB10 |
-| GPU utilization | 91% |
-| GPU temperature | 78 C |
-| GPU power | 83.2 W |
-| Perturbation GPU memory | 2,401 MiB |
-| System memory used | 39.3 GiB |
-| System memory available | 80.4 GiB |
+| GPU utilization | 5% |
+| GPU temperature | 62 C |
+| GPU power | 15.7 W |
+| Perturbation GPU memory | 701 MiB |
+| System memory used | 42.1 GiB |
+| System memory available | 77.6 GiB |
 | Swap used | 0.0 GiB |
 
 ### Progress by source
@@ -43,7 +44,7 @@ Newest refreshes are appended at the top and retained for the most recent
 | --- | --- | --- | --- | --- |
 | LUSC | 560 / 560 (100.00%) | 23 / 23 | 1,120 | 348,313 / 348,313 |
 | LUAD | 1,411 / 1,411 (100.00%) | 57 / 57 | 2,822 | 1,150,097 / 1,150,097 |
-| NORMAL | 654 / 1,408 (46.45%) | 26 / 57 | 1,316 | 670,937 / 1,439,366 |
+| NORMAL | 659 / 1,408 (46.80%) | 26 / 57 | 1,326 | 670,937 / 1,439,366 |
 
 ## Final statistical comparisons
 
@@ -72,6 +73,7 @@ The history table below shows the newest samples first.
 
 | Timestamp | Cells | Progress | GPU util | Temp | Power | Shards |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-07-18T17:52:31+09:00 | 2,630 | 77.83% | 5% | 62 C | 15.7 W | 106 |
 | 2026-07-18T17:48:04+09:00 | 2,625 | 77.69% | 91% | 78 C | 83.2 W | 106 |
 | 2026-07-18T17:41:08+09:00 | 2,613 | 77.33% | 4% | 67 C | 16.5 W | 105 |
 | 2026-07-18T15:16:02+09:00 | 2,403 | 71.12% | 91% | 79 C | 83.2 W | 97 |
@@ -79,7 +81,6 @@ The history table below shows the newest samples first.
 | 2026-07-18T13:39:27+09:00 | 2,258 | 66.82% | 96% | 76 C | 84.1 W | 91 |
 | 2026-07-18T12:39:23+09:00 | 2,172 | 64.28% | 96% | 84 C | 88.8 W | 88 |
 | 2026-07-18T11:39:20+09:00 | 2,073 | 61.35% | 96% | 81 C | 90.1 W | 84 |
-| 2026-07-18T10:39:17+09:00 | 1,974 | 58.42% | 96% | 85 C | 89.0 W | 80 |
 
 ## Job notes
 
