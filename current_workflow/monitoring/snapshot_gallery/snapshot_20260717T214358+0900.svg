@@ -33,29 +33,23 @@
   <text x="20" y="150" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" font-weight="700" fill="#2c5684">Progress</text>
   <text x="20" y="160" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#2c5684">█░░░░░░░░░░░░░</text>
   <text x="93" y="157" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#2c5684">4.26%</text>
-  
-    <g transform="translate(112 56)">
+  <g transform="translate(112 56)">
       <rect x="0" y="0" width="122" height="30" rx="10" fill="#ebf3ff" stroke="#d8e3ea"/>
       <circle cx="17" cy="15" r="8" fill="#4f83c6"/>
       <text x="32" y="13" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#24313d">LUAD</text>
       <text x="32" y="24" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#51606d">0 / 144 (0.0%)</text>
     </g>
-
-  
-    <g transform="translate(112 88)">
+  <g transform="translate(112 88)">
       <rect x="0" y="0" width="122" height="30" rx="10" fill="#f4ecff" stroke="#d8e3ea"/>
       <circle cx="17" cy="15" r="8" fill="#a36ad9"/>
       <text x="32" y="13" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#24313d">LUSC</text>
       <text x="32" y="24" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#51606d">144 / 144 (100.0%)</text>
     </g>
-
-  
-    <g transform="translate(112 120)">
+  <g transform="translate(112 120)">
       <rect x="0" y="0" width="122" height="30" rx="10" fill="#ecfbf3" stroke="#d8e3ea"/>
       <circle cx="17" cy="15" r="8" fill="#43b87a"/>
       <text x="32" y="13" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#24313d">NORMAL</text>
       <text x="32" y="24" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#51606d">0 / 144 (0.0%)</text>
     </g>
-
   <text x="200" y="156" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#5f7180">shards 5</text>
 </svg>
