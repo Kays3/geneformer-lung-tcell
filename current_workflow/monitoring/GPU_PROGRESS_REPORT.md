@@ -4,8 +4,9 @@
 
 > **15-minute report job:** This report is generated from `latest_status.json`
 > and `hourly_history.csv` on each run. Every snapshot includes a short delta
-> summary plus the compact sketch below. The sketch is an orientation aid only;
-> it is not a measured ligand-receptor or pathology result.
+> summary, and the gallery below shows the recent single-cell snapshots. The
+> thumbnails are orientation aids only; they are not measured ligand-receptor
+> or pathology results.
 
 ![Single-cell-inspired interaction sketch](cell_interaction_diagram.svg)
 
@@ -37,10 +38,10 @@
 
 ## Snapshot gallery
 
-| Snapshot | Snapshot | Snapshot |
-| --- | --- | --- |
-| **2026-07-18T12:39:23+09:00**<br/>`████████░░░░` 64.28%<br/>Cells 2,172 · GPU 96% · 84 C · 88.8 W<br/>Shards 88 | **2026-07-18T11:39:20+09:00**<br/>`███████░░░░░` 61.35%<br/>Cells 2,073 · GPU 96% · 81 C · 90.1 W<br/>Shards 84 | **2026-07-18T10:39:17+09:00**<br/>`███████░░░░░` 58.42%<br/>Cells 1,974 · GPU 96% · 85 C · 89.0 W<br/>Shards 80 |
-| **2026-07-18T09:39:14+09:00**<br/>`███████░░░░░` 54.72%<br/>Cells 1,849 · GPU 96% · 78 C · 89.6 W<br/>Shards 74 | **2026-07-18T08:39:11+09:00**<br/>`██████░░░░░░` 50.81%<br/>Cells 1,717 · GPU 91% · 80 C · 90.1 W<br/>Shards 69 | **2026-07-18T07:39:07+09:00**<br/>`██████░░░░░░` 46.67%<br/>Cells 1,577 · GPU 0% · 62 C · 14.9 W<br/>Shards 63 |
+Each thumbnail is a single-cell diagram that encodes overall progress and the
+LUAD, LUSC, and NORMAL pathology balance at that snapshot.
+
+<table><thead><tr><th align="center">Single-cell snapshot</th><th align="center">Single-cell snapshot</th><th align="center">Single-cell snapshot</th></tr></thead><tbody><tr><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T123923+0900.svg" alt="Snapshot 2026-07-18T12:39:23+09:00" width="260"/><br/><sub>2026-07-18T12:39:23+09:00 · 64.28% · 2,172 cells</sub></td><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T113920+0900.svg" alt="Snapshot 2026-07-18T11:39:20+09:00" width="260"/><br/><sub>2026-07-18T11:39:20+09:00 · 61.35% · 2,073 cells</sub></td><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T103917+0900.svg" alt="Snapshot 2026-07-18T10:39:17+09:00" width="260"/><br/><sub>2026-07-18T10:39:17+09:00 · 58.42% · 1,974 cells</sub></td></tr><tr><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T093914+0900.svg" alt="Snapshot 2026-07-18T09:39:14+09:00" width="260"/><br/><sub>2026-07-18T09:39:14+09:00 · 54.72% · 1,849 cells</sub></td><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T083911+0900.svg" alt="Snapshot 2026-07-18T08:39:11+09:00" width="260"/><br/><sub>2026-07-18T08:39:11+09:00 · 50.81% · 1,717 cells</sub></td><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T073907+0900.svg" alt="Snapshot 2026-07-18T07:39:07+09:00" width="260"/><br/><sub>2026-07-18T07:39:07+09:00 · 46.67% · 1,577 cells</sub></td></tr></tbody></table>
 
 ## Monitoring history
 
@@ -64,5 +65,5 @@ The history table below shows the newest samples first.
 ## Job notes
 
 - Job entrypoint: `current_workflow/monitoring/generate_progress_report.py`
-- Output files: `GPU_PROGRESS_REPORT.md`, `progress_animation.gif`, `progress_animation.svg`, and `cell_interaction_diagram.svg`
+- Output files: `GPU_PROGRESS_REPORT.md`, `progress_animation.gif`, `progress_animation.svg`, `cell_interaction_diagram.svg`, and `snapshot_gallery/*.svg`
 - Cadence: 15 minutes

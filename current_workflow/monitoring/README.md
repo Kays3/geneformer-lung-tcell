@@ -12,6 +12,7 @@ and rewrites:
 - `progress_animation.gif`
 - `progress_animation.svg`
 - `cell_interaction_diagram.svg`
+- `snapshot_gallery/*.svg`
 
 Run it every 15 minutes from cron, a timer, or the existing workflow wrapper.
 The cron example is in `report_generation.cron`.

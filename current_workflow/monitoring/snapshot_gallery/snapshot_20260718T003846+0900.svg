@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="180" viewBox="0 0 260 180" role="img" aria-labelledby="title desc">
+  <title id="title">Snapshot 2026-07-18T00:38:46+09:00 | 18.91% complete | 639 cells | RUNNING</title>
+  <desc id="desc">A compact single-cell diagram for the 2026-07-18T00:38:46+09:00 snapshot, showing overall job progress and NSCLC pathology state.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f7fbf9"/>
+    </linearGradient>
+    <linearGradient id="cell" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e7f9ef"/>
+      <stop offset="1" stop-color="#d7f2e3"/>
+    </linearGradient>
+    <linearGradient id="progress" x1="0" x2="1">
+      <stop offset="0" stop-color="#20d878"/>
+      <stop offset="1" stop-color="#0ea55b"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="260" height="180" rx="16" fill="url(#bg)" stroke="#ceddde"/>
+  <text x="14" y="20" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#365368">2026-07-18 00:38</text>
+  <text x="14" y="34" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#607381">639 cells · 18.91% · RUNNING</text>
+  <g transform="translate(68 88)">
+    <circle r="41" fill="none" stroke="#dce7eb" stroke-width="10"/>
+    <circle r="41" fill="none" stroke="url(#progress)" stroke-width="10" stroke-linecap="round" transform="rotate(-90)" stroke-dasharray="42.78 183.42"/>
+    <circle r="31" fill="url(#cell)" stroke="#2bb56f" stroke-width="2"/>
+    <circle cx="-9" cy="-6" r="10" fill="#9edcb6"/>
+    <circle cx="11" cy="8" r="7" fill="#73c898"/>
+    <circle cx="0" cy="-15" r="4" fill="#ffffff"/>
+    <circle cx="17" cy="-11" r="2.5" fill="#ffffff" opacity=".85"/>
+    <circle cx="-16" cy="13" r="2.5" fill="#ffffff" opacity=".85"/>
+    <text x="0" y="50" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#2c5a3f">job cell</text>
+  </g>
+  <rect x="14" y="138" width="94" height="28" rx="10" fill="#eef7ff" stroke="#d7e8fb"/>
+  <text x="20" y="150" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" font-weight="700" fill="#2c5684">Progress</text>
+  <text x="20" y="160" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#2c5684">███░░░░░░░░░░░</text>
+  <text x="93" y="157" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#2c5684">18.91%</text>
+  
+    <g transform="translate(112 56)">
+      <rect x="0" y="0" width="122" height="30" rx="10" fill="#ebf3ff" stroke="#d8e3ea"/>
+      <circle cx="17" cy="15" r="8" fill="#4f83c6"/>
+      <text x="32" y="13" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#24313d">LUAD</text>
+      <text x="32" y="24" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#51606d">79 / 639 (12.4%)</text>
+    </g>
+
+  
+    <g transform="translate(112 88)">
+      <rect x="0" y="0" width="122" height="30" rx="10" fill="#f4ecff" stroke="#d8e3ea"/>
+      <circle cx="17" cy="15" r="8" fill="#a36ad9"/>
+      <text x="32" y="13" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#24313d">LUSC</text>
+      <text x="32" y="24" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#51606d">560 / 639 (87.6%)</text>
+    </g>
+
+  
+    <g transform="translate(112 120)">
+      <rect x="0" y="0" width="122" height="30" rx="10" fill="#ecfbf3" stroke="#d8e3ea"/>
+      <circle cx="17" cy="15" r="8" fill="#43b87a"/>
+      <text x="32" y="13" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#24313d">NORMAL</text>
+      <text x="32" y="24" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#51606d">0 / 639 (0.0%)</text>
+    </g>
+
+  <text x="200" y="156" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#5f7180">shards 26</text>
+</svg>
