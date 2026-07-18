@@ -15,6 +15,7 @@ Newest refreshes are appended at the top and retained for the most recent
 48 runs.
 
 <!-- JOB_RUN_SUMMARIES_START -->
+- **2026-07-19T02:00:01+09:00** — RUNNING; 3,357 / 3,379 cells (99.35%). The run advanced by 50 cells and 2 shards, lifting completion from 97.87% to 99.35%. LUSC remained complete; LUAD remained complete; NORMAL moved from 1,336 to 1,386 cells; GPU utilization stayed at 92%.
 - **2026-07-19T01:30:01+09:00** — RUNNING; 3,307 / 3,379 cells (97.87%). The run advanced by 43 cells and 2 shards, lifting completion from 96.60% to 97.87%. LUSC remained complete; LUAD remained complete; NORMAL moved from 1,293 to 1,336 cells; GPU utilization fell from 96% to 92%.
 - **2026-07-19T01:00:01+09:00** — RUNNING; 3,264 / 3,379 cells (96.60%). The run advanced by 43 cells and 1 shards, lifting completion from 95.32% to 96.60%. LUSC remained complete; LUAD remained complete; NORMAL moved from 1,250 to 1,293 cells; GPU utilization stayed at 96%.
 - **2026-07-19T00:30:01+09:00** — RUNNING; 3,221 / 3,379 cells (95.32%). The run advanced by 55 cells and 3 shards, lifting completion from 93.70% to 95.32%. LUSC remained complete; LUAD remained complete; NORMAL moved from 1,195 to 1,250 cells; GPU utilization rose from 1% to 96%.
@@ -38,18 +39,18 @@ Newest refreshes are appended at the top and retained for the most recent
 
 ## Current snapshot
 
-**What changed since the prior report:** The run advanced by 43 cells and 2 shards, lifting completion from 96.60% to 97.87%. LUSC remained complete; LUAD remained complete; NORMAL moved from 1,293 to 1,336 cells; GPU utilization fell from 96% to 92%.
+**What changed since the prior report:** The run advanced by 50 cells and 2 shards, lifting completion from 97.87% to 99.35%. LUSC remained complete; LUAD remained complete; NORMAL moved from 1,336 to 1,386 cells; GPU utilization stayed at 92%.
 
 | Metric | Value |
 | --- | --- |
-| Generated | 2026-07-19T01:30:01+09:00 |
+| Generated | 2026-07-19T02:00:01+09:00 |
 | Run status | RUNNING |
-| Overall cell progress | 3,307 / 3,379 (97.87%) |
+| Overall cell progress | 3,357 / 3,379 (99.35%) |
 | GPU | NVIDIA GB10 |
 | GPU utilization | 92% |
-| GPU temperature | 78 C |
-| GPU power | 84.3 W |
-| Perturbation GPU memory | 1,801 MiB |
+| GPU temperature | 79 C |
+| GPU power | 84.6 W |
+| Perturbation GPU memory | 2,001 MiB |
 | System memory used | 39.8 GiB |
 | System memory available | 79.9 GiB |
 | Swap used | 0.0 GiB |
@@ -60,11 +61,11 @@ Newest refreshes are appended at the top and retained for the most recent
 | --- | --- | --- | --- | --- |
 | LUSC | 560 / 560 (100.00%) | 23 / 23 | 1,120 | 348,313 / 348,313 |
 | LUAD | 1,411 / 1,411 (100.00%) | 57 / 57 | 2,822 | 1,150,097 / 1,150,097 |
-| NORMAL | 1,336 / 1,408 (94.89%) | 53 / 57 | 2,690 | 1,356,809 / 1,439,366 |
+| NORMAL | 1,386 / 1,408 (98.44%) | 55 / 57 | 2,790 | 1,405,088 / 1,439,366 |
 
 ## Final statistical comparisons
 
-**0 / 6 comparisons are complete. Final aggregation waits for the deletion screen, currently 133 / 137 shards.**
+**0 / 6 comparisons are complete. Final aggregation waits for the deletion screen, currently 135 / 137 shards.**
 
 | Comparison | State | Result rows | Updated | Output |
 | --- | --- | --- | --- | --- |
@@ -89,6 +90,7 @@ The history table below shows the newest samples first.
 
 | Timestamp | Cells | Progress | GPU util | Temp | Power | Shards |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-07-19T02:00:01+09:00 | 3,357 | 99.35% | 92% | 79 C | 84.6 W | 135 |
 | 2026-07-19T01:30:01+09:00 | 3,307 | 97.87% | 92% | 78 C | 84.3 W | 133 |
 | 2026-07-19T01:00:01+09:00 | 3,264 | 96.60% | 96% | 75 C | 85.2 W | 131 |
 | 2026-07-19T00:30:01+09:00 | 3,221 | 95.32% | 96% | 77 C | 84.1 W | 130 |
@@ -96,7 +98,6 @@ The history table below shows the newest samples first.
 | 2026-07-18T23:30:01+09:00 | 3,124 | 92.45% | 96% | 81 C | 82.4 W | 126 |
 | 2026-07-18T23:00:01+09:00 | 3,075 | 91.00% | 1% | 67 C | 24.5 W | 124 |
 | 2026-07-18T22:30:01+09:00 | 3,032 | 89.73% | 1% | 68 C | 16.0 W | 122 |
-| 2026-07-18T22:00:01+09:00 | 2,990 | 88.49% | 92% | 74 C | 84.2 W | 120 |
 
 ## Job notes
 
