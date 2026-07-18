@@ -1,1 +1,1 @@
-*/30 * * * * /home/petadimensionlab/workspace/geneformer-nsclc-monitor/current_workflow/monitoring/refresh_live_report.sh >> /home/petadimensionlab/workspace/geneformer-nsclc-monitor/current_workflow/monitoring/report_generation.log 2>&1
+*/30 * * * * PUBLISH_TO_GIT=1 /home/petadimensionlab/workspace/geneformer-nsclc-monitor/current_workflow/monitoring/refresh_live_report.sh >> /home/petadimensionlab/workspace/geneformer-nsclc-monitor/current_workflow/monitoring/report_generation.log 2>&1
