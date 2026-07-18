@@ -4,9 +4,8 @@
 
 > **30-minute report job:** This report is generated from `latest_status.json`
 > and `hourly_history.csv` on each run. Every snapshot includes a short delta
-> summary, and the gallery below shows the recent single-cell snapshots. The
-> thumbnails are orientation aids only; they are not measured ligand-receptor
-> or pathology results.
+> summary. A single final diagram is appended for each disease source when its
+> perturbation screen completes.
 
 ![Single-cell-inspired interaction sketch](cell_interaction_diagram.svg)
 
@@ -63,13 +62,6 @@ Result-row counts confirm artifact generation only; they do not establish
 biological significance. Gene rankings should be interpreted only after all
 six comparisons complete and coverage, FDR, and donor-consistency checks pass.
 
-## Snapshot gallery
-
-Each thumbnail is a single-cell diagram that encodes overall progress and the
-LUAD, LUSC, and NORMAL pathology balance at that snapshot.
-
-<table><thead><tr><th align="center">Single-cell snapshot</th><th align="center">Single-cell snapshot</th><th align="center">Single-cell snapshot</th></tr></thead><tbody><tr><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T174804+0900.svg" alt="Snapshot 2026-07-18T17:48:04+09:00" width="260"/><br/><sub>2026-07-18T17:48:04+09:00 · 77.69% · 2,625 cells</sub></td><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T174108+0900.svg" alt="Snapshot 2026-07-18T17:41:08+09:00" width="260"/><br/><sub>2026-07-18T17:41:08+09:00 · 77.33% · 2,613 cells</sub></td><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T151602+0900.svg" alt="Snapshot 2026-07-18T15:16:02+09:00" width="260"/><br/><sub>2026-07-18T15:16:02+09:00 · 71.12% · 2,403 cells</sub></td></tr><tr><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T143930+0900.svg" alt="Snapshot 2026-07-18T14:39:30+09:00" width="260"/><br/><sub>2026-07-18T14:39:30+09:00 · 69.58% · 2,351 cells</sub></td><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T133927+0900.svg" alt="Snapshot 2026-07-18T13:39:27+09:00" width="260"/><br/><sub>2026-07-18T13:39:27+09:00 · 66.82% · 2,258 cells</sub></td><td align="center" valign="top"><img src="snapshot_gallery/snapshot_20260718T123923+0900.svg" alt="Snapshot 2026-07-18T12:39:23+09:00" width="260"/><br/><sub>2026-07-18T12:39:23+09:00 · 64.28% · 2,172 cells</sub></td></tr></tbody></table>
-
 ## Monitoring history
 
 ![GPU utilization, temperature, power, and memory over time](gpu_statistics.png)
@@ -94,5 +86,12 @@ The history table below shows the newest samples first.
 - Scheduled entrypoint: `current_workflow/monitoring/refresh_live_report.sh`
 - Render entrypoint: `current_workflow/monitoring/generate_progress_report.py`
 - Statistics source: `/home/petadimensionlab/workspace/Geneformer/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation/stats` (override with `PERTURBATION_STATS_DIR`)
-- Output files: `GPU_PROGRESS_REPORT.md`, `progress_animation.gif`, `progress_animation.svg`, `cell_interaction_diagram.svg`, and `snapshot_gallery/*.svg`
+- Output files: `GPU_PROGRESS_REPORT.md`, `progress_animation.gif`, `progress_animation.svg`, `cell_interaction_diagram.svg`, and `disease_completion/*.svg`
 - Cadence: 30 minutes
+
+
+## Disease completion diagrams
+
+One final diagram is appended for each source after its perturbation screen completes. Cell totals are shown explicitly.
+
+<table><tbody><tr><td align="center" valign="top"><img src="disease_completion/lusc_complete.svg" alt="LUSC perturbation complete" width="360"/></td><td align="center" valign="top"><img src="disease_completion/luad_complete.svg" alt="LUAD perturbation complete" width="360"/></td></tr></tbody></table>

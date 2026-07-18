@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="190" viewBox="0 0 360 190" role="img" aria-labelledby="title desc">
+  <title id="title">LUAD perturbation complete: 1,411 of 1,411 cells</title>
+  <desc id="desc">Final disease completion diagram with exact cell, shard, and deletion counts.</desc>
+  <rect width="360" height="190" rx="18" fill="#eaf2ff" stroke="#2563eb" stroke-width="2"/>
+  <circle cx="58" cy="65" r="34" fill="#fff" stroke="#2563eb" stroke-width="4"/>
+  <circle cx="48" cy="59" r="10" fill="#2563eb" opacity=".55"/>
+  <circle cx="69" cy="72" r="8" fill="#2563eb" opacity=".75"/>
+  <circle cx="64" cy="49" r="5" fill="#2563eb" opacity=".35"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+    <text x="108" y="39" font-size="16" font-weight="700" fill="#2563eb">LUAD COMPLETE</text>
+    <text x="108" y="75" font-size="28" font-weight="800" fill="#17212b">1,411 / 1,411</text>
+    <text x="108" y="98" font-size="15" font-weight="600" fill="#465563">cells · 100.00%</text>
+    <rect x="24" y="122" width="312" height="45" rx="10" fill="#fff" opacity=".92"/>
+    <text x="42" y="142" font-size="12" fill="#52616d">Completed shards</text>
+    <text x="42" y="158" font-size="15" font-weight="700" fill="#17212b">57 / 57</text>
+    <text x="190" y="142" font-size="12" fill="#52616d">Marker deletions</text>
+    <text x="190" y="158" font-size="15" font-weight="700" fill="#17212b">1,150,097 / 1,150,097</text>
+  </g>
+</svg>

@@ -15,7 +15,7 @@ and rewrites:
 - `progress_animation.gif`
 - `progress_animation.svg`
 - `cell_interaction_diagram.svg`
-- `snapshot_gallery/*.svg`
+- `disease_completion/*.svg` (one final diagram per completed source)
 
 The report also inspects the six expected directional CSV files in
 `PERTURBATION_STATS_DIR` and reports each comparison as waiting, queued/running,

@@ -46,7 +46,7 @@ if [[ "$PUBLISH_TO_GIT" == "1" ]]; then
     "$MONITOR_PATH/progress_animation.svg"
     "$MONITOR_PATH/gpu_statistics.png"
     "$MONITOR_PATH/cell_interaction_diagram.svg"
-    "$MONITOR_PATH/snapshot_gallery"
+    "$MONITOR_PATH/disease_completion"
   )
 
   git -C "$CHECKOUT" add -- "${GENERATED_PATHS[@]}"

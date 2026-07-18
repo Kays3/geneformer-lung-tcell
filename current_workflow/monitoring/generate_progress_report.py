@@ -15,7 +15,6 @@ the recent monitor timeline, regardless of cadence.
 from __future__ import annotations
 
 import csv
-import html
 import json
 import math
 import os
@@ -31,7 +30,7 @@ HERE = Path(__file__).resolve().parent
 STATUS_PATH = HERE / "latest_status.json"
 HISTORY_PATH = HERE / "hourly_history.csv"
 REPORT_PATH = HERE / "GPU_PROGRESS_REPORT.md"
-SNAPSHOT_GALLERY_DIR = HERE / "snapshot_gallery"
+DISEASE_COMPLETION_DIR = HERE / "disease_completion"
 PROGRESS_GIF_PATH = HERE / "progress_animation.gif"
 PROGRESS_SVG_PATH = HERE / "progress_animation.svg"
 DIAGRAM_SVG_PATH = HERE / "cell_interaction_diagram.svg"
@@ -456,137 +455,64 @@ def markdown_table(headers: Iterable[str], rows: Iterable[Iterable[str]]) -> str
     return "\n".join([header_row, separator, *body])
 
 
-def progress_blocks(percent: float, width: int = 12) -> str:
-    filled = max(0, min(width, int(round((percent / 100.0) * width))))
-    return "█" * filled + "░" * (width - filled)
-
-
-def snapshot_slug(timestamp: str) -> str:
-    return datetime.fromisoformat(timestamp).strftime("%Y%m%dT%H%M%S%z")
-
-
-def snapshot_path(row: dict[str, Any]) -> Path:
-    return SNAPSHOT_GALLERY_DIR / f"snapshot_{snapshot_slug(row['timestamp'])}.svg"
-
-
-def render_snapshot_thumbnail_svg(row: dict[str, Any], total_cells: int, output: Path) -> None:
-    cells, percent = overall_progress_from_history_row(row, total_cells)
-    lusc = int(row["lusc_cells"])
-    luad = int(row["luad_cells"])
-    normal = int(row["normal_cells"])
-    source_total = max(1, lusc + luad + normal)
-    total_shards = max(1, int(row["completed_shards"]))
-    active = "RUNNING" if row["run_active"] else "IDLE"
-    stamp = html.escape(datetime.fromisoformat(row["timestamp"]).strftime("%Y-%m-%d %H:%M"))
-    timestamp = html.escape(row["timestamp"])
-    title = (
-        f"Snapshot {timestamp} | {percent:.2f}% complete | "
-        f"{cells:,} cells | {active}"
-    )
-    r = 36
-    circumference = 2 * math.pi * r
-    dash = max(0.0, min(circumference, circumference * percent / 100.0))
-
-    def source_badge(x: int, y: int, label: str, value: int, total: int, fill: str, pale: str) -> str:
-        pct = 100.0 * value / total if total else 0.0
-        return f"""<g transform="translate({x} {y})">
-      <rect x="0" y="0" width="122" height="30" rx="10" fill="{pale}" stroke="#d8e3ea"/>
-      <circle cx="17" cy="15" r="8" fill="{fill}"/>
-      <text x="32" y="13" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#24313d">{label}</text>
-      <text x="32" y="24" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#51606d">{value:,} / {total:,} ({pct:.1f}%)</text>
-    </g>"""
-
-    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="260" height="180" viewBox="0 0 260 180" role="img" aria-labelledby="title desc">
-  <title id="title">{title}</title>
-  <desc id="desc">A compact single-cell diagram for the {timestamp} snapshot, showing overall job progress and NSCLC pathology state.</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#f7fbf9"/>
-    </linearGradient>
-    <linearGradient id="cell" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#e7f9ef"/>
-      <stop offset="1" stop-color="#d7f2e3"/>
-    </linearGradient>
-    <linearGradient id="progress" x1="0" x2="1">
-      <stop offset="0" stop-color="#20d878"/>
-      <stop offset="1" stop-color="#0ea55b"/>
-    </linearGradient>
-  </defs>
-  <rect x="0" y="0" width="260" height="180" rx="16" fill="url(#bg)" stroke="#ceddde"/>
-  <text x="14" y="20" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#365368">{stamp}</text>
-  <text x="14" y="34" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#607381">{cells:,} cells · {percent:.2f}% · {active}</text>
-  <g transform="translate(68 88)">
-    <circle r="41" fill="none" stroke="#dce7eb" stroke-width="10"/>
-    <circle r="41" fill="none" stroke="url(#progress)" stroke-width="10" stroke-linecap="round" transform="rotate(-90)" stroke-dasharray="{dash:.2f} {circumference - dash:.2f}"/>
-    <circle r="31" fill="url(#cell)" stroke="#2bb56f" stroke-width="2"/>
-    <circle cx="-9" cy="-6" r="10" fill="#9edcb6"/>
-    <circle cx="11" cy="8" r="7" fill="#73c898"/>
-    <circle cx="0" cy="-15" r="4" fill="#ffffff"/>
-    <circle cx="17" cy="-11" r="2.5" fill="#ffffff" opacity=".85"/>
-    <circle cx="-16" cy="13" r="2.5" fill="#ffffff" opacity=".85"/>
-    <text x="0" y="50" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#2c5a3f">job cell</text>
+def render_disease_completion_svg(source: SourceProgress, output: Path) -> None:
+    colors = {
+        "lusc": ("#7c3aed", "#f3e8ff"),
+        "luad": ("#2563eb", "#eaf2ff"),
+        "normal": ("#059669", "#e8f8f2"),
+    }
+    accent, pale = colors[source.name]
+    label = SOURCE_LABELS[source.name]
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="360" height="190" viewBox="0 0 360 190" role="img" aria-labelledby="title desc">
+  <title id="title">{label} perturbation complete: {source.completed_cells:,} of {source.total_cells:,} cells</title>
+  <desc id="desc">Final disease completion diagram with exact cell, shard, and deletion counts.</desc>
+  <rect width="360" height="190" rx="18" fill="{pale}" stroke="{accent}" stroke-width="2"/>
+  <circle cx="58" cy="65" r="34" fill="#fff" stroke="{accent}" stroke-width="4"/>
+  <circle cx="48" cy="59" r="10" fill="{accent}" opacity=".55"/>
+  <circle cx="69" cy="72" r="8" fill="{accent}" opacity=".75"/>
+  <circle cx="64" cy="49" r="5" fill="{accent}" opacity=".35"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+    <text x="108" y="39" font-size="16" font-weight="700" fill="{accent}">{label} COMPLETE</text>
+    <text x="108" y="75" font-size="28" font-weight="800" fill="#17212b">{source.completed_cells:,} / {source.total_cells:,}</text>
+    <text x="108" y="98" font-size="15" font-weight="600" fill="#465563">cells · {source.percent:.2f}%</text>
+    <rect x="24" y="122" width="312" height="45" rx="10" fill="#fff" opacity=".92"/>
+    <text x="42" y="142" font-size="12" fill="#52616d">Completed shards</text>
+    <text x="42" y="158" font-size="15" font-weight="700" fill="#17212b">{source.completed_shards:,} / {source.total_shards:,}</text>
+    <text x="190" y="142" font-size="12" fill="#52616d">Marker deletions</text>
+    <text x="190" y="158" font-size="15" font-weight="700" fill="#17212b">{source.completed_deletions:,} / {source.total_deletions:,}</text>
   </g>
-  <rect x="14" y="138" width="94" height="28" rx="10" fill="#eef7ff" stroke="#d7e8fb"/>
-  <text x="20" y="150" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" font-weight="700" fill="#2c5684">Progress</text>
-  <text x="20" y="160" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#2c5684">{progress_blocks(percent, 14)}</text>
-  <text x="93" y="157" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#2c5684">{percent:.2f}%</text>
-  {source_badge(112, 56, "LUAD", luad, source_total, "#4f83c6", "#ebf3ff")}
-  {source_badge(112, 88, "LUSC", lusc, source_total, "#a36ad9", "#f4ecff")}
-  {source_badge(112, 120, "NORMAL", normal, source_total, "#43b87a", "#ecfbf3")}
-  <text x="200" y="156" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#5f7180">shards {total_shards:,}</text>
 </svg>
 """
     output.write_text(svg)
 
 
-def render_snapshot_gallery(history: list[dict[str, Any]], total_cells: int) -> list[dict[str, str]]:
-    SNAPSHOT_GALLERY_DIR.mkdir(parents=True, exist_ok=True)
-    gallery: list[dict[str, str]] = []
-    for row in history:
-        path = snapshot_path(row)
-        render_snapshot_thumbnail_svg(row, total_cells, path)
-        cells, percent = overall_progress_from_history_row(row, total_cells)
-        gallery.append(
-            {
-                "path": f"snapshot_gallery/{path.name}",
-                "timestamp": row["timestamp"],
-                "cells": f"{cells:,}",
-                "percent": f"{percent:.2f}",
-                "gpu": f"{float(row['gpu_utilization_percent']):.0f}%",
-                "temp": f"{float(row['gpu_temperature_c']):.0f} C",
-                "power": f"{float(row['gpu_power_w']):.1f} W",
-                "shards": f"{int(row['completed_shards']):,}",
-                "run_state": "RUNNING" if row["run_active"] else "IDLE",
-                "slug": snapshot_slug(row["timestamp"]),
-            }
+def disease_completion_gallery(sources: dict[str, SourceProgress]) -> str:
+    completed_sources = [
+        sources[name]
+        for name in SOURCE_ORDER
+        if sources[name].completed_cells == sources[name].total_cells
+        and sources[name].completed_shards == sources[name].total_shards
+    ]
+    if not completed_sources:
+        return ""
+
+    DISEASE_COMPLETION_DIR.mkdir(parents=True, exist_ok=True)
+    cells: list[str] = []
+    for source in completed_sources:
+        filename = f"{source.name}_complete.svg"
+        render_disease_completion_svg(source, DISEASE_COMPLETION_DIR / filename)
+        label = SOURCE_LABELS[source.name]
+        cells.append(
+            '<td align="center" valign="top">'
+            f'<img src="disease_completion/{filename}" alt="{label} perturbation complete" width="360"/>'
+            "</td>"
         )
-    return gallery
-
-
-def snapshot_gallery(gallery: list[dict[str, str]], columns: int = 3, limit: int = 6) -> str:
-    recent = list(reversed(gallery[-limit:]))
-    if not recent:
-        return "_No snapshot history available._"
-
-    rows: list[str] = []
-    for start in range(0, len(recent), columns):
-        chunk = recent[start : start + columns]
-        cells = []
-        for item in chunk:
-            cells.append(
-                "<td align=\"center\" valign=\"top\">"
-                f"<img src=\"{item['path']}\" alt=\"Snapshot {html.escape(item['timestamp'])}\" width=\"260\"/>"
-                "<br/>"
-                f"<sub>{html.escape(item['timestamp'])} · {item['percent']}% · {item['cells']} cells</sub>"
-                "</td>"
-            )
-        while len(cells) < columns:
-            cells.append("<td></td>")
-        rows.append("<tr>" + "".join(cells) + "</tr>")
-
-    header = "".join("<th align=\"center\">Single-cell snapshot</th>" for _ in range(columns))
-    return f"<table><thead><tr>{header}</tr></thead><tbody>{''.join(rows)}</tbody></table>"
+    return (
+        "\n\n## Disease completion diagrams\n\n"
+        "One final diagram is appended for each source after its perturbation "
+        "screen completes. Cell totals are shown explicitly.\n\n"
+        "<table><tbody><tr>" + "".join(cells) + "</tr></tbody></table>"
+    )
 
 
 def existing_summary_entries(path: Path) -> list[str]:
@@ -627,8 +553,7 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
     summary = delta_summary(status, history, sources)
     summary_entries = update_summary_entries(status, history, sources)
     summary_log = "\n".join(summary_entries)
-    gallery_items = render_snapshot_gallery(history, total)
-    gallery = snapshot_gallery(gallery_items)
+    completion_gallery = disease_completion_gallery(sources)
 
     rows = [
         ("Generated", generated_at),
@@ -704,9 +629,8 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
 
 > **30-minute report job:** This report is generated from `latest_status.json`
 > and `hourly_history.csv` on each run. Every snapshot includes a short delta
-> summary, and the gallery below shows the recent single-cell snapshots. The
-> thumbnails are orientation aids only; they are not measured ligand-receptor
-> or pathology results.
+> summary. A single final diagram is appended for each disease source when its
+> perturbation screen completes.
 
 ![Single-cell-inspired interaction sketch](cell_interaction_diagram.svg)
 
@@ -739,13 +663,6 @@ Result-row counts confirm artifact generation only; they do not establish
 biological significance. Gene rankings should be interpreted only after all
 six comparisons complete and coverage, FDR, and donor-consistency checks pass.
 
-## Snapshot gallery
-
-Each thumbnail is a single-cell diagram that encodes overall progress and the
-LUAD, LUSC, and NORMAL pathology balance at that snapshot.
-
-{gallery}
-
 ## Monitoring history
 
 ![GPU utilization, temperature, power, and memory over time](gpu_statistics.png)
@@ -761,8 +678,9 @@ The history table below shows the newest samples first.
 - Scheduled entrypoint: `current_workflow/monitoring/refresh_live_report.sh`
 - Render entrypoint: `current_workflow/monitoring/generate_progress_report.py`
 - Statistics source: `{STATS_DIR}` (override with `PERTURBATION_STATS_DIR`)
-- Output files: `GPU_PROGRESS_REPORT.md`, `progress_animation.gif`, `progress_animation.svg`, `cell_interaction_diagram.svg`, and `snapshot_gallery/*.svg`
+- Output files: `GPU_PROGRESS_REPORT.md`, `progress_animation.gif`, `progress_animation.svg`, `cell_interaction_diagram.svg`, and `disease_completion/*.svg`
 - Cadence: 30 minutes
+{completion_gallery}
 """
 
 
