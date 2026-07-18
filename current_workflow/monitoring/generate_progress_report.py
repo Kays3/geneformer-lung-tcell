@@ -209,14 +209,18 @@ def _round_rect(draw: ImageDraw.ImageDraw, box: tuple[float, float, float, float
 def render_progress_gif(status: dict[str, Any], output: Path) -> None:
     completed, total, percent = overall_progress_from_status(status)
     base_width = 812 * percent / 100.0
+    handle_left = 47
+    handle_width = 34
+    blade_left = handle_left + handle_width + 8
+    blade_track = 812 - handle_width - 8
     frames: list[Image.Image] = []
     title_font = _font(22, bold=True)
     body_font = _font(16)
 
     for frame_index in range(18):
-        pulse = 10.0 * (1.0 + math.sin((frame_index / 18.0) * 2.0 * math.pi))
-        width = min(812.0, base_width + pulse)
-        tip_x = 47.0 + width
+        pulse = 8.0 * (1.0 + math.sin((frame_index / 18.0) * 2.0 * math.pi))
+        width = min(float(blade_track), base_width + pulse)
+        tip_x = blade_left + width
 
         canvas = Image.new("RGBA", (900, 150), (255, 255, 255, 255))
         draw = ImageDraw.Draw(canvas)
@@ -226,18 +230,18 @@ def render_progress_gif(status: dict[str, Any], output: Path) -> None:
 
         glow = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
         glow_draw = ImageDraw.Draw(glow)
-        glow_draw.rounded_rectangle((47, 55, tip_x, 83), 14, fill=(120, 255, 180, 120))
-        glow_draw.rounded_rectangle((47, 58, tip_x, 80), 12, fill=(32, 216, 120, 140))
+        glow_draw.rounded_rectangle((blade_left, 55, tip_x, 83), 14, fill=(120, 255, 180, 120))
+        glow_draw.rounded_rectangle((blade_left, 58, tip_x, 80), 12, fill=(32, 216, 120, 140))
         glow = glow.filter(ImageFilter.GaussianBlur(5))
         canvas = Image.alpha_composite(canvas, glow)
         draw = ImageDraw.Draw(canvas)
 
-        core_width = max(0.0, width - 18.0)
-        _round_rect(draw, (47, 55, 47 + core_width, 83), 14, (32, 216, 120, 255))
-        if core_width > 4:
-            _round_rect(draw, (49, 57, 47 + core_width - 2, 81), 12, (185, 255, 213, 190))
-        if core_width > 14:
-            _round_rect(draw, (52, 59, 47 + core_width - 8, 79), 10, (22, 184, 102, 255))
+        if width > 0:
+            _round_rect(draw, (blade_left, 55, tip_x, 83), 14, (32, 216, 120, 255))
+            if width > 4:
+                _round_rect(draw, (blade_left + 2, 57, tip_x - 2, 81), 12, (185, 255, 213, 190))
+            if width > 14:
+                _round_rect(draw, (blade_left + 5, 59, tip_x - 8, 79), 10, (22, 184, 102, 255))
 
         tip_glow = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
         tip_draw = ImageDraw.Draw(tip_glow)
@@ -246,8 +250,11 @@ def render_progress_gif(status: dict[str, Any], output: Path) -> None:
         canvas = Image.alpha_composite(canvas, tip_glow)
         draw = ImageDraw.Draw(canvas)
 
-        handle_x = max(47.0, tip_x - 16.0)
-        _round_rect(draw, (handle_x - 10, 60, handle_x + 6, 78), 4, (12, 143, 78, 230))
+        _round_rect(draw, (handle_left, 58, handle_left + handle_width, 80), 5, (37, 44, 52, 255), (118, 129, 137, 255), 1)
+        _round_rect(draw, (handle_left + 4, 60, handle_left + 9, 78), 2, (219, 227, 233, 255))
+        _round_rect(draw, (handle_left + 11, 59, handle_left + 24, 79), 3, (57, 68, 77, 255))
+        _round_rect(draw, (handle_left + 20, 61, handle_left + 27, 77), 2, (156, 167, 176, 255))
+        draw.line((handle_left + handle_width + 4, 69, blade_left + 4, 69), fill=(255, 255, 255, 150), width=2)
 
         draw.text(
             (44, 111),
@@ -273,6 +280,12 @@ def render_progress_svg(status: dict[str, Any], output: Path) -> None:
     completed, total, percent = overall_progress_from_status(status)
     fill_width = 812 * percent / 100.0
     animated_width = min(812, fill_width + 18)
+    handle_left = 47
+    handle_width = 34
+    blade_left = handle_left + handle_width + 8
+    blade_track = 812 - handle_width - 8
+    blade_width = max(0.0, min(blade_track, fill_width - handle_width - 4))
+    animated_blade_width = max(0.0, min(blade_track, animated_width - handle_width - 4))
     label = (
         f"{completed:,} / {total:,} cells  |  {percent:.2f}%  |  "
         f"{'RUNNING' if status['run_active'] else 'IDLE'}"
@@ -288,11 +301,15 @@ def render_progress_svg(status: dict[str, Any], output: Path) -> None:
   <rect width="900" height="150" fill="#fff"/>
   <text x="44" y="31" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#273746">Held-out all-gene deletion progress</text>
   <rect x="44" y="52" width="812" height="34" rx="17" fill="url(#track)" stroke="#b6c8d2"/>
-  <rect x="47" y="55" width="{fill_width:.1f}" height="28" rx="14" fill="url(#blade)" filter="url(#glow)">
-    <animate attributeName="width" values="{fill_width:.1f};{animated_width:.1f};{fill_width:.1f}" dur="2.4s" repeatCount="indefinite"/>
+  <rect x="{blade_left}" y="55" width="{blade_width:.1f}" height="28" rx="14" fill="url(#blade)" filter="url(#glow)">
+    <animate attributeName="width" values="{blade_width:.1f};{animated_blade_width:.1f};{blade_width:.1f}" dur="2.4s" repeatCount="indefinite"/>
   </rect>
-  <circle cx="{47 + fill_width:.1f}" cy="69" r="8" fill="#f2fff7" filter="url(#glow)"><animate attributeName="cx" values="{47 + fill_width:.1f};{47 + animated_width:.1f};{47 + fill_width:.1f}" dur="2.4s" repeatCount="indefinite"/></circle>
-  <rect x="{37 + fill_width:.1f}" y="60" width="16" height="18" rx="4" fill="#0c8f4e" opacity=".9"><animate attributeName="x" values="{37 + fill_width:.1f};{37 + animated_width:.1f};{37 + fill_width:.1f}" dur="2.4s" repeatCount="indefinite"/></rect>
+  <circle cx="{blade_left + blade_width:.1f}" cy="69" r="8" fill="#f2fff7" filter="url(#glow)"><animate attributeName="cx" values="{blade_left + blade_width:.1f};{blade_left + animated_blade_width:.1f};{blade_left + blade_width:.1f}" dur="2.4s" repeatCount="indefinite"/></circle>
+  <rect x="{handle_left}" y="58" width="{handle_width}" height="22" rx="5" fill="#252c34" stroke="#7d8790" stroke-width="1"/>
+  <rect x="{handle_left + 4}" y="60" width="5" height="18" rx="2" fill="#dfe6ea"/>
+  <rect x="{handle_left + 11}" y="59" width="13" height="20" rx="3" fill="#3f4a55"/>
+  <rect x="{handle_left + 20}" y="61" width="7" height="16" rx="2" fill="#a7b0b8"/>
+  <rect x="{handle_left + handle_width + 4}" y="67" width="4" height="4" rx="2" fill="#ffffff" opacity=".75"/>
   <text x="44" y="119" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="16" fill="#425b70">{label}</text>
 </svg>
 """
