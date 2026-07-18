@@ -18,6 +18,7 @@ import csv
 import html
 import json
 import math
+import os
 from datetime import datetime
 from dataclasses import dataclass
 from pathlib import Path
@@ -34,6 +35,7 @@ SNAPSHOT_GALLERY_DIR = HERE / "snapshot_gallery"
 PROGRESS_GIF_PATH = HERE / "progress_animation.gif"
 PROGRESS_SVG_PATH = HERE / "progress_animation.svg"
 DIAGRAM_SVG_PATH = HERE / "cell_interaction_diagram.svg"
+STATS_DIR = Path(os.environ.get("PERTURBATION_STATS_DIR", HERE.parent / "stats"))
 
 SOURCE_ORDER = ("lusc", "luad", "normal")
 SOURCE_LABELS = {
@@ -41,6 +43,15 @@ SOURCE_LABELS = {
     "luad": "LUAD",
     "normal": "NORMAL",
 }
+STATISTICAL_COMPARISONS = (
+    ("lusc", "normal"),
+    ("lusc", "luad"),
+    ("luad", "normal"),
+    ("luad", "lusc"),
+    ("normal", "luad"),
+    ("normal", "lusc"),
+)
+
 
 
 @dataclass(frozen=True)
@@ -57,6 +68,24 @@ class SourceProgress:
     @property
     def percent(self) -> float:
         return 100.0 * self.completed_cells / self.total_cells if self.total_cells else 0.0
+
+
+@dataclass(frozen=True)
+class StatisticalComparison:
+    source: str
+    target: str
+    state: str
+    result_rows: int | None
+    updated_at: str | None
+    filename: str
+
+    @property
+    def label(self) -> str:
+        return f"{SOURCE_LABELS[self.source]} → {SOURCE_LABELS[self.target]}"
+
+    @property
+    def complete(self) -> bool:
+        return self.state == "COMPLETE"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -119,6 +148,81 @@ def load_sources(status: dict[str, Any]) -> dict[str, SourceProgress]:
             raw_files=int(source["raw_files"]),
         )
     return result
+
+
+def csv_result_rows(path: Path) -> int:
+    with path.open(newline="") as handle:
+        reader = csv.reader(handle)
+        next(reader, None)
+        return sum(1 for row in reader if row)
+
+
+def load_statistical_comparisons(
+    status: dict[str, Any], sources: dict[str, SourceProgress]
+) -> list[StatisticalComparison]:
+    """Inspect final comparison artifacts without interpreting their biology."""
+    perturbation_complete = all(
+        source.completed_shards == source.total_shards for source in sources.values()
+    )
+    comparisons: list[StatisticalComparison] = []
+    for source, target in STATISTICAL_COMPARISONS:
+        filename = f"heldout_allgene_{source}_to_{target}.csv"
+        path = STATS_DIR / filename
+        if path.is_file():
+            try:
+                result_rows = csv_result_rows(path)
+                state = "COMPLETE" if result_rows > 0 else "EMPTY OUTPUT"
+            except (OSError, csv.Error):
+                result_rows = None
+                state = "UNREADABLE OUTPUT"
+            updated_at = datetime.fromtimestamp(
+                path.stat().st_mtime
+            ).astimezone().isoformat(timespec="seconds")
+        else:
+            result_rows = None
+            updated_at = None
+            if perturbation_complete:
+                state = "QUEUED / RUNNING" if status["run_active"] else "PENDING"
+            else:
+                state = "WAITING FOR PERTURBATION"
+        comparisons.append(
+            StatisticalComparison(
+                source=source,
+                target=target,
+                state=state,
+                result_rows=result_rows,
+                updated_at=updated_at,
+                filename=filename,
+            )
+        )
+    return comparisons
+
+
+def statistical_comparison_summary(
+    comparisons: list[StatisticalComparison], sources: dict[str, SourceProgress]
+) -> str:
+    complete = sum(comparison.complete for comparison in comparisons)
+    total = len(comparisons)
+    perturbation_complete = all(
+        source.completed_shards == source.total_shards for source in sources.values()
+    )
+    if complete == total:
+        return (
+            f"All {total} directional comparisons have generated non-empty result "
+            "tables. Statistical outputs are available for review."
+        )
+    if not perturbation_complete:
+        completed_shards = sum(source.completed_shards for source in sources.values())
+        total_shards = sum(source.total_shards for source in sources.values())
+        return (
+            f"{complete} / {total} comparisons are complete. Final aggregation waits "
+            f"for the deletion screen, currently {completed_shards:,} / "
+            f"{total_shards:,} shards."
+        )
+    return (
+        f"{complete} / {total} comparisons are complete. The remaining comparison "
+        "jobs are queued or running."
+    )
 
 
 def delta_summary(
@@ -381,14 +485,12 @@ def render_snapshot_thumbnail_svg(row: dict[str, Any], total_cells: int, output:
 
     def source_badge(x: int, y: int, label: str, value: int, total: int, fill: str, pale: str) -> str:
         pct = 100.0 * value / total if total else 0.0
-        return f"""
-    <g transform="translate({x} {y})">
+        return f"""<g transform="translate({x} {y})">
       <rect x="0" y="0" width="122" height="30" rx="10" fill="{pale}" stroke="#d8e3ea"/>
       <circle cx="17" cy="15" r="8" fill="{fill}"/>
       <text x="32" y="13" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#24313d">{label}</text>
       <text x="32" y="24" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#51606d">{value:,} / {total:,} ({pct:.1f}%)</text>
-    </g>
-"""
+    </g>"""
 
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="260" height="180" viewBox="0 0 260 180" role="img" aria-labelledby="title desc">
   <title id="title">{title}</title>
@@ -485,6 +587,7 @@ def snapshot_gallery(gallery: list[dict[str, str]], columns: int = 3, limit: int
 
 def build_report(status: dict[str, Any], history: list[dict[str, Any]], generated_at: str) -> str:
     sources = load_sources(status)
+    comparisons = load_statistical_comparisons(status, sources)
     completed, total, percent = overall_progress_from_status(status)
     summary = delta_summary(status, history, sources)
     gallery_items = render_snapshot_gallery(history, total)
@@ -521,6 +624,23 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
         ("Source", "Cells", "Shards", "Raw files", "Marker deletions"),
         source_rows,
     )
+
+    comparison_rows = []
+    for comparison in comparisons:
+        comparison_rows.append(
+            (
+                comparison.label,
+                comparison.state,
+                f"{comparison.result_rows:,}" if comparison.result_rows is not None else "—",
+                comparison.updated_at or "—",
+                f"`{comparison.filename}`",
+            )
+        )
+    comparison_table = markdown_table(
+        ("Comparison", "State", "Result rows", "Updated", "Output"),
+        comparison_rows,
+    )
+    comparison_summary = statistical_comparison_summary(comparisons, sources)
 
     history_rows = []
     for row in reversed(history[-8:]):
@@ -563,6 +683,16 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
 
 {source_table}
 
+## Final statistical comparisons
+
+**{comparison_summary}**
+
+{comparison_table}
+
+Result-row counts confirm artifact generation only; they do not establish
+biological significance. Gene rankings should be interpreted only after all
+six comparisons complete and coverage, FDR, and donor-consistency checks pass.
+
 ## Snapshot gallery
 
 Each thumbnail is a single-cell diagram that encodes overall progress and the
@@ -583,6 +713,7 @@ The history table below shows the newest samples first.
 ## Job notes
 
 - Job entrypoint: `current_workflow/monitoring/generate_progress_report.py`
+- Statistics source: `{STATS_DIR}` (override with `PERTURBATION_STATS_DIR`)
 - Output files: `GPU_PROGRESS_REPORT.md`, `progress_animation.gif`, `progress_animation.svg`, `cell_interaction_diagram.svg`, and `snapshot_gallery/*.svg`
 - Cadence: 15 minutes
 """
