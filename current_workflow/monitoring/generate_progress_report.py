@@ -345,6 +345,38 @@ def markdown_table(headers: Iterable[str], rows: Iterable[Iterable[str]]) -> str
     return "\n".join([header_row, separator, *body])
 
 
+def progress_blocks(percent: float, width: int = 12) -> str:
+    filled = max(0, min(width, int(round((percent / 100.0) * width))))
+    return "█" * filled + "░" * (width - filled)
+
+
+def format_snapshot_card(row: dict[str, Any], total_cells: int) -> str:
+    cells, percent = overall_progress_from_history_row(row, total_cells)
+    return (
+        f"**{row['timestamp']}**<br/>"
+        f"`{progress_blocks(percent)}` {percent:.2f}%<br/>"
+        f"Cells {cells:,} · GPU {row['gpu_utilization_percent']:.0f}% · "
+        f"{row['gpu_temperature_c']:.0f} C · {row['gpu_power_w']:.1f} W<br/>"
+        f"Shards {row['completed_shards']:,}"
+    )
+
+
+def snapshot_gallery(history: list[dict[str, Any]], total_cells: int, columns: int = 3, limit: int = 6) -> str:
+    recent = list(reversed(history[-limit:]))
+    if not recent:
+        return "_No snapshot history available._"
+
+    headers = ["Snapshot"] * columns
+    rows: list[list[str]] = []
+    for start in range(0, len(recent), columns):
+        chunk = recent[start : start + columns]
+        row = [format_snapshot_card(item, total_cells) for item in chunk]
+        if len(row) < columns:
+            row.extend([""] * (columns - len(row)))
+        rows.append(row)
+    return markdown_table(headers, rows)
+
+
 def build_report(status: dict[str, Any], history: list[dict[str, Any]], generated_at: str) -> str:
     sources = load_sources(status)
     completed, total, percent = overall_progress_from_status(status)
@@ -381,6 +413,8 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
         ("Source", "Cells", "Shards", "Raw files", "Marker deletions"),
         source_rows,
     )
+
+    gallery_table = snapshot_gallery(history, total)
 
     history_rows = []
     for row in reversed(history[-8:]):
@@ -421,6 +455,10 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
 ### Progress by source
 
 {source_table}
+
+## Snapshot gallery
+
+{gallery_table}
 
 ## Monitoring history
 

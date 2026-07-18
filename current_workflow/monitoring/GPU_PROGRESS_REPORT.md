@@ -35,6 +35,13 @@
 | LUAD | 1,411 / 1,411 (100.00%) | 57 / 57 | 2,822 | 1,150,097 / 1,150,097 |
 | NORMAL | 201 / 1,408 (14.28%) | 8 / 57 | 404 | 204,266 / 1,439,366 |
 
+## Snapshot gallery
+
+| Snapshot | Snapshot | Snapshot |
+| --- | --- | --- |
+| **2026-07-18T12:39:23+09:00**<br/>`████████░░░░` 64.28%<br/>Cells 2,172 · GPU 96% · 84 C · 88.8 W<br/>Shards 88 | **2026-07-18T11:39:20+09:00**<br/>`███████░░░░░` 61.35%<br/>Cells 2,073 · GPU 96% · 81 C · 90.1 W<br/>Shards 84 | **2026-07-18T10:39:17+09:00**<br/>`███████░░░░░` 58.42%<br/>Cells 1,974 · GPU 96% · 85 C · 89.0 W<br/>Shards 80 |
+| **2026-07-18T09:39:14+09:00**<br/>`███████░░░░░` 54.72%<br/>Cells 1,849 · GPU 96% · 78 C · 89.6 W<br/>Shards 74 | **2026-07-18T08:39:11+09:00**<br/>`██████░░░░░░` 50.81%<br/>Cells 1,717 · GPU 91% · 80 C · 90.1 W<br/>Shards 69 | **2026-07-18T07:39:07+09:00**<br/>`██████░░░░░░` 46.67%<br/>Cells 1,577 · GPU 0% · 62 C · 14.9 W<br/>Shards 63 |
+
 ## Monitoring history
 
 ![GPU utilization, temperature, power, and memory over time](gpu_statistics.png)
