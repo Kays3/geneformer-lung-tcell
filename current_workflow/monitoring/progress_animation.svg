@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="150" viewBox="0 0 900 150" role="img" aria-labelledby="title desc">
+  <title id="title">Held-out all-gene deletion progress</title>
+  <desc id="desc">A green lightsaber-like progress bar showing 64.28 percent completion.</desc>
+  <defs>
+    <linearGradient id="track" x1="0" x2="1"><stop stop-color="#e8eef2"/><stop offset="1" stop-color="#dce6ea"/></linearGradient>
+    <linearGradient id="blade" x1="0" x2="1"><stop stop-color="#20d878"/><stop offset=".5" stop-color="#b9ffd5"/><stop offset="1" stop-color="#16b866"/></linearGradient>
+    <filter id="glow" x="-20%" y="-100%" width="140%" height="300%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="900" height="150" fill="#fff"/>
+  <text x="44" y="31" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" fill="#273746">Held-out all-gene deletion progress</text>
+  <rect x="44" y="52" width="812" height="34" rx="17" fill="url(#track)" stroke="#b6c8d2"/>
+  <rect x="47" y="55" width="521.9" height="28" rx="14" fill="url(#blade)" filter="url(#glow)">
+    <animate attributeName="width" values="521.9;539.9;521.9" dur="2.4s" repeatCount="indefinite"/>
+  </rect>
+  <circle cx="568.9" cy="69" r="8" fill="#f2fff7" filter="url(#glow)"><animate attributeName="cx" values="568.9;586.9;568.9" dur="2.4s" repeatCount="indefinite"/></circle>
+  <rect x="558.9" y="60" width="16" height="18" rx="4" fill="#0c8f4e" opacity=".9"><animate attributeName="x" values="558.9;576.9;558.9" dur="2.4s" repeatCount="indefinite"/></rect>
+  <text x="44" y="119" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="16" fill="#425b70">2,172 / 3,379 cells  |  64.28%  |  RUNNING</text>
+</svg>

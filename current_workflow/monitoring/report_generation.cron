@@ -1,0 +1,1 @@
+*/15 * * * * cd /home/petadimensionlab/workspace/geneformer-nsclc-monitor/current_workflow/monitoring && ./report_generation_job.sh >> report_generation.log 2>&1
