@@ -15,6 +15,7 @@ Newest refreshes are appended at the top and retained for the most recent
 48 runs.
 
 <!-- JOB_RUN_SUMMARIES_START -->
+- **2026-07-19T03:00:01+09:00** — IDLE; 3,379 / 3,379 cells (100.00%). The run advanced by 0 cells and 0 shards, lifting completion from 100.00% to 100.00%. LUSC remained complete; LUAD remained complete; NORMAL remained complete; GPU utilization stayed at 1%.
 - **2026-07-19T02:30:01+09:00** — RUNNING; 3,379 / 3,379 cells (100.00%). The run advanced by 22 cells and 2 shards, lifting completion from 99.35% to 100.00%. LUSC remained complete; LUAD remained complete; NORMAL finished; GPU utilization fell from 92% to 1%.
 - **2026-07-19T02:00:01+09:00** — RUNNING; 3,357 / 3,379 cells (99.35%). The run advanced by 50 cells and 2 shards, lifting completion from 97.87% to 99.35%. LUSC remained complete; LUAD remained complete; NORMAL moved from 1,336 to 1,386 cells; GPU utilization stayed at 92%.
 - **2026-07-19T01:30:01+09:00** — RUNNING; 3,307 / 3,379 cells (97.87%). The run advanced by 43 cells and 2 shards, lifting completion from 96.60% to 97.87%. LUSC remained complete; LUAD remained complete; NORMAL moved from 1,293 to 1,336 cells; GPU utilization fell from 96% to 92%.
@@ -40,20 +41,20 @@ Newest refreshes are appended at the top and retained for the most recent
 
 ## Current snapshot
 
-**What changed since the prior report:** The run advanced by 22 cells and 2 shards, lifting completion from 99.35% to 100.00%. LUSC remained complete; LUAD remained complete; NORMAL finished; GPU utilization fell from 92% to 1%.
+**What changed since the prior report:** The run advanced by 0 cells and 0 shards, lifting completion from 100.00% to 100.00%. LUSC remained complete; LUAD remained complete; NORMAL remained complete; GPU utilization stayed at 1%.
 
 | Metric | Value |
 | --- | --- |
-| Generated | 2026-07-19T02:30:01+09:00 |
-| Run status | RUNNING |
+| Generated | 2026-07-19T03:00:01+09:00 |
+| Run status | IDLE |
 | Overall cell progress | 3,379 / 3,379 (100.00%) |
 | GPU | NVIDIA GB10 |
 | GPU utilization | 1% |
-| GPU temperature | 49 C |
-| GPU power | 12.8 W |
-| Perturbation GPU memory | 701 MiB |
-| System memory used | 39.5 GiB |
-| System memory available | 80.2 GiB |
+| GPU temperature | 46 C |
+| GPU power | 12.5 W |
+| Perturbation GPU memory | 0 MiB |
+| System memory used | 37.7 GiB |
+| System memory available | 82.0 GiB |
 | Swap used | 0.0 GiB |
 
 ### Progress by source
@@ -66,20 +67,38 @@ Newest refreshes are appended at the top and retained for the most recent
 
 ## Final statistical comparisons
 
-**3 / 6 comparisons are complete. The remaining comparison jobs are queued or running.**
+**All 6 directional comparisons have generated non-empty result tables. Statistical outputs are available for review.**
 
 | Comparison | State | Result rows | Updated | Output |
 | --- | --- | --- | --- | --- |
 | LUSC → NORMAL | COMPLETE | 11,242 | 2026-07-19T02:22:21+09:00 | `heldout_allgene_lusc_to_normal.csv` |
 | LUSC → LUAD | COMPLETE | 11,242 | 2026-07-19T02:17:15+09:00 | `heldout_allgene_lusc_to_luad.csv` |
-| LUAD → NORMAL | QUEUED / RUNNING | — | — | `heldout_allgene_luad_to_normal.csv` |
+| LUAD → NORMAL | COMPLETE | 13,458 | 2026-07-19T02:34:50+09:00 | `heldout_allgene_luad_to_normal.csv` |
 | LUAD → LUSC | COMPLETE | 13,458 | 2026-07-19T02:28:35+09:00 | `heldout_allgene_luad_to_lusc.csv` |
-| NORMAL → LUAD | QUEUED / RUNNING | — | — | `heldout_allgene_normal_to_luad.csv` |
-| NORMAL → LUSC | QUEUED / RUNNING | — | — | `heldout_allgene_normal_to_lusc.csv` |
+| NORMAL → LUAD | COMPLETE | 14,923 | 2026-07-19T02:41:46+09:00 | `heldout_allgene_normal_to_luad.csv` |
+| NORMAL → LUSC | COMPLETE | 14,923 | 2026-07-19T02:48:43+09:00 | `heldout_allgene_normal_to_lusc.csv` |
 
 Result-row counts confirm artifact generation only; they do not establish
 biological significance. Gene rankings should be interpreted only after all
 six comparisons complete and coverage, FDR, and donor-consistency checks pass.
+
+
+## Perturbation statistics and biological interpretation
+
+The completed analysis applies a conservative ranking filter of
+`Goal_end_FDR < 0.05`, positive goal shift, and at least 25 detections. Across
+the six comparisons, 1,604 gene-comparison tests pass all three criteria.
+Translation/ribosome and immune/inflammatory themes recur, with oxidative
+phosphorylation strongest for LUAD → LUSC. Lung epithelial, alveolar, stromal,
+and vascular transcripts among the leading T-cell shifts create a material
+ambient-RNA/doublet risk; findings are therefore hypothesis-generating rather
+than causal.
+
+- [Portable technical report](../perturbation_statistics/perturbation_statistics_report.html)
+- [Executed analysis notebook](../perturbation_statistics/perturbation_statistics.ipynb)
+- [Goal-shift plots](../perturbation_statistics/figures/goal_shift_top_genes.png)
+- [Biological pathway plot](../perturbation_statistics/figures/pathway_enrichment.png)
+
 
 ## Monitoring history
 
@@ -91,6 +110,7 @@ The history table below shows the newest samples first.
 
 | Timestamp | Cells | Progress | GPU util | Temp | Power | Shards |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-07-19T03:00:01+09:00 | 3,379 | 100.00% | 1% | 46 C | 12.5 W | 137 |
 | 2026-07-19T02:30:01+09:00 | 3,379 | 100.00% | 1% | 49 C | 12.8 W | 137 |
 | 2026-07-19T02:00:01+09:00 | 3,357 | 99.35% | 92% | 79 C | 84.6 W | 135 |
 | 2026-07-19T01:30:01+09:00 | 3,307 | 97.87% | 92% | 78 C | 84.3 W | 133 |
@@ -98,7 +118,6 @@ The history table below shows the newest samples first.
 | 2026-07-19T00:30:01+09:00 | 3,221 | 95.32% | 96% | 77 C | 84.1 W | 130 |
 | 2026-07-19T00:00:01+09:00 | 3,166 | 93.70% | 1% | 66 C | 15.8 W | 127 |
 | 2026-07-18T23:30:01+09:00 | 3,124 | 92.45% | 96% | 81 C | 82.4 W | 126 |
-| 2026-07-18T23:00:01+09:00 | 3,075 | 91.00% | 1% | 67 C | 24.5 W | 124 |
 
 ## Job notes
 

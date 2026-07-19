@@ -107,7 +107,7 @@ def read_history(path: Path) -> list[dict[str, Any]]:
                 "gpu_utilization_percent": float(row["gpu_utilization_percent"]),
                 "gpu_temperature_c": float(row["gpu_temperature_c"]),
                 "gpu_power_w": float(row["gpu_power_w"]),
-                "gpu_process_memory_mib": float(row["gpu_process_memory_mib"]),
+                "gpu_process_memory_mib": float(row["gpu_process_memory_mib"] or 0),
                 "system_used_gib": float(row["system_used_gib"]),
                 "system_available_gib": float(row["system_available_gib"]),
                 "lusc_cells": int(row["lusc_cells"]),
@@ -554,6 +554,7 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
     summary_entries = update_summary_entries(status, history, sources)
     summary_log = "\n".join(summary_entries)
     completion_gallery = disease_completion_gallery(sources)
+    gpu_process = status["gpu"].get("perturbation_process") or {}
 
     rows = [
         ("Generated", generated_at),
@@ -563,7 +564,7 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
         ("GPU utilization", f"{fmt_float(status['gpu']['utilization_percent'], 0)}%"),
         ("GPU temperature", f"{fmt_float(status['gpu']['temperature_c'], 0)} C"),
         ("GPU power", f"{fmt_float(status['gpu']['power_w'], 1)} W"),
-        ("Perturbation GPU memory", f"{fmt_int(status['gpu']['perturbation_process']['memory_mib'])} MiB"),
+        ("Perturbation GPU memory", f"{fmt_int(gpu_process.get('memory_mib', 0))} MiB"),
         ("System memory used", f"{fmt_float(status['memory']['used_gib'], 1)} GiB"),
         ("System memory available", f"{fmt_float(status['memory']['available_gib'], 1)} GiB"),
         ("Swap used", f"{fmt_float(status['memory']['swap_used_gib'], 1)} GiB"),
@@ -603,6 +604,27 @@ def build_report(status: dict[str, Any], history: list[dict[str, Any]], generate
         comparison_rows,
     )
     comparison_summary = statistical_comparison_summary(comparisons, sources)
+    analysis_report = Path(__file__).resolve().parents[1] / "perturbation_statistics" / "perturbation_statistics_report.html"
+    analysis_section = ""
+    if analysis_report.exists():
+        analysis_section = """
+
+## Perturbation statistics and biological interpretation
+
+The completed analysis applies a conservative ranking filter of
+`Goal_end_FDR < 0.05`, positive goal shift, and at least 25 detections. Across
+the six comparisons, 1,604 gene-comparison tests pass all three criteria.
+Translation/ribosome and immune/inflammatory themes recur, with oxidative
+phosphorylation strongest for LUAD → LUSC. Lung epithelial, alveolar, stromal,
+and vascular transcripts among the leading T-cell shifts create a material
+ambient-RNA/doublet risk; findings are therefore hypothesis-generating rather
+than causal.
+
+- [Portable technical report](../perturbation_statistics/perturbation_statistics_report.html)
+- [Executed analysis notebook](../perturbation_statistics/perturbation_statistics.ipynb)
+- [Goal-shift plots](../perturbation_statistics/figures/goal_shift_top_genes.png)
+- [Biological pathway plot](../perturbation_statistics/figures/pathway_enrichment.png)
+"""
 
     history_rows = []
     for row in reversed(history[-8:]):
@@ -662,6 +684,7 @@ Newest refreshes are appended at the top and retained for the most recent
 Result-row counts confirm artifact generation only; they do not establish
 biological significance. Gene rankings should be interpreted only after all
 six comparisons complete and coverage, FDR, and donor-consistency checks pass.
+{analysis_section}
 
 ## Monitoring history
 

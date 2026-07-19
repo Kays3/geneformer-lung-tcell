@@ -1,0 +1,28 @@
+{
+  "stats_directory": "/home/petadimensionlab/workspace/Geneformer/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation/stats",
+  "comparison_order": [
+    "lusc_to_luad",
+    "lusc_to_normal",
+    "luad_to_lusc",
+    "luad_to_normal",
+    "normal_to_luad",
+    "normal_to_lusc"
+  ],
+  "goal_shift_filter": {
+    "goal_end_fdr_lt": 0.05,
+    "shift_to_goal_end_gt": 0,
+    "n_detections_gte": 25
+  },
+  "pathway_method": {
+    "service": "g:Profiler g:GOSt",
+    "organism": "hsapiens",
+    "sources": [
+      "REAC",
+      "KEGG",
+      "GO:BP"
+    ],
+    "domain_scope": "custom",
+    "background": "all genes tested in the corresponding source-state table",
+    "multiple_testing": "Benjamini-Hochberg FDR"
+  }
+}

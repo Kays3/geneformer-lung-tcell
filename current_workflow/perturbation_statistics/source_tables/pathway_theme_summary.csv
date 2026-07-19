@@ -1,0 +1,33 @@
+comparison,comparison_label,theme,chart_label,best_adjusted_p_value,minus_log10_p,matching_term_count,representative_source,representative_term,intersection_size
+luad_to_lusc,LUAD → LUSC,Translation / ribosome,LUAD → LUSC · Translation / ribosome,5.367150018056316e-32,31.27025626550978,21,REAC,L13a-mediated translational silencing of Ceruloplasmin expression,38
+luad_to_lusc,LUAD → LUSC,Oxidative phosphorylation,LUAD → LUSC · Oxidative phosphorylation,5.726935428906593e-14,13.242077713521496,13,KEGG,Oxidative phosphorylation,23
+luad_to_lusc,LUAD → LUSC,Immune / cytokine,LUAD → LUSC · Immune / cytokine,1.647066020677492e-06,5.783288992304885,53,GO:BP,immune system process,89
+luad_to_lusc,LUAD → LUSC,IL-17 / inflammation,LUAD → LUSC · IL-17 / inflammation,0.00011696447788900289,3.931946013460274,1,REAC,Neutrophil degranulation,26
+luad_to_lusc,LUAD → LUSC,Antigen processing,LUAD → LUSC · Antigen processing,0.002499899409951748,2.602077465960676,7,KEGG,Antigen processing and presentation,8
+luad_to_lusc,LUAD → LUSC,Cellular stress,LUAD → LUSC · Cellular stress,0.006990365500779788,2.1555001159822322,1,GO:BP,response to stress,101
+luad_to_normal,LUAD → NORMAL,Translation / ribosome,LUAD → NORMAL · Translation / ribosome,5.84141339606864e-58,57.23348205770853,32,REAC,Eukaryotic Translation Elongation,54
+luad_to_normal,LUAD → NORMAL,Immune / cytokine,LUAD → NORMAL · Immune / cytokine,1.4883815122575456e-19,18.827285733150905,128,GO:BP,immune response,108
+luad_to_normal,LUAD → NORMAL,Cellular stress,LUAD → NORMAL · Cellular stress,2.9075496234371723e-08,7.536472864389358,3,GO:BP,response to stress,142
+luad_to_normal,LUAD → NORMAL,Antigen processing,LUAD → NORMAL · Antigen processing,1.8771460419271464e-06,5.726501937961615,29,KEGG,Antigen processing and presentation,13
+luad_to_normal,LUAD → NORMAL,IL-17 / inflammation,LUAD → NORMAL · IL-17 / inflammation,0.00012728299981014707,3.89522959777347,10,GO:BP,inflammatory response,41
+lusc_to_luad,LUSC → LUAD,Translation / ribosome,LUSC → LUAD · Translation / ribosome,1.1493835812141229e-10,9.939535010994765,23,REAC,Eukaryotic Translation Elongation,15
+lusc_to_luad,LUSC → LUAD,Immune / cytokine,LUSC → LUAD · Immune / cytokine,4.2550418224363295e-07,6.371096166915691,59,GO:BP,immune response,43
+lusc_to_luad,LUSC → LUAD,Cellular stress,LUSC → LUAD · Cellular stress,0.00035580158899059245,3.4487921167121693,2,GO:BP,response to stress,58
+lusc_to_luad,LUSC → LUAD,IL-17 / inflammation,LUSC → LUAD · IL-17 / inflammation,0.0005516365944502384,3.2583469313275,11,GO:BP,positive regulation of inflammatory response,9
+lusc_to_luad,LUSC → LUAD,Antigen processing,LUSC → LUAD · Antigen processing,0.024610439697478486,1.608880626992738,1,KEGG,Antigen processing and presentation,5
+lusc_to_normal,LUSC → NORMAL,Translation / ribosome,LUSC → NORMAL · Translation / ribosome,5.001406919373142e-58,57.30090780938975,31,REAC,Peptide chain elongation,44
+lusc_to_normal,LUSC → NORMAL,Immune / cytokine,LUSC → NORMAL · Immune / cytokine,1.720927323977892e-13,12.764237469859435,106,GO:BP,immune system process,68
+lusc_to_normal,LUSC → NORMAL,Antigen processing,LUSC → NORMAL · Antigen processing,1.837904691397398e-05,4.735677013664492,30,GO:BP,antigen processing and presentation of endogenous antigen,6
+lusc_to_normal,LUSC → NORMAL,Cellular stress,LUSC → NORMAL · Cellular stress,0.0007432090095345546,3.128889034257384,2,GO:BP,response to stress,60
+lusc_to_normal,LUSC → NORMAL,IL-17 / inflammation,LUSC → NORMAL · IL-17 / inflammation,0.009501257474538796,2.022218912804509,3,REAC,Neutrophil degranulation,14
+normal_to_luad,NORMAL → LUAD,Immune / cytokine,NORMAL → LUAD · Immune / cytokine,2.7749268902725256e-11,10.556748454548325,121,REAC,Immune System,91
+normal_to_luad,NORMAL → LUAD,Cellular stress,NORMAL → LUAD · Cellular stress,7.242433163518262e-08,7.140115503973582,2,GO:BP,response to stress,127
+normal_to_luad,NORMAL → LUAD,IL-17 / inflammation,NORMAL → LUAD · IL-17 / inflammation,2.871134909686195e-07,6.541946400274057,11,GO:BP,inflammatory response,45
+normal_to_luad,NORMAL → LUAD,Translation / ribosome,NORMAL → LUAD · Translation / ribosome,3.4332330474843107e-06,5.464296715711659,19,REAC,Eukaryotic Translation Elongation,14
+normal_to_luad,NORMAL → LUAD,Antigen processing,NORMAL → LUAD · Antigen processing,0.0032678861546730116,2.4857330816556926,1,KEGG,Antigen processing and presentation,8
+normal_to_lusc,NORMAL → LUSC,Translation / ribosome,NORMAL → LUSC · Translation / ribosome,3.6528845926190747e-23,22.437364048450675,19,REAC,Eukaryotic Translation Elongation,26
+normal_to_lusc,NORMAL → LUSC,Immune / cytokine,NORMAL → LUSC · Immune / cytokine,9.551987212194913e-07,6.019906267629792,34,REAC,Cytokine Signaling in Immune system,32
+normal_to_lusc,NORMAL → LUSC,Oxidative phosphorylation,NORMAL → LUSC · Oxidative phosphorylation,5.059304346243523e-05,4.295909194495662,10,GO:BP,"mitochondrial electron transport, cytochrome c to oxygen",6
+normal_to_lusc,NORMAL → LUSC,Antigen processing,NORMAL → LUSC · Antigen processing,0.01143456503425274,1.941780351111164,1,KEGG,Antigen processing and presentation,6
+normal_to_lusc,NORMAL → LUSC,Cellular stress,NORMAL → LUSC · Cellular stress,0.021901199942015958,1.6595320900037236,2,GO:BP,response to stress,75
+normal_to_lusc,NORMAL → LUSC,IL-17 / inflammation,NORMAL → LUSC · IL-17 / inflammation,0.02524300945888997,1.5978588699716076,3,KEGG,Inflammatory bowel disease,5
