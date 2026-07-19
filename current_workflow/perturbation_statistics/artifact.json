@@ -1,0 +1,1862 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "NSCLC T-cell perturbation statistics and biological interpretation",
+    "description": "Completed directional Geneformer goal-state statistics, goal-shift rankings, pathway enrichment, and robustness caveats.",
+    "generatedAt": "2026-07-19T13:28:03+09:00",
+    "cards": [
+      {
+        "id": "cells-card",
+        "dataset": "overview",
+        "description": "All planned source cells completed perturbation.",
+        "sourceId": "overview",
+        "metrics": [
+          {
+            "label": "Cells completed",
+            "field": "cells_completed",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "deletions-card",
+        "dataset": "overview",
+        "description": "Marker-deletion observations written across LUSC, LUAD, and normal sources.",
+        "sourceId": "overview",
+        "metrics": [
+          {
+            "label": "Deletion observations",
+            "field": "deletions_completed",
+            "format": "compact"
+          }
+        ]
+      },
+      {
+        "id": "comparisons-card",
+        "dataset": "overview",
+        "description": "Every directional source-to-goal statistical table is present.",
+        "sourceId": "overview",
+        "metrics": [
+          {
+            "label": "Comparisons complete",
+            "field": "completed_comparisons",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "qualified-card",
+        "dataset": "overview",
+        "description": "Sum across comparisons; a gene can appear in more than one direction.",
+        "sourceId": "overview",
+        "metrics": [
+          {
+            "label": "Qualified toward-goal tests",
+            "field": "qualified_gene_shifts",
+            "format": "number"
+          }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "direction-chart",
+        "title": "FDR-significant shifts split almost evenly by direction",
+        "subtitle": "Counts at Goal_end_FDR < 0.05; no coverage threshold",
+        "intent": "composition",
+        "question": "How many significant shifts point toward versus away from each goal centroid?",
+        "rationale": "A stacked horizontal bar prevents the raw FDR count from being mistaken for positive goal shifts.",
+        "type": "horizontalStackedBar",
+        "dataset": "comparison_summary",
+        "sourceId": "comparison-summary",
+        "encodings": {
+          "x": {
+            "field": "comparison_label",
+            "type": "nominal",
+            "label": "Comparison"
+          },
+          "y": {
+            "fields": [
+              "significant_toward_goal",
+              "significant_away_from_goal"
+            ],
+            "type": "quantitative",
+            "label": "Gene tests"
+          },
+          "tooltip": [
+            {
+              "field": "genes_tested",
+              "type": "quantitative",
+              "label": "Genes tested"
+            },
+            {
+              "field": "qualified_toward_goal",
+              "type": "quantitative",
+              "label": "Coverage-qualified toward goal"
+            }
+          ]
+        },
+        "layout": "full",
+        "maxRows": 6
+      },
+      {
+        "id": "pathway-chart",
+        "title": "Translation dominates most directions; immune and respiratory programs add context",
+        "subtitle": "Best adjusted enrichment p-value per predefined biological theme",
+        "intent": "comparison",
+        "question": "Which broad biological themes recur among qualified toward-goal deletions?",
+        "rationale": "Theme consolidation reduces term redundancy while preserving the best term, source, intersection size, and number of matching terms for audit.",
+        "type": "horizontalBar",
+        "dataset": "pathway_themes",
+        "sourceId": "pathways",
+        "encodings": {
+          "x": {
+            "field": "chart_label",
+            "type": "nominal",
+            "label": "Comparison · theme"
+          },
+          "y": {
+            "field": "minus_log10_p",
+            "type": "quantitative",
+            "label": "−log10 adjusted p-value"
+          },
+          "color": {
+            "field": "theme",
+            "type": "nominal",
+            "label": "Theme"
+          },
+          "tooltip": [
+            {
+              "field": "representative_term",
+              "type": "text",
+              "label": "Representative term"
+            },
+            {
+              "field": "representative_source",
+              "type": "text",
+              "label": "Database"
+            },
+            {
+              "field": "intersection_size",
+              "type": "quantitative",
+              "label": "Intersection genes"
+            },
+            {
+              "field": "matching_term_count",
+              "type": "quantitative",
+              "label": "Matching enriched terms"
+            }
+          ]
+        },
+        "layout": "full",
+        "maxRows": 40
+      },
+      {
+        "id": "goal-lusc_to_luad",
+        "title": "LUSC → LUAD: top coverage-qualified goal shifts",
+        "subtitle": "Mean cosine shift after gene deletion; top 10 of the qualified ranking",
+        "intent": "comparison",
+        "question": "Which deletions most strongly move the source embedding toward the LUAD centroid?",
+        "rationale": "Horizontal ranking preserves gene labels and shows the magnitude concentration within a comparison.",
+        "type": "horizontalBar",
+        "dataset": "genes_lusc_to_luad",
+        "sourceId": "top-genes",
+        "encodings": {
+          "x": {
+            "field": "Gene_name",
+            "type": "nominal",
+            "label": "Deleted gene"
+          },
+          "y": {
+            "field": "Shift_to_goal_end",
+            "type": "quantitative",
+            "label": "Mean cosine shift toward goal"
+          },
+          "tooltip": [
+            {
+              "field": "Goal_end_FDR",
+              "type": "quantitative",
+              "label": "Goal-end FDR"
+            },
+            {
+              "field": "N_Detections",
+              "type": "quantitative",
+              "label": "Detections"
+            },
+            {
+              "field": "Ensembl_ID",
+              "type": "text",
+              "label": "Ensembl ID"
+            }
+          ]
+        },
+        "layout": "full",
+        "maxRows": 10
+      },
+      {
+        "id": "goal-lusc_to_normal",
+        "title": "LUSC → NORMAL: top coverage-qualified goal shifts",
+        "subtitle": "Mean cosine shift after gene deletion; top 10 of the qualified ranking",
+        "intent": "comparison",
+        "question": "Which deletions most strongly move the source embedding toward the NORMAL centroid?",
+        "rationale": "Horizontal ranking preserves gene labels and shows the magnitude concentration within a comparison.",
+        "type": "horizontalBar",
+        "dataset": "genes_lusc_to_normal",
+        "sourceId": "top-genes",
+        "encodings": {
+          "x": {
+            "field": "Gene_name",
+            "type": "nominal",
+            "label": "Deleted gene"
+          },
+          "y": {
+            "field": "Shift_to_goal_end",
+            "type": "quantitative",
+            "label": "Mean cosine shift toward goal"
+          },
+          "tooltip": [
+            {
+              "field": "Goal_end_FDR",
+              "type": "quantitative",
+              "label": "Goal-end FDR"
+            },
+            {
+              "field": "N_Detections",
+              "type": "quantitative",
+              "label": "Detections"
+            },
+            {
+              "field": "Ensembl_ID",
+              "type": "text",
+              "label": "Ensembl ID"
+            }
+          ]
+        },
+        "layout": "full",
+        "maxRows": 10
+      },
+      {
+        "id": "goal-luad_to_lusc",
+        "title": "LUAD → LUSC: top coverage-qualified goal shifts",
+        "subtitle": "Mean cosine shift after gene deletion; top 10 of the qualified ranking",
+        "intent": "comparison",
+        "question": "Which deletions most strongly move the source embedding toward the LUSC centroid?",
+        "rationale": "Horizontal ranking preserves gene labels and shows the magnitude concentration within a comparison.",
+        "type": "horizontalBar",
+        "dataset": "genes_luad_to_lusc",
+        "sourceId": "top-genes",
+        "encodings": {
+          "x": {
+            "field": "Gene_name",
+            "type": "nominal",
+            "label": "Deleted gene"
+          },
+          "y": {
+            "field": "Shift_to_goal_end",
+            "type": "quantitative",
+            "label": "Mean cosine shift toward goal"
+          },
+          "tooltip": [
+            {
+              "field": "Goal_end_FDR",
+              "type": "quantitative",
+              "label": "Goal-end FDR"
+            },
+            {
+              "field": "N_Detections",
+              "type": "quantitative",
+              "label": "Detections"
+            },
+            {
+              "field": "Ensembl_ID",
+              "type": "text",
+              "label": "Ensembl ID"
+            }
+          ]
+        },
+        "layout": "full",
+        "maxRows": 10
+      },
+      {
+        "id": "goal-luad_to_normal",
+        "title": "LUAD → NORMAL: top coverage-qualified goal shifts",
+        "subtitle": "Mean cosine shift after gene deletion; top 10 of the qualified ranking",
+        "intent": "comparison",
+        "question": "Which deletions most strongly move the source embedding toward the NORMAL centroid?",
+        "rationale": "Horizontal ranking preserves gene labels and shows the magnitude concentration within a comparison.",
+        "type": "horizontalBar",
+        "dataset": "genes_luad_to_normal",
+        "sourceId": "top-genes",
+        "encodings": {
+          "x": {
+            "field": "Gene_name",
+            "type": "nominal",
+            "label": "Deleted gene"
+          },
+          "y": {
+            "field": "Shift_to_goal_end",
+            "type": "quantitative",
+            "label": "Mean cosine shift toward goal"
+          },
+          "tooltip": [
+            {
+              "field": "Goal_end_FDR",
+              "type": "quantitative",
+              "label": "Goal-end FDR"
+            },
+            {
+              "field": "N_Detections",
+              "type": "quantitative",
+              "label": "Detections"
+            },
+            {
+              "field": "Ensembl_ID",
+              "type": "text",
+              "label": "Ensembl ID"
+            }
+          ]
+        },
+        "layout": "full",
+        "maxRows": 10
+      },
+      {
+        "id": "goal-normal_to_luad",
+        "title": "NORMAL → LUAD: top coverage-qualified goal shifts",
+        "subtitle": "Mean cosine shift after gene deletion; top 10 of the qualified ranking",
+        "intent": "comparison",
+        "question": "Which deletions most strongly move the source embedding toward the LUAD centroid?",
+        "rationale": "Horizontal ranking preserves gene labels and shows the magnitude concentration within a comparison.",
+        "type": "horizontalBar",
+        "dataset": "genes_normal_to_luad",
+        "sourceId": "top-genes",
+        "encodings": {
+          "x": {
+            "field": "Gene_name",
+            "type": "nominal",
+            "label": "Deleted gene"
+          },
+          "y": {
+            "field": "Shift_to_goal_end",
+            "type": "quantitative",
+            "label": "Mean cosine shift toward goal"
+          },
+          "tooltip": [
+            {
+              "field": "Goal_end_FDR",
+              "type": "quantitative",
+              "label": "Goal-end FDR"
+            },
+            {
+              "field": "N_Detections",
+              "type": "quantitative",
+              "label": "Detections"
+            },
+            {
+              "field": "Ensembl_ID",
+              "type": "text",
+              "label": "Ensembl ID"
+            }
+          ]
+        },
+        "layout": "full",
+        "maxRows": 10
+      },
+      {
+        "id": "goal-normal_to_lusc",
+        "title": "NORMAL → LUSC: top coverage-qualified goal shifts",
+        "subtitle": "Mean cosine shift after gene deletion; top 10 of the qualified ranking",
+        "intent": "comparison",
+        "question": "Which deletions most strongly move the source embedding toward the LUSC centroid?",
+        "rationale": "Horizontal ranking preserves gene labels and shows the magnitude concentration within a comparison.",
+        "type": "horizontalBar",
+        "dataset": "genes_normal_to_lusc",
+        "sourceId": "top-genes",
+        "encodings": {
+          "x": {
+            "field": "Gene_name",
+            "type": "nominal",
+            "label": "Deleted gene"
+          },
+          "y": {
+            "field": "Shift_to_goal_end",
+            "type": "quantitative",
+            "label": "Mean cosine shift toward goal"
+          },
+          "tooltip": [
+            {
+              "field": "Goal_end_FDR",
+              "type": "quantitative",
+              "label": "Goal-end FDR"
+            },
+            {
+              "field": "N_Detections",
+              "type": "quantitative",
+              "label": "Detections"
+            },
+            {
+              "field": "Ensembl_ID",
+              "type": "text",
+              "label": "Ensembl ID"
+            }
+          ]
+        },
+        "layout": "full",
+        "maxRows": 10
+      }
+    ],
+    "tables": [
+      {
+        "id": "comparison-table",
+        "title": "Exact per-comparison statistical counts",
+        "dataset": "comparison_summary",
+        "sourceId": "comparison-summary",
+        "density": "dense",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "comparison_label",
+            "label": "Comparison",
+            "type": "text"
+          },
+          {
+            "field": "genes_tested",
+            "label": "Genes tested",
+            "format": "number"
+          },
+          {
+            "field": "fdr_significant",
+            "label": "FDR significant",
+            "format": "number"
+          },
+          {
+            "field": "significant_toward_goal",
+            "label": "Toward goal",
+            "format": "number"
+          },
+          {
+            "field": "significant_away_from_goal",
+            "label": "Away from goal",
+            "format": "number"
+          },
+          {
+            "field": "qualified_toward_goal",
+            "label": "Qualified",
+            "format": "number"
+          },
+          {
+            "field": "qualified_fraction",
+            "label": "Qualified rate",
+            "format": "percent"
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "overview",
+        "label": "Completed run overview",
+        "path": "source_tables/overview_summary.csv",
+        "query": {
+          "engine": "DuckDB",
+          "language": "sql",
+          "sql": "SELECT * FROM read_csv_auto('source_tables/overview_summary.csv');",
+          "description": "Run totals consolidated from the completed live progress snapshot and six statistical tables.",
+          "metric_definitions": [
+            "Deletion observations = 348,313 LUSC + 1,150,097 LUAD + 1,439,366 normal deletion observations.",
+            "Qualified toward-goal tests = sum across six tables after FDR, positive-shift, and detection filters."
+          ]
+        }
+      },
+      {
+        "id": "comparison-summary",
+        "label": "Directional perturbation comparison summary",
+        "path": "source_tables/comparison_summary.csv",
+        "query": {
+          "engine": "DuckDB",
+          "language": "sql",
+          "sql": "SELECT * FROM read_csv_auto('source_tables/comparison_summary.csv');",
+          "description": "Per-comparison counts from six Geneformer goal-state-shift result tables.",
+          "filters": [
+            "Goal_end_FDR < 0.05",
+            "Shift_to_goal_end > 0",
+            "N_Detections >= 25 for qualified shifts"
+          ],
+          "metric_definitions": [
+            "FDR-significant = Goal_end_FDR < 0.05, regardless of shift direction.",
+            "Qualified toward-goal = Goal_end_FDR < 0.05 AND Shift_to_goal_end > 0 AND N_Detections >= 25."
+          ]
+        }
+      },
+      {
+        "id": "top-genes",
+        "label": "Coverage-qualified goal-shift gene rankings",
+        "path": "source_tables/top_goal_shift_genes.csv",
+        "query": {
+          "engine": "DuckDB",
+          "language": "sql",
+          "sql": "SELECT * FROM read_csv_auto('source_tables/top_goal_shift_genes.csv');",
+          "description": "Top 15 positive goal shifts per comparison after the prespecified FDR, direction, and coverage filter.",
+          "filters": [
+            "Goal_end_FDR < 0.05",
+            "Shift_to_goal_end > 0",
+            "N_Detections >= 25"
+          ]
+        }
+      },
+      {
+        "id": "pathways",
+        "label": "g:Profiler pathway enrichment and thematic consolidation",
+        "path": "source_tables/pathway_theme_summary.csv",
+        "href": "https://biit.cs.ut.ee/gprofiler/page/apis",
+        "query": {
+          "engine": "g:Profiler g:GOSt",
+          "language": "sql",
+          "sql": "SELECT * FROM read_csv_auto('source_tables/pathway_theme_summary.csv');",
+          "description": "Over-representation analysis for each qualified gene set against all genes tested in that comparison; predefined regex themes consolidate redundant significant terms.",
+          "filters": [
+            "Organism: hsapiens",
+            "Sources: Reactome, KEGG, GO Biological Process",
+            "FDR < 0.05"
+          ],
+          "metric_definitions": [
+            "Bar length is -log10 of the best adjusted enrichment p-value within each predefined theme."
+          ]
+        }
+      },
+      {
+        "id": "geneformer-method",
+        "label": "Geneformer transfer-learning and perturbation framework",
+        "href": "https://www.nature.com/articles/s41586-023-06139-9"
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# NSCLC T-cell perturbation statistics and biological interpretation"
+      },
+      {
+        "id": "technical-summary",
+        "type": "markdown",
+        "body": "## Technical summary\n\n**The computational screen and all six directional statistical analyses are complete.** Across 3,379 cells and 2,937,776 deletion observations, 3,698 gene-comparison tests met FDR < 0.05. Only 1,604 also shifted positively toward the goal centroid with at least 25 detections; these are the report's primary ranking set.\n\n**The result is useful for prioritization, not yet for causal or therapeutic claims.** Directional shifts are close to evenly divided between toward-goal and away-from-goal effects. Translation/ribosome, immune/inflammatory, antigen-processing, and—especially for LUAD → LUSC—oxidative-phosphorylation programs are enriched. Several leading genes are canonical lung epithelial, alveolar, stromal, or myeloid-associated transcripts despite the T-cell selection, making ambient RNA, doublets, or tissue-mixture effects a major alternative explanation."
+      },
+      {
+        "id": "metrics",
+        "type": "metric-strip",
+        "cardIds": [
+          "cells-card",
+          "deletions-card",
+          "comparisons-card",
+          "qualified-card"
+        ]
+      },
+      {
+        "id": "status",
+        "type": "markdown",
+        "sourceId": "comparison-summary",
+        "body": "## Completion and statistical status\n\nAll result tables are non-empty and contain one row per tested gene with no missing values or duplicate gene identifiers. Tested genes range from 11,242 in LUSC-source comparisons to 14,923 in normal-source comparisons. The coverage-qualified toward-goal rate ranges from **1.25% (LUSC → LUAD)** to **2.94% (LUAD → NORMAL)** of tested genes."
+      },
+      {
+        "id": "direction-interpretation",
+        "type": "markdown",
+        "sourceId": "comparison-summary",
+        "body": "### Statistical significance is not the same as movement toward the goal\n\nThe original significance flag uses only FDR. Of 3,698 FDR-significant tests, 1,780 have a positive shift and 1,918 have a negative shift. The plot below keeps both directions visible; downstream biological ranking additionally requires a positive shift and at least 25 detections."
+      },
+      {
+        "id": "direction-chart-block",
+        "type": "chart",
+        "chartId": "direction-chart"
+      },
+      {
+        "id": "comparison-table-block",
+        "type": "table",
+        "tableId": "comparison-table"
+      },
+      {
+        "id": "interpret-lusc_to_luad",
+        "type": "markdown",
+        "body": "**LUSC → LUAD:** MMP12, KRT17, S100A2, S100A7, S100A8/S100A9, and CXCL8 lead the positive shifts. The coherent squamous/inflammatory pattern suggests that deleting source-associated inflammatory or epithelial-like features moves embeddings away from the LUSC centroid; it does not show that these genes are LUAD-promoting.",
+        "sourceId": "top-genes"
+      },
+      {
+        "id": "chart-lusc_to_luad",
+        "type": "chart",
+        "chartId": "goal-lusc_to_luad"
+      },
+      {
+        "id": "interpret-lusc_to_normal",
+        "type": "markdown",
+        "body": "**LUSC → NORMAL:** the leading effects are dominated by ribosomal, translational, and housekeeping genes (including RPS27, RPL21, UQCR11, and PTMA), with relatively small absolute shifts. This pattern is more compatible with a broad state/fitness axis than a specific normal-T-cell program.",
+        "sourceId": "top-genes"
+      },
+      {
+        "id": "chart-lusc_to_normal",
+        "type": "chart",
+        "chartId": "goal-lusc_to_normal"
+      },
+      {
+        "id": "interpret-luad_to_lusc",
+        "type": "markdown",
+        "body": "**LUAD → LUSC:** HBB, SFTPB, SFTPC, NAPSA, SCGB3A1, and stress/trafficking genes rank highly. Loss of alveolar/secretory transcripts can separate cells from a LUAD-associated centroid, but their appearance in a T-cell analysis is also a strong contamination or doublet warning.",
+        "sourceId": "top-genes"
+      },
+      {
+        "id": "chart-luad_to_lusc",
+        "type": "chart",
+        "chartId": "goal-luad_to_lusc"
+      },
+      {
+        "id": "interpret-luad_to_normal",
+        "type": "markdown",
+        "body": "**LUAD → NORMAL:** PIGR, MUC1, AGR2, WFDC2, SLC34A2, and KRT8/18/19 form a conspicuous epithelial/secretory program. These shifts may reflect removal of tumor-tissue RNA signatures rather than restoration of an intrinsic normal T-cell state.",
+        "sourceId": "top-genes"
+      },
+      {
+        "id": "chart-luad_to_normal",
+        "type": "chart",
+        "chartId": "goal-luad_to_normal"
+      },
+      {
+        "id": "interpret-normal_to_luad",
+        "type": "markdown",
+        "body": "**NORMAL → LUAD:** SFTPC, SFTPA1, FBLN1, DCN, MGP, IGFBP6, and ACKR1 combine alveolar, stromal, and vascular-associated signals. The mixture argues for donor/tissue-composition sensitivity and warrants cell-level decontamination review before target nomination.",
+        "sourceId": "top-genes"
+      },
+      {
+        "id": "chart-normal_to_luad",
+        "type": "chart",
+        "chartId": "goal-normal_to_luad"
+      },
+      {
+        "id": "interpret-normal_to_lusc",
+        "type": "markdown",
+        "body": "**NORMAL → LUSC:** SFTPC, SFTPA1/2, FBLN1, MGP, HSPA1B, and RAB4B again emphasize lung-environment and stress features. The direction is statistically reproducible at the cell-observation level, but cellular provenance is uncertain.",
+        "sourceId": "top-genes"
+      },
+      {
+        "id": "chart-normal_to_lusc",
+        "type": "chart",
+        "chartId": "goal-normal_to_lusc"
+      },
+      {
+        "id": "pathway-findings",
+        "type": "markdown",
+        "body": "## Pathway analysis: recurring programs, with substantial redundancy\n\nEnrichment used each comparison's qualified gene set against its own tested-gene background. Translation/ribosome terms dominate four directions and remain present in the other two. Immune/cytokine programs occur in every direction; oxidative phosphorylation is especially prominent for LUAD → LUSC and appears more modestly for NORMAL → LUSC. Antigen-processing and inflammatory themes recur but often share genes with broader immune terms. **These are overlapping annotations, not independent pathway discoveries**, and enrichment significance does not measure effect size or causal importance.",
+        "sourceId": "pathways"
+      },
+      {
+        "id": "pathway-chart-block",
+        "type": "chart",
+        "chartId": "pathway-chart"
+      },
+      {
+        "id": "scope-methods",
+        "type": "markdown",
+        "body": "## Scope, definitions, and methodology\n\n**Unit and comparison.** The screen deletes one expressed gene at a time in held-out cells and measures the change in cosine position relative to source and goal disease centroids. A positive `Shift_to_goal_end` means the perturbed embedding moved toward the specified goal centroid. It does **not** mean the gene is more highly expressed in the goal state, that deletion converts cell identity, or that the gene is a beneficial intervention target.\n\n**Statistics.** Geneformer goal-state statistics compare each gene's shift distribution with a pooled random all-gene perturbation distribution using a Wilcoxon rank-sum procedure, followed by Benjamini–Hochberg correction within each result table. This report defines a conservative ranking set as FDR < 0.05, positive goal shift, and at least 25 detections. FDR is not jointly controlled across all six tables.\n\n**Pathways.** g:Profiler g:GOSt tests Reactome, KEGG, and GO Biological Process terms using all genes tested in the same source-state table as the custom background and FDR correction. The displayed themes are a transparent regex consolidation of redundant significant terms; the underlying 2,762 enriched term rows remain in `source_tables/pathway_enrichment.csv`. See the [Geneformer framework](https://www.nature.com/articles/s41586-023-06139-9), [g:Profiler methodology](https://pmc.ncbi.nlm.nih.gov/articles/PMC10320099/), and [GO enrichment guidance](https://www.geneontology.org/docs/go-enrichment-analysis/)."
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "body": "## Limitations and robustness assessment\n\n**Overall confidence: share with caveats; hypothesis-generating.**\n\n- **Cell observations are not independent donor replicates.** The held-out cohort includes 19 LUAD, 12 normal, and only 5 LUSC donors. Donor-stratified direction consistency and donor-blocked inference are not yet available.\n- **Ambient RNA/doublets are a plausible dominant confounder.** Lung epithelial/alveolar genes (for example SFTPC, SFTPB, NAPSA, MUC1, PIGR, and keratins) and stromal/vascular genes appear among top T-cell shifts. Ambient RNA is known to create cell-type-inappropriate expression and false pathway signals; review [DecontX](https://pmc.ncbi.nlm.nih.gov/articles/PMC7059395/) and [SoupX](https://pmc.ncbi.nlm.nih.gov/articles/PMC7763177/).\n- **The null is pooled and cell-weighted.** Unequal expression frequency, donor composition, and cell-state abundance can influence detection counts and shift distributions.\n- **Centroid movement is representation-dependent.** A small cosine shift can be statistically precise without being biologically large, and the unusually large LUSC → LUAD MMP12 shift should be checked for outliers and donor concentration.\n- **Pathway terms are correlated.** Thousands of overlapping GO/Reactome/KEGG terms amplify apparent breadth; theme consolidation is descriptive and does not add a second inferential test."
+      },
+      {
+        "id": "next-steps",
+        "type": "markdown",
+        "body": "## Recommended next steps\n\n1. Recompute top-gene direction and effect size per donor, then require consistent sign in a prespecified majority of donors; report leave-one-donor-out stability, especially for the five LUSC donors.\n2. Quantify epithelial/alveolar marker burden per T cell, doublet score, and ambient-RNA correction sensitivity. Repeat rankings after excluding high-burden cells.\n3. Compare each disease-direction ranking with source-versus-goal differential expression. Distinguish deletion of a source marker from genuine movement toward a goal-specific T-cell program.\n4. Replace raw term lists with redundancy-aware pathway modules and confirm modules by donor-stratified gene-set scores.\n5. Nominate targets only after effect size, donor stability, T-cell expression specificity, and an orthogonal perturbation or validation dataset agree."
+      },
+      {
+        "id": "questions",
+        "type": "markdown",
+        "body": "## Further questions\n\n- Do the leading shifts remain after ambient-RNA correction and doublet exclusion?\n- Are effects distributed across donors, or driven by one tissue specimen or sequencing batch?\n- Which shifts are reciprocal (source → goal and goal → source) versus disease-direction specific?\n- Do qualified deletions move canonical T-cell functional programs, or primarily remove tissue-of-origin transcripts?\n- Which candidates reproduce in a donor-balanced external NSCLC T-cell cohort?"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-07-19T13:28:03+09:00",
+    "status": "ready",
+    "datasets": {
+      "overview": [
+        {
+          "completed_comparisons": 6,
+          "total_comparisons": 6,
+          "cells_completed": 3379,
+          "cells_total": 3379,
+          "deletions_completed": 2937776,
+          "qualified_gene_shifts": 1604,
+          "fdr_significant_gene_tests": 3698
+        }
+      ],
+      "comparison_summary": [
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "genes_tested": 11242,
+          "fdr_significant": 321,
+          "significant_toward_goal": 173,
+          "significant_away_from_goal": 148,
+          "qualified_toward_goal": 141,
+          "qualified_fraction": 0.0125422523,
+          "max_positive_shift": 0.3260396519,
+          "median_qualified_shift": 0.0051466213,
+          "median_qualified_detections": 119.0,
+          "qualified_percent": 1.2542252268,
+          "fdr_significant_percent": 2.8553638143
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "genes_tested": 11242,
+          "fdr_significant": 364,
+          "significant_toward_goal": 169,
+          "significant_away_from_goal": 195,
+          "qualified_toward_goal": 159,
+          "qualified_fraction": 0.0141433909,
+          "max_positive_shift": 0.0167713404,
+          "median_qualified_shift": 0.0023203964,
+          "median_qualified_detections": 258.0,
+          "qualified_percent": 1.4143390856,
+          "fdr_significant_percent": 3.2378580324
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "genes_tested": 13458,
+          "fdr_significant": 691,
+          "significant_toward_goal": 336,
+          "significant_away_from_goal": 355,
+          "qualified_toward_goal": 321,
+          "qualified_fraction": 0.023851984,
+          "max_positive_shift": 0.0277214872,
+          "median_qualified_shift": 0.0010853443,
+          "median_qualified_detections": 385.0,
+          "qualified_percent": 2.385198395,
+          "fdr_significant_percent": 5.1344924952
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "genes_tested": 13458,
+          "fdr_significant": 935,
+          "significant_toward_goal": 438,
+          "significant_away_from_goal": 497,
+          "qualified_toward_goal": 396,
+          "qualified_fraction": 0.0294248774,
+          "max_positive_shift": 0.0147467164,
+          "median_qualified_shift": 0.0016991957,
+          "median_qualified_detections": 218.5,
+          "qualified_percent": 2.9424877396,
+          "fdr_significant_percent": 6.9475404964
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "genes_tested": 14923,
+          "fdr_significant": 825,
+          "significant_toward_goal": 415,
+          "significant_away_from_goal": 410,
+          "qualified_toward_goal": 343,
+          "qualified_fraction": 0.0229846546,
+          "max_positive_shift": 0.1644081718,
+          "median_qualified_shift": 0.002753022,
+          "median_qualified_detections": 308.0,
+          "qualified_percent": 2.298465456,
+          "fdr_significant_percent": 5.5283790123
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "genes_tested": 14923,
+          "fdr_significant": 562,
+          "significant_toward_goal": 249,
+          "significant_away_from_goal": 313,
+          "qualified_toward_goal": 244,
+          "qualified_fraction": 0.0163505997,
+          "max_positive_shift": 0.0472992901,
+          "median_qualified_shift": 0.0009195751,
+          "median_qualified_detections": 356.0,
+          "qualified_percent": 1.6350599745,
+          "fdr_significant_percent": 3.7659987938
+        }
+      ],
+      "pathway_themes": [
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "theme": "Translation / ribosome",
+          "chart_label": "LUAD → LUSC · Translation / ribosome",
+          "best_adjusted_p_value": 5.367150018e-32,
+          "minus_log10_p": 31.2702562655,
+          "matching_term_count": 21,
+          "representative_source": "REAC",
+          "representative_term": "L13a-mediated translational silencing of Ceruloplasmin expression",
+          "intersection_size": 38
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "theme": "Oxidative phosphorylation",
+          "chart_label": "LUAD → LUSC · Oxidative phosphorylation",
+          "best_adjusted_p_value": 0.0,
+          "minus_log10_p": 13.2420777135,
+          "matching_term_count": 13,
+          "representative_source": "KEGG",
+          "representative_term": "Oxidative phosphorylation",
+          "intersection_size": 23
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "theme": "Immune / cytokine",
+          "chart_label": "LUAD → LUSC · Immune / cytokine",
+          "best_adjusted_p_value": 1.6471e-06,
+          "minus_log10_p": 5.7832889923,
+          "matching_term_count": 53,
+          "representative_source": "GO:BP",
+          "representative_term": "immune system process",
+          "intersection_size": 89
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "theme": "IL-17 / inflammation",
+          "chart_label": "LUAD → LUSC · IL-17 / inflammation",
+          "best_adjusted_p_value": 0.0001169645,
+          "minus_log10_p": 3.9319460135,
+          "matching_term_count": 1,
+          "representative_source": "REAC",
+          "representative_term": "Neutrophil degranulation",
+          "intersection_size": 26
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "theme": "Antigen processing",
+          "chart_label": "LUAD → LUSC · Antigen processing",
+          "best_adjusted_p_value": 0.0024998994,
+          "minus_log10_p": 2.602077466,
+          "matching_term_count": 7,
+          "representative_source": "KEGG",
+          "representative_term": "Antigen processing and presentation",
+          "intersection_size": 8
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "theme": "Cellular stress",
+          "chart_label": "LUAD → LUSC · Cellular stress",
+          "best_adjusted_p_value": 0.0069903655,
+          "minus_log10_p": 2.155500116,
+          "matching_term_count": 1,
+          "representative_source": "GO:BP",
+          "representative_term": "response to stress",
+          "intersection_size": 101
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "theme": "Translation / ribosome",
+          "chart_label": "LUAD → NORMAL · Translation / ribosome",
+          "best_adjusted_p_value": 5.841413396e-58,
+          "minus_log10_p": 57.2334820577,
+          "matching_term_count": 32,
+          "representative_source": "REAC",
+          "representative_term": "Eukaryotic Translation Elongation",
+          "intersection_size": 54
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "theme": "Immune / cytokine",
+          "chart_label": "LUAD → NORMAL · Immune / cytokine",
+          "best_adjusted_p_value": 1.488381512e-19,
+          "minus_log10_p": 18.8272857332,
+          "matching_term_count": 128,
+          "representative_source": "GO:BP",
+          "representative_term": "immune response",
+          "intersection_size": 108
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "theme": "Cellular stress",
+          "chart_label": "LUAD → NORMAL · Cellular stress",
+          "best_adjusted_p_value": 2.91e-08,
+          "minus_log10_p": 7.5364728644,
+          "matching_term_count": 3,
+          "representative_source": "GO:BP",
+          "representative_term": "response to stress",
+          "intersection_size": 142
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "theme": "Antigen processing",
+          "chart_label": "LUAD → NORMAL · Antigen processing",
+          "best_adjusted_p_value": 1.8771e-06,
+          "minus_log10_p": 5.726501938,
+          "matching_term_count": 29,
+          "representative_source": "KEGG",
+          "representative_term": "Antigen processing and presentation",
+          "intersection_size": 13
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "theme": "IL-17 / inflammation",
+          "chart_label": "LUAD → NORMAL · IL-17 / inflammation",
+          "best_adjusted_p_value": 0.000127283,
+          "minus_log10_p": 3.8952295978,
+          "matching_term_count": 10,
+          "representative_source": "GO:BP",
+          "representative_term": "inflammatory response",
+          "intersection_size": 41
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "theme": "Translation / ribosome",
+          "chart_label": "LUSC → LUAD · Translation / ribosome",
+          "best_adjusted_p_value": 1e-10,
+          "minus_log10_p": 9.939535011,
+          "matching_term_count": 23,
+          "representative_source": "REAC",
+          "representative_term": "Eukaryotic Translation Elongation",
+          "intersection_size": 15
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "theme": "Immune / cytokine",
+          "chart_label": "LUSC → LUAD · Immune / cytokine",
+          "best_adjusted_p_value": 4.255e-07,
+          "minus_log10_p": 6.3710961669,
+          "matching_term_count": 59,
+          "representative_source": "GO:BP",
+          "representative_term": "immune response",
+          "intersection_size": 43
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "theme": "Cellular stress",
+          "chart_label": "LUSC → LUAD · Cellular stress",
+          "best_adjusted_p_value": 0.0003558016,
+          "minus_log10_p": 3.4487921167,
+          "matching_term_count": 2,
+          "representative_source": "GO:BP",
+          "representative_term": "response to stress",
+          "intersection_size": 58
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "theme": "IL-17 / inflammation",
+          "chart_label": "LUSC → LUAD · IL-17 / inflammation",
+          "best_adjusted_p_value": 0.0005516366,
+          "minus_log10_p": 3.2583469313,
+          "matching_term_count": 11,
+          "representative_source": "GO:BP",
+          "representative_term": "positive regulation of inflammatory response",
+          "intersection_size": 9
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "theme": "Antigen processing",
+          "chart_label": "LUSC → LUAD · Antigen processing",
+          "best_adjusted_p_value": 0.0246104397,
+          "minus_log10_p": 1.608880627,
+          "matching_term_count": 1,
+          "representative_source": "KEGG",
+          "representative_term": "Antigen processing and presentation",
+          "intersection_size": 5
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "theme": "Translation / ribosome",
+          "chart_label": "LUSC → NORMAL · Translation / ribosome",
+          "best_adjusted_p_value": 5.001406919e-58,
+          "minus_log10_p": 57.3009078094,
+          "matching_term_count": 31,
+          "representative_source": "REAC",
+          "representative_term": "Peptide chain elongation",
+          "intersection_size": 44
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "theme": "Immune / cytokine",
+          "chart_label": "LUSC → NORMAL · Immune / cytokine",
+          "best_adjusted_p_value": 0.0,
+          "minus_log10_p": 12.7642374699,
+          "matching_term_count": 106,
+          "representative_source": "GO:BP",
+          "representative_term": "immune system process",
+          "intersection_size": 68
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "theme": "Antigen processing",
+          "chart_label": "LUSC → NORMAL · Antigen processing",
+          "best_adjusted_p_value": 1.8379e-05,
+          "minus_log10_p": 4.7356770137,
+          "matching_term_count": 30,
+          "representative_source": "GO:BP",
+          "representative_term": "antigen processing and presentation of endogenous antigen",
+          "intersection_size": 6
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "theme": "Cellular stress",
+          "chart_label": "LUSC → NORMAL · Cellular stress",
+          "best_adjusted_p_value": 0.000743209,
+          "minus_log10_p": 3.1288890343,
+          "matching_term_count": 2,
+          "representative_source": "GO:BP",
+          "representative_term": "response to stress",
+          "intersection_size": 60
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "theme": "IL-17 / inflammation",
+          "chart_label": "LUSC → NORMAL · IL-17 / inflammation",
+          "best_adjusted_p_value": 0.0095012575,
+          "minus_log10_p": 2.0222189128,
+          "matching_term_count": 3,
+          "representative_source": "REAC",
+          "representative_term": "Neutrophil degranulation",
+          "intersection_size": 14
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "theme": "Immune / cytokine",
+          "chart_label": "NORMAL → LUAD · Immune / cytokine",
+          "best_adjusted_p_value": 0.0,
+          "minus_log10_p": 10.5567484545,
+          "matching_term_count": 121,
+          "representative_source": "REAC",
+          "representative_term": "Immune System",
+          "intersection_size": 91
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "theme": "Cellular stress",
+          "chart_label": "NORMAL → LUAD · Cellular stress",
+          "best_adjusted_p_value": 7.24e-08,
+          "minus_log10_p": 7.140115504,
+          "matching_term_count": 2,
+          "representative_source": "GO:BP",
+          "representative_term": "response to stress",
+          "intersection_size": 127
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "theme": "IL-17 / inflammation",
+          "chart_label": "NORMAL → LUAD · IL-17 / inflammation",
+          "best_adjusted_p_value": 2.871e-07,
+          "minus_log10_p": 6.5419464003,
+          "matching_term_count": 11,
+          "representative_source": "GO:BP",
+          "representative_term": "inflammatory response",
+          "intersection_size": 45
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "theme": "Translation / ribosome",
+          "chart_label": "NORMAL → LUAD · Translation / ribosome",
+          "best_adjusted_p_value": 3.4332e-06,
+          "minus_log10_p": 5.4642967157,
+          "matching_term_count": 19,
+          "representative_source": "REAC",
+          "representative_term": "Eukaryotic Translation Elongation",
+          "intersection_size": 14
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "theme": "Antigen processing",
+          "chart_label": "NORMAL → LUAD · Antigen processing",
+          "best_adjusted_p_value": 0.0032678862,
+          "minus_log10_p": 2.4857330817,
+          "matching_term_count": 1,
+          "representative_source": "KEGG",
+          "representative_term": "Antigen processing and presentation",
+          "intersection_size": 8
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "theme": "Translation / ribosome",
+          "chart_label": "NORMAL → LUSC · Translation / ribosome",
+          "best_adjusted_p_value": 3.652884593e-23,
+          "minus_log10_p": 22.4373640485,
+          "matching_term_count": 19,
+          "representative_source": "REAC",
+          "representative_term": "Eukaryotic Translation Elongation",
+          "intersection_size": 26
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "theme": "Immune / cytokine",
+          "chart_label": "NORMAL → LUSC · Immune / cytokine",
+          "best_adjusted_p_value": 9.552e-07,
+          "minus_log10_p": 6.0199062676,
+          "matching_term_count": 34,
+          "representative_source": "REAC",
+          "representative_term": "Cytokine Signaling in Immune system",
+          "intersection_size": 32
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "theme": "Oxidative phosphorylation",
+          "chart_label": "NORMAL → LUSC · Oxidative phosphorylation",
+          "best_adjusted_p_value": 5.0593e-05,
+          "minus_log10_p": 4.2959091945,
+          "matching_term_count": 10,
+          "representative_source": "GO:BP",
+          "representative_term": "mitochondrial electron transport, cytochrome c to oxygen",
+          "intersection_size": 6
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "theme": "Antigen processing",
+          "chart_label": "NORMAL → LUSC · Antigen processing",
+          "best_adjusted_p_value": 0.011434565,
+          "minus_log10_p": 1.9417803511,
+          "matching_term_count": 1,
+          "representative_source": "KEGG",
+          "representative_term": "Antigen processing and presentation",
+          "intersection_size": 6
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "theme": "Cellular stress",
+          "chart_label": "NORMAL → LUSC · Cellular stress",
+          "best_adjusted_p_value": 0.0219011999,
+          "minus_log10_p": 1.65953209,
+          "matching_term_count": 2,
+          "representative_source": "GO:BP",
+          "representative_term": "response to stress",
+          "intersection_size": 75
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "theme": "IL-17 / inflammation",
+          "chart_label": "NORMAL → LUSC · IL-17 / inflammation",
+          "best_adjusted_p_value": 0.0252430095,
+          "minus_log10_p": 1.59785887,
+          "matching_term_count": 3,
+          "representative_source": "KEGG",
+          "representative_term": "Inflammatory bowel disease",
+          "intersection_size": 5
+        }
+      ],
+      "genes_lusc_to_luad": [
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 1,
+          "Gene_name": "MMP12",
+          "Ensembl_ID": "ENSG00000262406",
+          "Shift_to_goal_end": 0.3260396519,
+          "Goal_end_FDR": 2.924497745e-16,
+          "N_Detections": 28
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 2,
+          "Gene_name": "KRT17",
+          "Ensembl_ID": "ENSG00000128422",
+          "Shift_to_goal_end": 0.2950160585,
+          "Goal_end_FDR": 2.147192015e-23,
+          "N_Detections": 41
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 3,
+          "Gene_name": "S100A2",
+          "Ensembl_ID": "ENSG00000196754",
+          "Shift_to_goal_end": 0.2203675925,
+          "Goal_end_FDR": 1.054242951e-17,
+          "N_Detections": 35
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 4,
+          "Gene_name": "S100A7",
+          "Ensembl_ID": "ENSG00000143556",
+          "Shift_to_goal_end": 0.1562121568,
+          "Goal_end_FDR": 0.0,
+          "N_Detections": 35
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 5,
+          "Gene_name": "HBA2",
+          "Ensembl_ID": "ENSG00000188536",
+          "Shift_to_goal_end": 0.07494743,
+          "Goal_end_FDR": 2.982294447e-75,
+          "N_Detections": 135
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 6,
+          "Gene_name": "S100A8",
+          "Ensembl_ID": "ENSG00000143546",
+          "Shift_to_goal_end": 0.0704952436,
+          "Goal_end_FDR": 1.604804653e-70,
+          "N_Detections": 134
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 7,
+          "Gene_name": "HBA1",
+          "Ensembl_ID": "ENSG00000206172",
+          "Shift_to_goal_end": 0.0609816748,
+          "Goal_end_FDR": 2.814700492e-52,
+          "N_Detections": 105
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 8,
+          "Gene_name": "CXCL8",
+          "Ensembl_ID": "ENSG00000169429",
+          "Shift_to_goal_end": 0.0454122625,
+          "Goal_end_FDR": 4.7352e-06,
+          "N_Detections": 28
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 9,
+          "Gene_name": "S100A9",
+          "Ensembl_ID": "ENSG00000163220",
+          "Shift_to_goal_end": 0.0284899344,
+          "Goal_end_FDR": 1.086508195e-43,
+          "N_Detections": 134
+        },
+        {
+          "comparison": "lusc_to_luad",
+          "comparison_label": "LUSC → LUAD",
+          "rank": 10,
+          "Gene_name": "TPSB2",
+          "Ensembl_ID": "ENSG00000197253",
+          "Shift_to_goal_end": 0.0236040073,
+          "Goal_end_FDR": 0.0004601156,
+          "N_Detections": 36
+        }
+      ],
+      "genes_lusc_to_normal": [
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 1,
+          "Gene_name": "RPS27",
+          "Ensembl_ID": "ENSG00000177954",
+          "Shift_to_goal_end": 0.0167713404,
+          "Goal_end_FDR": 4.014082559e-225,
+          "N_Detections": 560
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 2,
+          "Gene_name": "RPL21",
+          "Ensembl_ID": "ENSG00000122026",
+          "Shift_to_goal_end": 0.0117852658,
+          "Goal_end_FDR": 1.713441357e-163,
+          "N_Detections": 560
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 3,
+          "Gene_name": "LYZ",
+          "Ensembl_ID": "ENSG00000090382",
+          "Shift_to_goal_end": 0.0088443873,
+          "Goal_end_FDR": 1.223223047e-28,
+          "N_Detections": 92
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 4,
+          "Gene_name": "UQCR11",
+          "Ensembl_ID": "ENSG00000127540",
+          "Shift_to_goal_end": 0.0087494631,
+          "Goal_end_FDR": 1.275529222e-34,
+          "N_Detections": 156
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 5,
+          "Gene_name": "BTG1",
+          "Ensembl_ID": "ENSG00000133639",
+          "Shift_to_goal_end": 0.0078284175,
+          "Goal_end_FDR": 9.289349528e-137,
+          "N_Detections": 510
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 6,
+          "Gene_name": "RPL27A",
+          "Ensembl_ID": "ENSG00000166441",
+          "Shift_to_goal_end": 0.0075237385,
+          "Goal_end_FDR": 2.380718343e-178,
+          "N_Detections": 536
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 7,
+          "Gene_name": "NDUFB8",
+          "Ensembl_ID": "ENSG00000166136",
+          "Shift_to_goal_end": 0.0073461763,
+          "Goal_end_FDR": 5.24791e-05,
+          "N_Detections": 66
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 8,
+          "Gene_name": "PDCD7",
+          "Ensembl_ID": "ENSG00000090470",
+          "Shift_to_goal_end": 0.0073136481,
+          "Goal_end_FDR": 0.0012227407,
+          "N_Detections": 26
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 9,
+          "Gene_name": "ARL6IP1",
+          "Ensembl_ID": "ENSG00000170540",
+          "Shift_to_goal_end": 0.0068517517,
+          "Goal_end_FDR": 4e-10,
+          "N_Detections": 74
+        },
+        {
+          "comparison": "lusc_to_normal",
+          "comparison_label": "LUSC → NORMAL",
+          "rank": 10,
+          "Gene_name": "PTMA",
+          "Ensembl_ID": "ENSG00000187514",
+          "Shift_to_goal_end": 0.0058855951,
+          "Goal_end_FDR": 6.365641822e-94,
+          "N_Detections": 552
+        }
+      ],
+      "genes_luad_to_lusc": [
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 1,
+          "Gene_name": "HBB",
+          "Ensembl_ID": "ENSG00000244734",
+          "Shift_to_goal_end": 0.0277214872,
+          "Goal_end_FDR": 0.0,
+          "N_Detections": 178
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 2,
+          "Gene_name": "SFTPB",
+          "Ensembl_ID": "ENSG00000168878",
+          "Shift_to_goal_end": 0.0158698942,
+          "Goal_end_FDR": 1.651933692e-24,
+          "N_Detections": 126
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 3,
+          "Gene_name": "SFTPC",
+          "Ensembl_ID": "ENSG00000168484",
+          "Shift_to_goal_end": 0.0134795913,
+          "Goal_end_FDR": 2.63279523e-41,
+          "N_Detections": 314
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 4,
+          "Gene_name": "NAPSA",
+          "Ensembl_ID": "ENSG00000131400",
+          "Shift_to_goal_end": 0.0098478946,
+          "Goal_end_FDR": 0.0049935595,
+          "N_Detections": 99
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 5,
+          "Gene_name": "TRAPPC5",
+          "Ensembl_ID": "ENSG00000181029",
+          "Shift_to_goal_end": 0.0090504871,
+          "Goal_end_FDR": 0.0025591344,
+          "N_Detections": 28
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 6,
+          "Gene_name": "HSPA1B",
+          "Ensembl_ID": "ENSG00000204388",
+          "Shift_to_goal_end": 0.008916737,
+          "Goal_end_FDR": 8.208630779e-58,
+          "N_Detections": 270
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 7,
+          "Gene_name": "RAB4B",
+          "Ensembl_ID": "ENSG00000167578",
+          "Shift_to_goal_end": 0.0088400194,
+          "Goal_end_FDR": 5.525023553e-17,
+          "N_Detections": 84
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 8,
+          "Gene_name": "SCGB3A1",
+          "Ensembl_ID": "ENSG00000161055",
+          "Shift_to_goal_end": 0.0081809877,
+          "Goal_end_FDR": 5.588176151e-20,
+          "N_Detections": 176
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 9,
+          "Gene_name": "NME2",
+          "Ensembl_ID": "ENSG00000243678",
+          "Shift_to_goal_end": 0.0059556851,
+          "Goal_end_FDR": 6.0599e-06,
+          "N_Detections": 65
+        },
+        {
+          "comparison": "luad_to_lusc",
+          "comparison_label": "LUAD → LUSC",
+          "rank": 10,
+          "Gene_name": "RAD50",
+          "Ensembl_ID": "ENSG00000113522",
+          "Shift_to_goal_end": 0.0058761174,
+          "Goal_end_FDR": 7.3e-08,
+          "N_Detections": 98
+        }
+      ],
+      "genes_luad_to_normal": [
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 1,
+          "Gene_name": "PIGR",
+          "Ensembl_ID": "ENSG00000162896",
+          "Shift_to_goal_end": 0.0147467164,
+          "Goal_end_FDR": 2e-10,
+          "N_Detections": 25
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 2,
+          "Gene_name": "EEF1G",
+          "Ensembl_ID": "ENSG00000254772",
+          "Shift_to_goal_end": 0.012168734,
+          "Goal_end_FDR": 1.564739463e-44,
+          "N_Detections": 196
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 3,
+          "Gene_name": "KRT18",
+          "Ensembl_ID": "ENSG00000111057",
+          "Shift_to_goal_end": 0.0117506062,
+          "Goal_end_FDR": 2.954108194e-16,
+          "N_Detections": 58
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 4,
+          "Gene_name": "MUC1",
+          "Ensembl_ID": "ENSG00000185499",
+          "Shift_to_goal_end": 0.0102648318,
+          "Goal_end_FDR": 0.0,
+          "N_Detections": 52
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 5,
+          "Gene_name": "AGR2",
+          "Ensembl_ID": "ENSG00000106541",
+          "Shift_to_goal_end": 0.0102066485,
+          "Goal_end_FDR": 4.2e-09,
+          "N_Detections": 49
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 6,
+          "Gene_name": "WFDC2",
+          "Ensembl_ID": "ENSG00000101443",
+          "Shift_to_goal_end": 0.0100995051,
+          "Goal_end_FDR": 6.886750762e-16,
+          "N_Detections": 72
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 7,
+          "Gene_name": "KRT19",
+          "Ensembl_ID": "ENSG00000171345",
+          "Shift_to_goal_end": 0.0095676759,
+          "Goal_end_FDR": 0.0,
+          "N_Detections": 54
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 8,
+          "Gene_name": "SLC34A2",
+          "Ensembl_ID": "ENSG00000157765",
+          "Shift_to_goal_end": 0.0093078174,
+          "Goal_end_FDR": 8.57e-08,
+          "N_Detections": 34
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 9,
+          "Gene_name": "SCGB3A2",
+          "Ensembl_ID": "ENSG00000164265",
+          "Shift_to_goal_end": 0.0083291719,
+          "Goal_end_FDR": 0.0411995942,
+          "N_Detections": 100
+        },
+        {
+          "comparison": "luad_to_normal",
+          "comparison_label": "LUAD → NORMAL",
+          "rank": 10,
+          "Gene_name": "KRT8",
+          "Ensembl_ID": "ENSG00000170421",
+          "Shift_to_goal_end": 0.0079692236,
+          "Goal_end_FDR": 1.3e-09,
+          "N_Detections": 45
+        }
+      ],
+      "genes_normal_to_luad": [
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 1,
+          "Gene_name": "SFTPC",
+          "Ensembl_ID": "ENSG00000168484",
+          "Shift_to_goal_end": 0.1644081718,
+          "Goal_end_FDR": 6.290218263e-252,
+          "N_Detections": 465
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 2,
+          "Gene_name": "FBLN1",
+          "Ensembl_ID": "ENSG00000077942",
+          "Shift_to_goal_end": 0.1153658228,
+          "Goal_end_FDR": 6.22733503e-17,
+          "N_Detections": 32
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 3,
+          "Gene_name": "DCN",
+          "Ensembl_ID": "ENSG00000011465",
+          "Shift_to_goal_end": 0.0834205902,
+          "Goal_end_FDR": 6.983326668e-23,
+          "N_Detections": 44
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 4,
+          "Gene_name": "RPS26",
+          "Ensembl_ID": "ENSG00000197728",
+          "Shift_to_goal_end": 0.07825061,
+          "Goal_end_FDR": 7.0848e-06,
+          "N_Detections": 960
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 5,
+          "Gene_name": "TXNIP",
+          "Ensembl_ID": "ENSG00000265972",
+          "Shift_to_goal_end": 0.0451702682,
+          "Goal_end_FDR": 0.0,
+          "N_Detections": 1053
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 6,
+          "Gene_name": "MGP",
+          "Ensembl_ID": "ENSG00000111341",
+          "Shift_to_goal_end": 0.0388515422,
+          "Goal_end_FDR": 6.601798666e-32,
+          "N_Detections": 81
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 7,
+          "Gene_name": "IGFBP6",
+          "Ensembl_ID": "ENSG00000167779",
+          "Shift_to_goal_end": 0.0353466179,
+          "Goal_end_FDR": 0.0,
+          "N_Detections": 28
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 8,
+          "Gene_name": "SFTPA1",
+          "Ensembl_ID": "ENSG00000122852",
+          "Shift_to_goal_end": 0.0344895037,
+          "Goal_end_FDR": 1.182213332e-50,
+          "N_Detections": 134
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 9,
+          "Gene_name": "ACKR1",
+          "Ensembl_ID": "ENSG00000213088",
+          "Shift_to_goal_end": 0.0289762529,
+          "Goal_end_FDR": 0.0,
+          "N_Detections": 36
+        },
+        {
+          "comparison": "normal_to_luad",
+          "comparison_label": "NORMAL → LUAD",
+          "rank": 10,
+          "Gene_name": "HSPA1B",
+          "Ensembl_ID": "ENSG00000204388",
+          "Shift_to_goal_end": 0.0289147902,
+          "Goal_end_FDR": 1.182313231e-130,
+          "N_Detections": 641
+        }
+      ],
+      "genes_normal_to_lusc": [
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 1,
+          "Gene_name": "SFTPC",
+          "Ensembl_ID": "ENSG00000168484",
+          "Shift_to_goal_end": 0.0472992901,
+          "Goal_end_FDR": 5.244057879e-123,
+          "N_Detections": 465
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 2,
+          "Gene_name": "FBLN1",
+          "Ensembl_ID": "ENSG00000077942",
+          "Shift_to_goal_end": 0.026929938,
+          "Goal_end_FDR": 1.5e-09,
+          "N_Detections": 32
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 3,
+          "Gene_name": "SFTPA1",
+          "Ensembl_ID": "ENSG00000122852",
+          "Shift_to_goal_end": 0.0188511469,
+          "Goal_end_FDR": 2.423403155e-26,
+          "N_Detections": 134
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 4,
+          "Gene_name": "MATR3",
+          "Ensembl_ID": "ENSG00000015479",
+          "Shift_to_goal_end": 0.0151934897,
+          "Goal_end_FDR": 0.0,
+          "N_Detections": 43
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 5,
+          "Gene_name": "HSPA1B",
+          "Ensembl_ID": "ENSG00000204388",
+          "Shift_to_goal_end": 0.0140052259,
+          "Goal_end_FDR": 4.59069727e-123,
+          "N_Detections": 641
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 6,
+          "Gene_name": "PRICKLE4",
+          "Ensembl_ID": "ENSG00000278224",
+          "Shift_to_goal_end": 0.0135886281,
+          "Goal_end_FDR": 3e-10,
+          "N_Detections": 28
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 7,
+          "Gene_name": "SFTPA2",
+          "Ensembl_ID": "ENSG00000185303",
+          "Shift_to_goal_end": 0.0114882709,
+          "Goal_end_FDR": 2.314776659e-29,
+          "N_Detections": 131
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 8,
+          "Gene_name": "MGP",
+          "Ensembl_ID": "ENSG00000111341",
+          "Shift_to_goal_end": 0.01117458,
+          "Goal_end_FDR": 3.707479229e-16,
+          "N_Detections": 81
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 9,
+          "Gene_name": "RAB4B",
+          "Ensembl_ID": "ENSG00000167578",
+          "Shift_to_goal_end": 0.0100062721,
+          "Goal_end_FDR": 0.0,
+          "N_Detections": 63
+        },
+        {
+          "comparison": "normal_to_lusc",
+          "comparison_label": "NORMAL → LUSC",
+          "rank": 10,
+          "Gene_name": "STEAP1B",
+          "Ensembl_ID": "ENSG00000105889",
+          "Shift_to_goal_end": 0.0095800015,
+          "Goal_end_FDR": 1.047038911e-216,
+          "N_Detections": 433
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "overview",
+      "label": "Completed run overview",
+      "path": "source_tables/overview_summary.csv",
+      "query": {
+        "engine": "DuckDB",
+        "language": "sql",
+        "sql": "SELECT * FROM read_csv_auto('source_tables/overview_summary.csv');",
+        "description": "Run totals consolidated from the completed live progress snapshot and six statistical tables.",
+        "metric_definitions": [
+          "Deletion observations = 348,313 LUSC + 1,150,097 LUAD + 1,439,366 normal deletion observations.",
+          "Qualified toward-goal tests = sum across six tables after FDR, positive-shift, and detection filters."
+        ]
+      }
+    },
+    {
+      "id": "comparison-summary",
+      "label": "Directional perturbation comparison summary",
+      "path": "source_tables/comparison_summary.csv",
+      "query": {
+        "engine": "DuckDB",
+        "language": "sql",
+        "sql": "SELECT * FROM read_csv_auto('source_tables/comparison_summary.csv');",
+        "description": "Per-comparison counts from six Geneformer goal-state-shift result tables.",
+        "filters": [
+          "Goal_end_FDR < 0.05",
+          "Shift_to_goal_end > 0",
+          "N_Detections >= 25 for qualified shifts"
+        ],
+        "metric_definitions": [
+          "FDR-significant = Goal_end_FDR < 0.05, regardless of shift direction.",
+          "Qualified toward-goal = Goal_end_FDR < 0.05 AND Shift_to_goal_end > 0 AND N_Detections >= 25."
+        ]
+      }
+    },
+    {
+      "id": "top-genes",
+      "label": "Coverage-qualified goal-shift gene rankings",
+      "path": "source_tables/top_goal_shift_genes.csv",
+      "query": {
+        "engine": "DuckDB",
+        "language": "sql",
+        "sql": "SELECT * FROM read_csv_auto('source_tables/top_goal_shift_genes.csv');",
+        "description": "Top 15 positive goal shifts per comparison after the prespecified FDR, direction, and coverage filter.",
+        "filters": [
+          "Goal_end_FDR < 0.05",
+          "Shift_to_goal_end > 0",
+          "N_Detections >= 25"
+        ]
+      }
+    },
+    {
+      "id": "pathways",
+      "label": "g:Profiler pathway enrichment and thematic consolidation",
+      "path": "source_tables/pathway_theme_summary.csv",
+      "href": "https://biit.cs.ut.ee/gprofiler/page/apis",
+      "query": {
+        "engine": "g:Profiler g:GOSt",
+        "language": "sql",
+        "sql": "SELECT * FROM read_csv_auto('source_tables/pathway_theme_summary.csv');",
+        "description": "Over-representation analysis for each qualified gene set against all genes tested in that comparison; predefined regex themes consolidate redundant significant terms.",
+        "filters": [
+          "Organism: hsapiens",
+          "Sources: Reactome, KEGG, GO Biological Process",
+          "FDR < 0.05"
+        ],
+        "metric_definitions": [
+          "Bar length is -log10 of the best adjusted enrichment p-value within each predefined theme."
+        ]
+      }
+    },
+    {
+      "id": "geneformer-method",
+      "label": "Geneformer transfer-learning and perturbation framework",
+      "href": "https://www.nature.com/articles/s41586-023-06139-9"
+    }
+  ]
+}
