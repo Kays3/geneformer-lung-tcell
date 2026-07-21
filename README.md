@@ -1,5 +1,9 @@
 # Geneformer NSCLC T-cell workflow
 
+For moving the active Geneformer experiment, trained model, perturbation
+outputs, and reporting environment to another machine, see the
+[reproducible migration workspace](migration/README.md).
+
 This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
 21,000 naturally balanced CD4/CD8 T cells, a three-state LUAD/LUSC/normal
 classifier, and an all-gene in silico deletion screen.
@@ -8,7 +12,7 @@ classifier, and an all-gene in silico deletion screen.
 
 | Dataset | Donor control | Test performance | Perturbation |
 |---|---|---|---|
-| 7,000 LUAD + 7,000 LUSC + 7,000 normal; no oversampling | No donor crosses train/eval/test | Accuracy **0.7834**; macro F1 **0.7577** | **2,937,776** held-out cell-gene deletions running |
+| 7,000 LUAD + 7,000 LUSC + 7,000 normal; no oversampling | No donor crosses train/eval/test | Accuracy **0.7834**; macro F1 **0.7577** | **2,937,776** held-out cell-gene deletions complete; 6/6 comparisons generated |
 
 **Workflow:** atlas selection → donor-disjoint split → Geneformer V2 tokenization
 → fine-tuning → held-out evaluation → all-gene deletion.

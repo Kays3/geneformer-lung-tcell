@@ -9,6 +9,8 @@ venv/
 .ruff_cache/
 *.log
 .tmp-report/
+migration/migration.env
+migration/generated/
 
 # Local configuration and credentials
 .env
