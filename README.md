@@ -4,6 +4,9 @@ For moving the active Geneformer experiment, trained model, perturbation
 outputs, and reporting environment to another machine, see the
 [reproducible migration workspace](migration/README.md).
 
+For creating a project-agnostic Geneformer environment with `uv` on a clean
+machine, see the [general Geneformer + uv setup](geneformer_uv_setup/README.md).
+
 This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
 21,000 naturally balanced CD4/CD8 T cells, a three-state LUAD/LUSC/normal
 classifier, and an all-gene in silico deletion screen.
