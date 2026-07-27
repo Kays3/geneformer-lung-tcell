@@ -1,0 +1,46 @@
+disease,donor_id,cells
+lung adenocarcinoma,RU1038,1579
+lung adenocarcinoma,RU1057,1899
+lung adenocarcinoma,RU1061,241
+lung adenocarcinoma,RU1128,944
+lung adenocarcinoma,RU1134,2599
+lung adenocarcinoma,RU1135,1000
+lung adenocarcinoma,RU1137,569
+lung adenocarcinoma,RU1138,2625
+lung adenocarcinoma,RU1170,2086
+lung adenocarcinoma,RU1262,884
+lung adenocarcinoma,RU1271,181
+lung adenocarcinoma,RU255,1238
+lung adenocarcinoma,RU653,47
+lung adenocarcinoma,RU661,3475
+lung adenocarcinoma,RU666,163
+lung adenocarcinoma,RU675,1107
+lung adenocarcinoma,RU676,2712
+lung adenocarcinoma,RU681,77
+lung adenocarcinoma,RU682,2099
+lung adenocarcinoma,RU684,56
+lung adenocarcinoma,RU699,2195
+lung adenocarcinoma,RU701,2053
+small cell lung carcinoma,PleuralEffusion,1816
+small cell lung carcinoma,RU1065,2208
+small cell lung carcinoma,RU1066,876
+small cell lung carcinoma,RU1080,396
+small cell lung carcinoma,RU1108,49
+small cell lung carcinoma,RU1124,496
+small cell lung carcinoma,RU1144,390
+small cell lung carcinoma,RU1145,892
+small cell lung carcinoma,RU1152,266
+small cell lung carcinoma,RU1181,261
+small cell lung carcinoma,RU1195,921
+small cell lung carcinoma,RU1215,400
+small cell lung carcinoma,RU1229,235
+small cell lung carcinoma,RU1231,47
+small cell lung carcinoma,RU1293,212
+small cell lung carcinoma,RU1311,108
+small cell lung carcinoma,RU1322,50
+small cell lung carcinoma,RU426,212
+small cell lung carcinoma,RU779,1956
+normal,RU675,566
+normal,RU682,1044
+normal,RU684,1620
+normal,RU685,1290

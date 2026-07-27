@@ -1,0 +1,4 @@
+disease,cells,donors,median_cells_per_donor,min_cells_per_donor,max_cells_per_donor,donors_with_20_cells,donors_with_100_cells
+lung adenocarcinoma,29829,22,1172.5,47,3475,22,19
+small cell lung carcinoma,11791,19,390.0,47,2208,19,16
+normal,4520,4,1167.0,566,1620,4,4
