@@ -1,0 +1,6 @@
+sample,matrix_banner,features,barcodes,positions,in_tissue_spots,matrix_feature_rows,matrix_barcode_columns,matrix_nonzero_values,features_match_matrix,barcodes_match_matrix,positions_cover_matrix_barcodes,unique_ensembl_ids,unique_gene_symbols,signature_genes_present,signature_genes_expected,image_width,image_height,spot_diameter_fullres
+GSM8187469_SCLC3,%%MatrixMarket matrix coordinate integer general,33542,3860,4992,3860,33542,3860,13356299,True,True,True,33542,33518,21,21,586,600,128.9939379399885
+GSM8187470_SCLC4,%%MatrixMarket matrix coordinate integer general,33542,2709,4992,2709,33542,2709,12259503,True,True,True,33542,33518,21,21,577,600,130.10477956479343
+GSM8187471_SCLC8,%%MatrixMarket matrix coordinate integer general,33542,3030,4992,3030,33542,3030,15090578,True,True,True,33542,33518,21,21,578,600,130.0429179214012
+GSM8187472_SCLC9,%%MatrixMarket matrix coordinate integer general,33542,3520,4992,3520,33542,3520,19948662,True,True,True,33542,33518,21,21,569,600,130.13231612409945
+GSM8187473_SCLC12,%%MatrixMarket matrix coordinate integer general,33542,2655,4992,2655,33542,2655,5255688,True,True,True,33542,33518,21,21,577,600,129.02580080750798
