@@ -1,0 +1,12 @@
+patient,primary_tumor,adjacent_normal,relapse_or_metastatic
+P1,189,23,0
+P10,10,77,0
+P11,1,2,0
+P12,95,18,0
+P13,14,19,0
+P14,158,88,0
+P2,184,2,16
+P3,4,0,0
+P4,7,0,0
+P5,14,7,0
+P7,93,18,0

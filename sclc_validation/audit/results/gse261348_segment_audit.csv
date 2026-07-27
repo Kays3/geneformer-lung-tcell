@@ -1,0 +1,185 @@
+SegmentDisplayName,SlideName,ROILabel,SegmentLabel,QCFlags,NormalizationFactor,included_in_expression_matrix
+IMF-030 | 001 | Geometric Segment,IMF-030,1,Geometric Segment,,3.9678079139959177,True
+IMF-030 | 002 | Geometric Segment,IMF-030,2,Geometric Segment,,0.9967993134626736,True
+IMF-030 | 003 | Geometric Segment,IMF-030,3,Geometric Segment,,1.41062734867583,True
+IMF-030 | 004 | Geometric Segment,IMF-030,4,Geometric Segment,,1.1689386016761425,True
+IMF-030 | 005 | Geometric Segment,IMF-030,5,Geometric Segment,,4.795938351554943,True
+IMF-030 | 006 | Geometric Segment,IMF-030,6,Geometric Segment,,1.3673921423080144,True
+IMF-030 | 007 | Geometric Segment,IMF-030,7,Geometric Segment,,1.3002447711157,True
+IMF-019-020 | 001 | Geometric Segment,IMF-019-020,1,Geometric Segment,,0.6260489263477973,True
+IMF-019-020 | 002 | Geometric Segment,IMF-019-020,2,Geometric Segment,,0.7327379220934405,True
+IMF-019-020 | 003 | Geometric Segment,IMF-019-020,3,Geometric Segment,,1.54298816701056,True
+IMF-019-020 | 004 | Geometric Segment,IMF-019-020,4,Geometric Segment,,0.3092313850486596,True
+IMF-019-020 | 006 | Geometric Segment,IMF-019-020,6,Geometric Segment,,0.5666750090691741,True
+IMF-019-020 | 007 | Geometric Segment,IMF-019-020,7,Geometric Segment,,0.5479911343353719,True
+IMF-019-020 | 008 | Geometric Segment,IMF-019-020,8,Geometric Segment,,0.2493474880413005,True
+IMF-019-020 | 009 | Geometric Segment,IMF-019-020,9,Geometric Segment,,0.8276814510738805,True
+IMF-019-020 | 010 | Geometric Segment,IMF-019-020,10,Geometric Segment,,1.8668482622564908,True
+IMF-019-020 | 011 | Geometric Segment,IMF-019-020,11,Geometric Segment,,1.654086472244398,True
+IMF-019-020 | 012 | Geometric Segment,IMF-019-020,12,Geometric Segment,,3.413236942182071,True
+IMF-019-020 | 013 | Geometric Segment,IMF-019-020,13,Geometric Segment,,1.259777630617911,True
+IMF-005/006 | 001 | Geometric Segment,IMF-005/006,1,Geometric Segment,,1.775715459631204,True
+IMF-005/006 | 002 | Geometric Segment,IMF-005/006,2,Geometric Segment,,0.8858113461967863,True
+IMF-005/006 | 003 | Geometric Segment,IMF-005/006,3,Geometric Segment,,1.2213194541837018,True
+IMF-005/006 | 004 | Geometric Segment,IMF-005/006,4,Geometric Segment,,0.2622260961735078,True
+IMF-005/006 | 005 | Geometric Segment,IMF-005/006,5,Geometric Segment,,0.8452248931609678,True
+IMF-005/006 | 006 | Geometric Segment,IMF-005/006,6,Geometric Segment,,0.3620856465538576,True
+IMF-005/006 | 007 | Geometric Segment,IMF-005/006,7,Geometric Segment,,0.4213600887627197,True
+IMF-005/006 | 008 | Geometric Segment,IMF-005/006,8,Geometric Segment,,1.2358081449334593,True
+IMF-005/006 | 009 | Geometric Segment,IMF-005/006,9,Geometric Segment,,0.714360414854175,True
+IMF-005/006 | 010 | Geometric Segment,IMF-005/006,10,Geometric Segment,,1.011086697833025,True
+IMF-005/006 | 011 | Geometric Segment,IMF-005/006,11,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,2.535779191383805,True
+IMF-005/006 | 012 | Geometric Segment,IMF-005/006,12,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,2.554698097068299,True
+IMF-007/008 | 001 | Geometric Segment,IMF-007/008,1,Geometric Segment,,1.5586383358242668,True
+IMF-007/008 | 002 | Geometric Segment,IMF-007/008,2,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,6.363054190626105,True
+IMF-007/008 | 003 | Geometric Segment,IMF-007/008,3,Geometric Segment,,4.72221314060971,True
+IMF-007/008 | 004 | Geometric Segment,IMF-007/008,4,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,2.4212430564476644,True
+IMF-007/008 | 005 | Geometric Segment,IMF-007/008,5,Geometric Segment,,0.2699128356909783,True
+IMF-007/008 | 006 | Geometric Segment,IMF-007/008,6,Geometric Segment,,0.2213759913937674,True
+IMF-007/008 | 007 | Geometric Segment,IMF-007/008,7,Geometric Segment,,0.3916833711184045,True
+IMF-007/008 | 008 | Geometric Segment,IMF-007/008,8,Geometric Segment,,0.8709210084103526,True
+IMF-007/008 | 009 | Geometric Segment,IMF-007/008,9,Geometric Segment,,0.205611486931256,True
+IMF-007/008 | 010 | Geometric Segment,IMF-007/008,10,Geometric Segment,,0.2528356181293842,True
+IMF-007/008 | 011 | Geometric Segment,IMF-007/008,11,Geometric Segment,,0.3213076507054819,True
+IMF-007/008 | 012 | Geometric Segment,IMF-007/008,12,Geometric Segment,,0.284148958908728,True
+IMF-031/034 | 001 | Geometric Segment,IMF-031/034,1,Geometric Segment,,0.243884541587425,True
+IMF-031/034 | 002 | Geometric Segment,IMF-031/034,2,Geometric Segment,,0.4459874183764214,True
+IMF-001/002 | 001 | Geometric Segment,IMF-001/002,1,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,12.77456236943151,True
+IMF-001/002 | 002 | Geometric Segment,IMF-001/002,2,Geometric Segment,,0.2469648206388912,False
+IMF-001/002 | 003 | Geometric Segment,IMF-001/002,3,Geometric Segment,,0.1948699901460915,False
+IMF-001/002 | 004 | Geometric Segment,IMF-001/002,4,Geometric Segment,,0.2217726316208395,False
+IMF-001/002 | 005 | Geometric Segment,IMF-001/002,5,Geometric Segment,,0.2869951046791845,False
+IMF-001/002 | 006 | Geometric Segment,IMF-001/002,6,Geometric Segment,,0.2899009646423268,False
+IMF-001/002 | 007 | Geometric Segment,IMF-001/002,7,Geometric Segment,,0.2171881127166076,False
+IMF-001/002 | 008 | Geometric Segment,IMF-001/002,8,Geometric Segment,,0.3411183717444401,False
+IMF-001/002 | 009 | Geometric Segment,IMF-001/002,9,Geometric Segment,,0.2791928784112992,False
+IMF-001/002 | 010 | Geometric Segment,IMF-001/002,10,Geometric Segment,,0.3307572016444293,False
+IMF-037/039 | 001 | Full ROI,IMF-037/039,1,Full ROI,,0.412495332183058,True
+IMF-037/039 | 002 | Full ROI,IMF-037/039,2,Full ROI,,0.3892521285505785,True
+IMF-037/039 | 003 | Full ROI,IMF-037/039,3,Full ROI,,0.3747443565219797,True
+IMF-037/039 | 004 | Full ROI,IMF-037/039,4,Full ROI,,0.3419598225246422,True
+IMF-037/039 | 005 | Full ROI,IMF-037/039,5,Full ROI,,0.3602762421320131,True
+IMF-037/039 | 006 | Full ROI,IMF-037/039,6,Full ROI,,0.3249453300855949,True
+IMF-037/039 | 007 | Full ROI,IMF-037/039,7,Full ROI,,0.8235395062422656,True
+IMF-037/039 | 008 | Full ROI,IMF-037/039,8,Full ROI,,1.0573034607963625,True
+IMF-037/039 | 009 | Full ROI,IMF-037/039,9,Full ROI,,0.561742375950376,True
+IMF-037/039 | 010 | Full ROI,IMF-037/039,10,Full ROI,,0.7383750459241805,True
+IMF-037/039 | 011 | Full ROI,IMF-037/039,11,Full ROI,,0.7837757056053182,True
+IMF-037/039 | 012 | Full ROI,IMF-037/039,12,Full ROI,,0.6459816196681168,True
+IMF-037/039 | 013 | Full ROI,IMF-037/039,13,Full ROI,,0.4612229038643822,True
+IMF-026/033 | 001 | Geometric Segment,IMF-026/033,1,Geometric Segment,,1.6648988899829986,True
+IMF-026/033 | 002 | Geometric Segment,IMF-026/033,2,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,6.055964579871424,True
+IMF-026/033 | 003 | Geometric Segment,IMF-026/033,3,Geometric Segment,,1.17169235007584,True
+IMF-026/033 | 004 | Geometric Segment,IMF-026/033,4,Geometric Segment,,1.1064210298497443,True
+IMF-026/033 | 005 | Geometric Segment,IMF-026/033,5,Geometric Segment,,1.138333619712448,True
+IMF-026/033 | 006 | Geometric Segment,IMF-026/033,6,Geometric Segment,,1.8915743755389336,True
+IMF-026/033 | 007 | Geometric Segment,IMF-026/033,7,Geometric Segment,,2.16788475839783,True
+IMF-026/033 | 008 | Geometric Segment,IMF-026/033,8,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,3.827797959689436,True
+IMF-026/033 | 009 | Geometric Segment,IMF-026/033,9,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,4.16251767126621,True
+IMF-013/015 | 001 | Geometric Segment,IMF-013/015,1,Geometric Segment,,0.4293203701137945,True
+IMF-013/015 | 002 | Geometric Segment,IMF-013/015,2,Geometric Segment,,0.4123719138177962,True
+IMF-013/015 | 003 | Geometric Segment,IMF-013/015,3,Geometric Segment,,0.5360008565963744,True
+IMF-013/015 | 004 | Geometric Segment,IMF-013/015,4,Geometric Segment,,0.5168642715686272,True
+IMF-013/015 | 005 | Geometric Segment,IMF-013/015,5,Geometric Segment,,1.3650046936191578,True
+IMF-013/015 | 006 | Geometric Segment,IMF-013/015,6,Geometric Segment,,0.6526879129055292,True
+IMF-013/015 | 007 | Geometric Segment,IMF-013/015,7,Geometric Segment,,0.8060556256450159,True
+IMF-013/015 | 008 | Geometric Segment,IMF-013/015,8,Geometric Segment,,0.6164493224372332,True
+IMF-013/015 | 009 | Geometric Segment,IMF-013/015,9,Geometric Segment,,0.62163598084046,True
+IMF-016/018 | 001 | Geometric Segment,IMF-016/018,1,Geometric Segment,,1.2525032029564918,True
+IMF-016/018 | 002 | Geometric Segment,IMF-016/018,2,Geometric Segment,,0.8746192404133897,True
+IMF-016/018 | 003 | Geometric Segment,IMF-016/018,3,Geometric Segment,,0.7451546659195407,True
+IMF-016/018 | 004 | Geometric Segment,IMF-016/018,4,Geometric Segment,,0.68601822332897,True
+IMF-016/018 | 005 | Geometric Segment,IMF-016/018,5,Geometric Segment,,1.0729865229417117,True
+IMF-016/018 | 006 | Geometric Segment,IMF-016/018,6,Geometric Segment,,0.8865299936113747,True
+IMF-016/018 | 007 | Geometric Segment,IMF-016/018,7,Geometric Segment,,0.7156513076778197,True
+IMF-016/018 | 008 | Geometric Segment,IMF-016/018,8,Geometric Segment,,1.0122101522280165,True
+IMF-016/018 | 009 | Geometric Segment,IMF-016/018,9,Geometric Segment,,1.8673187477724107,True
+IMF-016/018 | 010 | Geometric Segment,IMF-016/018,10,Geometric Segment,,0.6869426231806635,True
+IMF-016/018 | 011 | Geometric Segment,IMF-016/018,11,Geometric Segment,,0.6843481151759608,True
+IMF-016/018 | 012 | Geometric Segment,IMF-016/018,12,Geometric Segment,,0.7799861497730207,True
+IMF-016/018 | 013 | Geometric Segment,IMF-016/018,13,Geometric Segment,,1.0406115743038518,True
+IMF-016/018 | 014 | Geometric Segment,IMF-016/018,14,Geometric Segment,,0.6621611903149305,True
+IMF-016/018 | 015 | Geometric Segment,IMF-016/018,15,Geometric Segment,,2.55507755656831,True
+IMF-029 | 001 | Geometric Segment,IMF-029,1,Geometric Segment,,0.8683523572297239,True
+IMF-029 | 002 | Geometric Segment,IMF-029,2,Geometric Segment,,0.9557349434749248,True
+IMF-029 | 003 | Geometric Segment,IMF-029,3,Geometric Segment,,0.5815442234598859,True
+IMF-029 | 004 | Geometric Segment,IMF-029,4,Geometric Segment,,0.3985259348075524,True
+IMF-029 | 005 | Geometric Segment,IMF-029,5,Geometric Segment,,1.5522008426780065,True
+IMF-029 | 006 | Geometric Segment,IMF-029,6,Geometric Segment,,1.6989855709007649,True
+IMF-029 | 007 | Geometric Segment,IMF-029,7,Geometric Segment,,1.4520025198678186,True
+IMF-029 | 008 | Geometric Segment,IMF-029,8,Geometric Segment,,1.1040076104204506,True
+IMF-040/042 | 001 | Full ROI,IMF-040/042,1,Full ROI,,0.3041113542526328,True
+IMF-040/042 | 002 | Full ROI,IMF-040/042,2,Full ROI,,0.3676739120423308,True
+IMF-040/042 | 003 | Full ROI,IMF-040/042,3,Full ROI,,0.4436262998749724,True
+IMF-040/042 | 004 | Full ROI,IMF-040/042,4,Full ROI,,0.257828373637102,True
+IMF-040/042 | 005 | Full ROI,IMF-040/042,5,Full ROI,,0.2998986956520585,True
+IMF-040/042 | 006 | Full ROI,IMF-040/042,6,Full ROI,,0.6115616884871544,True
+IMF-040/042 | 007 | Full ROI,IMF-040/042,7,Full ROI,,0.4868223480944598,True
+IMF-040/042 | 008 | Full ROI,IMF-040/042,8,Full ROI,,0.5206586781380483,True
+IMF-040/042 | 009 | Full ROI,IMF-040/042,9,Full ROI,,0.496047183139844,True
+IMF-009/010 | 001 | Geometric Segment,IMF-009/010,1,Geometric Segment,,1.5463408046975746,True
+IMF-009/010 | 002 | Geometric Segment,IMF-009/010,2,Geometric Segment,,1.3887327828320373,True
+IMF-009/010 | 003 | Geometric Segment,IMF-009/010,3,Geometric Segment,,1.30069217159672,True
+IMF-009/010 | 004 | Geometric Segment,IMF-009/010,4,Geometric Segment,,1.2403868277512065,True
+IMF-009/010 | 005 | Geometric Segment,IMF-009/010,5,Geometric Segment,,1.0455152779183168,True
+IMF-009/010 | 006 | Geometric Segment,IMF-009/010,6,Geometric Segment,,1.208695727905669,True
+IMF-009/010 | 007 | Geometric Segment,IMF-009/010,7,Geometric Segment,,1.1691809785845113,True
+IMF-009/010 | 009 | Geometric Segment,IMF-009/010,9,Geometric Segment,,2.5954611493314563,True
+IMF-009/010 | 010 | Geometric Segment,IMF-009/010,10,Geometric Segment,,1.6095425798345118,True
+IMF-024/025 | 001 | Geometric Segment,IMF-024/025,1,Geometric Segment,,0.4529041660043231,True
+IMF-024/025 | 002 | Geometric Segment,IMF-024/025,2,Geometric Segment,,0.3189374528612178,True
+IMF-024/025 | 003 | Geometric Segment,IMF-024/025,3,Geometric Segment,,0.8207514754449586,True
+IMF-024/025 | 004 | Geometric Segment,IMF-024/025,4,Geometric Segment,,1.027133143735517,True
+IMF-024/025 | 005 | Geometric Segment,IMF-024/025,5,Geometric Segment,,1.9163440763067192,True
+IMF-024/025 | 006 | Geometric Segment,IMF-024/025,6,Geometric Segment,,0.5531761678325683,True
+IMF-024/025 | 007 | Geometric Segment,IMF-024/025,7,Geometric Segment,,0.4017567571092388,True
+IMF-024/025 | 008 | Geometric Segment,IMF-024/025,8,Geometric Segment,,0.4481733001799665,True
+IMF-024/025 | 009 | Geometric Segment,IMF-024/025,9,Geometric Segment,,0.4801270418307888,True
+IMF-024/025 | 010 | Geometric Segment,IMF-024/025,10,Geometric Segment,,0.4867178979828427,True
+IMF-024/025 | 011 | Geometric Segment,IMF-024/025,11,Geometric Segment,,0.7066452566314162,True
+IMF-024/025 | 012 | Geometric Segment,IMF-024/025,12,Geometric Segment,,0.8561382782250992,True
+IMF-024/025 | 013 | Geometric Segment,IMF-024/025,13,Geometric Segment,,0.9321231485670408,True
+IMF-027/028 | 001 | Geometric Segment,IMF-027/028,1,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,4.9564890042662055,True
+IMF-027/028 | 002 | Geometric Segment,IMF-027/028,2,Geometric Segment,,4.585539819781005,True
+IMF-027/028 | 003 | Geometric Segment,IMF-027/028,3,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,4.614812499323139,True
+IMF-027/028 | 004 | Geometric Segment,IMF-027/028,4,Geometric Segment,,2.2236335334564985,True
+IMF-027/028 | 005 | Geometric Segment,IMF-027/028,5,Geometric Segment,,2.4717132307519827,True
+IMF-027/028 | 006 | Geometric Segment,IMF-027/028,6,Geometric Segment,,2.2065376308759306,True
+IMF-027/028 | 007 | Geometric Segment,IMF-027/028,7,Geometric Segment,,2.689333788337454,True
+IMF-027/028 | 008 | Geometric Segment,IMF-027/028,8,Geometric Segment,,2.1767544600238464,True
+IMF-027/028 | 009 | Geometric Segment,IMF-027/028,9,Geometric Segment,,2.455480606090994,True
+IMF-027/028 | 010 | Geometric Segment,IMF-027/028,10,Geometric Segment,,1.1338536129036787,True
+IMF-027/028 | 011 | Geometric Segment,IMF-027/028,11,Geometric Segment,,2.1728188021371846,True
+IMF-027/028 | 012 | Geometric Segment,IMF-027/028,12,Geometric Segment,,2.3837192291746927,True
+IMF-043 | 001 | Full ROI,IMF-043,1,Full ROI,,0.2609863344150853,True
+IMF-043 | 002 | Full ROI,IMF-043,2,Full ROI,,0.8837888078823306,True
+IMF-043 | 003 | Full ROI,IMF-043,3,Full ROI,,0.4717482961097838,True
+IMF-043 | 004 | Full ROI,IMF-043,4,Full ROI,,0.5408759081071477,True
+IMF-043 | 005 | Full ROI,IMF-043,5,Full ROI,,0.4360884035368966,True
+IMF-043 | 006 | Full ROI,IMF-043,6,Full ROI,,0.514596607305653,True
+IMF-011/012 | 001 | Geometric Segment,IMF-011/012,1,Geometric Segment,,1.034960301114422,True
+IMF-011/012 | 002 | Geometric Segment,IMF-011/012,2,Geometric Segment,,4.707570193837309,True
+IMF-011/012 | 003 | Geometric Segment,IMF-011/012,3,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,7.861316621795063,True
+IMF-011/012 | 004 | Geometric Segment,IMF-011/012,4,Geometric Segment,,0.6788796812663518,True
+IMF-011/012 | 005 | Geometric Segment,IMF-011/012,5,Geometric Segment,,0.6446996476211742,True
+IMF-011/012 | 006 | Geometric Segment,IMF-011/012,6,Geometric Segment,,0.9582997944441048,True
+IMF-011/012 | 007 | Geometric Segment,IMF-011/012,7,Geometric Segment,,0.8020471105678714,True
+IMF-003/004 | 001 | Geometric Segment,IMF-003/004,1,Geometric Segment,,0.8278603981657496,True
+IMF-003/004 | 002 | Geometric Segment,IMF-003/004,2,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,3.5099905089102905,True
+IMF-003/004 | 003 | Geometric Segment,IMF-003/004,3,Geometric Segment,,2.2881508062685096,True
+IMF-003/004 | 004 | Geometric Segment,IMF-003/004,4,Geometric Segment,,2.5743361193122754,True
+IMF-003/004 | 005 | Geometric Segment,IMF-003/004,5,Geometric Segment,,3.7796792714710112,True
+IMF-003/004 | 006 | Geometric Segment,IMF-003/004,6,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,7.826633076295802,True
+IMF-003/004 | 007 | Geometric Segment,IMF-003/004,7,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,10.538684491370407,True
+IMF-021/022 | 001 | Geometric Segment,IMF-021/022,1,Geometric Segment,,1.4599109765106386,True
+IMF-021/022 | 002 | Geometric Segment,IMF-021/022,2,Geometric Segment,,4.415126136420022,True
+IMF-021/022 | 003 | Geometric Segment,IMF-021/022,3,Geometric Segment,,1.8849699687815775,True
+IMF-021/022 | 004 | Geometric Segment,IMF-021/022,4,Geometric Segment,,2.5430092100780572,True
+IMF-021/022 | 005 | Geometric Segment,IMF-021/022,5,Geometric Segment,,2.2296988826395614,True
+IMF-021/022 | 006 | Geometric Segment,IMF-021/022,6,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,6.249131529630841,True
+IMF-021/022 | 007 | Geometric Segment,IMF-021/022,7,Geometric Segment,,4.400509534867069,True
+IMF-021/022 | 008 | Geometric Segment,IMF-021/022,8,Geometric Segment,,3.232310570985112,True
+IMF-021/022 | 009 | Geometric Segment,IMF-021/022,9,Geometric Segment,,4.813141459394337,True
+IMF-021/022 | 010 | Geometric Segment,IMF-021/022,10,Geometric Segment,,1.808376966308571,True
+IMF-021/022 | 011 | Geometric Segment,IMF-021/022,11,Geometric Segment,,3.647534771862499,True
+IMF-021/022 | 012 | Geometric Segment,IMF-021/022,12,Geometric Segment,Low Negative Probe Count for Probe Kit Zugazagoitia_SQ-48831 custom,7.517386391862311,True

@@ -1,0 +1,4 @@
+compartment,cells,patients,median_features,median_counts,median_mapping_rate
+adjacent_normal,254,9,1678.5,17839.0,0.445
+primary_tumor,769,11,2159.0,20395.0,0.511
+relapse_or_metastatic,16,1,3465.0,25537.5,0.536

@@ -1,0 +1,12 @@
+title,cell_count,feature_count,donor_count,diseases,raw_data_location,h5ad_bytes,h5ad_url,dataset_id
+Immune cells,73047,24540,42,"['lung adenocarcinoma', 'normal', 'small cell lung carcinoma']",raw.X,3006537786,https://datasets.cellxgene.cziscience.com/5deb79e5-fdd2-45f2-89cd-f291403cc572.h5ad,f64e1be1-de15-4d27-8da4-82225cd4c035
+Myeloid cells,14072,24540,42,"['lung adenocarcinoma', 'normal', 'small cell lung carcinoma']",raw.X,649943595,https://datasets.cellxgene.cziscience.com/38504daf-b825-48ea-b277-033b64d5babb.h5ad,e9175006-8978-4417-939f-819855eab80e
+NSCLC epithelial cells,9778,24540,42,"['lung adenocarcinoma', 'normal', 'small cell lung carcinoma']",raw.X,444987283,https://datasets.cellxgene.cziscience.com/25f2c5ad-3426-42be-9a3c-2aacf189b9aa.h5ad,d4cfefa0-3a35-44eb-b848-d7a725b481e7
+Mesenchymal cells,8030,24540,41,"['lung adenocarcinoma', 'normal', 'small cell lung carcinoma']",raw.X,332890824,https://datasets.cellxgene.cziscience.com/c54035d5-a021-4bd0-9496-e9ec0cf9dcc8.h5ad,d224c8e0-c28e-4360-9e42-b3977cd83f9f
+Myeloid SCLC samples only,2951,22021,19,['small cell lung carcinoma'],raw.X,342598408,https://datasets.cellxgene.cziscience.com/05c6fd7c-b5bb-43c6-9820-26c936b25a28.h5ad,b47cf863-d90d-4fe5-a1eb-1a4785a3e329
+Epithelial cells,64091,24540,42,"['lung adenocarcinoma', 'normal', 'small cell lung carcinoma']",raw.X,3835314338,https://datasets.cellxgene.cziscience.com/cfbc234a-7812-4b82-af81-ec6df4b65e04.h5ad,a6858c10-c52a-4a1d-bc12-a90dbd51ca66
+SCLC immune cells,16475,24540,19,['small cell lung carcinoma'],raw.X,685928747,https://datasets.cellxgene.cziscience.com/3d400eb9-7e4a-4ac4-8dc2-3bc9f2a59a17.h5ad,76347874-8801-44bf-9aea-0da21c78c430
+Combined samples,147137,22021,42,"['lung adenocarcinoma', 'normal', 'small cell lung carcinoma']",raw.X,1463737857,https://datasets.cellxgene.cziscience.com/a9d92e38-9a6e-401b-8484-74bb15122341.h5ad,576f193c-75d0-4a11-bd25-8676587e6dc2
+SCLC RU1215 epithelial cells,3923,24540,1,['small cell lung carcinoma'],raw.X,516103560,https://datasets.cellxgene.cziscience.com/c58323c4-492e-4623-aa9c-5dd35fe3b7fe.h5ad,524d4513-8afd-4120-9b7b-fe31ae10c29b
+T cells,46140,24540,42,"['lung adenocarcinoma', 'normal', 'small cell lung carcinoma']",raw.X,1848340942,https://datasets.cellxgene.cziscience.com/6fde3ad9-c2dc-4bea-bcb1-100192dd5877.h5ad,486486d4-9462-43e5-9249-eb43fa5a49a6
+SCLC epithelial cells,54313,24540,19,['small cell lung carcinoma'],raw.X,8952427790,https://datasets.cellxgene.cziscience.com/0e55369f-8a0d-4897-b6fb-b09e817c72ba.h5ad,34deb33b-a50e-4993-a38b-1c0e5079c1c2
