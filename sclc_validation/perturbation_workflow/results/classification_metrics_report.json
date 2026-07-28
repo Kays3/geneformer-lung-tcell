@@ -1,0 +1,40 @@
+{
+  "overall_accuracy": 0.9193686006825939,
+  "overall_macro_f1": 0.9033154352563612,
+  "per_class": [
+    {
+      "disease": "lung adenocarcinoma",
+      "precision": 0.9256123374659813,
+      "recall": 0.9586595678045725,
+      "f1": 0.9418461538461539,
+      "n_test_cells": 6386,
+      "n_test_donors": 4
+    },
+    {
+      "disease": "normal",
+      "precision": 0.8467374810318664,
+      "recall": 0.9858657243816255,
+      "f1": 0.9110204081632653,
+      "n_test_cells": 566,
+      "n_test_donors": 1
+    },
+    {
+      "disease": "small cell lung carcinoma",
+      "precision": 0.922491678554446,
+      "recall": 0.8003300330033003,
+      "f1": 0.8570797437596642,
+      "n_test_cells": 2424,
+      "n_test_donors": 3
+    }
+  ],
+  "low_donor_support_classes": [
+    "normal"
+  ],
+  "low_donor_support_caveat": "Classes with 1 test donor cannot distinguish a real classification signal from that single donor's idiosyncrasies -- treat their precision/recall as a single-patient data point, not a population estimate.",
+  "prior_workflow_context": {
+    "model": "LUAD/LUSC/normal T-cell classifier (17 July 2026 run)",
+    "held_out_accuracy": 0.7834,
+    "held_out_macro_f1": 0.7577,
+    "note": "Different classes and cohort (LUAD/LUSC/normal, larger balanced 21k-cell design) -- not a head-to-head ranking, only a calibration reference for whether the new SCLC/LUAD/normal model's performance is in a reasonable range."
+  }
+}

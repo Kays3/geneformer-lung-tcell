@@ -1,0 +1,27 @@
+{
+  "model_path": "/home/thinkstation2/workspace/KD/sclc_luad_normal_htan_finetune/runs/260728_geneformer_cellClassifier_sclc_luad_normal_htan/ksplit1",
+  "base_model_dir": "/home/thinkstation2/workspace/geneformer-uv-starter/geneformer-workspace/Geneformer/Geneformer-V2-104M",
+  "seed": 43,
+  "disease_states": [
+    "small cell lung carcinoma",
+    "lung adenocarcinoma",
+    "normal"
+  ],
+  "source_h5ad": "/home/thinkstation2/workspace/KD/sclc_luad_normal_htan_finetune/data/htan_sclc_luad_normal_tcells_prepared.h5ad",
+  "tokenized_dataset": "/home/thinkstation2/workspace/KD/sclc_luad_normal_htan_finetune/data/sclc_luad_normal_htan_tcells.dataset",
+  "donor_leakage_check": "PASS",
+  "eval_metrics": {
+    "macro_f1": [
+      0.8298826673508045
+    ],
+    "acc": [
+      0.8819161175609246
+    ],
+    "all_roc_metrics": null
+  },
+  "test_metrics": {
+    "macro_f1": 0.9033154352563612,
+    "acc": 0.9193686006825939,
+    "all_roc_metrics": null
+  }
+}
