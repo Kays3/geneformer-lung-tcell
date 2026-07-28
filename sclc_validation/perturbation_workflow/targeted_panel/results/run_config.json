@@ -1,0 +1,17 @@
+{
+  "created_utc": "2026-07-28T02:29:02.358641+00:00",
+  "model_directory": "/home/thinkstation2/workspace/KD/sclc_luad_normal_htan_finetune/runs/260728_geneformer_cellClassifier_sclc_luad_normal_htan/ksplit1",
+  "n_target_genes": 50,
+  "perturbation_types": [
+    "delete",
+    "overexpress"
+  ],
+  "forward_batch_size": 128,
+  "nproc": 4,
+  "source_order": [
+    "normal",
+    "sclc",
+    "luad"
+  ],
+  "target_genes_file": "/home/thinkstation2/workspace/KD/sclc_luad_normal_htan_targeted_panel_perturbation/target_gene_panel.json"
+}
