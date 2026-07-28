@@ -1,0 +1,330 @@
+{
+  "n_genes": 50,
+  "n_panel": 21,
+  "n_top_drivers": 29,
+  "contamination_markers_excluded": [
+    "ACKR1",
+    "DCN",
+    "FBLN1",
+    "KRT17",
+    "KRT18",
+    "KRT19",
+    "KRT7",
+    "KRT8",
+    "MUC1",
+    "NAPSA",
+    "PIGR",
+    "SFTPB",
+    "SFTPC"
+  ],
+  "genes": [
+    {
+      "gene": "PDCD1",
+      "ensembl_id": "ENSG00000188389",
+      "source": "panel"
+    },
+    {
+      "gene": "CTLA4",
+      "ensembl_id": "ENSG00000163599",
+      "source": "panel"
+    },
+    {
+      "gene": "HAVCR2",
+      "ensembl_id": "ENSG00000135077",
+      "source": "panel"
+    },
+    {
+      "gene": "LAG3",
+      "ensembl_id": "ENSG00000089692",
+      "source": "panel"
+    },
+    {
+      "gene": "TIGIT",
+      "ensembl_id": "ENSG00000181847",
+      "source": "panel"
+    },
+    {
+      "gene": "TOX",
+      "ensembl_id": "ENSG00000198846",
+      "source": "panel"
+    },
+    {
+      "gene": "LAYN",
+      "ensembl_id": "ENSG00000204381",
+      "source": "panel"
+    },
+    {
+      "gene": "NKG7",
+      "ensembl_id": "ENSG00000105374",
+      "source": "panel"
+    },
+    {
+      "gene": "GNLY",
+      "ensembl_id": "ENSG00000115523",
+      "source": "panel"
+    },
+    {
+      "gene": "PRF1",
+      "ensembl_id": "ENSG00000180644",
+      "source": "panel"
+    },
+    {
+      "gene": "GZMB",
+      "ensembl_id": "ENSG00000100453",
+      "source": "panel"
+    },
+    {
+      "gene": "GZMH",
+      "ensembl_id": "ENSG00000100450",
+      "source": "panel"
+    },
+    {
+      "gene": "IFNG",
+      "ensembl_id": "ENSG00000111537",
+      "source": "panel"
+    },
+    {
+      "gene": "TCF7",
+      "ensembl_id": "ENSG00000081059",
+      "source": "panel"
+    },
+    {
+      "gene": "SLAMF6",
+      "ensembl_id": "ENSG00000162739",
+      "source": "panel"
+    },
+    {
+      "gene": "IL7R",
+      "ensembl_id": "ENSG00000168685",
+      "source": "panel"
+    },
+    {
+      "gene": "CCR7",
+      "ensembl_id": "ENSG00000126353",
+      "source": "panel"
+    },
+    {
+      "gene": "ASCL1",
+      "ensembl_id": "ENSG00000139352",
+      "source": "panel"
+    },
+    {
+      "gene": "NEUROD1",
+      "ensembl_id": "ENSG00000162992",
+      "source": "panel"
+    },
+    {
+      "gene": "POU2F3",
+      "ensembl_id": "ENSG00000137709",
+      "source": "panel"
+    },
+    {
+      "gene": "YAP1",
+      "ensembl_id": "ENSG00000137693",
+      "source": "panel"
+    },
+    {
+      "gene": "MMP12",
+      "ensembl_id": "ENSG00000262406",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.3260396519409759
+    },
+    {
+      "gene": "S100A2",
+      "ensembl_id": "ENSG00000196754",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.220367592466729
+    },
+    {
+      "gene": "S100A7",
+      "ensembl_id": "ENSG00000143556",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.1562121567981583
+    },
+    {
+      "gene": "RPS26",
+      "ensembl_id": "ENSG00000197728",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.0782506099965151
+    },
+    {
+      "gene": "HBA2",
+      "ensembl_id": "ENSG00000188536",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.074947430000261
+    },
+    {
+      "gene": "S100A8",
+      "ensembl_id": "ENSG00000143546",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.0704952435595775
+    },
+    {
+      "gene": "HBA1",
+      "ensembl_id": "ENSG00000206172",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.0609816748294092
+    },
+    {
+      "gene": "CXCL8",
+      "ensembl_id": "ENSG00000169429",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.0454122625025255
+    },
+    {
+      "gene": "TXNIP",
+      "ensembl_id": "ENSG00000265972",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.0451702681783116
+    },
+    {
+      "gene": "MGP",
+      "ensembl_id": "ENSG00000111341",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.0388515422373642
+    },
+    {
+      "gene": "IGFBP6",
+      "ensembl_id": "ENSG00000167779",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.0353466179221868
+    },
+    {
+      "gene": "SFTPA1",
+      "ensembl_id": "ENSG00000122852",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.0344895037141308
+    },
+    {
+      "gene": "HSPA1B",
+      "ensembl_id": "ENSG00000204388",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.0289147901762852
+    },
+    {
+      "gene": "S100A9",
+      "ensembl_id": "ENSG00000163220",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.0284899343500164
+    },
+    {
+      "gene": "HBB",
+      "ensembl_id": "ENSG00000244734",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUAD \u2192 LUSC",
+      "origin_shift": 0.0277214871531122
+    },
+    {
+      "gene": "TPSB2",
+      "ensembl_id": "ENSG00000197253",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.0236040073343449
+    },
+    {
+      "gene": "SFTPA2",
+      "ensembl_id": "ENSG00000185303",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.0231198800571319
+    },
+    {
+      "gene": "GPR174",
+      "ensembl_id": "ENSG00000147138",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.0220054264883605
+    },
+    {
+      "gene": "CCN1",
+      "ensembl_id": "ENSG00000142871",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.0195541410676894
+    },
+    {
+      "gene": "IL1R2",
+      "ensembl_id": "ENSG00000115590",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.0194430518895387
+    },
+    {
+      "gene": "GZMK",
+      "ensembl_id": "ENSG00000113088",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.0188376945645912
+    },
+    {
+      "gene": "PLA2G2A",
+      "ensembl_id": "ENSG00000188257",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.018008017912507
+    },
+    {
+      "gene": "PSMA6",
+      "ensembl_id": "ENSG00000100902",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUAD",
+      "origin_shift": 0.0174060829270344
+    },
+    {
+      "gene": "RPS27",
+      "ensembl_id": "ENSG00000177954",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 NORMAL",
+      "origin_shift": 0.0167713403967874
+    },
+    {
+      "gene": "MATR3",
+      "ensembl_id": "ENSG00000015479",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUSC",
+      "origin_shift": 0.0151934897483781
+    },
+    {
+      "gene": "MNDA",
+      "ensembl_id": "ENSG00000163563",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 LUAD",
+      "origin_shift": 0.0144314544561963
+    },
+    {
+      "gene": "PRICKLE4",
+      "ensembl_id": "ENSG00000278224",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "NORMAL \u2192 LUSC",
+      "origin_shift": 0.0135886280664375
+    },
+    {
+      "gene": "EEF1G",
+      "ensembl_id": "ENSG00000254772",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUAD \u2192 NORMAL",
+      "origin_shift": 0.0121687340112973
+    },
+    {
+      "gene": "RPL21",
+      "ensembl_id": "ENSG00000122026",
+      "source": "top_driver_luad_lusc_normal",
+      "origin_comparison": "LUSC \u2192 NORMAL",
+      "origin_shift": 0.0117852657501186
+    }
+  ]
+}
