@@ -1,0 +1,13 @@
+gene_set,comparison,n_genes,n_concordant
+panel,luad_to_normal,21,7
+panel,luad_to_sclc,21,9
+panel,normal_to_luad,21,8
+panel,normal_to_sclc,21,9
+panel,sclc_to_luad,21,9
+panel,sclc_to_normal,21,9
+top_driver_luad_lusc_normal,luad_to_normal,29,16
+top_driver_luad_lusc_normal,luad_to_sclc,29,15
+top_driver_luad_lusc_normal,normal_to_luad,29,9
+top_driver_luad_lusc_normal,normal_to_sclc,29,11
+top_driver_luad_lusc_normal,sclc_to_luad,29,9
+top_driver_luad_lusc_normal,sclc_to_normal,29,12
