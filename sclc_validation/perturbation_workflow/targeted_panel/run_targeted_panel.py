@@ -153,12 +153,40 @@ def run_gene(perturb_type: str, source_slug: str, gene: dict, state_embs: dict, 
         model_version="V2",
         clear_mem_ncells=1000,
     )
-    perturber.perturb_data(
-        model_directory=str(model_dir()),
-        input_data_file=str(data_path),
-        output_directory=str(raw_dir),
-        output_prefix=prefix,
-    )
+    try:
+        perturber.perturb_data(
+            model_directory=str(model_dir()),
+            input_data_file=str(data_path),
+            output_directory=str(raw_dir),
+            output_prefix=prefix,
+        )
+    except RuntimeError as exc:
+        # Geneformer's filter_data_by_tokens_and_log has a bare `raise` (no
+        # active exception) when zero cells in the source contain the target
+        # gene -- this is a real, expected outcome for e.g. SCLC-subtype
+        # transcription factors (ASCL1/NEUROD1/POU2F3) tested against normal
+        # T cells, not a bug in this script. Treat it as "0 cells detected"
+        # and move on rather than crashing the whole sweep.
+        if "No active exception to reraise" in str(exc):
+            logging.warning(
+                "[%s/%s/%s] 0 cells detected -- skipping (expected for genes not "
+                "biologically active in this source's cell type)",
+                perturb_type, source_slug, symbol,
+            )
+            payload = {
+                "completed_utc": utc_now(),
+                "perturb_type": perturb_type,
+                "source": source_slug,
+                "gene": symbol,
+                "ensembl_id": ensembl_id,
+                "elapsed_seconds": time.time() - started,
+                "n_raw_files": 0,
+                "skipped_zero_cells_detected": True,
+            }
+            done_file.write_text(json.dumps(payload, indent=2) + "\n")
+            return
+        raise
+
     output_files = sorted(raw_dir.glob(f"in_silico_{perturb_type}_{prefix}_*_raw.pickle"))
     payload = {
         "completed_utc": utc_now(),
