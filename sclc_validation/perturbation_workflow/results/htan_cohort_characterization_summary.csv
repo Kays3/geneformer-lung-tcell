@@ -1,0 +1,10 @@
+disease,split,n_cells,n_donors
+lung adenocarcinoma,eval,5611,4
+lung adenocarcinoma,test,6387,4
+lung adenocarcinoma,train,17831,14
+normal,eval,1620,1
+normal,test,566,1
+normal,train,2334,2
+small cell lung carcinoma,eval,2330,3
+small cell lung carcinoma,test,2424,3
+small cell lung carcinoma,train,7037,13

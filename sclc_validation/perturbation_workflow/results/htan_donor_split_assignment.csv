@@ -1,0 +1,46 @@
+disease,individual,n_cells,split
+lung adenocarcinoma,RU1057,1899,eval
+lung adenocarcinoma,RU1128,944,eval
+lung adenocarcinoma,RU676,2712,eval
+lung adenocarcinoma,RU684,56,eval
+lung adenocarcinoma,RU1137,569,test
+lung adenocarcinoma,RU1138,2625,test
+lung adenocarcinoma,RU1170,2086,test
+lung adenocarcinoma,RU675,1107,test
+lung adenocarcinoma,RU1038,1579,train
+lung adenocarcinoma,RU1061,241,train
+lung adenocarcinoma,RU1134,2599,train
+lung adenocarcinoma,RU1135,1000,train
+lung adenocarcinoma,RU1262,884,train
+lung adenocarcinoma,RU1271,181,train
+lung adenocarcinoma,RU255,1238,train
+lung adenocarcinoma,RU653,47,train
+lung adenocarcinoma,RU661,3475,train
+lung adenocarcinoma,RU666,163,train
+lung adenocarcinoma,RU681,77,train
+lung adenocarcinoma,RU682,2099,train
+lung adenocarcinoma,RU699,2195,train
+lung adenocarcinoma,RU701,2053,train
+normal,RU684,1620,eval
+normal,RU675,566,test
+normal,RU682,1044,train
+normal,RU685,1290,train
+small cell lung carcinoma,RU1152,266,eval
+small cell lung carcinoma,RU1311,108,eval
+small cell lung carcinoma,RU779,1956,eval
+small cell lung carcinoma,PleuralEffusion,1816,test
+small cell lung carcinoma,RU1080,396,test
+small cell lung carcinoma,RU426,212,test
+small cell lung carcinoma,RU1065,2208,train
+small cell lung carcinoma,RU1066,876,train
+small cell lung carcinoma,RU1108,49,train
+small cell lung carcinoma,RU1124,496,train
+small cell lung carcinoma,RU1144,390,train
+small cell lung carcinoma,RU1145,892,train
+small cell lung carcinoma,RU1181,261,train
+small cell lung carcinoma,RU1195,921,train
+small cell lung carcinoma,RU1215,400,train
+small cell lung carcinoma,RU1229,235,train
+small cell lung carcinoma,RU1231,47,train
+small cell lung carcinoma,RU1293,212,train
+small cell lung carcinoma,RU1322,50,train
