@@ -1,4 +1,4 @@
-# Geneformer NSCLC T-cell workflow
+# Geneformer lung T-cell workflow (NSCLC + SCLC)
 
 For moving the active Geneformer experiment, trained model, perturbation
 outputs, and reporting environment to another machine, see the
