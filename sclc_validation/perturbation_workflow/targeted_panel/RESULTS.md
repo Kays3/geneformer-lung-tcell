@@ -32,7 +32,7 @@ the pipeline rather than a claim about T-cell biology.
 
 ## Panel genes: concordant hits by comparison
 
-Of 21 x 6 = 126 panel-gene x comparison combinations tested, **60 are
+Of 21 x 6 = 126 panel-gene x comparison combinations tested, **51 are
 concordant** (both delete and overexpress FDR < 0.05, opposite-sign shift).
 Every one of the 21 panel genes has at least one concordant comparison.
 
@@ -85,13 +85,52 @@ evaluation pipeline already scoped in `evaluation/biology/README.md`
 coherence), not as validated findings.** That evaluation has not been run
 against this panel.
 
+## Donor-level consistency
+
+For each of the 123 concordant hits, per-cell shift values were recovered
+from the raw perturbation pickles (which store one shift scalar per
+processed cell, in the exact order `InSilicoPerturber` processes them: for
+`delete`, filtered to cells containing the gene's token, then always sorted
+by token-sequence length descending; for `overexpress`, no token filter,
+same sort) and joined back to donor identity via the cached per-source
+dataset. This was validated against the aggregate stats before trusting it
+at scale: replicating this exact order for TIGIT/luad_to_sclc/delete
+recovered 1,320 cells and a mean shift of 0.006911 -- matching the reported
+`N_Detections` and `Shift_to_goal_end` exactly.
+
+Each hit was classified using the **stricter of its delete and overexpress
+arms**:
+
+| Class | N | Meaning |
+|---|---:|---|
+| Fully consistent | 43 | 100% of donors agree in sign, in both arms |
+| Majority consistent | 33 | \>=50% but <100% of donors agree, in both arms |
+| Inconsistent | 9 | <50% of donors agree in at least one arm |
+| Single-donor only | 38 | Fewer than 2 donors detected the gene in at least one arm -- cannot be assessed (this is the `normal` source's structural limitation: only 1 test donor) |
+
+**43 hits are fully donor-consistent**, including the large-N panel hits
+already highlighted above -- TIGIT (all 3 of its comparisons), GZMH, CCR7,
+NKG7, TCF7, IL7R, SLAMF6, CTLA4, HAVCR2, IFNG, and both ASCL1 and NEUROD1
+(2 comparisons each). These are the strongest candidates in this screen:
+concordant between perturbation types, well-powered, and consistent across
+every donor that had data.
+
+**9 hits are inconsistent** (a minority-donor disagreement in at least one
+arm) and should not be treated as robust despite passing the
+concordance/FDR bar: `GZMB` (sclc_to_luad, sclc_to_normal), `PRF1`
+(sclc_to_luad), `LAG3` (sclc_to_luad), and four top-driver genes (`HBA2`,
+`HBB`, `S100A2`, `MNDA`, `RPS27` in various comparisons) -- several of which
+were already separately flagged above as plausible contamination signals,
+so donor inconsistency here is a second, independent reason to discount
+them, not a new concern.
+
+Full per-hit classification: `results/targeted_panel_concordant_hits_with_donor_robustness.csv`.
+Per-donor breakdown for every hit: `results/targeted_panel_donor_consistency.csv`.
+Rebuild with `donor_consistency.py` (must run on the compute host -- it reads
+the raw perturbation pickles, which are not stored in Git).
+
 ## What has not been done yet
 
-- **Donor-level consistency.** All shifts above are cell-level aggregates
-  across a source's held-out cells; whether a concordant effect holds
-  consistently across donors (vs. being driven by one or two donors) has not
-  been checked. This is listed as required in `../METHODS.md` \S8 and is the
-  most important next step before treating any hit here as a candidate.
 - **Ambient-RNA / contamination correction**, per `evaluation/biology/README.md`.
 - **Sensitivity analysis excluding ribosomal/rank-dominant genes.**
 - **Pathway-level interpretation.**
