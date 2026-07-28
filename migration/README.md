@@ -8,7 +8,7 @@ absolute symlinks are tied to the source machine.
 ## Pinned source state
 
 - Monitor repository: current `main` branch of
-  `https://github.com/Kays3/geneformer-nsclc.git`.
+  `https://github.com/Kays3/geneformer-lung-tcell.git`.
 - Geneformer upstream: `https://huggingface.co/ctheodoris/Geneformer`, commit
   `f45a6c7`.
 - Python: 3.12.
@@ -85,7 +85,7 @@ Run on the target machine:
 mkdir -p /home/petadimensionlab/workspace
 cd /home/petadimensionlab/workspace
 
-git clone https://github.com/Kays3/geneformer-nsclc.git \
+git clone https://github.com/Kays3/geneformer-lung-tcell.git \
   geneformer-nsclc-monitor
 
 git clone https://huggingface.co/ctheodoris/Geneformer
