@@ -36,3 +36,12 @@ A specific-gene-list run also routes through a different internal code path
 `num_proc=1`; this crashes if CUDA is already initialized in the parent
 process ("Cannot re-initialize CUDA in forked subprocess"). Fixed by forcing
 the `spawn` multiprocessing start method before any CUDA-touching import.
+
+Check a live or completed run with:
+
+```bash
+./check_status.sh
+```
+
+Override the compute-output directory with `TARGETED_PANEL_RUN_DIR` when the
+run is stored somewhere other than the default `~/workspace/KD/` location.
