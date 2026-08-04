@@ -1,0 +1,21 @@
+{
+  "generated_utc": "2026-08-01T09:56:37.937496+00:00",
+  "artifact_root": "/home/thinkstation2/workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
+  "primary_dataset": "donor-held-out test cells",
+  "reference_dataset": "training cells only",
+  "complete": false,
+  "arms": [
+    "delete",
+    "overexpress"
+  ],
+  "comparisons": [
+    "sclc_to_luad",
+    "sclc_to_normal",
+    "luad_to_sclc",
+    "luad_to_normal",
+    "normal_to_sclc",
+    "normal_to_luad"
+  ],
+  "fdr_threshold": 0.05,
+  "minimum_detections": 25
+}

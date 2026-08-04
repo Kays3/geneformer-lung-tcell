@@ -1,0 +1,13 @@
+arm,comparison,status,genes_tested,qualified_primary,fdr_significant,positive_shift
+delete,sclc_to_luad,missing,0,0,0,0
+delete,sclc_to_normal,missing,0,0,0,0
+delete,luad_to_sclc,missing,0,0,0,0
+delete,luad_to_normal,missing,0,0,0,0
+delete,normal_to_sclc,missing,0,0,0,0
+delete,normal_to_luad,missing,0,0,0,0
+overexpress,sclc_to_luad,missing,0,0,0,0
+overexpress,sclc_to_normal,missing,0,0,0,0
+overexpress,luad_to_sclc,missing,0,0,0,0
+overexpress,luad_to_normal,missing,0,0,0,0
+overexpress,normal_to_sclc,missing,0,0,0,0
+overexpress,normal_to_luad,missing,0,0,0,0
