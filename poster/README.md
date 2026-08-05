@@ -131,15 +131,23 @@ made visible: a **red dashed rule** marks the A0 bottom edge on screen.
 `--fit` scales **every** font size on the poster — all 46 declarations,
 including the title, the P25 box and the large stat figures:
 
-| `--fit` | title | body | smallest label |
-|---|---|---|---|
-| `1.00` | 40 pt | 17.5 pt | 10.5 pt |
-| `0.94` | 38 pt | 16.4 pt | 9.9 pt |
-| `0.88` | 35 pt | 15.4 pt | 9.2 pt ← practical floor |
+| `--fit` | title | body | smallest label | fits 1 A0 page? |
+|---|---|---|---|---|
+| `0.88` | 35 pt | 15.4 pt | 9.2 pt ← practical floor | yes |
+| `1.00` | 40 pt | 17.5 pt | 10.5 pt | yes (original) |
+| `1.20` | 48 pt | 21.0 pt | 12.6 pt ← **current default** | yes |
+| `1.60` | 64 pt | 28.0 pt | 16.8 pt | yes — measured ceiling |
+| `1.65` | 66 pt | 28.9 pt | 17.3 pt | no — spills to a 2nd page |
 
 Do not go below about `0.88`: the smallest labels fall under 9 pt and stop
-being readable at normal poster viewing distance. If it still overruns at
-`0.88`, cut content rather than shrinking further.
+being readable at normal poster viewing distance.
+
+The 1.60 ceiling is **content-dependent**, not a fixed limit — it was found
+by rendering at each value and checking the page count Cell 6 reports. Any
+edit to panel text, table rows, or figures changes how much room is left,
+so re-measure rather than assuming 1.60 still holds after content changes.
+If it overruns at your target `--fit`, cut content rather than shrinking
+below the 0.88 floor.
 
 The red rule is hidden in print output.
 
