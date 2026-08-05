@@ -79,16 +79,44 @@ box, so the poster still builds while an analysis is in flight.
 
 ## Exporting a PDF
 
-Open the generated HTML in Chrome:
+**Preferred: Cell 6 in the notebook.** Renders the HTML with WeasyPrint,
+which reads the template's `@page { size: A0 portrait }` rule directly, so
+the output is exactly 841 × 1189 mm with no print-dialog steps. Needs
+WeasyPrint's system libraries (Pango, Cairo, GDK-Pixbuf) — a bare
+`pip install weasyprint` is usually not enough:
 
+```
+conda install -c conda-forge weasyprint pango cairo gdk-pixbuf
+```
+
+The cell asserts the export landed on exactly one A0 page and fails loudly
+if not — see "Why every figure has an inline height" below.
+
+**Fallback: browser print.** Open the generated HTML in Chrome:
 Print → Paper **A0** → Margins **None** → Scale **100%** →
-**Background graphics ON** → Save as PDF.
-
-Background graphics is not optional: with it off, every coloured panel,
-header and slide mount prints white.
+**Background graphics ON** → Save as PDF. Background graphics is not
+optional: with it off, every coloured panel, header and slide mount prints
+white.
 
 The organizers supply the 20 × 20 cm presentation-number panel; the poster
 reserves matching space at the top left showing the abstract number.
+
+### Why every figure has an inline height
+
+WeasyPrint 69 mis-paginates this template's `<img>` tags when they have
+`width:100%` and no matching height — it silently splits one page of content
+into several mostly-blank pages instead of raising an error. This has
+nothing to do with content actually overflowing A0; a browser renders the
+identical markup on one page.
+
+The fix lives in `img_tag(..., width_mm=...)` in Cell 3: it reads each
+figure's real pixel dimensions and writes an explicit `height` in
+millimetres, computed from the known column width in
+`poster_template.html`'s CSS grid. If you resize a column or add a new
+figure panel, add its width to `WIDTH_MM` in Cell 3 so the image gets a
+matching inline height — an image without one will silently reintroduce the
+multi-page bug, which is why Cell 6 asserts the page count rather than
+trusting the render.
 
 ## If the content does not fit the sheet
 
@@ -148,5 +176,14 @@ introduced errors up to 61/255 on the expression colour map.
 ## Requirements
 
 ```
+pip install pandas qrcode Pillow pypdfium2
+```
+
+For the WeasyPrint PDF export (Cell 6), a conda environment with the system
+libraries is more reliable than pip alone:
+
+```
+conda create -n pdfrender -c conda-forge python=3.11 weasyprint pango cairo gdk-pixbuf
+conda activate pdfrender
 pip install pandas qrcode Pillow pypdfium2
 ```
