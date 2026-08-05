@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<!--
+  JSDP poster template.
+  Tokens written as double-brace NAME are replaced by generate_poster.ipynb.
+  Edit layout / wording freely here; the notebook only substitutes tokens.
+  Physical size: 90 cm wide x 210 cm tall (3:7). Screen render = 900 x 2100 px.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{CONF_NAME}} {{ABSTRACT_NO}} - {{DRAFT_LABEL}}</title>
+<style>
+:root{
+  --W:900px;
+  --navy:#0d2b45; --teal:#0b7065; --sky:#1565a8;
+  --mauve:#5e3492; --amber:#b56c18; --green:#1a6b3c;
+  --bg:#f0f3f6; --panel:#ffffff;
+  --gap:11px; --pad:11px; --rad:5px; --fs:11px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:#8a9bb0;}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:var(--fs);color:#1a202c;
+  display:flex;justify-content:center;padding:18px;}
+.poster{width:var(--W);background:var(--bg);border-radius:8px;overflow:hidden;
+  box-shadow:0 6px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;}
+
+/* header */
+header{background:var(--navy);color:#fff;padding:14px 22px 12px;
+  display:grid;grid-template-columns:160px 1fr;gap:10px;align-items:start;
+  border-bottom:4px solid var(--teal);}
+.num-box{background:var(--teal);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:8px;text-align:center;border-radius:4px;}
+.num-box .n{font-size:36px;font-weight:700;line-height:1;}
+.num-box .s{font-size:9px;opacity:.75;margin-top:3px;}
+.h-title{font-size:16.5px;font-weight:700;line-height:1.28;}
+.h-authors{font-size:11.5px;margin-top:6px;}
+.h-affil{font-size:10px;margin-top:3px;opacity:.82;line-height:1.5;}
+.h-meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:9.5px;
+  opacity:.85;border-top:1px solid rgba(255,255,255,.2);padding-top:6px;flex-wrap:wrap;}
+.conf-badge{background:var(--teal);border-radius:4px;padding:2px 9px;font-weight:700;font-size:12px;}
+.draft-badge{background:var(--amber);border-radius:4px;padding:2px 8px;font-weight:700;font-size:10px;}
+.coi-box{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  border-radius:3px;padding:2px 8px;font-size:9px;}
+
+/* layout */
+.body{flex:1;display:grid;grid-template-columns:265px 1fr 285px;gap:var(--gap);padding:var(--gap);}
+.col{display:flex;flex-direction:column;gap:var(--gap);}
+.sec{background:var(--navy);color:#9cc5d8;font-size:9px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-left:4px solid var(--teal);}
+
+/* panels */
+.panel{background:var(--panel);border-radius:var(--rad);padding:var(--pad);
+  border-top:3px solid var(--teal);box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.panel.sky{border-top-color:var(--sky);}
+.panel.mauve{border-top-color:var(--mauve);}
+.panel.amber{border-top-color:var(--amber);}
+.panel.green{border-top-color:var(--green);}
+.panel.mid{border-top-color:#85929e;}
+.panel h2{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--teal);margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid #dce5ed;}
+.panel.sky h2{color:var(--sky);}
+.panel.mauve h2{color:var(--mauve);}
+.panel.amber h2{color:var(--amber);}
+.panel.green h2{color:var(--green);}
+.panel p{margin-bottom:4px;line-height:1.45;}
+.panel ul{padding-left:14px;margin-bottom:4px;}
+.panel li{margin-bottom:2px;line-height:1.4;}
+
+/* stats */
+.sg{display:grid;gap:5px;margin:4px 0;}
+.sg3{grid-template-columns:repeat(3,1fr);}
+.sg4{grid-template-columns:repeat(4,1fr);}
+.sb{background:#eaf4fb;border:1px solid #aed6f1;border-radius:4px;padding:5px 4px;text-align:center;}
+.sb .v{font-size:17px;font-weight:700;color:var(--navy);line-height:1.1;}
+.sb .v.t{color:var(--teal);} .sb .v.m{color:var(--mauve);}
+.sb .l{font-size:7.5px;color:#556;margin-top:2px;line-height:1.3;}
+
+/* tables */
+table.mt{width:100%;border-collapse:collapse;font-size:9px;margin-top:4px;}
+table.mt th{background:var(--navy);color:#fff;padding:3px 5px;text-align:left;font-size:8.5px;}
+table.mt.s th{background:var(--sky);}
+table.mt.m th{background:var(--mauve);}
+table.mt td{padding:2px 5px;border-bottom:1px solid #eaf0f6;}
+table.mt tr:nth-child(even) td{background:#f4f8ff;}
+.num{text-align:right;font-family:'Consolas',monospace;}
+.bold{font-weight:700;}
+.hl{color:var(--teal);font-weight:700;}
+
+/* figures */
+.fig{width:100%;border-radius:4px;border:1px solid #dce5ed;display:block;}
+.fcap{font-size:7.8px;color:#718096;margin-top:2px;text-align:center;font-style:italic;line-height:1.4;}
+.pending{background:#e8ecf0;border:2px dashed #aab;border-radius:4px;
+  padding:18px 10px;text-align:center;color:#667;font-size:10px;margin:4px 0;}
+.spatial-hero{position:relative;border-radius:4px;overflow:hidden;background:#000;
+  border:2px solid var(--mauve);}
+.spatial-hero img{width:100%;display:block;}
+.spatial-hero .ov{position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(13,43,69,.9));padding:6px 10px;
+  color:#fff;font-size:8px;line-height:1.4;}
+
+/* workflow */
+.wf{display:flex;align-items:center;gap:2px;margin:4px 0;}
+.ws{flex:1;background:#eaf4fb;border:1px solid #aed6f1;border-radius:4px;
+  padding:4px 2px;text-align:center;font-size:8px;line-height:1.3;}
+.wa{color:#aaa;font-size:10px;}
+
+/* lists */
+.ladder{list-style:none;padding:0;}
+.ladder li{padding:2px 6px 2px 23px;margin-bottom:2px;border-radius:3px;
+  background:#eafaf1;border-left:3px solid var(--teal);position:relative;
+  line-height:1.35;font-size:9.5px;}
+.ladder li::before{content:attr(data-lv);position:absolute;left:5px;
+  font-weight:700;font-size:7.5px;color:var(--teal);top:4px;}
+.concl{list-style:none;padding:0;}
+.concl li{padding:3px 7px 3px 21px;margin-bottom:3px;border-radius:3px;
+  background:#eafaf1;border-left:3px solid var(--teal);position:relative;line-height:1.4;}
+.concl li::before{content:"\2713";position:absolute;left:6px;color:var(--teal);font-weight:700;}
+
+/* future directions */
+.fd{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:4px;}
+.fb{background:#fdfaf5;border-left:3px solid var(--amber);border-radius:3px;padding:4px 6px;}
+.fb h3{font-size:8.5px;font-weight:700;color:var(--amber);margin-bottom:2px;}
+.fb ul{padding-left:12px;font-size:9px;}
+
+/* compute grid */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px;}
+.ci{background:#f8f9fb;border:1px solid #d0d8e4;border-radius:3px;padding:4px 5px;}
+.ci .cl{font-size:7.5px;font-weight:700;text-transform:uppercase;color:var(--sky);}
+.ci .cv{font-size:9.5px;line-height:1.4;}
+
+/* qr */
+.qr-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;background:#f8f9fb;
+  border:1px dashed #aed6f1;border-radius:4px;padding:6px;text-align:center;}
+.qr-wrap img{width:80px;height:80px;}
+.ql{font-size:8px;color:#446;line-height:1.4;}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+footer{background:var(--navy);color:#9ab;font-size:8.5px;padding:5px 14px;
+  display:flex;justify-content:space-between;border-top:3px solid var(--teal);}
+</style>
+</head>
+<body>
+<div class="poster">
+
+<header>
+  <div class="num-box">
+    <div class="n">{{ABSTRACT_NO}}</div>
+    <div class="s">Abstract No.<br>{{CONF_NAME}}</div>
+  </div>
+  <div>
+    <div class="h-title">{{TITLE}}</div>
+    <div class="h-authors"><strong>{{AUTHOR1}}</strong><sup>1</sup> &emsp;|&emsp; <strong>{{AUTHOR2}}</strong><sup>1</sup></div>
+    <div class="h-affil"><sup>1</sup> {{AFFIL}}<br>Correspondence: {{EMAIL}}</div>
+    <div class="h-meta">
+      <span class="conf-badge">{{CONF_NAME}}</span>
+      <span class="draft-badge">{{DRAFT_LABEL}}</span>
+      <span class="coi-box"><strong>COI:</strong> {{COI}}</span>
+      <span>HTAN MSK CELLxGENE &middot; GSE263196 (10x Visium) &middot; Geneformer-V2-104M</span>
+    </div>
+  </div>
+</header>
+
+<div class="body">
+
+<!-- ================= LEFT ================= -->
+<div class="col">
+  <div class="sec">A &middot; Background &amp; Methods</div>
+
+  <div class="panel">
+    <h2>Background &amp; Motivation</h2>
+    <p><strong>Small cell lung cancer (SCLC)</strong> is the most aggressive thoracic malignancy
+      and responds poorly to immune checkpoint blockade despite high tumour mutational burden.
+      T-cell dysfunction in the SCLC tumour microenvironment is a candidate mediator, but its
+      transcriptional basis is poorly characterised at single-cell resolution.</p>
+    <p><strong>Gap:</strong> Conventional differential expression captures mean shifts and misses
+      non-linear, context-dependent regulatory relationships encoded in each cell's full
+      transcriptomic rank order.</p>
+    <p><strong>Approach:</strong> Geneformer-V2-104M fine-tuned on HTAN SCLC T cells, followed by
+      bidirectional <em>in silico</em> perturbation screening and orthogonal 10x Visium
+      digital-pathology spatial validation.</p>
+  </div>
+
+  <div class="panel sky">
+    <h2>Cohort &mdash; HTAN MSK (CELLxGENE)</h2>
+    <table class="mt s">
+      <tr><th>Disease</th><th class="num">Train</th><th class="num">Eval</th><th class="num">Test</th><th class="num">Donors</th></tr>
+      {{COHORT_ROWS}}
+    </table>
+    <p style="margin-top:4px;font-size:8.5px;color:#556;">
+      CD4 + CD8 T cells &middot; donor-disjoint splits (seed 43) &middot; cross-disease guard for
+      paired tumour-normal donors &middot; test split: {{N_TEST_DONORS}} donors.
+    </p>
+  </div>
+
+  <div class="panel green">
+    <h2>Workflow &amp; Validation Hierarchy</h2>
+    <div class="wf">
+      <div class="ws">HTAN<br>T cells</div><div class="wa">&rarr;</div>
+      <div class="ws">Tokenise<br>Fine-tune</div><div class="wa">&rarr;</div>
+      <div class="ws">Disease<br>Classifier</div><div class="wa">&rarr;</div>
+      <div class="ws">Bidirectional<br>Perturb</div><div class="wa">&rarr;</div>
+      <div class="ws">Concordance<br>Consistency</div><div class="wa">&rarr;</div>
+      <div class="ws">Spatial<br>Validation</div>
+    </div>
+    <ul class="ladder" style="margin-top:5px;">
+      <li data-lv="L1">Donor leakage audit &mdash; zero leakage across 42 donors; cross-disease guard for paired tumour-normal donors</li>
+      <li data-lv="L2">Held-out test &mdash; {{ACC}} accuracy, macro F1 = {{MACRO_F1}} ({{N_TEST_CELLS}} cells, {{N_TEST_DONORS}} donors)</li>
+      <li data-lv="L3">Internal positive control &mdash; ASCL1 / NEUROD1 recover expected SCLC master regulator behaviour</li>
+      <li data-lv="L4">Bidirectional concordance &mdash; {{N_CONCORDANT}} concordant hits; {{N_FULLY}} fully donor-consistent</li>
+      <li data-lv="L5">Orthogonal spatial validation &mdash; pooled rho = {{RHO}} [{{CI_LOW}}, {{CI_HIGH}}]</li>
+    </ul>
+  </div>
+
+  <div class="panel amber">
+    <h2>Computational Requirements</h2>
+    <div class="cg">
+      <div class="ci"><div class="cl">GPU</div><div class="cv">NVIDIA GB10 &middot; 119 GiB unified memory</div></div>
+      <div class="ci"><div class="cl">Screen scale</div><div class="cv">~5.88M cell-gene perturbations &middot; 137 shards</div></div>
+      <div class="ci"><div class="cl">Wall-clock</div><div class="cv">~48 h GPU (delete + overexpress)</div></div>
+      <div class="ci"><div class="cl">Fine-tuning</div><div class="cv">1 epoch &middot; LR 5e-5 &middot; 6 frozen layers</div></div>
+    </div>
+  </div>
+
+  {{EXTRA_LEFT_PANELS}}
+</div>
+
+<!-- ================= MIDDLE ================= -->
+<div class="col">
+  <div class="sec">B &middot; Classifier &amp; Perturbation Results</div>
+
+  <div class="panel mauve">
+    <h2>Classifier Performance &mdash; SCLC vs LUAD vs Normal</h2>
+    <div class="sg sg4">
+      <div class="sb"><div class="v t">{{ACC}}</div><div class="l">Test accuracy</div></div>
+      <div class="sb"><div class="v t">{{MACRO_F1}}</div><div class="l">Macro F1</div></div>
+      <div class="sb"><div class="v">{{N_TEST_CELLS}}</div><div class="l">Held-out cells</div></div>
+      <div class="sb"><div class="v">{{N_TEST_DONORS}}</div><div class="l">Test donors</div></div>
+    </div>
+    <div class="twocol" style="margin-top:5px;">
+      <div>
+        {{IMG_CM}}
+        <div class="fcap">Fig. 1 &mdash; Held-out test confusion matrix.</div>
+      </div>
+      <div>
+        <table class="mt m">
+          <tr><th>True \ Pred</th><th class="num">SCLC</th><th class="num">Normal</th><th class="num">LUAD</th><th class="num">Recall</th></tr>
+          {{CM_ROWS}}
+        </table>
+        <p style="margin-top:5px;font-size:9px;">
+          <strong>Internal control (ASCL1 / NEUROD1):</strong> deletion shifts cells toward LUAD
+          (+0.157 and +0.378, p &lt; 1e-7); overexpression reinforces SCLC identity. Directional
+          concordance confirms the pipeline recovers canonical SCLC master regulator biology.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel sky">
+    <h2>Bidirectional Perturbation &mdash; SCLC-Source Concordant Hits</h2>
+    <div class="sg sg4">
+      <div class="sb"><div class="v">300</div><div class="l">Gene-runs</div></div>
+      <div class="sb"><div class="v">{{N_CONCORDANT}}</div><div class="l">Concordant hits</div></div>
+      <div class="sb"><div class="v t">{{N_FULLY}}</div><div class="l">Fully donor-consistent</div></div>
+      <div class="sb"><div class="v">21/21</div><div class="l">Panel genes with a hit</div></div>
+    </div>
+    <table class="mt s" style="margin-top:5px;">
+      <tr><th>Gene</th><th>Comparison</th><th class="num">Delete</th><th class="num">Overexpress</th><th class="num">N cells</th><th>Donor consistency</th></tr>
+      {{HIT_ROWS}}
+    </table>
+    <p style="font-size:8px;color:#556;margin-top:3px;">
+      Values are mean cosine shift toward the goal state. A gene is concordant when deletion and
+      overexpression move cells in opposite directions with FDR &lt; 0.05 in both arms.
+    </p>
+  </div>
+
+  {{EXTRA_MIDDLE_PANELS}}
+
+  <div class="sec">C &middot; Spatial Validation &mdash; Digital Pathology (10x Visium, GSE263196)</div>
+
+  <div class="panel mauve" style="flex:1;">
+    <h2>T-Cell Dysfunction Co-localises with T-Cell Abundance in SCLC Tissue</h2>
+    <div class="sg sg3" style="margin-bottom:5px;">
+      <div class="sb"><div class="v m">{{RHO}}</div><div class="l">Pooled Spearman rho<br>[{{CI_LOW}}, {{CI_HIGH}}]</div></div>
+      <div class="sb"><div class="v m">{{N_SIG_SAMPLES}}</div><div class="l">Samples with p &lt; 0.001</div></div>
+      <div class="sb"><div class="v m">{{N_SPOTS}}</div><div class="l">Valid spots</div></div>
+    </div>
+    <div class="spatial-hero">
+      {{IMG_SPATIAL}}
+      <div class="ov"><strong>Fig. 2</strong> &mdash; 10x Visium spatial maps across SCLC tumour
+        sections. T-cell abundance score and T-cell dysfunction score are computed from disjoint
+        marker gene sets, so the correlation is not a self-correlation.</div>
+    </div>
+    <div class="twocol" style="margin-top:6px;">
+      <div>
+        {{IMG_FOREST}}
+        <div class="fcap">Fig. 3 &mdash; Per-sample Spearman rho with 95% CI (Fisher-z meta-analysis).</div>
+      </div>
+      <div>
+        <table class="mt m">
+          <tr><th>Sample</th><th class="num">Spots</th><th class="num">rho</th><th class="num">95% CI</th><th class="num">p</th></tr>
+          {{SPATIAL_ROWS}}
+        </table>
+        <div style="background:#f3eeff;border:1px solid #c9aff7;border-radius:3px;
+          padding:5px 7px;margin-top:5px;font-size:9.5px;">
+          <strong style="color:var(--mauve)">Interpretation:</strong> T-cell infiltration
+          co-localises with exhaustion programme expression in SCLC tumour tissue, independent of
+          the single-cell modality used to derive those programmes. Between-patient heterogeneity
+          indicates variation in tumour microenvironment composition across cases.
+        </div>
+        <p style="font-size:8px;color:#718096;margin-top:4px;">
+          Caveats: marker-score proxy rather than formal deconvolution; no Normal/LUAD spatial
+          controls, so SCLC-specificity is untested; correlational design in archival tissue.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= RIGHT ================= -->
+<div class="col">
+  <div class="sec">D &middot; Conclusions &amp; Future Directions</div>
+
+  <div class="panel">
+    <h2>Conclusions</h2>
+    <ul class="concl">{{CONCLUSIONS}}</ul>
+  </div>
+
+  <div class="panel mid">
+    <h2>Limitations</h2>
+    <ul>{{LIMITATIONS}}</ul>
+  </div>
+
+  <div class="panel amber">
+    <h2>Future Directions</h2>
+    <div class="fd">{{FUTURE}}</div>
+  </div>
+
+  {{EXTRA_RIGHT_PANELS}}
+
+  <div class="panel mid">
+    <h2>References</h2>
+    <p style="font-size:8.8px;line-height:1.6;">
+      1. Theodoris CV et al. (2023) Transfer learning enables predictions in network biology.
+         <em>Nature</em> 618, 616&ndash;624.<br>
+      2. HTAN MSK collection, CELLxGENE dataset 6fde3ad9.<br>
+      3. GSE263196 &mdash; 10x Visium SCLC fresh-frozen tumour sections, NCBI GEO.<br>
+      4. KEGG, Reactome and GO:BP pathway databases.
+    </p>
+  </div>
+
+  <div class="panel sky">
+    <h2>Repository &amp; Digital Version</h2>
+    <div class="qr-wrap">
+      {{IMG_QR}}
+      <div class="ql"><strong>Scan for the repository</strong><br>{{GITHUB_URL}}<br>
+        <span style="font-size:7px;color:#888;">Code, data tables, notebooks and all poster drafts</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /body -->
+
+<footer>
+  <span>{{AUTHOR1}} &amp; {{AUTHOR2}} &middot; {{AFFIL}} &middot; {{CONF_NAME}} {{ABSTRACT_NO}} &middot; <strong>{{DRAFT_LABEL}}</strong></span>
+  <span>HTAN MSK CELLxGENE &middot; GSE263196 &middot; Geneformer-V2-104M &middot; {{EMAIL}}</span>
+</footer>
+
+</div>
+</body>
+</html>
