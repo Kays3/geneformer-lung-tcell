@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<!--
+  JSDP poster template - A0 portrait (841 x 1189 mm), digital pathology theme.
+  Tokens written as double-brace NAME are replaced by generate_poster.ipynb.
+  Print: Chrome > Print > Paper A0 > Margins None > Scale 100% > Background graphics ON.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{CONF_NAME}} {{ABSTRACT_NO}} - {{DRAFT_LABEL}}</title>
+<style>
+/* ============================================================
+   A0 PORTRAIT GEOMETRY
+   ============================================================ */
+@page { size: A0 portrait; margin: 0; }
+
+:root{
+  /* structure */
+  --A0-W: 841mm;
+  --A0-H: 1189mm;
+  --pad: 7mm;
+  --gap: 7mm;
+  --rad: 2.4mm;
+
+  /* computational palette */
+  --navy:  #10243c;
+  --teal:  #0b6f6a;
+  --sky:   #17608f;
+  --green: #1a6b3c;
+  --amber: #a8631a;
+
+  /* digital pathology palette - hematoxylin & eosin derived */
+  --hema:      #3d2f6b;   /* hematoxylin, nuclear blue-violet */
+  --hema-lt:   #6b5aa8;
+  --hema-wash: #f0edf9;
+  --eosin:     #b8465e;   /* eosin, cytoplasmic rose */
+  --eosin-lt:  #d98a9c;
+  --eosin-wash:#fdf0f3;
+
+  /* neutrals */
+  --bg:    #eef1f5;
+  --panel: #ffffff;
+  --rule:  #d5dee7;
+  --ink:   #16202c;
+  --ink-2: #4a5768;
+
+  /* ---- FIT KNOB -------------------------------------------------
+     Scales EVERY font size on the poster (all 47 declarations,
+     title and stat figures included).
+
+     If content spills past the red dashed A0 edge rule on screen,
+     lower this; if there is slack above it, raise it.
+
+       1.00  title 40pt, body 17.5pt, smallest 10.5pt
+       0.94  title 38pt, body 16.4pt, smallest  9.9pt
+       0.88  title 35pt, body 15.4pt, smallest  9.2pt  <- practical floor
+
+     Do not go below ~0.88: the smallest labels drop under 9pt and
+     stop being readable at normal poster viewing distance. If it
+     still does not fit at 0.88, cut content instead.             */
+  --fit: 1.00;
+
+  /* type scale for A0 (read at ~1 m) */
+  --fs-body:  calc(17.5pt * var(--fit));
+  --fs-small: calc(13pt * var(--fit));
+  --fs-table: calc(14pt * var(--fit));
+  --fs-cap:   calc(12.5pt * var(--fit));
+  --fs-h2:    calc(19pt * var(--fit));
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+html,body{ background:#7b8794; }
+body{
+  font-family:"Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:var(--fs-body);
+  color:var(--ink);
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+/* Screen preview shrinks the sheet; print renders 1:1. */
+@media screen{
+  body{ display:flex; justify-content:center; padding:16px; }
+  .poster{ zoom:0.58; box-shadow:0 8px 40px rgba(0,0,0,.4); }
+}
+@media print{
+  body{ background:#fff; padding:0; }
+  .poster{ box-shadow:none; }
+}
+
+.poster{
+  width:var(--A0-W);
+  min-height:var(--A0-H);   /* exact A0; grows visibly if content overruns */
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+/* Overrun marker: sits exactly at the A0 bottom edge. If any content
+   appears below this red rule on screen, the poster does not fit -
+   lower --fit until the rule sits flush with the footer.            */
+.a0-edge{
+  position:absolute; left:0; right:0; top:var(--A0-H);
+  height:0; border-top:1.5mm dashed #d92a2a; z-index:99;
+}
+@media print{ .a0-edge{ display:none; } }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header{
+  background:
+    linear-gradient(180deg, var(--navy) 0%, #16324f 100%);
+  color:#fff;
+  padding:9mm 11mm 7mm;
+  display:grid;
+  grid-template-columns:52mm 1fr;
+  gap:9mm;
+  align-items:start;
+  border-bottom:2.2mm solid var(--hema);
+  position:relative;
+}
+/* thin H&E spectrum strip under the header */
+header::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:-2.2mm; height:2.2mm;
+  background:linear-gradient(90deg,
+    var(--hema) 0%, var(--hema-lt) 26%, var(--eosin-lt) 62%, var(--eosin) 100%);
+}
+.num-box{
+  background:var(--hema);
+  border-radius:var(--rad);
+  padding:5mm 3mm;
+  text-align:center;
+  border:0.5mm solid var(--hema-lt);
+}
+.num-box .n{ font-size:calc(54pt * var(--fit)); font-weight:700; line-height:1; letter-spacing:-0.01em; }
+.num-box .s{ font-size:calc(11.5pt * var(--fit)); opacity:.8; margin-top:2.5mm; line-height:1.45; }
+
+.h-title{ font-size:calc(40pt * var(--fit)); font-weight:700; line-height:1.16; letter-spacing:-0.005em; }
+.h-authors{ font-size:calc(23pt * var(--fit)); margin-top:4.5mm; }
+.h-authors sup{ font-size:calc(13pt * var(--fit)); }
+.h-affil{ font-size:calc(15pt * var(--fit)); margin-top:2mm; opacity:.86; line-height:1.5; }
+.h-affil sup{ font-size:calc(10.5pt * var(--fit)); }
+.h-meta{
+  display:flex; align-items:center; gap:3.5mm; flex-wrap:wrap;
+  margin-top:4mm; padding-top:3.5mm;
+  border-top:0.3mm solid rgba(255,255,255,.24);
+  font-size:calc(12.5pt * var(--fit)); opacity:.9;
+}
+.chip{ border-radius:1.6mm; padding:1mm 3mm; font-weight:700; font-size:calc(14pt * var(--fit)); }
+.chip-conf { background:var(--teal); }
+.chip-draft{ background:var(--amber); font-size:calc(12.5pt * var(--fit)); }
+.chip-modal{ background:var(--eosin); font-size:calc(12.5pt * var(--fit)); }
+.coi-box{
+  background:rgba(255,255,255,.11);
+  border:0.3mm solid rgba(255,255,255,.24);
+  border-radius:1.4mm; padding:1mm 3mm; font-size:calc(12pt * var(--fit));
+}
+
+/* ============================================================
+   BODY GRID
+   ============================================================ */
+.body{
+  flex:1;
+  display:grid;
+  grid-template-columns:248mm 1fr 248mm;
+  gap:var(--gap);
+  padding:var(--gap) var(--pad);
+  min-height:0;
+}
+.col{ display:flex; flex-direction:column; gap:var(--gap); min-height:0; }
+
+.sec{
+  background:var(--navy);
+  color:#a9c8dc;
+  font-size:calc(16pt * var(--fit)); font-weight:700;
+  text-transform:uppercase; letter-spacing:.12em;
+  padding:1.8mm 4mm;
+  border-left:2.2mm solid var(--teal);
+  border-radius:0 var(--rad) var(--rad) 0;
+}
+.sec.path{
+  color:#e7d9f2;
+  border-left-color:var(--eosin);
+  background:linear-gradient(90deg, var(--hema) 0%, #2b2450 100%);
+}
+
+/* ============================================================
+   PANELS
+   ============================================================ */
+.panel{
+  background:var(--panel);
+  border-radius:var(--rad);
+  padding:5mm;
+  border-top:1.1mm solid var(--teal);
+  box-shadow:0 0.3mm 1mm rgba(0,0,0,.07);
+}
+.panel.sky  { border-top-color:var(--sky); }
+.panel.green{ border-top-color:var(--green); }
+.panel.amber{ border-top-color:var(--amber); }
+.panel.mid  { border-top-color:#8493a5; }
+.panel.hema { border-top-color:var(--hema); }
+.panel.eosin{ border-top-color:var(--eosin); }
+
+.panel h2{
+  font-size:var(--fs-h2); font-weight:700;
+  text-transform:uppercase; letter-spacing:.06em;
+  color:var(--teal);
+  margin-bottom:2.6mm; padding-bottom:1.5mm;
+  border-bottom:0.3mm solid var(--rule);
+}
+.panel.sky   h2{ color:var(--sky); }
+.panel.green h2{ color:var(--green); }
+.panel.amber h2{ color:var(--amber); }
+.panel.hema  h2{ color:var(--hema); }
+.panel.eosin h2{ color:var(--eosin); }
+
+.panel p { margin-bottom:2mm; line-height:1.45; }
+.panel ul{ padding-left:6mm; margin-bottom:2mm; }
+.panel li{ margin-bottom:1.1mm; line-height:1.42; }
+
+/* ============================================================
+   STAT BOXES
+   ============================================================ */
+.sg{ display:grid; gap:2.5mm; margin:2.5mm 0; }
+.sg3{ grid-template-columns:repeat(3,1fr); }
+.sg4{ grid-template-columns:repeat(4,1fr); }
+.sb{
+  background:#e9f2fa; border:0.3mm solid #b3d3ea;
+  border-radius:1.8mm; padding:2.5mm 1.5mm; text-align:center;
+}
+.sb .v{ font-size:calc(33pt * var(--fit)); font-weight:700; color:var(--navy); line-height:1.05; }
+.sb .v.t{ color:var(--teal); }
+.sb .l{ font-size:calc(11pt * var(--fit)); color:var(--ink-2); margin-top:1.2mm; line-height:1.32; }
+/* pathology-tinted stat */
+.sb.path{ background:var(--hema-wash); border-color:#c3b6e0; }
+.sb.path .v{ color:var(--hema); }
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+table.mt{ width:100%; border-collapse:collapse; font-size:var(--fs-table); margin-top:2mm; }
+table.mt th{
+  background:var(--navy); color:#fff;
+  padding:1.5mm 2mm; text-align:left;
+  font-size:calc(12.5pt * var(--fit)); font-weight:600;
+}
+table.mt.s th{ background:var(--sky); }
+table.mt.h th{ background:var(--hema); }
+table.mt.e th{ background:var(--eosin); }
+table.mt td{ padding:1.2mm 2mm; border-bottom:0.25mm solid #eaf0f6; }
+table.mt tr:nth-child(even) td{ background:#f5f9fd; }
+table.mt.h tr:nth-child(even) td{ background:var(--hema-wash); }
+.num{ text-align:right; font-variant-numeric:tabular-nums; }
+.bold{ font-weight:700; }
+.hl{ color:var(--teal); font-weight:700; }
+
+/* ============================================================
+   FIGURES
+   ============================================================ */
+.fig{ width:100%; border-radius:1.4mm; border:0.3mm solid var(--rule); display:block; }
+.fcap{
+  font-size:var(--fs-cap); color:var(--ink-2);
+  margin-top:1.2mm; line-height:1.4; font-style:italic;
+}
+.pending{
+  background:#e4e9ee; border:0.6mm dashed #9aa8b8;
+  border-radius:1.6mm; padding:9mm 4mm; text-align:center;
+  color:#66768a; font-size:calc(14pt * var(--fit));
+}
+
+/* ---- VIRTUAL SLIDE MOUNT --------------------------------
+   Frames a whole-slide / spatial image like a glass slide
+   on a microscope stage, with a frosted label strip.       */
+.slide-mount{
+  background:linear-gradient(160deg,#1d2530 0%, #121820 100%);
+  border-radius:1.6mm;
+  padding:2.4mm;
+  border:0.4mm solid #39434f;
+  position:relative;
+}
+.slide-label{
+  display:flex; align-items:center; gap:3mm; flex-wrap:wrap;
+  background:linear-gradient(180deg,#f4f2ee 0%, #e6e2da 100%);
+  border-radius:0.9mm;
+  padding:1.6mm 3mm;
+  margin-bottom:2.2mm;
+  font-size:calc(11.5pt * var(--fit)); color:#2b3340;
+  border-left:2mm solid var(--eosin);
+}
+.slide-label .sl-id{ font-weight:700; letter-spacing:.04em; }
+.slide-label .sl-tag{
+  background:var(--hema); color:#fff;
+  border-radius:0.8mm; padding:0.4mm 2mm;
+  font-size:calc(10.5pt * var(--fit)); font-weight:600; letter-spacing:.03em;
+}
+.slide-label .sl-meta{ color:#5a6473; font-size:calc(10.5pt * var(--fit)); }
+.slide-mount img{ width:100%; display:block; border-radius:0.9mm; }
+.slide-foot{
+  margin-top:2mm; font-size:calc(11pt * var(--fit)); color:#b9c4d2; line-height:1.45;
+}
+.slide-foot strong{ color:#fff; }
+
+/* ---- SLIDE TRAY: one card per specimen ------------------ */
+.tray{ display:grid; grid-template-columns:repeat(5,1fr); gap:2mm; margin-top:2.5mm; }
+.slide-card{
+  background:#fff;
+  border:0.3mm solid #cdd7e2;
+  border-radius:1.4mm;
+  overflow:hidden;
+  text-align:center;
+}
+.slide-card .sc-top{
+  background:linear-gradient(180deg,#f4f2ee,#e6e2da);
+  border-bottom:0.3mm solid #cdd7e2;
+  font-size:calc(11pt * var(--fit)); font-weight:700; color:#2b3340;
+  padding:1mm 0;
+}
+.slide-card .sc-rho{ font-size:calc(22pt * var(--fit)); font-weight:700; padding:1.6mm 0 0.4mm; }
+.slide-card .sc-n{ font-size:calc(10.5pt * var(--fit)); color:var(--ink-2); padding-bottom:1.6mm; }
+.slide-card .sc-bar{ height:1.4mm; }
+
+/* ============================================================
+   WORKFLOW STRIPS
+   ============================================================ */
+.wf{ display:flex; align-items:stretch; gap:1.2mm; margin:2.5mm 0; }
+.ws{
+  flex:1; background:#e9f2fa; border:0.3mm solid #b3d3ea;
+  border-radius:1.4mm; padding:2mm 1mm; text-align:center;
+  font-size:calc(11.5pt * var(--fit)); line-height:1.32;
+}
+.wa{ align-self:center; color:#93a3b5; font-size:calc(15pt * var(--fit)); }
+/* pathology-tinted workflow */
+.wf.path .ws{ background:var(--hema-wash); border-color:#c3b6e0; color:#2f2752; }
+.wf.path .wa{ color:var(--hema-lt); }
+
+/* ============================================================
+   LISTS
+   ============================================================ */
+.ladder{ list-style:none; padding:0; }
+.ladder li{
+  padding:1.4mm 2.5mm 1.4mm 11mm;
+  margin-bottom:1.2mm; border-radius:1.2mm;
+  background:#e9f7f1; border-left:1.1mm solid var(--teal);
+  position:relative; line-height:1.36; font-size:calc(14.5pt * var(--fit));
+}
+.ladder li::before{
+  content:attr(data-lv); position:absolute; left:2.5mm; top:1.4mm;
+  font-weight:700; font-size:calc(12pt * var(--fit)); color:var(--teal);
+}
+.ladder li.path{ background:var(--hema-wash); border-left-color:var(--eosin); }
+.ladder li.path::before{ color:var(--eosin); }
+
+.concl{ list-style:none; padding:0; }
+.concl li{
+  padding:2mm 3mm 2mm 8mm; margin-bottom:1.8mm;
+  border-radius:1.2mm; background:#e9f7f1;
+  border-left:1.1mm solid var(--teal);
+  position:relative; line-height:1.42;
+}
+.concl li::before{
+  content:"\2713"; position:absolute; left:2.6mm; top:2mm;
+  color:var(--teal); font-weight:700;
+}
+
+/* ============================================================
+   FUTURE DIRECTIONS
+   ============================================================ */
+.fd{ display:grid; grid-template-columns:1fr 1fr; gap:2.5mm; margin-top:2mm; }
+.fb{
+  background:#fdf7ef; border-left:1.1mm solid var(--amber);
+  border-radius:1.2mm; padding:2mm 3mm;
+}
+.fb h3{ font-size:calc(13pt * var(--fit)); font-weight:700; color:var(--amber); margin-bottom:1mm; }
+.fb ul{ padding-left:5mm; font-size:calc(12.5pt * var(--fit)); }
+.fb li{ margin-bottom:0.8mm; line-height:1.36; }
+
+/* ============================================================
+   MISC
+   ============================================================ */
+.cg{ display:grid; grid-template-columns:1fr 1fr; gap:2mm; margin-top:2mm; }
+.ci{ background:#f6f8fb; border:0.3mm solid #ccd6e2; border-radius:1.2mm; padding:2mm 2.5mm; }
+.ci .cl{ font-size:calc(11pt * var(--fit)); font-weight:700; text-transform:uppercase;
+         letter-spacing:.05em; color:var(--sky); }
+.ci .cv{ font-size:calc(13pt * var(--fit)); line-height:1.4; margin-top:0.6mm; }
+
+.callout{
+  border-radius:1.4mm; padding:2.5mm 3mm; margin-top:2.5mm;
+  font-size:calc(14.5pt * var(--fit)); line-height:1.44;
+  background:var(--hema-wash); border:0.3mm solid #c3b6e0;
+  border-left:1.4mm solid var(--hema);
+}
+.callout strong{ color:var(--hema); }
+.caveat{
+  font-size:calc(12pt * var(--fit)); color:var(--ink-2); line-height:1.4;
+  margin-top:2mm; padding-left:2.5mm;
+  border-left:0.8mm solid #c9d3de;
+}
+.spec-strip{
+  display:flex; gap:2mm; flex-wrap:wrap; margin-top:2.5mm;
+}
+.spec{
+  background:var(--eosin-wash); border:0.3mm solid #eabfc9;
+  border-radius:1.2mm; padding:1.4mm 2.6mm; font-size:calc(12pt * var(--fit));
+}
+.spec b{ color:var(--eosin); }
+
+.qr-wrap{
+  display:flex; align-items:center; gap:4mm;
+  background:#f6f8fb; border:0.4mm dashed #b3d3ea;
+  border-radius:1.6mm; padding:3mm;
+}
+.qr-wrap img{ width:34mm; height:34mm; flex-shrink:0; }
+.ql{ font-size:calc(12.5pt * var(--fit)); color:#3c4a5c; line-height:1.5; }
+
+.twocol{ display:grid; grid-template-columns:1fr 1fr; gap:3.5mm; }
+.twocol-32{ display:grid; grid-template-columns:3fr 2fr; gap:3.5mm; }
+
+footer{
+  background:var(--navy); color:#93a7bb;
+  font-size:calc(11.5pt * var(--fit)); padding:2.4mm 8mm;
+  display:flex; justify-content:space-between; align-items:center; gap:6mm;
+  border-top:1.1mm solid var(--hema);
+}
+</style>
+</head>
+<body>
+<div class="poster">
+<div class="a0-edge"></div>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header>
+  <div class="num-box">
+    <div class="n">{{ABSTRACT_NO}}</div>
+    <div class="s">Abstract No.<br>{{CONF_NAME}}</div>
+  </div>
+  <div>
+    <div class="h-title">{{TITLE}}</div>
+    <div class="h-authors">
+      <strong>{{AUTHOR1}}</strong><sup>1</sup> &nbsp;&middot;&nbsp;
+      <strong>{{AUTHOR2}}</strong><sup>1</sup>
+    </div>
+    <div class="h-affil"><sup>1</sup> {{AFFIL}} &nbsp;&middot;&nbsp; {{EMAIL}}</div>
+    <div class="h-meta">
+      <span class="chip chip-conf">{{CONF_NAME}}</span>
+      <span class="chip chip-draft">{{DRAFT_LABEL}}</span>
+      <span class="chip chip-modal">single-cell &rarr; spatial pathology</span>
+      <span class="coi-box"><strong>COI:</strong> {{COI}}</span>
+      <span>HTAN MSK CELLxGENE &middot; GSE263196 10x Visium &middot; Geneformer-V2-104M</span>
+    </div>
+  </div>
+</header>
+
+<div class="body">
+
+<!-- ══════════════════ LEFT ══════════════════ -->
+<div class="col">
+  <div class="sec">A &middot; Background &amp; Cohort</div>
+
+  <div class="panel">
+    <h2>Background</h2>
+    <p><strong>Small cell lung cancer (SCLC)</strong> is the most aggressive thoracic
+      malignancy and responds poorly to immune checkpoint blockade despite a high tumour
+      mutational burden. T-cell dysfunction in the tumour microenvironment is a candidate
+      mediator, but its transcriptional basis is poorly characterised at single-cell
+      resolution.</p>
+    <p><strong>Gap.</strong> Conventional differential expression captures mean shifts and
+      misses non-linear, context-dependent regulatory relationships encoded in each cell's
+      full transcriptomic rank order.</p>
+    <p><strong>Approach.</strong> Geneformer-V2-104M fine-tuned on HTAN SCLC T cells, then
+      bidirectional <em>in silico</em> perturbation, with findings tested in intact tissue
+      by quantitative spatial pathology.</p>
+  </div>
+
+  <div class="panel sky">
+    <h2>Cohort &mdash; HTAN MSK (CELLxGENE)</h2>
+    <table class="mt s">
+      <tr><th>Disease</th><th class="num">Train</th><th class="num">Eval</th>
+          <th class="num">Test</th><th class="num">Donors</th></tr>
+      {{COHORT_ROWS}}
+    </table>
+    <p style="margin-top:2.5mm;font-size:calc(13pt * var(--fit));color:var(--ink-2);">
+      CD4 + CD8 T cells &middot; donor-disjoint splits (seed 43) &middot; cross-disease guard
+      for paired tumour-normal donors &middot; test split {{N_TEST_DONORS}} donors.
+    </p>
+  </div>
+
+  <div class="panel green">
+    <h2>Workflow &amp; Validation Hierarchy</h2>
+    <div class="wf">
+      <div class="ws">HTAN<br>T cells</div><div class="wa">&rarr;</div>
+      <div class="ws">Tokenise<br>fine-tune</div><div class="wa">&rarr;</div>
+      <div class="ws">Disease<br>classifier</div><div class="wa">&rarr;</div>
+      <div class="ws">Bidirectional<br>perturbation</div><div class="wa">&rarr;</div>
+      <div class="ws">Spatial<br>pathology</div>
+    </div>
+    <ul class="ladder" style="margin-top:3mm;">
+      <li data-lv="L1">Donor leakage audit &mdash; zero leakage across 42 donors; cross-disease
+        guard for paired tumour-normal donors</li>
+      <li data-lv="L2">Held-out test &mdash; {{ACC}} accuracy, macro F1 {{MACRO_F1}}
+        ({{N_TEST_CELLS}} cells, {{N_TEST_DONORS}} donors)</li>
+      <li data-lv="L3">Internal positive control &mdash; ASCL1 / NEUROD1 reproduce expected
+        SCLC master regulator behaviour</li>
+      <li data-lv="L4">Bidirectional concordance &mdash; {{N_CONCORDANT}} concordant hits,
+        {{N_FULLY}} fully donor-consistent</li>
+      <li data-lv="L5" class="path">Spatial pathology &mdash; independent Visium cohort,
+        pooled rho {{RHO}} [{{CI_LOW}}, {{CI_HIGH}}]</li>
+    </ul>
+  </div>
+
+  <div class="panel hema">
+    <h2>Digital Pathology Pipeline</h2>
+    <div class="wf path">
+      <div class="ws">Fresh-frozen<br>tumour block</div><div class="wa">&rarr;</div>
+      <div class="ws">Cryosection<br>onto array</div><div class="wa">&rarr;</div>
+      <div class="ws">Barcoded<br>capture</div><div class="wa">&rarr;</div>
+      <div class="ws">Spot-level<br>transcriptome</div><div class="wa">&rarr;</div>
+      <div class="ws">Quantitative<br>score map</div>
+    </div>
+    <p style="margin-top:2.5mm;">
+      Each tissue section is resolved into thousands of spatially indexed transcriptomes.
+      Two <em>disjoint</em> marker panels are scored per spot &mdash; T-cell abundance
+      (CD3D/E/G, CD2, CD5, CD28, TRBC1/2, IL7R, CD8A/B, CD4) and T-cell dysfunction
+      (PDCD1, CTLA4, HAVCR2, LAG3, TIGIT, TOX, LAYN) &mdash; so their correlation cannot
+      be a self-correlation.
+    </p>
+    <div class="spec-strip">
+      <span class="spec"><b>Platform</b> 10x Visium</span>
+      <span class="spec"><b>Spot</b> 55 &micro;m diameter</span>
+      <span class="spec"><b>Pitch</b> 100 &micro;m centre-to-centre</span>
+      <span class="spec"><b>Specimens</b> {{N_SLIDES}} fresh-frozen SCLC</span>
+    </div>
+    <div class="caveat">
+      Spot geometry is the manufacturer platform specification, not a measurement from
+      these sections. Marker scores are a proxy for composition, not deconvolved
+      cell-type proportions.
+    </div>
+  </div>
+
+  <div class="panel amber">
+    <h2>Computational Requirements</h2>
+    <div class="cg">
+      <div class="ci"><div class="cl">GPU</div>
+        <div class="cv">NVIDIA GB10 &middot; 119 GiB unified memory</div></div>
+      <div class="ci"><div class="cl">Screen scale</div>
+        <div class="cv">~5.88M cell-gene perturbations &middot; 137 shards</div></div>
+      <div class="ci"><div class="cl">Wall-clock</div>
+        <div class="cv">~48 h GPU, delete + overexpress</div></div>
+      <div class="ci"><div class="cl">Fine-tuning</div>
+        <div class="cv">1 epoch &middot; LR 5e-5 &middot; 6 frozen layers</div></div>
+    </div>
+  </div>
+
+  {{EXTRA_LEFT_PANELS}}
+</div>
+
+<!-- ══════════════════ MIDDLE ══════════════════ -->
+<div class="col">
+  <div class="sec">B &middot; Classifier &amp; Perturbation</div>
+
+  <div class="panel">
+    <h2>Classifier Performance &mdash; SCLC vs LUAD vs Normal</h2>
+    <div class="sg sg4">
+      <div class="sb"><div class="v t">{{ACC}}</div><div class="l">Test accuracy</div></div>
+      <div class="sb"><div class="v t">{{MACRO_F1}}</div><div class="l">Macro F1</div></div>
+      <div class="sb"><div class="v">{{N_TEST_CELLS}}</div><div class="l">Held-out cells</div></div>
+      <div class="sb"><div class="v">{{N_TEST_DONORS}}</div><div class="l">Test donors</div></div>
+    </div>
+    <div class="twocol" style="margin-top:3mm;">
+      <div>
+        {{IMG_CM}}
+        <div class="fcap">Fig. 1 &mdash; Held-out test confusion matrix.</div>
+      </div>
+      <div>
+        <table class="mt">
+          <tr><th>True \ Pred</th><th class="num">SCLC</th><th class="num">Normal</th>
+              <th class="num">LUAD</th><th class="num">Recall</th></tr>
+          {{CM_ROWS}}
+        </table>
+        <p style="margin-top:2.5mm;font-size:calc(14pt * var(--fit));">
+          <strong>Internal control.</strong> Deleting ASCL1 or NEUROD1 shifts SCLC cells
+          toward LUAD (+0.157 and +0.378, p &lt; 1e-7); overexpression reinforces SCLC
+          identity. Recovering these canonical master regulators confirms the perturbation
+          pipeline reproduces known biology.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel sky">
+    <h2>Bidirectional Perturbation &mdash; SCLC-Source Concordant Hits</h2>
+    <div class="sg sg4">
+      <div class="sb"><div class="v">300</div><div class="l">Gene-runs</div></div>
+      <div class="sb"><div class="v">{{N_CONCORDANT}}</div><div class="l">Concordant hits</div></div>
+      <div class="sb"><div class="v t">{{N_FULLY}}</div><div class="l">Fully donor-consistent</div></div>
+      <div class="sb"><div class="v">21/21</div><div class="l">Panel genes with a hit</div></div>
+    </div>
+    <table class="mt s" style="margin-top:3mm;">
+      <tr><th>Gene</th><th>Comparison</th><th class="num">Delete</th>
+          <th class="num">Overexpress</th><th class="num">N cells</th><th>Donors</th></tr>
+      {{HIT_ROWS}}
+    </table>
+    <p style="margin-top:2mm;font-size:calc(12.5pt * var(--fit));color:var(--ink-2);">
+      Values are mean cosine shift toward the goal state. A gene is concordant when deletion
+      and overexpression move cells in opposite directions with FDR &lt; 0.05 in both arms.
+    </p>
+  </div>
+
+  {{EXTRA_MIDDLE_PANELS}}
+
+  <div class="sec path">C &middot; Spatial Pathology &mdash; Independent SCLC Tissue Cohort</div>
+
+  <div class="panel eosin" style="flex:1;display:flex;flex-direction:column;">
+    <h2>T-Cell Dysfunction Co-Localises with T-Cell Abundance in Tumour Tissue</h2>
+
+    <div class="sg sg3">
+      <div class="sb path"><div class="v">{{RHO}}</div>
+        <div class="l">Pooled Spearman rho<br>[{{CI_LOW}}, {{CI_HIGH}}]</div></div>
+      <div class="sb path"><div class="v">{{N_SIG_SAMPLES}}</div>
+        <div class="l">Specimens at p &lt; 0.001</div></div>
+      <div class="sb path"><div class="v">{{N_SPOTS}}</div>
+        <div class="l">Tissue spots analysed</div></div>
+    </div>
+
+    <!-- virtual slide mount -->
+    <div class="slide-mount" style="margin-top:3mm;">
+      <div class="slide-label">
+        <span class="sl-id">GSE263196</span>
+        <span class="sl-tag">10x VISIUM</span>
+        <span class="sl-tag" style="background:var(--eosin);">FRESH-FROZEN</span>
+        <span class="sl-meta">SCLC tumour sections &middot; {{N_SLIDES}} specimens
+          &middot; {{N_SPOTS}} spots &middot; spot 55 &micro;m / pitch 100 &micro;m</span>
+      </div>
+      {{IMG_SPATIAL}}
+      <div class="slide-foot">
+        <strong>Fig. 2 &mdash; Quantitative marker-score maps across SCLC tumour sections.</strong>
+        T-cell abundance and T-cell dysfunction are scored from disjoint gene panels at every
+        spatially indexed spot, then correlated within each specimen.
+      </div>
+    </div>
+
+    <!-- slide tray: per-specimen effect -->
+    <div class="tray">{{SLIDE_CARDS}}</div>
+
+    <div class="twocol-32" style="margin-top:3.5mm;">
+      <div>
+        {{IMG_FOREST}}
+        <div class="fcap">Fig. 3 &mdash; Per-specimen Spearman rho with 95% CI; pooled estimate
+          by Fisher-z meta-analysis.</div>
+      </div>
+      <div>
+        <table class="mt e">
+          <tr><th>Specimen</th><th class="num">Spots</th><th class="num">rho</th>
+              <th class="num">95% CI</th><th class="num">p</th></tr>
+          {{SPATIAL_ROWS}}
+        </table>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Interpretation.</strong> In intact tumour tissue, regions with greater T-cell
+      infiltration also carry higher co-inhibitory programme expression &mdash; the same
+      association the single-cell perturbation screen implicates, recovered by an independent
+      cohort and a different assay. Effect size varies substantially between specimens, which
+      is consistent with real differences in tumour microenvironment composition rather than
+      measurement noise.
+    </div>
+    <div class="caveat">
+      Marker-score proxy rather than formal deconvolution; no Normal or LUAD sections, so
+      SCLC-specificity of the association is untested; correlational design in archival tissue.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ RIGHT ══════════════════ -->
+<div class="col">
+  <div class="sec">D &middot; Conclusions &amp; Outlook</div>
+
+  <div class="panel">
+    <h2>Conclusions</h2>
+    <ul class="concl">{{CONCLUSIONS}}</ul>
+  </div>
+
+  <div class="panel mid">
+    <h2>Limitations</h2>
+    <ul>{{LIMITATIONS}}</ul>
+  </div>
+
+  <div class="panel amber">
+    <h2>Future Directions</h2>
+    <div class="fd">{{FUTURE}}</div>
+  </div>
+
+  {{EXTRA_RIGHT_PANELS}}
+
+  <div class="panel mid">
+    <h2>References</h2>
+    <p style="font-size:calc(12.5pt * var(--fit));line-height:1.55;">
+      1. Theodoris CV et al. (2023) Transfer learning enables predictions in network biology.
+         <em>Nature</em> 618, 616&ndash;624.<br>
+      2. HTAN MSK collection, CELLxGENE dataset 6fde3ad9.<br>
+      3. GSE263196 &mdash; 10x Visium SCLC fresh-frozen tumour sections, NCBI GEO.<br>
+      4. KEGG, Reactome and GO:BP pathway databases.
+    </p>
+  </div>
+
+  <div class="panel sky">
+    <h2>Repository &amp; Digital Version</h2>
+    <div class="qr-wrap">
+      {{IMG_QR}}
+      <div class="ql">
+        <strong>Scan for the repository</strong><br>
+        {{GITHUB_URL}}<br>
+        <span style="font-size:calc(11pt * var(--fit));color:#77839a;">Code, result tables, notebooks
+          and all poster drafts</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /body -->
+
+<footer>
+  <span>{{AUTHOR1}} &amp; {{AUTHOR2}} &middot; {{AFFIL}} &middot;
+        {{CONF_NAME}} {{ABSTRACT_NO}} &middot; <strong>{{DRAFT_LABEL}}</strong></span>
+  <span>A0 portrait 841 &times; 1189 mm &middot; {{EMAIL}}</span>
+</footer>
+
+</div>
+</body>
+</html>

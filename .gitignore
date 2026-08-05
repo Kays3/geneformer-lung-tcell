@@ -52,6 +52,34 @@ plots/
 *.tar.gz
 *.zip
 
+# ---------------------------------------------------------------------------
+# Large generated deliverables (> ~5 MB)
+#
+# Rendered posters are regenerated from tracked sources, and every export would
+# otherwise add a fresh multi-megabyte blob to history. They are ignored here;
+# `python tools/make_snapshots.py` writes a small PNG preview of each into
+# snapshots/, which IS tracked, so the repository still shows what was produced.
+# ---------------------------------------------------------------------------
+output/pdf/
+tmp/
+
+# Generated posters. The templates are source and stay tracked.
+poster/poster_*.html
+!poster/poster_template.html
+!poster/poster_template_90x210.html
+
+# PNG previews of the above are deliberately committed.
+!snapshots/
+!snapshots/*.png
+
+# Exception: source figures that notebooks read as inputs stay tracked even
+# when they exceed the size threshold. spatial_tissue_validation_panel.png is
+# 7.5 MB and is embedded by poster/generate_poster.ipynb; ignoring it, or
+# down-sampling it to fit, would break reproduction from a fresh clone
+# (palette quantisation to get under 5 MB introduced errors up to 61/255 on
+# the expression colour map).
+!sclc_validation/spatial_validation/figures/spatial_tissue_validation_panel.png
+
 # OS and editor files
 .DS_Store
 Thumbs.db
