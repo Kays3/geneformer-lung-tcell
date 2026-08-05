@@ -60,12 +60,17 @@ whenever the underlying CSVs change:
 python tools/make_result_figures.py
 ```
 
-Figs. 1's column split (`.twocol`) and Fig. 3's (`.twocol-32`) use
-non-default `grid-template-columns` set inline in `poster_template.html`
-(3fr:2fr and 2fr:1fr) to give the images more width than the original 1:1 /
-3:2 split. If you change these ratios, update the matching entries in
-`WIDTH_MM` in Cell 3 of the notebook — they are not derived automatically
-from the CSS.
+Figs. 1 and 3 are stacked (figure, then its table, full panel width), not
+side-by-side. They started as a `.twocol` / `.twocol-32` grid with the table
+beside the figure; widening the image column to enlarge the figures left
+the table column too narrow for its own header/cell text, and the tables
+overran the panel border. Stacking removes the tradeoff entirely — both
+elements get the panel's full inner width. `WIDTH_MM["cm"]` and
+`WIDTH_MM["forest"]` in Cell 3 hold each image's width as a fraction of the
+panel's inner width (currently 0.62 and 0.66) — deliberately less than 1.0,
+since a full-width image would push the total stacked height (image +
+caption + table) past one A0 page. If you resize these, re-run Cell 6's
+page-count assertion rather than assuming it still fits.
 
 ### Confusion-matrix fix
 
