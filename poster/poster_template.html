@@ -45,20 +45,30 @@
   --ink-2: #4a5768;
 
   /* ---- FIT KNOB -------------------------------------------------
-     Scales EVERY font size on the poster (all 47 declarations,
+     Scales EVERY font size on the poster (all 46 declarations,
      title and stat figures included).
 
+     Measured against the current content by rendering at each value
+     and checking the WeasyPrint page count (see Cell 6's assertion):
+
+       1.00  title 40pt, body 17.5pt, smallest 10.5pt  - original fit
+       1.20  title 48pt, body 21.0pt, smallest 12.6pt  <- current value
+       1.60  title 64pt, body 28.0pt, smallest 16.8pt  - last value that
+                                                            still fits 1 page
+       1.65  spills onto a 2nd A0 page
+
+     1.60 is a hard content-dependent ceiling, not a stylistic choice -
+     it will move if panels, tables or prose length change. Re-measure
+     with Cell 6 after any content edit rather than assuming 1.60 still
+     holds.
+
      If content spills past the red dashed A0 edge rule on screen,
-     lower this; if there is slack above it, raise it.
+     lower this; if there is slack above it, raise it (up to the
+     current one-page ceiling above).
 
-       1.00  title 40pt, body 17.5pt, smallest 10.5pt
-       0.94  title 38pt, body 16.4pt, smallest  9.9pt
-       0.88  title 35pt, body 15.4pt, smallest  9.2pt  <- practical floor
-
-     Do not go below ~0.88: the smallest labels drop under 9pt and
-     stop being readable at normal poster viewing distance. If it
-     still does not fit at 0.88, cut content instead.             */
-  --fit: 1.00;
+     Floor: below ~0.88 the smallest labels drop under 9pt and stop
+     being readable at normal poster viewing distance.             */
+  --fit: 1.20;
 
   /* type scale for A0 (read at ~1 m) */
   --fs-body:  calc(17.5pt * var(--fit));
