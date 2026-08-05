@@ -72,6 +72,38 @@ since a full-width image would push the total stacked height (image +
 caption + table) past one A0 page. If you resize these, re-run Cell 6's
 page-count assertion rather than assuming it still fits.
 
+## Cohort panels
+
+Two panels describe the data provenance, both computed from source tables at
+run time rather than typed in:
+
+**Discovery cohort (left column)** — HTAN MSK, CELLxGENE "T cells" dataset
+`6fde3ad9`. Reads `htan_donor_split_assignment.csv`,
+`htan_tcell_summary_by_disease.csv` and `cellxgene_collection_inventory.csv`.
+
+The donor arithmetic is worth understanding before editing it: the split
+table has one row per **donor × disease**, so a donor contributing both
+tumour and normal tissue appears twice. That is why 45 donor×disease groups
+map to 42 individuals — the 3-row difference is exactly the paired
+tumour-normal donors (RU675, RU682, RU684), which the panel names explicitly.
+Cell 4 asserts this arithmetic closes, and separately asserts no individual
+spans two splits, rather than trusting the stored `donor_leakage_check: PASS`
+string. If either assertion fires, the poster's "measured on individuals the
+model never saw" claim is no longer supported — fix the split, don't relax
+the assertion.
+
+**Validation cohort (right column)** — GSE263196, from
+`gse263196_spatial_file_audit.csv` joined to the correlation results. Reports
+per-specimen in-tissue vs. analysed spot counts (15,632 of 15,774 retained,
+99.1%), genes detected, and marker-panel coverage (21/21 in every specimen).
+Cell 4 asserts the audit's spot total matches the results table's, so a
+mismatch between the QC file and the analysis surfaces as an error rather
+than two different numbers on the same poster.
+
+Adding these panels cost roughly 107 mm of column height and pulled the
+one-page `--fit` ceiling from 1.60 down to 1.12; `--fit` is now 1.10. See the
+fit table above.
+
 ### Confusion-matrix fix
 
 `FIG_CONFUSION` previously pointed at
@@ -180,17 +212,18 @@ including the title, the P25 box and the large stat figures:
 |---|---|---|---|---|
 | `0.88` | 35 pt | 15.4 pt | 9.2 pt ← practical floor | yes |
 | `1.00` | 40 pt | 17.5 pt | 10.5 pt | yes (original) |
-| `1.20` | 48 pt | 21.0 pt | 12.6 pt ← **current default** | yes |
-| `1.60` | 64 pt | 28.0 pt | 16.8 pt | yes — measured ceiling |
-| `1.65` | 66 pt | 28.9 pt | 17.3 pt | no — spills to a 2nd page |
+| `1.10` | 44 pt | 19.3 pt | 11.6 pt ← **current default** | yes |
+| `1.12` | 45 pt | 19.6 pt | 11.8 pt | yes — measured ceiling |
+| `1.15` | 46 pt | 20.1 pt | 12.1 pt | no — spills to a 2nd page |
 
 Do not go below about `0.88`: the smallest labels fall under 9 pt and stop
 being readable at normal poster viewing distance.
 
-The 1.60 ceiling is **content-dependent**, not a fixed limit — it was found
-by rendering at each value and checking the page count Cell 6 reports. Any
-edit to panel text, table rows, or figures changes how much room is left,
-so re-measure rather than assuming 1.60 still holds after content changes.
+The ceiling is **content-dependent**, not a fixed limit, and it moves a lot:
+it was `1.60` before the two cohort panels were added and is `1.12` now. It
+is found by rendering at each value and checking the page count Cell 6
+reports. Any edit to panel text, table rows, or figures changes how much
+room is left, so re-measure rather than assuming a value here still holds.
 If it overruns at your target `--fit`, cut content rather than shrinking
 below the 0.88 floor.
 

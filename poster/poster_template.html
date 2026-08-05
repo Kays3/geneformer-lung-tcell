@@ -52,15 +52,17 @@
      and checking the WeasyPrint page count (see Cell 6's assertion):
 
        1.00  title 40pt, body 17.5pt, smallest 10.5pt  - original fit
-       1.20  title 48pt, body 21.0pt, smallest 12.6pt  <- current value
-       1.60  title 64pt, body 28.0pt, smallest 16.8pt  - last value that
+       1.10  title 44pt, body 19.3pt, smallest 11.6pt  <- current value
+       1.12  title 45pt, body 19.6pt, smallest 11.8pt  - last value that
                                                             still fits 1 page
-       1.65  spills onto a 2nd A0 page
+       1.15  spills onto a 2nd A0 page
 
-     1.60 is a hard content-dependent ceiling, not a stylistic choice -
-     it will move if panels, tables or prose length change. Re-measure
-     with Cell 6 after any content edit rather than assuming 1.60 still
-     holds.
+     The ceiling is content-dependent, NOT a fixed property of the layout.
+     It was 1.60 before the discovery-cohort and validation-cohort detail
+     panels were added; that content costs roughly 107 mm of column height
+     and pulled the ceiling down to 1.12. Adding or removing content moves
+     it again - re-measure with Cell 6's page-count assertion rather than
+     assuming any value here still holds.
 
      If content spills past the red dashed A0 edge rule on screen,
      lower this; if there is slack above it, raise it (up to the
@@ -68,7 +70,7 @@
 
      Floor: below ~0.88 the smallest labels drop under 9pt and stop
      being readable at normal poster viewing distance.             */
-  --fit: 1.20;
+  --fit: 1.10;
 
   /* type scale for A0 (read at ~1 m) */
   --fs-body:  calc(17.5pt * var(--fit));
@@ -493,6 +495,26 @@ footer{
       CD4 + CD8 T cells &middot; donor-disjoint splits (seed 43) &middot; cross-disease guard
       for paired tumour-normal donors &middot; test split {{N_TEST_DONORS}} donors.
     </p>
+
+    <p style="margin-top:2.5mm;font-size:calc(12.5pt * var(--fit));">
+      Source: HTAN MSK, CELLxGENE &ldquo;T cells&rdquo; dataset 6fde3ad9 &mdash;
+      <strong>{{N_ATLAS_CELLS}} cells &times; {{N_ATLAS_FEATURES}} features</strong> from
+      <strong>{{N_UNIQUE_DONORS}} individuals</strong> ({{N_DONOR_ROWS}} donor&times;disease
+      groups; {{CELLS_PER_DONOR}} cells per donor). Donor leakage audit:
+      <strong style="color:var(--green);">{{LEAKAGE_STATUS}}</strong>.
+    </p>
+
+    <table class="mt s" style="margin-top:2.5mm;">
+      <tr><th>Paired donor</th><th>Tumour</th><th class="num">Cells</th>
+          <th class="num">Normal cells</th><th>Split</th></tr>
+      {{PAIRED_ROWS}}
+    </table>
+    <p style="margin-top:2mm;font-size:calc(12pt * var(--fit));color:var(--ink-2);">
+      {{N_PAIRED_DONORS}} donors give both tumour and normal tissue, so a naive split
+      could place the same individual on both sides of a train/test boundary. Each is
+      confined to one split, making the {{ACC}} test accuracy a measurement on
+      individuals the model never saw.
+    </p>
   </div>
 
   <div class="panel green">
@@ -620,6 +642,7 @@ footer{
 
   <div class="sec path">C &middot; Spatial Pathology &mdash; Independent SCLC Tissue Cohort</div>
 
+
   <div class="panel eosin" style="flex:1;display:flex;flex-direction:column;">
     <h2>T-Cell Dysfunction Co-Localises with T-Cell Abundance in Tumour Tissue</h2>
 
@@ -703,6 +726,29 @@ footer{
 
   {{EXTRA_RIGHT_PANELS}}
 
+  <div class="panel hema">
+    <h2>Validation Cohort &mdash; GSE263196 Specimens &amp; QC</h2>
+    <p>An <strong>entirely separate cohort</strong> from the HTAN discovery atlas: different
+      patients, different assay (10x Visium spatial transcriptomics rather than
+      single-cell), different laboratory. No donor, cell or read is shared with the
+      data the classifier was trained on, so agreement here is external validation
+      rather than internal consistency.</p>
+    <table class="mt s" style="margin-top:2.5mm;">
+      <tr><th>GSM</th><th>Specimen</th><th class="num">In-tissue spots</th>
+          <th class="num">Analysed</th><th class="num">Genes detected</th>
+          <th class="num">Panel genes</th></tr>
+      {{VALIDATION_ROWS}}
+    </table>
+    <p style="margin-top:2.5mm;font-size:calc(12.5pt * var(--fit));">
+      10x Visium, spot 55 &micro;m / pitch 100 &micro;m, fresh-frozen sections.
+      Retained <strong>{{VAL_RETENTION}}</strong>; matrix/barcode/position integrity
+      <strong style="color:var(--green);">{{VAL_INTEGRITY}}</strong>;
+      {{VAL_PANEL_GENES}} present in every specimen.
+      <span style="color:var(--ink-2);">All five specimens are SCLC &mdash; the cohort has
+      no Normal or LUAD sections, so these data test whether the association holds in
+      intact SCLC tissue, not whether it is specific to SCLC.</span>
+    </p>
+  </div>
   <div class="panel mid">
     <h2>References</h2>
     <p style="font-size:calc(12.5pt * var(--fit));line-height:1.55;">
