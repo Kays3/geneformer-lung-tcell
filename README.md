@@ -7,6 +7,10 @@ outputs, and reporting environment to another machine, see the
 For creating a project-agnostic Geneformer environment with `uv` on a clean
 machine, see the [general Geneformer + uv setup](geneformer_uv_setup/README.md).
 
+## Poster Draft 2
+
+[![Poster Draft 2](snapshots/poster__poster_draft_2.png)](poster/poster_draft_2_show.png)
+
 This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
 21,000 naturally balanced CD4/CD8 T cells, a three-state LUAD/LUSC/normal
 classifier, and an all-gene in silico deletion screen.
