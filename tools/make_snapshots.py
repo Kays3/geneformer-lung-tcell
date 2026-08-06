@@ -34,7 +34,13 @@ TARGET_LONG_EDGE = 2000
 # Files to preview. Globs are relative to the repository root.
 # Only GENERATED deliverables belong here - never tracked source such as
 # poster/poster_template*.html.
+#
+# poster/poster_*.pdf is the current A0 poster written by
+# poster/generate_poster.ipynb. output/pdf/*.pdf is the earlier 900x2100 mm
+# full-board export; both are kept because they are different physical
+# deliverables, and the flattened snapshot filenames keep them apart.
 SOURCES = [
+    "poster/poster_*.pdf",
     "output/pdf/*.pdf",
 ]
 
