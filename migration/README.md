@@ -44,7 +44,7 @@ outside this migration scope.
 Copy the example without committing the resulting local file:
 
 ```bash
-cd /home/petadimensionlab/workspace/geneformer-nsclc-monitor
+cd /home/thinkstation2/workspace/geneformer-lung-tcell
 cp migration/migration.env.example migration/migration.env
 ```
 
@@ -82,8 +82,8 @@ alone is not a backup of this experiment.
 Run on the target machine:
 
 ```bash
-mkdir -p /home/petadimensionlab/workspace
-cd /home/petadimensionlab/workspace
+mkdir -p /home/thinkstation2/workspace
+cd /home/thinkstation2/workspace
 
 git clone https://github.com/Kays3/geneformer-lung-tcell.git \
   geneformer-nsclc-monitor
@@ -127,10 +127,10 @@ rsync -aH --partial --info=progress2 \
 Install Python 3.12 and `uv`, then run:
 
 ```bash
-cd /home/petadimensionlab/workspace/geneformer-nsclc-monitor
+cd /home/thinkstation2/workspace/geneformer-lung-tcell
 
 migration/scripts/bootstrap_target.sh \
-  /home/petadimensionlab/workspace/Geneformer
+  /home/thinkstation2/workspace
 ```
 
 The bootstrap refuses a mismatched Geneformer source commit and executes
@@ -142,11 +142,11 @@ build, resolve that platform compatibility before executing perturbations.
 Without a full checksum manifest:
 
 ```bash
-cd /home/petadimensionlab/workspace/geneformer-nsclc-monitor
+cd /home/thinkstation2/workspace/geneformer-lung-tcell
 
 migration/scripts/verify_target.py \
-  --geneformer-root /home/petadimensionlab/workspace/Geneformer \
-  --monitor-root /home/petadimensionlab/workspace/geneformer-nsclc-monitor \
+  --geneformer-root /home/thinkstation2/workspace \
+  --monitor-root /home/thinkstation2/workspace/geneformer-lung-tcell \
   --runtime
 ```
 
@@ -154,8 +154,8 @@ With the generated manifest:
 
 ```bash
 migration/scripts/verify_target.py \
-  --geneformer-root /home/petadimensionlab/workspace/Geneformer \
-  --monitor-root /home/petadimensionlab/workspace/geneformer-nsclc-monitor \
+  --geneformer-root /home/thinkstation2/workspace \
+  --monitor-root /home/thinkstation2/workspace/geneformer-lung-tcell \
   --manifest "$TARGET_INVENTORY_DIR/files.sha256" \
   --runtime
 ```
@@ -167,7 +167,7 @@ Geneformer import, package versions, and CUDA visibility.
 After verification, the existing small perturbation smoke test can be run:
 
 ```bash
-cd /home/petadimensionlab/workspace/Geneformer
+cd /home/thinkstation2/workspace
 
 .venv/bin/python \
   KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation/scripts/run_heldout_allgene.py \
@@ -180,7 +180,7 @@ The completed run does not need active monitoring. For a future resumed or new
 run, use target-specific values rather than copying the old crontab blindly:
 
 ```cron
-*/30 * * * * PUBLISH_TO_GIT=1 ANALYSIS_ROOT=/home/petadimensionlab/workspace/Geneformer/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation PYTHON_BIN=/home/petadimensionlab/workspace/Geneformer/.venv/bin/python /home/petadimensionlab/workspace/geneformer-nsclc-monitor/current_workflow/monitoring/refresh_live_report.sh >> /home/petadimensionlab/workspace/geneformer-nsclc-monitor/current_workflow/monitoring/report_generation.log 2>&1
+*/30 * * * * PUBLISH_TO_GIT=1 ANALYSIS_ROOT=/home/thinkstation2/workspace/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation PYTHON_BIN=/home/thinkstation2/workspace/geneformer-uv-starter/.venv/bin/python /home/thinkstation2/workspace/geneformer-lung-tcell/current_workflow/monitoring/refresh_live_report.sh >> /home/thinkstation2/workspace/geneformer-lung-tcell/current_workflow/monitoring/report_generation.log 2>&1
 ```
 
 The monitor scripts also accept `PERTURBATION_STATS_DIR`. Historical JSON and

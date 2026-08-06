@@ -1,5 +1,5 @@
 {
-  "stats_directory": "/home/petadimensionlab/workspace/Geneformer/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation/stats",
+  "stats_directory": "/home/thinkstation2/workspace/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation/stats",
   "comparison_order": [
     "lusc_to_luad",
     "lusc_to_normal",

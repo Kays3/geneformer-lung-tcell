@@ -16,7 +16,7 @@ import requests
 
 HERE = Path(__file__).resolve().parent
 DEFAULT_STATS = Path(
-    "/home/petadimensionlab/workspace/Geneformer/KD/"
+    "/home/thinkstation2/workspace/KD/"
     "tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation/stats"
 )
 STATS_DIR = Path(os.environ.get("PERTURBATION_STATS_DIR", DEFAULT_STATS))

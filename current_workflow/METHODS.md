@@ -5,7 +5,7 @@
 The final cohort was sampled from the original integrated NSCLC atlas:
 
 ```text
-/home/petadimensionlab/workspace/Geneformer/KD/data/nsclc/nsclc_integrated.h5ad
+/home/thinkstation2/workspace/KD/data/nsclc/nsclc_integrated.h5ad
 ```
 
 Selection criteria were:
@@ -178,7 +178,7 @@ interrupted run can therefore restart without repeating completed shards.
 Local commands:
 
 ```bash
-cd /home/petadimensionlab/workspace/Geneformer
+cd /home/thinkstation2/workspace
 
 .venv/bin/python \
   KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation/scripts/run_heldout_allgene.py \
