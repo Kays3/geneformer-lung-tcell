@@ -123,7 +123,7 @@ The history table below shows the newest samples first.
 
 - Scheduled entrypoint: `current_workflow/monitoring/refresh_live_report.sh`
 - Render entrypoint: `current_workflow/monitoring/generate_progress_report.py`
-- Statistics source: `/home/petadimensionlab/workspace/Geneformer/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation/stats` (override with `PERTURBATION_STATS_DIR`)
+- Statistics source: `/home/thinkstation2/workspace/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation/stats` (override with `PERTURBATION_STATS_DIR`)
 - Output files: `GPU_PROGRESS_REPORT.md`, `progress_animation.gif`, `progress_animation.svg`, `cell_interaction_diagram.svg`, and `disease_completion/*.svg`
 - Cadence: 30 minutes
 

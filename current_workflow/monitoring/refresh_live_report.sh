@@ -2,10 +2,10 @@
 set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ANALYSIS_ROOT="${ANALYSIS_ROOT:-/home/petadimensionlab/workspace/Geneformer/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation}"
+ANALYSIS_ROOT="${ANALYSIS_ROOT:-/home/thinkstation2/workspace/KD/tcell_luad_lusc_normal_luscmax7000_heldout_allgene_perturbation}"
 COLLECTOR="$ANALYSIS_ROOT/scripts/update_hourly_report.py"
 SOURCE_MONITOR="$ANALYSIS_ROOT/monitoring"
-PYTHON_BIN="${PYTHON_BIN:-/home/petadimensionlab/workspace/Geneformer/.venv/bin/python}"
+PYTHON_BIN="${PYTHON_BIN:-/home/thinkstation2/workspace/geneformer-uv-starter/.venv/bin/python}"
 LOCK_FILE="${TMPDIR:-/tmp}/geneformer-nsclc-monitor-refresh.lock"
 PUBLISH_TO_GIT="${PUBLISH_TO_GIT:-0}"
 
