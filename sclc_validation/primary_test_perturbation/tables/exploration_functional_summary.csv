@@ -1,0 +1,9 @@
+functional_category,genes,comparison_rows,median_score,median_min_detection
+Other / unannotated here,23,27,0.6774884106871955,3981.0
+Translation / ribosome,8,20,0.8399656138618444,1750.0
+Signaling / transcription,7,12,0.7775174041172805,4324.5
+Antigen presentation / immune,5,15,0.8433023761071248,2420.0
+Stress / proteostasis,5,7,0.7466177177973515,3445.0
+Cytoskeleton / motility,4,8,0.7898764602692678,5470.0
+Mitochondrial,4,4,0.7154789875905575,5071.5
+Other prioritized signal,2,7,0.7839170988833644,1726.0
