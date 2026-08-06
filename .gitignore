@@ -63,8 +63,10 @@ plots/
 output/pdf/
 tmp/
 
-# Generated posters. The templates are source and stay tracked.
+# Generated posters (HTML ~10 MB, PDF ~7 MB each, both regenerable from the
+# notebook). The templates are source and stay tracked.
 poster/poster_*.html
+poster/poster_*.pdf
 !poster/poster_template.html
 !poster/poster_template_90x210.html
 
