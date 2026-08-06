@@ -1,9 +1,9 @@
 {
-  "generated_utc": "2026-08-01T09:56:37.937496+00:00",
+  "generated_utc": "2026-08-06T14:31:52.789225+00:00",
   "artifact_root": "/home/thinkstation2/workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
   "primary_dataset": "donor-held-out test cells",
   "reference_dataset": "training cells only",
-  "complete": false,
+  "complete": true,
   "arms": [
     "delete",
     "overexpress"
