@@ -38,6 +38,12 @@ H5AD = Path(os.environ.get(
     "HTAN_H5AD",
     Path.home() / "workspace/KD/sclc_luad_normal_htan_finetune/data/htan_sclc_luad_normal_tcells_prepared.h5ad",
 ))
+# The h5ad is indexed by Ensembl ID with no symbol column, so the symbol mapping is
+# taken from the perturbation stats tables, which carry both identifiers.
+STATS_ROOT = Path(os.environ.get(
+    "SCLC_PERTURBATION_ROOT",
+    Path.home() / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
+)) / "stats"
 CANDIDATES = Path(os.environ.get(
     "DENOISED_CANDIDATES",
     Path(__file__).resolve().parents[1] / "tables" / "immune_cancer_candidates_with_donor_robustness.csv",
@@ -63,6 +69,17 @@ KNOWN_TCELL = [
     "IL7R", "CCR7", "TCF7", "LEF1", "SELL", "GZMA", "GZMK", "PRF1", "NKG7", "CTSW",
     "CD27", "ICOS", "CTLA4", "PDCD1", "FOXP3", "IKZF2", "RUNX3", "BCL11B", "CD69",
 ]
+
+
+def symbol_to_ensembl() -> dict[str, str]:
+    """Union the stats tables to map gene symbol -> Ensembl ID."""
+    mapping: dict[str, str] = {}
+    for path in sorted(STATS_ROOT.glob("*/heldout_allgene_*.csv")):
+        frame = pd.read_csv(path, usecols=["Gene_name", "Ensembl_ID"])
+        mapping.update(dict(zip(frame.Gene_name, frame.Ensembl_ID)))
+    if not mapping:
+        raise SystemExit(f"No stats tables found under {STATS_ROOT}; cannot map gene symbols")
+    return mapping
 
 
 def group_f_statistic(counts: sp.csr_matrix, labels: pd.Series) -> np.ndarray:
@@ -131,8 +148,12 @@ def main() -> None:
     denom = np.sqrt(np.maximum(sumsq - adata.n_obs * col_mean ** 2, 1e-12)) * np.sqrt(adata.n_obs)
     libsize_corr = numerator / np.maximum(denom, 1e-12)
 
+    sym2ens = symbol_to_ensembl()
+    ens2sym = {e: s for s, e in sym2ens.items()}
+
     features = pd.DataFrame({
-        "gene": genes,
+        "ensembl_id": genes,
+        "gene": [ens2sym.get(e, e) for e in genes],
         "detect_frac": detect_frac,
         "mean_expr": mean_expr,
         "log_subtype_f": np.log1p(subtype_f),
@@ -143,8 +164,9 @@ def main() -> None:
     features["breadth_over_depth"] = features.detect_frac / np.maximum(features.mean_expr, 1e-6)
     features["subtype_over_donor"] = features.log_subtype_f / np.maximum(features.log_donor_f, 1e-6)
 
-    ambient_set = [g for g in KNOWN_AMBIENT if g in genes]
-    tcell_set = [g for g in KNOWN_TCELL if g in genes]
+    present_symbols = set(features.gene)
+    ambient_set = [g for g in KNOWN_AMBIENT if g in present_symbols]
+    tcell_set = [g for g in KNOWN_TCELL if g in present_symbols]
     print(f"\nAnchors present: {len(ambient_set)} ambient, {len(tcell_set)} T-cell-intrinsic")
 
     # Only score genes with enough detection for the features to mean anything.
@@ -181,13 +203,17 @@ def main() -> None:
     scored.sort_values("ambient_risk", ascending=False).to_csv(OUT_DIR / "ambient_risk_all_genes.csv", index=False)
 
     candidates = pd.read_csv(CANDIDATES)
-    per_gene = candidates.groupby("Gene_name", as_index=False).agg(
+    per_gene = candidates.groupby(["Gene_name", "Ensembl_ID"], as_index=False).agg(
         n_comparisons=("comparison", "nunique"),
         program=("class_label", "first"),
         donor_robustness=("donor_robustness", lambda s: s.value_counts().idxmax()),
     )
-    merged = per_gene.merge(scored[["gene", "ambient_risk", "ambient_pct", "detect_frac", "log_subtype_f", "log_donor_f"]],
-                            left_on="Gene_name", right_on="gene", how="left").drop(columns="gene")
+    # Join on Ensembl ID rather than symbol; the h5ad is Ensembl-indexed and symbols are
+    # not one-to-one.
+    merged = per_gene.merge(
+        scored[["ensembl_id", "ambient_risk", "ambient_pct", "detect_frac", "log_subtype_f", "log_donor_f"]],
+        left_on="Ensembl_ID", right_on="ensembl_id", how="left",
+    ).drop(columns="ensembl_id")
     merged["ambient_flag"] = np.where(
         merged.ambient_risk.isna(), "not_scored",
         np.where(merged.ambient_risk >= threshold, "AMBIENT_RISK", "ok"),
