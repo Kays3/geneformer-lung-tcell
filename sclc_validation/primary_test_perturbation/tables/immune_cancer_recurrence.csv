@@ -1,0 +1,111 @@
+Gene_name,class_label,n_comparisons,comparisons,median_min_detection,max_denoised_score,n_restrains,n_promotes
+HLA-C,Antigen presentation / MHC,6,luad_to_normal; luad_to_sclc; normal_to_luad; normal_to_sclc; sclc_to_luad; sclc_to_normal,2405.0,1.0,3,3
+CD27,Costimulation / activation,6,luad_to_normal; luad_to_sclc; normal_to_luad; normal_to_sclc; sclc_to_luad; sclc_to_normal,735.0,0.36961220777834947,4,2
+CD74,Antigen presentation / MHC,5,luad_to_sclc; normal_to_luad; normal_to_sclc; sclc_to_luad; sclc_to_normal,1787.0,0.9287452890512558,3,2
+RGS1,Trafficking / tissue residency,5,luad_to_normal; luad_to_sclc; normal_to_luad; normal_to_sclc; sclc_to_luad,681.0,0.8405571224862984,3,2
+PSMB9,Antigen presentation / MHC,5,luad_to_normal; luad_to_sclc; normal_to_sclc; sclc_to_luad; sclc_to_normal,1602.0,0.813623666736889,2,3
+PSMB8,Antigen presentation / MHC,5,luad_to_normal; luad_to_sclc; normal_to_sclc; sclc_to_luad; sclc_to_normal,1312.0,0.4966752736733451,2,3
+IRF1,Interferon / inflammatory,5,luad_to_normal; luad_to_sclc; normal_to_sclc; sclc_to_luad; sclc_to_normal,1033.0,0.4848279406391484,2,3
+STAT1,Interferon / inflammatory,5,luad_to_normal; luad_to_sclc; normal_to_sclc; sclc_to_luad; sclc_to_normal,557.0,0.479755447343955,2,3
+TIGIT,Checkpoint / exhaustion,5,luad_to_sclc; normal_to_luad; normal_to_sclc; sclc_to_luad; sclc_to_normal,436.0,0.4172030209349084,3,2
+GBP5,Interferon / inflammatory,5,luad_to_normal; luad_to_sclc; normal_to_sclc; sclc_to_luad; sclc_to_normal,393.0,0.4158513326022506,2,3
+TGFB1,Treg / suppressive,4,luad_to_normal; luad_to_sclc; normal_to_sclc; sclc_to_luad,1821.0,0.6768947323570532,2,2
+CCL4,Cytotoxic effector,4,luad_to_normal; luad_to_sclc; normal_to_luad; normal_to_sclc,1517.0,0.6096851790469502,2,2
+CCL5,Cytotoxic effector,4,luad_to_normal; luad_to_sclc; sclc_to_luad; sclc_to_normal,2680.5,0.5705553177717985,2,2
+HLA-DPA1,Antigen presentation / MHC,4,luad_to_normal; luad_to_sclc; normal_to_luad; sclc_to_luad,1976.5,0.5307860420315649,2,2
+CTSW,Cytotoxic effector,4,luad_to_sclc; normal_to_luad; normal_to_sclc; sclc_to_luad,728.5,0.5235910537761611,2,2
+CCR7,Memory / progenitor,4,luad_to_normal; luad_to_sclc; normal_to_luad; normal_to_sclc,821.0,0.4971393666049372,2,2
+CD3G,T-cell identity / TCR,4,luad_to_normal; luad_to_sclc; normal_to_sclc; sclc_to_luad,2414.5,0.49197302444748997,2,2
+GZMA,Cytotoxic effector,4,luad_to_normal; normal_to_luad; normal_to_sclc; sclc_to_luad,842.0,0.466817125943938,3,1
+TNFRSF18,Treg / suppressive,4,luad_to_sclc; normal_to_sclc; sclc_to_luad; sclc_to_normal,653.0,0.46433092199969755,3,1
+ISG15,Interferon / inflammatory,4,luad_to_normal; luad_to_sclc; normal_to_sclc; sclc_to_normal,1829.0,0.4590931904162498,1,3
+CD8A,T-cell identity / TCR,4,luad_to_normal; normal_to_luad; normal_to_sclc; sclc_to_normal,318.0,0.43054258988745225,3,1
+GBP2,Interferon / inflammatory,4,luad_to_normal; luad_to_sclc; sclc_to_luad; sclc_to_normal,1390.0,0.4201398404136904,2,2
+LDHA,Immunosuppressive metabolism / TME,4,luad_to_normal; luad_to_sclc; normal_to_luad; sclc_to_normal,2984.0,0.4052863096701718,1,3
+XAF1,Interferon / inflammatory,4,luad_to_normal; luad_to_sclc; sclc_to_luad; sclc_to_normal,557.0,0.3983457452874473,2,2
+IFI44L,Interferon / inflammatory,4,luad_to_normal; luad_to_sclc; sclc_to_luad; sclc_to_normal,499.0,0.384055649339343,2,2
+CD7,T-cell identity / TCR,4,luad_to_normal; luad_to_sclc; normal_to_luad; normal_to_sclc,1998.5,0.3745202622462946,2,2
+HLA-G,Antigen presentation / MHC,4,normal_to_luad; normal_to_sclc; sclc_to_luad; sclc_to_normal,233.0,0.3719162116823817,2,2
+TAP1,Antigen presentation / MHC,4,luad_to_normal; luad_to_sclc; sclc_to_luad; sclc_to_normal,1429.5,0.36927125762069996,2,2
+CXCR3,Trafficking / tissue residency,4,luad_to_normal; luad_to_sclc; sclc_to_luad; sclc_to_normal,837.5,0.3590261953067065,2,2
+ID3,Memory / progenitor,4,luad_to_normal; luad_to_sclc; normal_to_luad; normal_to_sclc,426.5,0.3432497822370208,2,2
+SELL,Memory / progenitor,4,luad_to_sclc; normal_to_luad; sclc_to_luad; sclc_to_normal,728.0,0.33174910064076424,2,2
+MX1,Interferon / inflammatory,4,luad_to_normal; luad_to_sclc; sclc_to_luad; sclc_to_normal,709.0,0.30513359914683214,2,2
+B2M,Antigen presentation / MHC,3,luad_to_sclc; sclc_to_luad; sclc_to_normal,2420.0,1.0,2,1
+CXCR4,Trafficking / tissue residency,3,luad_to_sclc; normal_to_sclc; sclc_to_normal,1693.0,0.8073623603184068,3,0
+HLA-E,Antigen presentation / MHC,3,luad_to_normal; luad_to_sclc; sclc_to_luad,5996.0,0.7098589657453642,2,1
+PRDM1,Immunosuppressive metabolism / TME,3,luad_to_normal; luad_to_sclc; normal_to_luad,2375.0,0.616836301939128,2,1
+CD3D,T-cell identity / TCR,3,luad_to_normal; normal_to_sclc; sclc_to_normal,1617.0,0.5850990426599627,3,0
+HLA-DPB1,Antigen presentation / MHC,3,luad_to_normal; luad_to_sclc; sclc_to_luad,2827.0,0.5710803996784373,1,2
+IL7R,Memory / progenitor,3,luad_to_sclc; sclc_to_luad; sclc_to_normal,1130.0,0.5529392074884608,2,1
+ITK,T-cell identity / TCR,3,luad_to_normal; luad_to_sclc; sclc_to_luad,2022.0,0.512186203929733,1,2
+GZMM,Cytotoxic effector,3,luad_to_normal; luad_to_sclc; sclc_to_luad,2816.0,0.5005796079291837,2,1
+FYN,T-cell identity / TCR,3,luad_to_normal; luad_to_sclc; sclc_to_luad,3340.0,0.45002537328717995,1,2
+TAPBP,Antigen presentation / MHC,3,luad_to_normal; luad_to_sclc; sclc_to_luad,2693.0,0.44307822105832634,2,1
+GZMH,Cytotoxic effector,3,luad_to_normal; luad_to_sclc; sclc_to_luad,1621.0,0.4243063564634088,1,2
+CD2,T-cell identity / TCR,3,luad_to_normal; luad_to_sclc; sclc_to_luad,5130.0,0.3913546220572105,2,1
+CD247,T-cell identity / TCR,3,luad_to_normal; luad_to_sclc; sclc_to_luad,2701.0,0.36119805894231044,2,1
+BATF,Immunosuppressive metabolism / TME,3,luad_to_normal; luad_to_sclc; normal_to_sclc,1542.0,0.3462414637273839,2,1
+ITGB2,Trafficking / tissue residency,3,luad_to_normal; normal_to_luad; normal_to_sclc,289.0,0.33033343523623576,2,1
+GBP1,Interferon / inflammatory,3,luad_to_sclc; sclc_to_luad; sclc_to_normal,320.0,0.322897666964361,1,2
+PRF1,Cytotoxic effector,3,luad_to_sclc; normal_to_luad; normal_to_sclc,234.0,0.32153854191854797,2,1
+IRF7,Interferon / inflammatory,3,luad_to_normal; luad_to_sclc; sclc_to_luad,672.0,0.29944091194312966,2,1
+CD58,Costimulation / activation,3,luad_to_normal; luad_to_sclc; sclc_to_luad,722.0,0.29123238617243097,1,2
+KLRG1,Checkpoint / exhaustion,3,luad_to_normal; luad_to_sclc; normal_to_luad,1197.0,0.2818942571896353,2,1
+HAVCR2,Checkpoint / exhaustion,3,luad_to_sclc; sclc_to_luad; sclc_to_normal,202.0,0.2714587986066133,2,1
+KLRC1,Cytotoxic effector,3,luad_to_normal; luad_to_sclc; normal_to_luad,515.0,0.24593037519157296,1,2
+IRF9,Interferon / inflammatory,3,luad_to_normal; luad_to_sclc; normal_to_sclc,462.0,0.2125615779448099,1,2
+IFIT3,Interferon / inflammatory,3,luad_to_normal; luad_to_sclc; sclc_to_normal,105.0,0.18299917238601623,1,2
+GZMK,Cytotoxic effector,2,luad_to_normal; luad_to_sclc,2736.0,0.6620581930202283,1,1
+HLA-A,Antigen presentation / MHC,2,sclc_to_luad; sclc_to_normal,2405.0,0.6461756498141822,1,1
+MCL1,Oncogenic / tumor suppressor,2,luad_to_normal; luad_to_sclc,4610.0,0.49746482250210383,1,1
+NKG7,Cytotoxic effector,2,luad_to_normal; normal_to_luad,1572.5,0.4810885428003795,1,1
+CD3E,T-cell identity / TCR,2,luad_to_sclc; sclc_to_luad,3595.5,0.4505266416049864,1,1
+CST7,Cytotoxic effector,2,luad_to_normal; luad_to_sclc,3939.0,0.3886973511426002,1,1
+IFI6,Interferon / inflammatory,2,luad_to_sclc; sclc_to_normal,1023.5,0.3754253875227221,0,2
+KLRB1,Cytotoxic effector,2,luad_to_normal; normal_to_luad,1779.0,0.35533217541470435,1,1
+GZMB,Cytotoxic effector,2,normal_to_sclc; sclc_to_luad,503.0,0.35131702351425637,1,1
+BST2,Interferon / inflammatory,2,luad_to_normal; luad_to_sclc,2007.0,0.34360284668430385,1,1
+CXCR6,Trafficking / tissue residency,2,luad_to_normal; normal_to_luad,720.5,0.34029317127148234,1,1
+ISG20,Interferon / inflammatory,2,luad_to_normal; luad_to_sclc,3802.0,0.3366599610451314,1,1
+ICOS,Costimulation / activation,2,luad_to_normal; luad_to_sclc,1893.0,0.31258937468853,1,1
+BCL2,Oncogenic / tumor suppressor,2,luad_to_normal; luad_to_sclc,1222.0,0.2788319430773304,1,1
+MX2,Interferon / inflammatory,2,luad_to_normal; luad_to_sclc,712.0,0.25943598347313535,1,1
+ZAP70,T-cell identity / TCR,2,luad_to_sclc; normal_to_sclc,695.0,0.23243391486377712,2,0
+CTLA4,Checkpoint / exhaustion,2,luad_to_sclc; normal_to_sclc,474.5,0.2117202190362065,2,0
+CD4,T-cell identity / TCR,2,luad_to_normal; sclc_to_normal,701.0,0.1955879624490424,1,1
+TNFRSF1B,Costimulation / activation,2,luad_to_normal; luad_to_sclc,2018.0,0.1905146490833487,1,1
+ENTPD1,Checkpoint / exhaustion,2,sclc_to_luad; sclc_to_normal,175.0,0.19008779169942466,1,1
+CD160,Checkpoint / exhaustion,2,luad_to_normal; normal_to_luad,190.5,0.18497572881840474,1,1
+TAP2,Antigen presentation / MHC,2,luad_to_sclc; normal_to_sclc,402.0,0.174727582600234,0,2
+IFI35,Interferon / inflammatory,2,luad_to_normal; luad_to_sclc,489.0,0.1703575578548975,1,1
+ITGA1,Trafficking / tissue residency,2,luad_to_normal; luad_to_sclc,333.0,0.16232915795454675,1,1
+THEMIS,T-cell identity / TCR,2,luad_to_normal; luad_to_sclc,1054.0,0.14417779217314364,1,1
+HLA-B,Antigen presentation / MHC,1,luad_to_sclc,6311.0,0.7924888285487265,0,1
+TNFRSF4,Treg / suppressive,1,sclc_to_normal,579.0,0.3447344295103856,1,0
+HLA-DRA,Antigen presentation / MHC,1,luad_to_normal,2235.0,0.27522234656248035,0,1
+IFI16,Interferon / inflammatory,1,luad_to_normal,2906.0,0.27401518878218123,1,0
+GNLY,Cytotoxic effector,1,normal_to_luad,100.0,0.2697621363847903,0,1
+CD8B,T-cell identity / TCR,1,luad_to_normal,1521.0,0.26747940264166226,1,0
+NFE2L2,Oncogenic / tumor suppressor,1,luad_to_sclc,2923.0,0.2666782629612747,1,0
+CD28,T-cell identity / TCR,1,luad_to_normal,1565.0,0.2524469771564626,1,0
+EP300,Oncogenic / tumor suppressor,1,luad_to_normal,811.0,0.2506760618369103,0,1
+CD226,Costimulation / activation,1,luad_to_normal,726.0,0.23826888554282227,0,1
+TOX,Checkpoint / exhaustion,1,luad_to_sclc,631.0,0.19257619295765896,1,0
+PDCD1,Checkpoint / exhaustion,1,normal_to_luad,34.0,0.18453767050522493,0,1
+KLRD1,Cytotoxic effector,1,luad_to_normal,982.0,0.17631795610508882,0,1
+STK11,Oncogenic / tumor suppressor,1,luad_to_normal,321.0,0.17233677112497292,1,0
+IL2RA,Treg / suppressive,1,luad_to_normal,517.0,0.1597561959600362,0,1
+TOX2,Checkpoint / exhaustion,1,luad_to_normal,205.0,0.14995026581899198,1,0
+CCR6,Trafficking / tissue residency,1,normal_to_luad,40.0,0.14418910929535306,0,1
+IKZF2,Treg / suppressive,1,luad_to_sclc,324.0,0.14122659007313723,1,0
+TCF7,Memory / progenitor,1,luad_to_sclc,1431.0,0.1355167760159719,0,1
+IL2,Costimulation / activation,1,luad_to_normal,149.0,0.13443258371749967,1,0
+TNFRSF9,Checkpoint / exhaustion,1,sclc_to_normal,99.0,0.12862240548690212,1,0
+IFIT1,Interferon / inflammatory,1,luad_to_sclc,90.0,0.11397523435206995,0,1
+CXCL13,Checkpoint / exhaustion,1,luad_to_normal,83.0,0.11276656622154685,1,0
+CCL3,Cytotoxic effector,1,sclc_to_luad,248.0,0.10211257816188221,0,1
+CD38,Costimulation / activation,1,luad_to_sclc,144.0,0.09672991857617039,0,1
+ITGAE,Checkpoint / exhaustion,1,luad_to_sclc,955.0,0.07503048543702488,0,1
+OAS3,Interferon / inflammatory,1,luad_to_sclc,120.0,0.05058313530045846,0,1
+CD40LG,Costimulation / activation,1,sclc_to_luad,300.0,0.010880354854591788,0,1

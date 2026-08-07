@@ -1,0 +1,23 @@
+tier,class_label,rows,genes,median_score,pct_of_all_rows
+ambiguous,Immediate-early / activation (ambiguous),24,8,0.3611582493014573,0.67
+immune_cancer,Interferon / inflammatory,60,20,0.2810515169066985,1.67
+immune_cancer,Antigen presentation / MHC,51,15,0.4370058924887483,1.42
+immune_cancer,Cytotoxic effector,41,16,0.3384365912920371,1.14
+immune_cancer,T-cell identity / TCR,37,14,0.2876241316578026,1.03
+immune_cancer,Checkpoint / exhaustion,23,12,0.1913614870576921,0.64
+immune_cancer,Trafficking / tissue residency,20,7,0.3098631492994442,0.56
+immune_cancer,Costimulation / activation,17,8,0.2412227187909798,0.47
+immune_cancer,Memory / progenitor,16,5,0.25831751155898164,0.45
+immune_cancer,Treg / suppressive,11,5,0.3160516800602862,0.31
+immune_cancer,Immunosuppressive metabolism / TME,10,3,0.3294353629702801,0.28
+immune_cancer,Oncogenic / tumor suppressor,7,5,0.2576687031764243,0.2
+noise,Ribosomal,134,70,0.3709046934527333,3.74
+noise,Immediate-early / dissociation stress,69,19,0.3737797652956301,1.92
+noise,Heat shock / proteostasis,56,24,0.31080470908618424,1.56
+noise,OXPHOS / housekeeping,49,25,0.2643877719870099,1.37
+noise,Histone,37,19,0.2264653182970884,1.03
+noise,Structural housekeeping,36,19,0.4022795954870576,1.0
+noise,Mitochondrial,32,12,0.4604820020696784,0.89
+noise,Epithelial / ambient RNA,16,8,0.17357861655807094,0.45
+noise,Hemoglobin / erythrocyte ambient,3,2,0.1876555059174022,0.08
+other,Other / unannotated,2837,1573,0.2065420068455443,79.11
