@@ -1,0 +1,12 @@
+class_label,genes,rows,median_score
+Interferon / inflammatory,20,60,0.29665976332104915
+Cytotoxic effector,16,41,0.35533217541470435
+Antigen presentation / MHC,15,51,0.4638227195755556
+T-cell identity / TCR,14,37,0.30630938135296654
+Checkpoint / exhaustion,12,23,0.19008779169942466
+Costimulation / activation,8,17,0.23826888554282227
+Trafficking / tissue residency,7,20,0.32813598190998694
+Memory / progenitor,5,16,0.25500902715500345
+Oncogenic / tumor suppressor,5,7,0.2666782629612747
+Treg / suppressive,5,11,0.3447344295103856
+Immunosuppressive metabolism / TME,3,10,0.333157466528347
