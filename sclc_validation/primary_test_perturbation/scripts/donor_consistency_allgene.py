@@ -52,6 +52,13 @@ NAME_TO_SLUG = {v: k for k, v in STATE_NAMES.items()}
 FILE_RE = re.compile(r"shard(\d+)_dict_cell_embs_(\d+)batch(-?\d+)_raw\.pickle$")
 N_WORKERS = int(os.environ.get("N_WORKERS", 8))
 
+# Perturbed genes per cell, relative to the tokenized sequence length.
+# Deletion drops <cls> and <eos>, leaving length - 2 genes. Overexpression additionally
+# skips the gene already ranked first, because moving it to the front is a no-op, leaving
+# length - 3. Measured as exactly constant across every cell of every shard checked in
+# all three sources, so it is asserted rather than tolerated.
+GENE_COUNT_OFFSET = {"delete": 2, "overexpress": 3}
+
 
 def shard_cell_donors(manifest: pd.DataFrame) -> dict[tuple[str, int], list[str]]:
     """Map (source, shard) -> donor per cell index, in length-descending order."""
@@ -88,11 +95,12 @@ def verify_ordering(arm: str, source: str, donors: dict, lengths: dict, n_shards
         if not per_cell:
             continue
         expected = lengths[(source, shard)]
+        offset = GENE_COUNT_OFFSET[arm]
         for cell_index, tokens in sorted(per_cell.items()):
-            if len(tokens) != expected[cell_index] - 2:
+            if len(tokens) != expected[cell_index] - offset:
                 raise AssertionError(
                     f"ordering mismatch {arm}/{source} shard{shard} cell{cell_index}: "
-                    f"{len(tokens)} genes vs expected {expected[cell_index] - 2}"
+                    f"{len(tokens)} genes vs expected {expected[cell_index] - offset}"
                 )
         checked += 1
     print(f"  [verify] {arm}/{source}: cell ordering confirmed on {checked} shards", flush=True)
