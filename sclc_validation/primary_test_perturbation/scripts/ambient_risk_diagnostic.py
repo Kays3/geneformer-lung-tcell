@@ -68,7 +68,9 @@ KNOWN_TCELL = [
 def group_f_statistic(counts: sp.csr_matrix, labels: pd.Series) -> np.ndarray:
     """One-way F statistic per gene across the given grouping, on log1p-CPM values."""
     codes = pd.Categorical(labels).codes
-    n_groups = codes.max() + 1
+    # codes is int8 for small category counts; keep the group count a Python int so
+    # arithmetic against the cell count cannot overflow.
+    n_groups = int(codes.max()) + 1
     n_cells, n_genes = counts.shape
     indicator = sp.csr_matrix(
         (np.ones(n_cells), (codes, np.arange(n_cells))), shape=(n_groups, n_cells)
