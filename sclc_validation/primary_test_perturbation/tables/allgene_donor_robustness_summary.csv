@@ -1,0 +1,5 @@
+donor_robustness,n_hits,pct
+fully_consistent,1645,45.9
+majority_consistent,1433,40.0
+single_donor_only,408,11.4
+inconsistent,100,2.8

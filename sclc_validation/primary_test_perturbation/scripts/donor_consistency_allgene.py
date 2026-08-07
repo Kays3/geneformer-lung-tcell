@@ -196,7 +196,75 @@ def classify(frac_delete: float, frac_over: float, donors_delete: int, donors_ov
     return "inconsistent"
 
 
+ORDER = ["fully_consistent", "majority_consistent", "inconsistent", "single_donor_only"]
+COLOURS = {
+    "fully_consistent": "#2A9D8F", "majority_consistent": "#8AB17D",
+    "inconsistent": "#E76F51", "single_donor_only": "#adb5bd",
+}
+
+
+def plot_figures() -> None:
+    """Render figures from the tables this script writes. Usable standalone."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    fig_dir = OUT_DIR.parent / "figures" / "donor_robustness"
+    fig_dir.mkdir(parents=True, exist_ok=True)
+    by_comparison = pd.read_csv(OUT_DIR / "allgene_donor_robustness_by_comparison.csv", index_col=0)
+    immune_path = OUT_DIR / "immune_cancer_candidates_with_donor_robustness.csv"
+
+    present = [c for c in ORDER if c in by_comparison.columns]
+    fractions = by_comparison[present].div(by_comparison[present].sum(axis=1), axis=0) * 100
+    fig, ax = plt.subplots(figsize=(10.5, 5.5))
+    left = np.zeros(len(fractions))
+    for column in present:
+        ax.barh(fractions.index, fractions[column], left=left, color=COLOURS[column], label=column)
+        left += fractions[column].values
+    ax.set_xlabel("Percent of concordant hits")
+    ax.set_title("Donor-level consistency of all-gene concordant hits, by disease transition")
+    ax.set_xlim(0, 100)
+    ax.legend(fontsize=8, frameon=False, ncol=4, loc="lower center", bbox_to_anchor=(0.5, -0.22))
+    ax.spines[["top", "right"]].set_visible(False)
+    fig.tight_layout()
+    fig.savefig(fig_dir / "donor_robustness_by_comparison.png", dpi=200, bbox_inches="tight")
+    plt.close(fig)
+
+    if not immune_path.exists():
+        return
+    immune = pd.read_csv(immune_path)
+    everything = pd.read_csv(OUT_DIR / "allgene_donor_robustness_summary.csv")
+    assessable_all = everything[everything.donor_robustness.ne("single_donor_only")]
+    immune_assessable = immune[immune.donor_robustness.ne("single_donor_only")]
+    pct_immune = 100 * immune_assessable.donor_robustness.eq("fully_consistent").mean()
+    total_assessable = assessable_all.n_hits.sum()
+    fully_all = int(everything.loc[everything.donor_robustness.eq("fully_consistent"), "n_hits"].iloc[0])
+    pct_background = 100 * (fully_all - immune_assessable.donor_robustness.eq("fully_consistent").sum()) / (
+        total_assessable - len(immune_assessable)
+    )
+
+    fig, ax = plt.subplots(figsize=(7, 4.6))
+    bars = ax.bar(
+        ["All other\nconcordant hits", "Denoised\nimmune / cancer set"],
+        [pct_background, pct_immune], color=["#adb5bd", "#2A9D8F"], width=0.55,
+    )
+    for bar, value in zip(bars, [pct_background, pct_immune]):
+        ax.text(bar.get_x() + bar.get_width() / 2, value + 1.5, f"{value:.1f}%", ha="center", fontsize=11)
+    ax.set_ylabel("Fully donor-consistent (%)")
+    ax.set_ylim(0, 100)
+    ax.set_title("Denoising selects for donor-robust hits\n(assessable hits only; normal-source excluded)", fontsize=11)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.grid(axis="y", alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(fig_dir / "donor_robustness_enrichment.png", dpi=200)
+    plt.close(fig)
+
+
 def main() -> None:
+    if "--plots-only" in sys.argv:
+        plot_figures()
+        print("figures written")
+        return
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     manifest = pd.read_csv(ROOT / "tables" / "heldout_shard_manifest.csv")
     donors_by_shard = shard_cell_donors(manifest)
