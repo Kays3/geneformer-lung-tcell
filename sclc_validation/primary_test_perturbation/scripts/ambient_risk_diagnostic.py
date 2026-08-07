@@ -3,7 +3,7 @@
 
 This is NOT CellBender and NOT ambient correction. CellBender's `remove-background`
 learns the ambient profile from empty droplets, and the only available HTAN matrix is
-filtered (minimum 235 UMI per cell, zero barcodes below 100) and already subset to T
+filtered (minimum 113 UMI per cell across all 46,140 cells) and already subset to T
 cells. With no empty droplets the ambient profile is unidentifiable, so that model
 cannot be fit. See RESULTS_ambient_risk.md.
 
