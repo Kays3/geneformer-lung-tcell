@@ -74,14 +74,15 @@ def group_f_statistic(counts: sp.csr_matrix, labels: pd.Series) -> np.ndarray:
         (np.ones(n_cells), (codes, np.arange(n_cells))), shape=(n_groups, n_cells)
     )
     group_n = np.asarray(indicator.sum(axis=1)).ravel()
-    group_sum = indicator @ counts
-    group_sumsq = indicator @ counts.multiply(counts)
+    # Both are (n_groups x n_genes), so densifying is cheap regardless of cell count.
+    group_sum = np.asarray(sp.csr_matrix(indicator @ counts).todense())
+    group_sumsq = np.asarray(sp.csr_matrix(indicator @ counts.multiply(counts)).todense())
 
-    group_mean = np.asarray(group_sum / group_n[:, None])
+    group_mean = group_sum / group_n[:, None]
     grand_mean = np.asarray(counts.mean(axis=0)).ravel()
 
     between = (group_n[:, None] * (group_mean - grand_mean) ** 2).sum(axis=0) / max(n_groups - 1, 1)
-    total_sumsq = np.asarray(group_sumsq.sum(axis=0)).ravel()
+    total_sumsq = group_sumsq.sum(axis=0)
     within_sumsq = total_sumsq - (group_n[:, None] * group_mean ** 2).sum(axis=0)
     within = within_sumsq / max(n_cells - n_groups, 1)
     return between / np.maximum(within, 1e-12)
