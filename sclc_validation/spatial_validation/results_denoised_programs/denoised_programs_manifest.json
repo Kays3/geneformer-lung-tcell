@@ -1,0 +1,110 @@
+{
+  "source_cohort": "GSE263196 (5 fresh-frozen SCLC Visium samples)",
+  "candidates_table": "/home/thinkstation2/scratch_denoised_spatial/immune_cancer_candidates.csv",
+  "min_counts_per_spot": 200,
+  "min_genes_per_program": 3,
+  "min_comparisons_for_recurrence": 2,
+  "n_null_iterations": 100,
+  "random_seed": 43,
+  "circularity_guard": "Genes overlapping the T-cell abundance marker set are removed from every tested program.",
+  "programs_tested": {
+    "Antigen presentation / MHC": [
+      "B2M",
+      "CD74",
+      "HLA-A",
+      "HLA-C",
+      "HLA-DPA1",
+      "HLA-DPB1",
+      "HLA-E",
+      "HLA-G",
+      "PSMB8",
+      "PSMB9",
+      "TAP1",
+      "TAP2",
+      "TAPBP"
+    ],
+    "Checkpoint / exhaustion": [
+      "CD160",
+      "CTLA4",
+      "ENTPD1",
+      "HAVCR2",
+      "KLRG1",
+      "TIGIT"
+    ],
+    "Costimulation / activation": [
+      "CD27",
+      "CD58",
+      "ICOS",
+      "TNFRSF1B"
+    ],
+    "Cytotoxic effector": [
+      "CCL4",
+      "CCL5",
+      "CST7",
+      "CTSW",
+      "GZMA",
+      "GZMB",
+      "GZMH",
+      "GZMK",
+      "GZMM",
+      "KLRB1",
+      "KLRC1",
+      "NKG7",
+      "PRF1"
+    ],
+    "Immunosuppressive metabolism / TME": [
+      "BATF",
+      "LDHA",
+      "PRDM1"
+    ],
+    "Interferon / inflammatory": [
+      "BST2",
+      "GBP1",
+      "GBP2",
+      "GBP5",
+      "IFI35",
+      "IFI44L",
+      "IFI6",
+      "IFIT3",
+      "IRF1",
+      "IRF7",
+      "IRF9",
+      "ISG15",
+      "ISG20",
+      "MX1",
+      "MX2",
+      "STAT1",
+      "XAF1"
+    ],
+    "Memory / progenitor": [
+      "CCR7",
+      "ID3",
+      "SELL"
+    ],
+    "T-cell identity / TCR": [
+      "CD247",
+      "CD7",
+      "FYN",
+      "ITK",
+      "THEMIS",
+      "ZAP70"
+    ],
+    "Trafficking / tissue residency": [
+      "CXCR3",
+      "CXCR4",
+      "CXCR6",
+      "ITGA1",
+      "ITGB2",
+      "RGS1"
+    ],
+    "Dysfunction panel (benchmark)": [
+      "PDCD1",
+      "CTLA4",
+      "HAVCR2",
+      "LAG3",
+      "TIGIT",
+      "TOX",
+      "LAYN"
+    ]
+  }
+}
