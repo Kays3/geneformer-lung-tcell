@@ -1,0 +1,12 @@
+program,genes,median_risk,n_flagged
+Interferon / inflammatory,20,0.22384105853255856,1
+Oncogenic / tumor suppressor,5,0.1942821875774963,0
+Checkpoint / exhaustion,12,0.16484345316862514,0
+Costimulation / activation,8,0.11676709501348514,0
+Trafficking / tissue residency,7,0.04092537469864771,0
+Memory / progenitor,5,0.023748191518342995,0
+Treg / suppressive,5,0.011612897582787766,0
+Immunosuppressive metabolism / TME,3,0.011294305591484614,0
+T-cell identity / TCR,14,0.0054637938190225015,0
+Cytotoxic effector,16,0.0030560550223795733,0
+Antigen presentation / MHC,15,0.0011044922507024136,0
