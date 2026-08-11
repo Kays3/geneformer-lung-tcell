@@ -74,10 +74,15 @@ the table column too narrow for its own header/cell text, and the tables
 overran the panel border. Stacking removes the tradeoff entirely — both
 elements get the panel's full inner width. `WIDTH_MM["cm"]` and
 `WIDTH_MM["forest"]` in Cell 3 hold each image's width as a fraction of the
-panel's inner width (currently 0.62 and 0.66) — deliberately less than 1.0,
-since a full-width image would push the total stacked height (image +
-caption + table) past one A0 page. If you resize these, re-run Cell 6's
-page-count assertion rather than assuming it still fits.
+panel's inner width (currently 0.62 and 0.66). These keep each image close
+to the size it rendered at in the old side-by-side layout — enlarging the
+figures was not the point of the stacking fix — but they are a layout
+choice, **not** a fit constraint: setting both to `1.0` (full 307 mm column
+width) was rendered and also fits on one A0 page, so full width is available
+if you want the figures larger. Stacking does turn the block height from
+`max(image, table)` into `image + table`, so widening costs more vertical
+room than it did in the side-by-side layout. Re-run Cell 6's page-count
+assertion after any such change rather than assuming it still fits.
 
 ## Cohort panels
 
