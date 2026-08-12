@@ -6,6 +6,11 @@ readme = "README.md"
 requires-python = ">=3.10,<3.13"
 dependencies = [
   "geneformer",
+  # Geneformer's setup.py leaves transformers unpinned while its requirements.txt
+  # pins 4.46. uv resolves from setup.py, so it picks transformers 5.x, which
+  # dropped SpecialTokensMixin and makes `import geneformer` fail. Pin it here to
+  # what upstream actually requires.
+  "transformers==4.46",
   "ipykernel",
   "jupyterlab",
 ]
