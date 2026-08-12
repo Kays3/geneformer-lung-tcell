@@ -39,6 +39,113 @@ instead, swap in `poster_template_90x210.html`.
 Panel accents `hema` and `eosin` are available to `EXTRA_PANELS` for new
 pathology content.
 
+## What Draft 4 added
+
+Two panels, both aimed at readers who are not foundation-model people:
+
+**"What Is an *In Silico* Perturbation?"** (left column, above the cohort) — a
+plain-language explainer, because every number in sections B and C is a
+perturbation shift and most JSDP attendees are clinicians and wet-lab
+biologists. It lives directly in `poster_template.html`, not in
+`EXTRA_PANELS`, because it is static prose and needs to sit near the top of
+the column rather than appended to the end. The four-step schematic is
+**inline SVG**, so it stays sharp at A0 and needs no figure file. Two things
+to know before editing it:
+
+- Its text is sized in viewBox units, so it scales with the column width
+  (fixed at 248 mm) and **not** with `--fit`. At the current geometry the
+  smallest labels land near 10 pt; check them against the 9 pt floor if the
+  column width ever changes.
+- The SVG's rendered height follows its viewBox aspect ratio, so slack
+  viewBox units become dead millimetres in the tallest column on the sheet.
+  The viewBox height is trimmed to just past the lowest element for that
+  reason. Also note elements are painted in document order — the stage-4 box
+  is drawn after the stage-3 captions and will cover anything that runs
+  under it.
+
+The applied checkpoint/CAR-T read-out now spans the middle and right columns,
+using the result package in `sclc_validation/checkpoint_cart_perturbation/`.
+The middle column carries the detection-aware four-hit table; the right column
+carries literature context, the STRING overlay, and the unresolved checkpoint
+axis.
+
+The four rows (TIM-3, TIGIT, CTLA-4, IL7R) are selected in Cell 1 by the
+conjunction the panel claims — concordant in both arms, `tier == "all donors
+agree"`, and not `low_detection_lt100` — rather than typed in, so the table
+cannot drift from the criteria printed beside it.
+
+The updated result package makes detection a first-class part of the claim:
+counts are joined on `(gene, comparison)`, eight genes have no deletion result,
+and detection count is strongly anti-correlated with nominal effect size
+(Spearman ρ = −0.60). Draft 5 therefore presents the four hits as replicated,
+detection-adequate candidates rather than as the largest effects in the panel.
+
+The panel also carries the SCLC↔LUAD sign flip as an **open question, not a
+result**, per that analysis's own interpretation notes: the model orders these
+states Normal < SCLC < LUAD on the exhaustion axis, which runs opposite to the
+clinical picture. Do not let a later edit smooth this into either narrative —
+the two are not the same measurement.
+
+## What Draft 5 changed
+
+Draft 5 is the conference-facing revision of Draft 4. It shortens the title,
+adds a single take-home strip to the header, and renames the section bars so a
+reader can follow the story as question/cohort → model/screen → tissue
+validation → conclusions. It replaces the former genome-scale/ambient prose
+with detection-aware checkpoint results, scope limits, literature context and
+new figures. The template uses `--fit: 0.88` so the new panels still
+strip still exports as one A0 page; the smallest labels remain above the
+documented readability floor.
+
+## Draft 6 Minimal Picture-led Version
+
+`poster_template.html` is now the picture-led source used by
+`generate_poster.ipynb`. It uses relative paths to the current classifier,
+detection-confound, spatial-validation and checkpoint-network figures, and
+keeps only the four-hit table. The rendered `poster_draft_6.html` and
+`poster_draft_6.pdf` are generated deliverables.
+
+## Draft 7 Reduced Draft 5
+
+Draft 7 restores the Draft 5 visual system through `generate_poster.ipynb`,
+removes the classifier, paired-donor, specimen-QC and validation tables, and
+keeps the four-hit table plus the spatial, detection-confound, forest and
+checkpoint-network figures.
+
+## Final — three-column rebalance
+
+The final poster (`DRAFT_LABEL = "Final"`) is Draft 9's content in a rebalanced
+grid. It is worth knowing why the grid changed, because the obvious edit
+reintroduces the problem.
+
+Through Draft 8 the middle column carried **both** section B and section C, and
+the extra panels that padded the outer columns were dropped one by one for
+space. Draft 9 finished that trend and put its two new denoising figures in the
+middle column as well. The result measured **left 59.5% / middle 95.0% /
+right 59.5%** of sheet height — the middle column nearly overran A0 while the
+outer two sat 40% empty, and `--fit` had to sit at the 0.88 readability floor
+to keep one page.
+
+The fix moves **section C to the top of the right column**, so the columns read
+A | B | C over D. That frees the middle column for the two denoising figures at
+`WIDTH_MM["middle_full"] = 260` and leaves room in the left column for the
+restored detection-confound panel. Measured after the move: **left 88.3% /
+middle 88.4% / right 94.0%**, one A0 page, with `--fit` back up to 0.96.
+
+Two things to keep in mind before editing this layout:
+
+- `WIDTH_MM["spatial"]` is derived from `_RIGHT_COL`, which is now the column
+  section C actually sits in. Before the move it was sized for a column it was
+  not in; `object-fit:contain` letterboxed the image rather than distorting it,
+  so the figure rendered at the same 233 mm either way and the bug was
+  invisible. If section C ever moves again, re-derive this key from its new
+  column or the figure silently shrinks inside its slide mount.
+- Balance is measurable, so measure it rather than eyeballing the render. The
+  per-column fill percentages quoted here come from finding the lowest
+  non-background pixel row within each column's x-range of the snapshot, with
+  the header and footer bands excluded. A one-page assertion pass does **not**
+  imply a balanced sheet — Draft 9 passed it.
+
 ## Figures
 
 All figures live in `sclc_validation/perturbation_workflow/figures/` and
@@ -50,8 +157,8 @@ result table the poster also cites elsewhere:
 | Fig. 1 Confusion matrix | `test_confusion_matrix.csv` | `sclc_confusion_matrix.png` — see "Confusion-matrix fix" below |
 | Fig. 2 Spatial score maps | `spatial_validation/results/*` | Visium tissue panel |
 | Fig. 3 Forest plot | `spatial_tcell_dysfunction_correlation_by_sample.csv` | per-specimen rho with 95% CI |
-| Fig. 4 Donor-robustness enrichment | `allgene_*_donor_robustness.csv` | denoised set vs. background, assessable hits only |
-| Fig. 5 Denoised-program forest | `denoised_programs_pooled.csv` | pooled rho per program with random-null reference |
+| Fig. 4 Detection/effect confound | `checkpoint_cart_perturbation/tables/cart_overexpression_vs_deletion.csv` | ρ = −0.60 across the 50-gene panel |
+| Fig. 5 Perturbation network | `checkpoint_cart_perturbation/tables/string_network_edges.csv` | three shared-layout readouts |
 
 Draft 3 replaced the two targeted-panel detail figures (previously Figs 4-5) with the
 genome-scale screen and its robustness checks. The targeted panel remains in Section B;
@@ -60,7 +167,16 @@ were left out for space — their panels carry the numbers as prose, and the fig
 stay in Cell 1 (`FIG_DENOISED_HEAT`, `FIG_AMBIENT`) so they can be restored if a panel is
 cut elsewhere.
 
-Figs. 1, 4 and 5 are generated by a script, not hand-drawn — regenerate them
+**Draft 4 dropped the remaining two figures** — the donor-robustness enrichment plot and
+the denoised-program forest, previously Figs 4 and 5 — to pay for the two new panels
+described below. This is the same trade Draft 3 made: both panels stay, and their `note`
+text already states the numbers the plots showed (72.5% vs 50.1% donor-consistency;
+7.9σ above the matched-random null, ρ 0.361 → 0.384 under depth control). The paths
+remain in Cell 1 as `FIG_DONOR_ENRICH` and `FIG_SPATIAL_PROG`, so setting `"figure"` back
+in `EXTRA_PANELS` restores them — re-run Cell 6's page-count assertion if you do, because
+they will not fit at the current `--fit`.
+
+Fig. 1 is generated by a script, not hand-drawn — regenerate it
 whenever the underlying CSVs change:
 
 ```
@@ -113,8 +229,7 @@ mismatch between the QC file and the analysis surfaces as an error rather
 than two different numbers on the same poster.
 
 Adding these panels cost roughly 107 mm of column height and pulled the
-one-page `--fit` ceiling from 1.60 down to 1.12; `--fit` is now 1.10. See the
-fit table above.
+one-page `--fit` ceiling from 1.60 down to 1.12. See the fit table below.
 
 ### Confusion-matrix fix
 
@@ -223,11 +338,23 @@ including the title, the P25 box and the large stat figures:
 | `--fit` | title | body | smallest label | fits 1 A0 page? |
 |---|---|---|---|---|
 | `0.88` | 35 pt | 15.4 pt | 9.2 pt ← practical floor | yes |
-| `1.00` | 40 pt | 17.5 pt | 10.5 pt | yes (original) |
-| `0.96` | 38 pt | 16.8 pt | 10.1 pt ← **current default (Draft 3)** | yes |
-| `1.10` | 44 pt | 19.3 pt | 11.6 pt | Draft 2 default; overruns with Draft 3 content |
-| `1.12` | 45 pt | 19.6 pt | 11.8 pt | yes — measured ceiling |
-| `1.15` | 46 pt | 20.1 pt | 12.1 pt | no — spills to a 2nd page |
+| `0.96` | 38 pt | 16.8 pt | 10.1 pt ← **current default (Final)** | yes — measured with Final content |
+| `0.99` | 40 pt | 17.3 pt | 10.4 pt | yes — measured with Draft 4 content |
+| `1.00` | 40 pt | 17.5 pt | 10.5 pt | yes — measured with Draft 4 content |
+| `1.12` | 45 pt | 19.6 pt | 11.8 pt | Draft 3 ceiling; not re-measured for Draft 4 |
+| `1.15` | 46 pt | 20.1 pt | 12.1 pt | no — spilled to a 2nd page with Draft 3 content |
+
+Draft 4 went *up* from 0.96 to 1.00, which looks backwards for a draft that
+added content. It added ~291 mm of column height (the explainer and the
+checkpoint panel) and paid for it by dropping Figs 4 and 5, which are worth
+~331 mm together — so the sheet came out with slack, and the type went back up
+to use it. The Draft 4 ceiling above 1.00 was never measured.
+
+The Final layout sits at `0.96` with its tallest column (the right, carrying
+C over D) filling 94.0% of the sheet. That leaves roughly 6% of headroom, so
+the ceiling here is tight — a step to `1.00` is about a 4% type increase and
+would very likely land past the A0 edge. Re-measure before raising it, and
+prefer moving a panel between columns over shrinking type if content grows.
 
 Do not go below about `0.88`: the smallest labels fall under 9 pt and stop
 being readable at normal poster viewing distance.
