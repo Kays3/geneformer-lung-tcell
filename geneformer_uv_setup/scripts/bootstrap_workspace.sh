@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
   echo "Usage: $0 WORKSPACE_ROOT ANALYSIS_NAME PROFILE [GENEFORMER_REF]" >&2
-  echo "Profiles: default, cpu, cu130" >&2
+  echo "Profiles: default, cpu, cu130, postprocess" >&2
 }
 
 if [[ $# -lt 3 || $# -gt 4 ]]; then
@@ -17,7 +17,7 @@ PROFILE="$3"
 GENEFORMER_REF="${4:-main}"
 
 case "$PROFILE" in
-  default|cpu|cu130) ;;
+  default|cpu|cu130|postprocess) ;;
   *) usage; exit 2 ;;
 esac
 
