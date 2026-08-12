@@ -29,6 +29,59 @@ Make rebase the default so a forgotten pull cannot create a merge bubble:
 git config pull.rebase true
 ```
 
+## Data layout: /srv/lab
+
+Large data lives outside Git and outside any personal home. It sits in `/srv/lab`,
+owned `root:labusers` with mode `2775`, so every `labusers` member can read it and
+the setgid bit makes new files inherit the group.
+
+This is not cosmetic. The data was previously under `/home/thinkstation2`, mode
+`750`, owned by a per-machine account. When those accounts were replaced by
+personal ones the data became unreadable to everybody — the second time a path
+assumption has broken this project. A group-owned path survives account churn.
+
+| Path | Contents | Shared? |
+|---|---|---|
+| `/srv/lab/KD/` | experiment workspaces, raw perturbation output, stats | yes |
+| `/srv/lab/spatial_raw/GSE263196_RAW/` | Visium matrices (gitignored, not in a clone) | yes |
+| `/srv/lab/geneformer/` | Geneformer checkout, model weights, token dictionary | yes |
+| `~/workspace/geneformer-uv-starter/.venv` | Python interpreter | **no — per user** |
+
+The interpreter is the one thing that must not be shared. A virtualenv embeds the
+absolute paths of the machine and user that built it, so a copied venv half-works
+and then fails obscurely. Rebuild it instead:
+
+```bash
+bash geneformer_uv_setup/scripts/bootstrap_workspace.sh
+```
+
+`/srv/lab` is local to each node, not shared storage. The nodes ran different arms
+of the perturbation, so each holds its own copy and there is no merge between them.
+
+### Resolving paths
+
+```bash
+source tools/lab_env.sh    # exports every path the analyses read
+bash tools/lab_env.sh      # or run it directly to see which paths exist
+```
+
+Resolution order is: an explicit environment variable, then the untracked
+per-machine `~/.config/geneformer-lung-tcell/paths.env`, then the `/srv/lab`
+defaults. No analysis script hardcodes a machine path; this file is the single
+place a machine's layout differs.
+
+### Migrating a node
+
+```bash
+sudo bash tools/migrate_to_srv_lab.sh --inventory   # sizes and free space, changes nothing
+sudo bash tools/migrate_to_srv_lab.sh --migrate     # copy, then group + setgid
+sudo bash tools/migrate_to_srv_lab.sh --verify      # file counts and permissions
+```
+
+It never deletes the source and rsync runs without `--delete`, so it is safe to
+re-run. Delete the retired account's copy yourself once `--verify` passes.
+
+
 ## Lessons from the fork this replaced
 
 On 2026-08-07 the laptop and `thinkstation2` had each committed on top of the same
