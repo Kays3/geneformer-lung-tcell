@@ -159,14 +159,30 @@ migrate)
 verify)
     say "Verifying $LAB_ROOT"
     fail=0
+    tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
     for d in "${SUBDIRS[@]}"; do
         [[ -d "$SRC/$d" ]] || continue
-        a="$(find "$SRC/$d" -type f -not -path '*/.venv/*' -not -name '*.pyc' 2>/dev/null | wc -l)"
-        b="$(find "$LAB_ROOT/$d" -type f 2>/dev/null | wc -l)"
-        if [[ "$a" == "$b" ]]; then
-            ok "$d: $b files match"
+        # Compare the actual relative paths, not just counts: a count can match
+        # while different files are missing on each side, and a count mismatch
+        # says nothing about which direction the problem lies in.
+        ( cd "$SRC/$d" && find . -type f -not -path './.venv/*' -not -name '*.pyc' 2>/dev/null | sort ) > "$tmp/src"
+        ( cd "$LAB_ROOT/$d" && find . -type f 2>/dev/null | sort ) > "$tmp/dst"
+        only_src="$(comm -23 "$tmp/src" "$tmp/dst")"
+        only_dst="$(comm -13 "$tmp/src" "$tmp/dst")"
+        n_src="$(wc -l < "$tmp/src")"; n_dst="$(wc -l < "$tmp/dst")"
+        if [[ -z "$only_src" && -z "$only_dst" ]]; then
+            ok "$d: $n_dst files, identical file lists"
+        elif [[ -z "$only_src" ]]; then
+            # Extra files in the target are not data loss. They accumulate when
+            # the target was populated earlier and has been written to since.
+            ok "$d: all $n_src source files present; target has $(wc -l <<< "$only_dst") extra"
+            printf '%s\n' "$only_dst" | head -10 | sed 's|^\./|      + |'
+            [[ "$(wc -l <<< "$only_dst")" -gt 10 ]] && printf '      ... and %s more\n' "$(( $(wc -l <<< "$only_dst") - 10 ))"
         else
-            warn "$d: source $a vs target $b files"; fail=1
+            warn "$d: $(wc -l <<< "$only_src") file(s) MISSING from the target"
+            printf '%s\n' "$only_src" | head -20 | sed 's|^\./|      - |' >&2
+            [[ "$(wc -l <<< "$only_src")" -gt 20 ]] && printf '      ... and %s more\n' "$(( $(wc -l <<< "$only_src") - 20 ))" >&2
+            fail=1
         fi
     done
     bad_group="$(find "$LAB_ROOT" ! -group "$LAB_GROUP" -print -quit 2>/dev/null || true)"
