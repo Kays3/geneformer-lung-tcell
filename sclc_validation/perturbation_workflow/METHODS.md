@@ -120,6 +120,53 @@ findings in light of the classifier metrics.
 KD/sclc_luad_normal_htan_finetune/scripts/report_classification_metrics.py
 ```
 
+### One test cell is not scored, by upstream design
+
+The recorded confusion matrix totals **9,376** cells while the tokenized test
+split holds **9,377**. The missing cell is real and reproducible, and it is not
+a fault in this pipeline.
+
+Geneformer's `classifier_predict` (`geneformer/evaluation_utils.py`) truncates
+the evaluation set when the final batch would contain exactly one example:
+
+```python
+# ensure there is at least 2 examples in each batch to avoid incorrect tensor dims
+evalset_len = len(evalset)
+max_divisible = find_largest_div(evalset_len, forward_batch_size)
+if len(evalset) - max_divisible == 1:
+    evalset_len = max_divisible
+```
+
+The guard exists because the loop calls `torch.squeeze(outputs.logits)`, which
+on a one-example batch collapses the batch dimension from `(1, 3)` to `(3,)` and
+corrupts the subsequent `torch.cat`. Upstream avoids the case rather than
+handling it.
+
+With this cohort it fires because `9377 % 16 == 1` at the configured
+`forward_batch_size=16` — and it would fire at 8 or 32 as well, since 9,377 is
+one more than a multiple of all three. The dropped cell is the final row of
+`sclc_luad_normal_htan_labeled_test.dataset`:
+
+| | |
+|---|---|
+| `cell_id` | `RU1138_230816753564460` |
+| donor | RU1138 |
+| celltype | CD4-positive helper T cell |
+| label | lung adenocarcinoma |
+
+which matches the per-class arithmetic exactly: LUAD 6,386 recorded against
+6,387 in the data, with SCLC and normal unaffected.
+
+**Impact: none at any reported precision.** Scoring all 9,377 cells gives
+accuracy 0.919377 and macro F1 0.903318, against the recorded 0.919369 and
+0.903315. The headline 91.9% / 0.903 is unchanged.
+
+**What to do with this.** The recorded confusion matrix is a valid 9,376-cell
+result, not a 9,377-cell one. Anyone recomputing metrics directly from the
+tokenized dataset will land one cell off and should not read that as an error.
+`tools/verify_gpu_env.py` reproduces the full-dataset numbers and reports the
+coverage difference explicitly rather than failing on it.
+
 ## 6. Held-out all-gene deletion + overexpression screen
 
 ### Reference states

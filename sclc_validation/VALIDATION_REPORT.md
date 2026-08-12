@@ -12,7 +12,7 @@ This report provides a comprehensive analysis of the validation techniques emplo
 
 **Key Validation Results:**
 - ✅ Zero donor leakage across 42 donors and 46,140 cells
-- ✅ 91.9% classification accuracy on held-out test set
+- ✅ 91.9% classification accuracy on held-out test set (9,376 of 9,377 cells; one cell is not scored by upstream Geneformer design — see [METHODS](perturbation_workflow/METHODS.md#one-test-cell-is-not-scored-by-upstream-design). Scoring all 9,377 changes accuracy by 8e-6.)
 - ✅ 123 concordant perturbation hits (43 fully donor-consistent)
 - ✅ Spatial validation: ρ = 0.161 [0.146, 0.176] (p < 1e-3 in 4/5 samples)
 - ✅ Internal positive control: ASCL1/NEUROD1 show expected master regulator behavior
