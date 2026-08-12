@@ -58,19 +58,31 @@ bash geneformer_uv_setup/scripts/bootstrap_workspace.sh
 `/srv/lab` is local to each node, not shared storage. The nodes ran different arms
 of the perturbation, so each holds its own copy and there is no merge between them.
 
-### Legacy paths
+### Legacy paths and the per-user copy
 
 A dozen committed scripts, notebooks and manifests default to `~/workspace/KD`,
-which no longer exists under the personal accounts. Rather than rewrite every
-default, each node carries two symlinks so the historical paths resolve:
+which does not exist under the personal accounts. Each node therefore provides
+that path:
+
+| Path | Kind | Why |
+|---|---|---|
+| `~/workspace/KD` | **real copy** of `/srv/lab/KD` | per-user working copy, writable without affecting anyone else |
+| `~/workspace/geneformer-uv-starter/geneformer-workspace/Geneformer` | symlink to `/srv/lab/geneformer` | model weights are immutable; no reason to duplicate |
+
+The symlink exists because several scripts expect the Geneformer checkout under
+`geneformer-workspace/`, while `bootstrap_workspace.sh` creates it one level up.
+
+**The copy diverges the moment either side is written to.** `/srv/lab/KD` stays
+the shared reference; `~/workspace/KD` is a personal workspace. Re-sync a stale
+copy with rsync, which tops up rather than deleting:
 
 ```bash
-~/workspace/KD                                              -> /srv/lab/KD
-~/workspace/geneformer-uv-starter/geneformer-workspace/Geneformer -> /srv/lab/geneformer
+rsync -aH /srv/lab/KD/ ~/workspace/KD/          # refresh from shared
+rsync -aHn --delete /srv/lab/KD/ ~/workspace/KD/ | head   # dry-run: what drifted
 ```
 
-The second exists because several scripts expect the Geneformer checkout under
-`geneformer-workspace/`, while `bootstrap_workspace.sh` creates it one level up.
+Disk cost is real and on the same filesystem: 24 GB on thinkstation2, 3.7 GB on
+thinkstation1, per user.
 
 With these in place a script runs correctly on its built-in defaults alone, with
 no environment variables set. `tools/lab_env.sh` still takes precedence when
