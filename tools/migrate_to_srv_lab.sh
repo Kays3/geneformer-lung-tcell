@@ -134,13 +134,21 @@ migrate)
         ok "done: $LAB_ROOT/$dest"
     done
 
-    say "Applying group ownership and setgid"
-    chgrp -R "$LAB_GROUP" "$LAB_ROOT"
-    chmod -R g+rX "$LAB_ROOT"
+    say "Applying ownership, group and setgid"
+    # Own the tree as root rather than leaving it under the retired account. If
+    # that account is ever deleted its UID disappears and every file it owns
+    # becomes an orphaned numeric owner; root always exists. Access is granted
+    # through the group, so nobody loses anything by root holding the files.
+    chown -R root:"$LAB_GROUP" "$LAB_ROOT"
+    # Group-writable, not just readable: analyses write their outputs back into
+    # these trees (stats tables, raw shards), so labusers members must be able to
+    # create and modify files here. X rather than x so only directories and
+    # already-executable files gain the traverse bit.
+    chmod -R g+rwX "$LAB_ROOT"
     # setgid on directories so anything created later inherits labusers; this is
     # what stops the permission problem recurring.
     find "$LAB_ROOT" -type d -exec chmod g+s {} +
-    ok "group=$LAB_GROUP, dirs setgid, group-readable"
+    ok "owner=root, group=$LAB_GROUP, group-writable, dirs setgid"
     say "Next: rebuild the Python environment"
     ok "the .venv was deliberately NOT copied; rebuild it with"
     ok "  bash geneformer_uv_setup/scripts/bootstrap_workspace.sh"
@@ -163,6 +171,10 @@ verify)
     done
     bad_group="$(find "$LAB_ROOT" ! -group "$LAB_GROUP" -print -quit 2>/dev/null || true)"
     [[ -n "$bad_group" ]] && { warn "not group $LAB_GROUP: $bad_group"; fail=1; } || ok "group ownership uniform"
+    bad_owner="$(find "$LAB_ROOT" ! -user root -print -quit 2>/dev/null || true)"
+    [[ -n "$bad_owner" ]] && { warn "not owned by root (orphans if the account is deleted): $bad_owner"; fail=1; } || ok "owned by root"
+    nogw="$(find "$LAB_ROOT" -type d ! -perm -g+w -print -quit 2>/dev/null || true)"
+    [[ -n "$nogw" ]] && { warn "directory not group-writable: $nogw"; fail=1; } || ok "directories group-writable"
     nosetgid="$(find "$LAB_ROOT" -type d ! -perm -g+s -print -quit 2>/dev/null || true)"
     [[ -n "$nosetgid" ]] && { warn "directory without setgid: $nosetgid"; fail=1; } || ok "setgid set on all directories"
     say "$([[ $fail -eq 0 ]] && echo 'VERIFIED' || echo 'PROBLEMS FOUND - do not delete the source')"
