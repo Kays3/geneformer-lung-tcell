@@ -58,6 +58,24 @@ bash geneformer_uv_setup/scripts/bootstrap_workspace.sh
 `/srv/lab` is local to each node, not shared storage. The nodes ran different arms
 of the perturbation, so each holds its own copy and there is no merge between them.
 
+### Legacy paths
+
+A dozen committed scripts, notebooks and manifests default to `~/workspace/KD`,
+which no longer exists under the personal accounts. Rather than rewrite every
+default, each node carries two symlinks so the historical paths resolve:
+
+```bash
+~/workspace/KD                                              -> /srv/lab/KD
+~/workspace/geneformer-uv-starter/geneformer-workspace/Geneformer -> /srv/lab/geneformer
+```
+
+The second exists because several scripts expect the Geneformer checkout under
+`geneformer-workspace/`, while `bootstrap_workspace.sh` creates it one level up.
+
+With these in place a script runs correctly on its built-in defaults alone, with
+no environment variables set. `tools/lab_env.sh` still takes precedence when
+sourced, so the explicit and implicit routes agree.
+
 ### Resolving paths
 
 ```bash
