@@ -28,11 +28,16 @@ _USER_ENV="${LAB_ENV_FILE:-$HOME/.config/geneformer-lung-tcell/paths.env}"
 : "${TARGETED_PANEL_RUN_DIR:=$_LAB_ROOT/KD/sclc_luad_normal_htan_targeted_panel_perturbation}"
 : "${HTAN_H5AD:=$_LAB_ROOT/KD/sclc_luad_normal_htan_finetune/data/htan_sclc_luad_normal_tcells_prepared.h5ad}"
 : "${GSE263196_RAW_DIR:=$_LAB_ROOT/spatial_raw/GSE263196_RAW}"
-: "${GENEFORMER_TOKEN_DICT:=$_LAB_ROOT/geneformer-uv-starter/geneformer-workspace/Geneformer/geneformer/token_dictionary_gc104M.pkl}"
-: "${PYTHON_BIN:=$_LAB_ROOT/geneformer-uv-starter/.venv/bin/python}"
+: "${GENEFORMER_TOKEN_DICT:=$_LAB_ROOT/geneformer/geneformer/token_dictionary_gc104M.pkl}"
+: "${GENEFORMER_MODEL_DIR:=$_LAB_ROOT/geneformer/Geneformer-V2-104M}"
+# The interpreter is deliberately NOT under $_LAB_ROOT. A virtualenv embeds the
+# absolute paths of the machine and user that built it, so it cannot be shared
+# through a group-readable directory the way data can. Each user rebuilds their
+# own with geneformer_uv_setup/scripts/bootstrap_workspace.sh.
+: "${PYTHON_BIN:=$HOME/workspace/geneformer-uv-starter/.venv/bin/python}"
 
 export SCLC_PERTURBATION_ROOT TARGETED_PANEL_RUN_DIR HTAN_H5AD \
-       GSE263196_RAW_DIR GENEFORMER_TOKEN_DICT PYTHON_BIN
+       GSE263196_RAW_DIR GENEFORMER_TOKEN_DICT GENEFORMER_MODEL_DIR PYTHON_BIN
 
 lab_env_check() {
     # Report which resolved paths actually exist. Missing entries are printed
@@ -41,7 +46,7 @@ lab_env_check() {
     local name value missing=0
     printf '\n\033[1mResolved lab paths\033[0m\n'
     for name in SCLC_PERTURBATION_ROOT TARGETED_PANEL_RUN_DIR HTAN_H5AD \
-                GSE263196_RAW_DIR GENEFORMER_TOKEN_DICT PYTHON_BIN; do
+                GSE263196_RAW_DIR GENEFORMER_TOKEN_DICT GENEFORMER_MODEL_DIR PYTHON_BIN; do
         value="${!name}"
         if [[ -e "$value" ]]; then
             printf '  \033[32mok     \033[0m %-24s %s\n' "$name" "$value"

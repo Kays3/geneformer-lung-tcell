@@ -57,7 +57,6 @@ warn() { printf '  ! %s\n' "$*" >&2; }
 # the old repo checkout rather than in KD.
 SUBDIRS=(
     "KD"
-    "geneformer-uv-starter"
 )
 # A virtualenv's compiled packages and shebangs embed absolute paths from the
 # machine that built it, so copying one to a new prefix produces an interpreter
@@ -65,8 +64,13 @@ SUBDIRS=(
 # inside the same tree ARE data and must come across, so exclude only the venv
 # and rebuild it with geneformer_uv_setup/scripts/bootstrap_workspace.sh.
 RSYNC_EXCLUDES=(--exclude '.venv/' --exclude '__pycache__/' --exclude '*.pyc')
+# Assets that are data but do not live under KD. Each entry is SRC:DEST_UNDER_LAB_ROOT.
+# The Geneformer checkout carries the model weights and token dictionary; it sits
+# inside the venv-bearing tree, so it is pulled out explicitly rather than copying
+# that whole directory.
 EXTRA_PATHS=(
-    "/home/$SRC_USER/workspace/geneformer-lung-tcell/sclc_validation/audit/source_metadata/GSE263196_RAW"
+    "/home/$SRC_USER/workspace/geneformer-lung-tcell/sclc_validation/audit/source_metadata/GSE263196_RAW:spatial_raw/GSE263196_RAW"
+    "/home/$SRC_USER/workspace/geneformer-uv-starter/geneformer-workspace/Geneformer:geneformer"
 )
 
 say "Source: $SRC   (retired account: $SRC_USER)"
@@ -86,10 +90,13 @@ inventory)
             warn "$d: absent"
         fi
     done
-    for p in "${EXTRA_PATHS[@]}"; do
-        if [[ -d "$p" ]]; then
-            sz="$(du -sb "$p" | cut -f1)"; total=$((total + sz))
-            printf '  %-28s %8s\n' "$(basename "$p")" "$(numfmt --to=iec "$sz")"
+    for entry in "${EXTRA_PATHS[@]}"; do
+        src="${entry%%:*}"; dest="${entry##*:}"
+        if [[ -d "$src" ]]; then
+            sz="$(du -sb "$src" | cut -f1)"; total=$((total + sz))
+            printf '  %-28s %8s  -> %s\n' "$dest" "$(numfmt --to=iec "$sz")" "$LAB_ROOT/$dest"
+        else
+            warn "$dest: absent at $src"
         fi
     done
     printf '\n  TOTAL %s\n' "$(numfmt --to=iec "$total")"
@@ -118,12 +125,13 @@ migrate)
         ok "done: $LAB_ROOT/$d"
     done
 
-    for p in "${EXTRA_PATHS[@]}"; do
-        [[ -d "$p" ]] || { warn "$(basename "$p"): absent, skipped"; continue; }
-        say "Copying $(basename "$p")"
-        install -d -m 2775 -g "$LAB_GROUP" "$LAB_ROOT/spatial_raw"
-        rsync -aHAX --info=progress2 "$p/" "$LAB_ROOT/spatial_raw/$(basename "$p")/"
-        ok "done: $LAB_ROOT/spatial_raw/$(basename "$p")"
+    for entry in "${EXTRA_PATHS[@]}"; do
+        src="${entry%%:*}"; dest="${entry##*:}"
+        [[ -d "$src" ]] || { warn "$dest: absent, skipped"; continue; }
+        say "Copying $dest"
+        install -d -m 2775 -g "$LAB_GROUP" "$LAB_ROOT/$(dirname "$dest")"
+        rsync -aHAX "${RSYNC_EXCLUDES[@]}" --info=progress2 "$src/" "$LAB_ROOT/$dest/"
+        ok "done: $LAB_ROOT/$dest"
     done
 
     say "Applying group ownership and setgid"
