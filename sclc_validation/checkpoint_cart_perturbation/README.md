@@ -111,9 +111,11 @@ strongest individual hit — a real asymmetry, not a plotting choice.
 ## Figures
 
 - `figures/ici_cart_perturbation_network.png` — three panels: (a) all 5 ICI
-  targets across 6 comparisons with donor-replication tiers, (b) the 4
-  replicated CAR-T knockouts ranked by SCLC→Normal deletion shift, (c) the
-  filtered STRING network coloured by replicated overexpression effect.
+  targets across 6 comparisons with donor-replication tiers, (b) all 11
+  CAR-T engineering genes ranked by SCLC→Normal deletion shift, with the 4
+  replicated knockouts (TIM-3, TIGIT, CTLA-4, IL7R) highlighted, (c) the
+  filtered STRING network coloured by SCLC→Normal deletion shift (not
+  overexpression — the colourbar label on the figure is authoritative).
 - `figures/cart_overexpression.png` — (a) detection vs. |effect| for all 50
   screened genes, showing the ρ=−0.60 confound; (b) all 31 immune/lineage
   genes ranked by deletion shift, every gene labelled with its detection

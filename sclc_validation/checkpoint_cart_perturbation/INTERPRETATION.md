@@ -25,7 +25,7 @@ literature. In BCMA-CAR-T for multiple myeloma, <cite index="4-1,4-6">both TIGIT
 
 ## CTLA-4 — supported as a target class, less CAR-T-specific evidence
 
-CTLA-4 blockade is clinically established in lung cancer generally — <cite index="36-1">ipilimumab and other CTLA-4 antibodies are among the ICI classes used against PD-1/PD-L1 in NSCLC</cite> — but the search surfaced comparatively little CAR-T-specific knockout literature for CTLA-4 relative to TIM-3/TIGIT; most CAR-T checkpoint-editing work in the retrieved results centers on PD-1, TIM-3, and TIGIT. The screen's CTLA-4 effect is also the smallest of the four in absolute deletion shift, consistent with weaker support.
+CTLA-4 blockade is clinically established in lung cancer generally — <cite index="36-1">ipilimumab and other CTLA-4 antibodies are among the ICI classes used against PD-1/PD-L1 in NSCLC</cite> — but the search surfaced comparatively little CAR-T-specific knockout literature for CTLA-4 relative to TIM-3/TIGIT; most CAR-T checkpoint-editing work in the retrieved results centers on PD-1, TIM-3, and TIGIT. By deletion shift alone CTLA-4 (0.001394) is not the smallest of the four — IL7R (0.001349) is slightly smaller — so the weaker case here rests on the literature gap, not on effect size.
 
 ## IL7R — supported, but as persistence engineering, not exhaustion reversal
 
