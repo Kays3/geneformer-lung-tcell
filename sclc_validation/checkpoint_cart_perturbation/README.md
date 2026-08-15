@@ -138,7 +138,7 @@ strongest individual hit — a real asymmetry, not a plotting choice.
 
 ## Reproducing
 
-Regenerated from `../perturbation_workflow/targeted_panel/results/
+The tables are regenerated from `../perturbation_workflow/targeted_panel/results/
 targeted_panel_delete_overexpress_merged.csv` and
 `targeted_panel_donor_consistency.csv`, plus a live STRING API call
 (`string-db.org/api/tsv/network`, species 9606, required_score=400) for the
@@ -146,3 +146,21 @@ targeted_panel_delete_overexpress_merged.csv` and
 which is a stable public reference and not expected to change edge
 composition meaningfully between runs, though scores may shift slightly
 with database updates.
+
+`figures/perturbation_networks.png` (poster Fig. 5) is rebuilt from the
+committed tables alone — no STRING call, no compute artifacts:
+
+```
+python sclc_validation/checkpoint_cart_perturbation/scripts/make_network_figure.py
+```
+
+That script was written after the fact; the notebook that first produced this
+figure was never committed. It derives every encoding from
+`network_node_perturbation.csv` and `string_network_edges.csv`, so the numbers
+are reproducible, but the original node coordinates were never saved and could
+not be recovered. It uses a deterministic ring layout instead, which is stable
+run to run and not pixel-identical to the figure committed before Draft 12.
+Position carries no meaning here — the same layout is reused across all three
+panels so that *only* colour differs between them.
+
+The other two figures in `figures/` still have no committed generator.

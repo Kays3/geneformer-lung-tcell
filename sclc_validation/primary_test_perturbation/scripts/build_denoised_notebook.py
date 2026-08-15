@@ -252,30 +252,104 @@ def _plot_program_heatmap(immune: pd.DataFrame) -> None:
     plt.close(fig)
 
 
+def _place_labels(ax, rows, *, fontsize: float) -> None:
+    """Annotate rows, nudging each label off the ones already placed.
+
+    Labels are positioned in axis-fraction space and tested against the boxes
+    already taken, so a gene name lands in the first free direction rather than
+    stacking on its neighbour. The earlier version wrote every label at a fixed
+    (+4, +4) point offset, which collided whenever two candidates sat close
+    together - "HLA-DPA1" over "HLA-DRA" and "IL7R"/"CXCR4"/"B2M"/"CD74" in the
+    original. Deterministic: candidate offsets are tried in a fixed order.
+    """
+    x0, x1 = ax.get_xlim()
+    y0, y1 = ax.get_ylim()
+    # Rough label extent as a fraction of the axes, from the font size and the
+    # axes size in points. Approximate on purpose - it only has to separate
+    # labels, not bound them exactly.
+    box_w = ax.get_window_extent()
+    char_w = fontsize * 0.60
+    taken: list[tuple[float, float, float, float]] = []
+    # right, left, above, below, then the diagonals
+    candidates = [(1.0, 0.4), (-1.0, 0.4), (0.0, 1.4), (0.0, -1.4),
+                  (1.0, -1.0), (-1.0, -1.0), (1.0, 1.4), (-1.0, 1.4)]
+
+    for row in rows.itertuples():
+        px = (row.delete_shift - x0) / (x1 - x0)
+        py = (row.overexpress_shift - y0) / (y1 - y0)
+        w = len(row.Gene_name) * char_w / max(box_w.width, 1) * 72 / plt.rcParams["figure.dpi"] * 100
+        w = min(max(w, 0.06), 0.42)
+        h = fontsize * 1.5 / max(box_w.height, 1) * 72 / plt.rcParams["figure.dpi"] * 100
+        h = min(max(h, 0.03), 0.20)
+
+        for dx, dy in candidates:
+            lx = px + dx * (w * 0.55 + 0.012)
+            ly = py + dy * (h * 0.75 + 0.008)
+            # Keep the whole label box inside the axes, not just its centre -
+            # a centre-only test let long names hang over the y-axis ticks.
+            if not (w / 2 + 0.01 <= lx <= 1 - w / 2 - 0.01):
+                continue
+            if not (h / 2 + 0.01 <= ly <= 1 - h / 2 - 0.01):
+                continue
+            box = (lx - w / 2, ly - h / 2, lx + w / 2, ly + h / 2)
+            if any(not (box[2] < t[0] or box[0] > t[2] or box[3] < t[1] or box[1] > t[3])
+                   for t in taken):
+                continue
+            taken.append(box)
+            ax.annotate(
+                row.Gene_name, (px, py), xycoords="axes fraction",
+                xytext=(lx, ly), textcoords="axes fraction",
+                fontsize=fontsize, fontweight="semibold", color="#111827",
+                ha="center", va="center",
+                arrowprops=dict(arrowstyle="-", color="#6b7280", linewidth=0.6,
+                                shrinkA=0, shrinkB=2),
+                bbox=dict(boxstyle="round,pad=0.16", facecolor="white",
+                          edgecolor="none", alpha=0.78),
+            )
+            break
+
+
 def _plot_bidirectional(immune: pd.DataFrame) -> None:
-    fig, axes = plt.subplots(2, 3, figsize=(18, 11), squeeze=False)
+    # Sized for the poster's right column (260 mm inner width): a smaller
+    # figure with larger point sizes renders text bigger once scaled to that
+    # width. At figsize 12in the 12 pt gene labels land near 10 pt on the A0
+    # sheet, which is about the poster's own smallest label.
+    fig, axes = plt.subplots(2, 3, figsize=(12, 7), squeeze=False)
     for ax, comparison in zip(axes.flat, COMPARISONS):
         group = immune[immune.comparison == comparison]
         if group.empty:
             ax.set_visible(False)
             continue
-        sizes = 18 + 300 * (group.min_detection / group.min_detection.max()) ** 0.7
-        ax.scatter(group.delete_shift, group.overexpress_shift, s=sizes, c=group.denoised_score, cmap="magma", alpha=0.55, linewidths=0)
-        top = group.head(8)
-        for _, row in top.iterrows():
-            ax.annotate(row.Gene_name, (row.delete_shift, row.overexpress_shift), xytext=(4, 4), textcoords="offset points", fontsize=8)
-        lim = max(abs(group.delete_shift).max(), abs(group.overexpress_shift).max()) * 1.12
+        sizes = 14 + 210 * (group.min_detection / group.min_detection.max()) ** 0.7
+        ax.scatter(group.delete_shift, group.overexpress_shift, s=sizes, c=group.denoised_score,
+                   cmap="magma", alpha=0.62, linewidths=0)
+
+        # Per-axis limits from each axis's own spread, rather than one symmetric
+        # limit taken from the larger of the two. The shared limit made the x
+        # range up to 4x the data it had to show - most of every panel was
+        # blank. Zero stays inside the range so "right half = deletion moves
+        # cells toward the goal state" still reads off the figure.
+        for axis, values in (("x", group.delete_shift), ("y", group.overexpress_shift)):
+            lo, hi = float(values.min()), float(values.max())
+            lo, hi = min(lo, 0.0), max(hi, 0.0)
+            pad = (hi - lo) * 0.14 or 1e-4
+            (ax.set_xlim if axis == "x" else ax.set_ylim)(lo - pad, hi + pad)
+
         ax.axhline(0, color="#9ca3af", linewidth=0.7)
         ax.axvline(0, color="#9ca3af", linewidth=0.7)
-        ax.set_xlim(-lim, lim)
-        ax.set_ylim(-lim, lim)
-        ax.set_title(comparison.replace("_to_", " → "))
-        ax.set_xlabel("Delete cosine shift")
-        ax.set_ylabel("Overexpression cosine shift")
+        _place_labels(ax, group.head(6), fontsize=12)
+        ax.set_title(comparison.replace("_to_", " → "), fontsize=14, fontweight="bold")
+        ax.set_xlabel("Delete cosine shift", fontsize=11.5)
+        ax.set_ylabel("Overexpression cosine shift", fontsize=11.5)
+        ax.tick_params(labelsize=10)
+        ax.xaxis.set_major_locator(plt.MaxNLocator(4))
+        ax.yaxis.set_major_locator(plt.MaxNLocator(5))
         ax.grid(alpha=0.15)
-    fig.suptitle("Denoised immune / cancer bidirectional candidates\n(right half = deletion moves cells toward the goal state)", y=1.01, fontsize=14)
+    fig.suptitle("Denoised immune / cancer bidirectional candidates\n"
+                 "(right half = deletion moves cells toward the goal state)",
+                 y=1.02, fontsize=15, fontweight="bold")
     fig.tight_layout()
-    fig.savefig(FIGURES / "immune_cancer_bidirectional.png", dpi=180, bbox_inches="tight")
+    fig.savefig(FIGURES / "immune_cancer_bidirectional.png", dpi=220, bbox_inches="tight")
     plt.close(fig)
 
 
