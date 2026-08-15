@@ -14,6 +14,9 @@ pathology narrative (single-cell perturbation → spatial validation in tissue).
 | `poster_template.html` | A0 layout and wording. Edit to move panels or change prose. |
 | `poster_template_90x210.html` | Previous 90 × 210 cm layout, kept for the full JSDP board. |
 | `poster_<draft>.html` | Generated output. Not committed by default. |
+| `../tools/make_hero_figure.py` | Builds Fig. 4, the full-width key-message band. |
+| `../tools/make_snapshots.py` | Writes the tracked PNG preview of the final PDF. |
+| `../sclc_validation/checkpoint_cart_perturbation/scripts/make_network_figure.py` | Builds Fig. 6. |
 
 ## Sheet size note
 
@@ -39,7 +42,42 @@ instead, swap in `poster_template_90x210.html`.
 Panel accents `hema` and `eosin` are available to `EXTRA_PANELS` for new
 pathology content.
 
-## What Draft 4 added
+## Final — key-message band, light-ink theme
+
+The current final poster (`DRAFT_LABEL = "Final"`, built after Draft 12) differs
+from every earlier draft in three ways that change how you edit it:
+
+**The body is two band grids, not three columns.** `.body` is a block containing
+`.band` (three columns) → `.hero` (full width) → `.band` (three columns). Two
+consequences. First, **only the tallest column in each band sets that band's
+height**, so trimming a short column frees nothing — the admin panels dropped in
+the final draft saved 0 mm on their own, and it took rebalancing both bands to
+recover the space. Second, the two bands each align to a shared baseline, so a
+column much shorter than its neighbours shows as dead space.
+
+**The one-page check is not the page count.** WeasyPrint clips band overflow
+instead of paginating it: the export reported one A0 page while the bottom band
+was cut off mid-panel. Cell 6 now re-renders onto a 4000 mm page, sums the
+laid-out band heights and asserts against 1189 mm. Trust that number, and look
+at the render.
+
+**The theme is light-ink.** Header, footer, section bars, table headers and the
+slide mount are tinted grounds with dark text rather than solid navy or
+hematoxylin fills — an A0 sheet of solid dark areas is a lot of toner and dries
+unevenly. Colour is carried by rules, left borders and text.
+
+Earlier drafts' notes below are kept as history; where they disagree with this
+section, this section is current.
+
+## History — superseded drafts
+
+Everything below records how the poster got here. It is kept because the
+reasoning still explains why parts of the layout are the way they are, but
+**where it disagrees with the section above, it is out of date** — the column
+widths, `--fit` values and figure inventory quoted in these notes are all
+superseded.
+
+### What Draft 4 added
 
 Two panels, both aimed at readers who are not foundation-model people:
 
@@ -86,7 +124,7 @@ states Normal < SCLC < LUAD on the exhaustion axis, which runs opposite to the
 clinical picture. Do not let a later edit smooth this into either narrative —
 the two are not the same measurement.
 
-## What Draft 5 changed
+### What Draft 5 changed
 
 Draft 5 is the conference-facing revision of Draft 4. It shortens the title,
 adds a single take-home strip to the header, and renames the section bars so a
@@ -97,7 +135,7 @@ new figures. The template uses `--fit: 0.88` so the new panels still
 strip still exports as one A0 page; the smallest labels remain above the
 documented readability floor.
 
-## Draft 6 Minimal Picture-led Version
+### Draft 6 Minimal Picture-led Version
 
 `poster_template.html` is now the picture-led source used by
 `generate_poster.ipynb`. It uses relative paths to the current classifier,
@@ -105,39 +143,12 @@ detection-confound, spatial-validation and checkpoint-network figures, and
 keeps only the four-hit table. The rendered `poster_draft_6.html` and
 `poster_draft_6.pdf` are generated deliverables.
 
-## Draft 7 Reduced Draft 5
+### Draft 7 Reduced Draft 5
 
 Draft 7 restores the Draft 5 visual system through `generate_poster.ipynb`,
 removes the classifier, paired-donor, specimen-QC and validation tables, and
 keeps the four-hit table plus the spatial, detection-confound, forest and
 checkpoint-network figures.
-
-## Final — key-message band, light-ink theme
-
-The current final poster (`DRAFT_LABEL = "Final"`, built after Draft 12) differs
-from every earlier draft in three ways that change how you edit it:
-
-**The body is two band grids, not three columns.** `.body` is a block containing
-`.band` (three columns) → `.hero` (full width) → `.band` (three columns). Two
-consequences. First, **only the tallest column in each band sets that band's
-height**, so trimming a short column frees nothing — the admin panels dropped in
-the final draft saved 0 mm on their own, and it took rebalancing both bands to
-recover the space. Second, the two bands each align to a shared baseline, so a
-column much shorter than its neighbours shows as dead space.
-
-**The one-page check is not the page count.** WeasyPrint clips band overflow
-instead of paginating it: the export reported one A0 page while the bottom band
-was cut off mid-panel. Cell 6 now re-renders onto a 4000 mm page, sums the
-laid-out band heights and asserts against 1189 mm. Trust that number, and look
-at the render.
-
-**The theme is light-ink.** Header, footer, section bars, table headers and the
-slide mount are tinted grounds with dark text rather than solid navy or
-hematoxylin fills — an A0 sheet of solid dark areas is a lot of toner and dries
-unevenly. Colour is carried by rules, left borders and text.
-
-Earlier drafts' notes below are kept as history; where they disagree with this
-section, this section is current.
 
 ### Superseded: three-column rebalance (Draft 10)
 
@@ -174,57 +185,36 @@ Two things to keep in mind before editing this layout:
 
 ## Figures
 
-All figures live in `sclc_validation/perturbation_workflow/figures/` and
-`sclc_validation/spatial_validation/figures/`, and every one traces to a
-result table the poster also cites elsewhere:
+Eight figures, numbered in reading order: top band left→right, then the
+key-message band, then the bottom band left→right. **Keep them consecutive** —
+an earlier draft dropped the forest plot and left the sheet numbering 1, 2, 4–9
+with no Fig. 3, which reads as a mistake to anyone at the poster.
 
-| Figure | Source data | Notes |
-|---|---|---|
-| Fig. 1 Confusion matrix | `test_confusion_matrix.csv` | `sclc_confusion_matrix.png` — see "Confusion-matrix fix" below |
-| Fig. 2 Spatial score maps | `spatial_validation/results/*` | Visium tissue panel |
-| Fig. 3 Forest plot | `spatial_tcell_dysfunction_correlation_by_sample.csv` | per-specimen rho with 95% CI |
-| Fig. 4 Detection/effect confound | `checkpoint_cart_perturbation/tables/cart_overexpression_vs_deletion.csv` | ρ = −0.60 across the 50-gene panel |
-| Fig. 5 Perturbation network | `checkpoint_cart_perturbation/tables/string_network_edges.csv` | three shared-layout readouts |
+| Figure | Panel / column | Source data | Generator |
+|---|---|---|---|
+| 1 Confusion matrix | Classifier, middle top | `test_confusion_matrix.csv` | `tools/make_result_figures.py` — see "Confusion-matrix fix" |
+| 2 Qualified genes heatmap | Classifier, middle top | `primary_test_perturbation/tables/` | `primary_test_perturbation/scripts/build_denoised_notebook.py` |
+| 3 Spatial score maps | Section C, right top | `spatial_validation/results/*` | pre-existing Visium tissue panel |
+| 4 Key-message band | Full-width band | several committed tables | **`tools/make_hero_figure.py`** |
+| 5 Detection/effect confound | Checkpoint screen, left bottom | `checkpoint_cart_perturbation/tables/cart_overexpression_vs_deletion.csv` | no committed generator |
+| 6 Perturbation network | Network context, middle bottom | `checkpoint_cart_perturbation/tables/{network_node_perturbation,string_network_edges}.csv` | **`checkpoint_cart_perturbation/scripts/make_network_figure.py`** |
+| 7 ICI / CAR-T candidates | ICI/CAR-T, middle bottom | `checkpoint_cart_perturbation/tables/` | no committed generator |
+| 8 Denoised bidirectional | Denoised programs, right bottom | `primary_test_perturbation/tables/immune_cancer_candidates.csv` | `build_denoised_notebook.py` (`_plot_bidirectional`) |
 
-Draft 3 replaced the two targeted-panel detail figures (previously Figs 4-5) with the
-genome-scale screen and its robustness checks. The targeted panel remains in Section B;
-only its *detail* figures were superseded. The denoised heatmap and ambient histogram
-were left out for space — their panels carry the numbers as prose, and the figure paths
-stay in Cell 1 (`FIG_DENOISED_HEAT`, `FIG_AMBIENT`) so they can be restored if a panel is
-cut elsewhere.
+Figure numbers appear both as captions and as cross-references in panel prose,
+in `poster_template.html` **and** in `EXTRA_PANELS` in Cell 1. Renumber both
+together or the references drift from the captions.
 
-**Draft 4 dropped the remaining two figures** — the donor-robustness enrichment plot and
-the denoised-program forest, previously Figs 4 and 5 — to pay for the two new panels
-described below. This is the same trade Draft 3 made: both panels stay, and their `note`
-text already states the numbers the plots showed (72.5% vs 50.1% donor-consistency;
-7.9σ above the matched-random null, ρ 0.361 → 0.384 under depth control). The paths
-remain in Cell 1 as `FIG_DONOR_ENRICH` and `FIG_SPATIAL_PROG`, so setting `"figure"` back
-in `EXTRA_PANELS` restores them — re-run Cell 6's page-count assertion if you do, because
-they will not fit at the current `--fit`.
+Two figures still have no committed generator (5 and 7). Fig. 6 had none either
+until it needed resizing and could not be rebuilt — that is what the
+`make_network_figure.py` docstring records. If either of these two ever needs to
+change, write the generator rather than editing the PNG.
 
-Fig. 1 is generated by a script, not hand-drawn — regenerate it
-whenever the underlying CSVs change:
-
-```
-python tools/make_result_figures.py
-```
-
-Figs. 1 and 3 are stacked (figure, then its table, full panel width), not
-side-by-side. They started as a `.twocol` / `.twocol-32` grid with the table
-beside the figure; widening the image column to enlarge the figures left
-the table column too narrow for its own header/cell text, and the tables
-overran the panel border. Stacking removes the tradeoff entirely — both
-elements get the panel's full inner width. `WIDTH_MM["cm"]` and
-`WIDTH_MM["forest"]` in Cell 3 hold each image's width as a fraction of the
-panel's inner width (currently 0.62 and 0.66). These keep each image close
-to the size it rendered at in the old side-by-side layout — enlarging the
-figures was not the point of the stacking fix — but they are a layout
-choice, **not** a fit constraint: setting both to `1.0` (full 307 mm column
-width) was rendered and also fits on one A0 page, so full width is available
-if you want the figures larger. Stacking does turn the block height from
-`max(image, table)` into `image + table`, so widening costs more vertical
-room than it did in the side-by-side layout. Re-run Cell 6's page-count
-assertion after any such change rather than assuming it still fits.
+**Fig. 4 carries a constraint.** Its panel B paints per-gene effects on cell
+state onto prior-knowledge STRING edges; the screen contains no gene-to-gene
+measurements. The edges are deliberately pale and unweighted and the caveat is
+inside the axes. `make_hero_figure.py` has a do-not-remove note explaining this;
+restyling those edges would make the figure claim something never measured.
 
 ## Cohort panels
 
