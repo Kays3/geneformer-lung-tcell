@@ -88,6 +88,22 @@ Thumbs.db
 .idea/
 .vscode/
 
+# Built talk deck. The .pptx is written by `node talk/build_deck.js` and is
+# 3.7 MB a revision, so it is regenerable bulk and stays out of history.
+#
+# The .pdf is NOT ignored, deliberately. It is 928 KB, it is the form anyone
+# actually reads, and no committed script produces it - it is the .pptx
+# exported by hand. The usual alternative, ignore it and track a PNG preview,
+# saves nothing here: the preview comes out about the same size as the PDF
+# while being less useful. Snapshots exist to stand in for multi-megabyte
+# artifacts, and this one is not that.
+talk/JSDP_P25_talk.pptx
+
+# Deliberate exception, do not "clean up": talk/assets/*.png are INPUTS that
+# build_deck.js reads with addImage(), not outputs it writes. Ignoring them
+# would leave a fresh clone unable to build the deck at all - the same reason
+# spatial_tissue_validation_panel.png stays tracked for the poster.
+
 # Node dependencies for the talk-deck generator (talk/build_deck.js).
 node_modules/
 
