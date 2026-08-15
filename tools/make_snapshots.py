@@ -98,10 +98,14 @@ DECK_BUILDER = REPO / "talk" / "build_deck.js"
 def ensure_deck(check_only: bool) -> None:
     """Rebuild the talk deck if it is missing.
 
-    talk/JSDP_P25_talk.pptx is git-ignored - it is 3.7 MB of regenerable build
-    output - so a fresh clone does not have one. `node talk/build_deck.js`
-    rebuilds it from talk/assets/, and this runs that rather than leaving the
-    deck to be reconstructed by hand.
+    talk/JSDP_P25_talk.pptx is git-ignored, so a checkout does not have one.
+    `node talk/build_deck.js` rebuilds it from talk/assets/, and this runs that
+    rather than leaving the deck to be reconstructed by hand.
+
+    Note the whole talk/ directory is unpublished, so a fresh clone has no
+    build_deck.js either and this is a no-op there - it only helps on machines
+    that already carry the sources. The existence check below is what makes
+    that harmless.
 
     Only when it is MISSING. This does not try to detect staleness: the deck's
     real inputs are the assets, which talk/make_assets.py rebuilds from the
