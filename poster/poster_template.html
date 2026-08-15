@@ -65,7 +65,7 @@
      Draft 12 fell to 0.98, and the reason is worth knowing before trying to
      raise it. The light-ink theme costs nothing in height - fills became
      tints. What cost height was geometry: the middle column widened from
-     273 to 309 mm for Fig. 5, so the two outer columns lost 18 mm each, and
+     273 to 309 mm for Fig. 6, so the two outer columns lost 18 mm each, and
      text that used to fit in N lines there now takes N+1. Total content
      measures ~1187 mm against 1189 mm available at --fit 1.00 - it fits on
      height alone and still paginates onto a second page, because a panel
@@ -233,7 +233,7 @@ header{
    grid without re-running Cell 6 and looking at the result. */
 .band{
   display:grid;
-  /* Draft 12 widened the middle for Fig. 5; see the Draft 12 note above.
+  /* Draft 12 widened the middle for Fig. 6; see the Draft 12 note above.
      Keep in sync with _LEFT_COL / _RIGHT_COL in Cell 3. */
   grid-template-columns:252mm 1fr 252mm;
   gap:var(--gap);
@@ -750,7 +750,7 @@ footer{
       </div>
       <div>
         {{IMG_QUALIFIED}}
-        <div class="fcap">Fig. 7 &mdash; Qualified genes supporting the denoised programme.</div>
+        <div class="fcap">Fig. 2 &mdash; Qualified genes supporting the denoised programme.</div>
       </div>
     </div>
     <p style="margin-top:2.5mm;font-size:calc(13pt * var(--fit));color:var(--ink-2);">
@@ -810,7 +810,7 @@ footer{
       </div>
       {{IMG_SPATIAL}}
       <div class="slide-foot">
-        <strong>Fig. 2 &mdash; Quantitative marker-score maps across SCLC tumour sections.</strong>
+        <strong>Fig. 3 &mdash; Quantitative marker-score maps across SCLC tumour sections.</strong>
         T-cell abundance and T-cell dysfunction are scored from disjoint gene panels at every
         spatially indexed spot, then correlated within each specimen.
       </div>
@@ -846,7 +846,7 @@ footer{
   <div class="panel hema">
     <h2>One Deletion at a Time, Every Gene, Every Cell &mdash; a Perturb-seq Screen Run <em>In Silico</em></h2>
     {{IMG_HERO}}
-    <div class="fcap">Fig. 9 &mdash; The screen in three acts: the Perturb-seq analogy and its
+    <div class="fcap">Fig. 4 &mdash; The screen in three acts: the Perturb-seq analogy and its
       scale (A); each deletion&rsquo;s measured effect on cell state, shown against the published
       STRING interaction map for the checkpoint genes (B); and the funnel from every gene-level
       test down to the four edits that replicate on every criterion (C).</div>
