@@ -112,11 +112,37 @@ removes the classifier, paired-donor, specimen-QC and validation tables, and
 keeps the four-hit table plus the spatial, detection-confound, forest and
 checkpoint-network figures.
 
-## Final — three-column rebalance
+## Final — key-message band, light-ink theme
 
-The final poster (`DRAFT_LABEL = "Final"`) is Draft 9's content in a rebalanced
-grid. It is worth knowing why the grid changed, because the obvious edit
-reintroduces the problem.
+The current final poster (`DRAFT_LABEL = "Final"`, built after Draft 12) differs
+from every earlier draft in three ways that change how you edit it:
+
+**The body is two band grids, not three columns.** `.body` is a block containing
+`.band` (three columns) → `.hero` (full width) → `.band` (three columns). Two
+consequences. First, **only the tallest column in each band sets that band's
+height**, so trimming a short column frees nothing — the admin panels dropped in
+the final draft saved 0 mm on their own, and it took rebalancing both bands to
+recover the space. Second, the two bands each align to a shared baseline, so a
+column much shorter than its neighbours shows as dead space.
+
+**The one-page check is not the page count.** WeasyPrint clips band overflow
+instead of paginating it: the export reported one A0 page while the bottom band
+was cut off mid-panel. Cell 6 now re-renders onto a 4000 mm page, sums the
+laid-out band heights and asserts against 1189 mm. Trust that number, and look
+at the render.
+
+**The theme is light-ink.** Header, footer, section bars, table headers and the
+slide mount are tinted grounds with dark text rather than solid navy or
+hematoxylin fills — an A0 sheet of solid dark areas is a lot of toner and dries
+unevenly. Colour is carried by rules, left borders and text.
+
+Earlier drafts' notes below are kept as history; where they disagree with this
+section, this section is current.
+
+### Superseded: three-column rebalance (Draft 10)
+
+Draft 10 was Draft 9's content in a rebalanced grid. It is worth knowing why the
+grid changed, because the obvious edit reintroduces the problem.
 
 Through Draft 8 the middle column carried **both** section B and section C, and
 the extra panels that padded the outer columns were dropped one by one for
@@ -351,7 +377,9 @@ including the title, the P25 box and the large stat figures:
 | `--fit` | title | body | smallest label | fits 1 A0 page? |
 |---|---|---|---|---|
 | `0.88` | 35 pt | 15.4 pt | 9.2 pt ← practical floor | yes |
-| `0.96` | 38 pt | 16.8 pt | 10.1 pt ← **current default (Final)** | yes — measured with Final content |
+| `0.90` | 36 pt | 15.8 pt | 9.5 pt ← **current default (Final)** | yes — 1150 mm of 1189 mm, +39 mm margin |
+| `0.92` | 37 pt | 16.1 pt | 9.7 pt | yes, but only ~0.5 mm margin — too close |
+| `0.96` | 38 pt | 16.8 pt | 10.1 pt | no — overruns with the key-message band |
 | `0.99` | 40 pt | 17.3 pt | 10.4 pt | yes — measured with Draft 4 content |
 | `1.00` | 40 pt | 17.5 pt | 10.5 pt | yes — measured with Draft 4 content |
 | `1.12` | 45 pt | 19.6 pt | 11.8 pt | Draft 3 ceiling; not re-measured for Draft 4 |

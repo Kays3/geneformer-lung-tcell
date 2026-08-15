@@ -51,35 +51,36 @@
      Measured against the current content by rendering at each value
      and checking the WeasyPrint page count (see Cell 6's assertion):
 
-       0.96  title 38pt, body 16.8pt, smallest 10.1pt  - Draft 3 default
-       0.99  title 40pt, body 17.3pt, smallest 10.4pt  - measured, fits
-       1.00  title 40pt, body 17.5pt, smallest 10.5pt  <- current value,
+       0.94  title 38pt, body 16.5pt, smallest 9.9pt   - measured, fits
+       0.98  title 39pt, body 17.2pt, smallest 10.3pt  <- current value,
                                                             measured, fits
-       1.12  title 45pt, body 19.6pt, smallest 11.8pt  - Draft 3 ceiling
+       1.00  title 40pt, body 17.5pt, smallest 10.5pt  - Draft 12 overruns
+       1.07  title 43pt, body 18.7pt, smallest 11.2pt  - Draft 11 ceiling
 
-     The ceiling is content-dependent, NOT a fixed property of the layout.
-     It was 1.60 before the discovery-cohort and validation-cohort detail
-     panels were added; that content costs roughly 107 mm of column height
-     and pulled the ceiling down to 1.12. Draft 4 then added ~291 mm more
-     (the perturbation explainer and the checkpoint/CAR-T panel) and paid
-     for it by dropping Figs. 4 and 5, which left enough slack to take the
-     type back up from 0.96 to 1.00. The Draft 4 ceiling above 1.00 was not
-     measured - re-measure with Cell 6's page-count assertion rather than
-     assuming any value here still holds.
+     The ceiling is content-dependent, NOT a fixed property of the layout,
+     and it moves a lot. History: 1.60 before the two cohort panels; 1.12
+     after them; Draft 4 added ~291 mm (explainer + checkpoint panel) and
+     paid for it by dropping Figs. 4 and 5; Draft 11 measured 1.07.
+
+     Draft 12 fell to 0.98, and the reason is worth knowing before trying to
+     raise it. The light-ink theme costs nothing in height - fills became
+     tints. What cost height was geometry: the middle column widened from
+     273 to 309 mm for Fig. 5, so the two outer columns lost 18 mm each, and
+     text that used to fit in N lines there now takes N+1. Total content
+     measures ~1187 mm against 1189 mm available at --fit 1.00 - it fits on
+     height alone and still paginates onto a second page, because a panel
+     cannot be split across the break. Anything within a few mm of 1189 is
+     effectively a coin toss; 0.98 buys back the margin. If you need larger
+     type, take width back from the middle column or cut a panel; do not
+     chase the last 0.01.
 
      If content spills past the red dashed A0 edge rule on screen,
      lower this; if there is slack above it, raise it (up to the
      current one-page ceiling above).
 
-     Draft 10 ("Final") rebalanced the columns: section C moved from the
-     middle column to the top of the right one, the middle denoising
-     figures grew to full panel width, and the left column regained the
-     detection-confound figure panel. Measured at --fit 1.00: column
-     fills 89 / 89 / 95% (left / middle / right), one A0 page.
-
      Floor: below ~0.88 the smallest labels drop under 9pt and stop
      being readable at normal poster viewing distance.             */
-  --fit: 1.00;
+  --fit: 0.90;
 
   /* type scale for A0 (read at ~1 m) */
   --fs-body:  calc(17.5pt * var(--fit));
@@ -128,62 +129,81 @@ body{
 /* ============================================================
    HEADER
    ============================================================ */
+/* Draft 12 is a light-ink theme. Every large filled area that used to be
+   navy, hematoxylin or near-black is now a white or lightly tinted ground
+   with dark text on it. Two reasons: a 841 x 1189 mm sheet with a solid
+   dark header and footer lays down an enormous amount of toner, which
+   large-format printers dry unevenly and which shows every roller mark;
+   and dark-on-light holds contrast better than light-on-dark once a poster
+   is behind glass under conference lighting. Colour is carried by rules,
+   left borders and text instead of by fills. The H&E accent identity is
+   unchanged - hema and eosin still mark the pathology content, they just
+   tint rather than flood. */
 header{
-  background:
-    linear-gradient(180deg, var(--navy) 0%, #16324f 100%);
-  color:#fff;
+  background:var(--panel);
+  color:var(--ink);
   padding:9mm 11mm 7mm;
   display:grid;
   grid-template-columns:52mm 1fr;
   gap:9mm;
   align-items:start;
-  border-bottom:2.2mm solid var(--hema);
   position:relative;
 }
-/* thin H&E spectrum strip under the header */
-header::after{
-  content:"";
-  position:absolute; left:0; right:0; bottom:-2.2mm; height:2.2mm;
+/* H&E spectrum strip under the header. A sibling element, not header::after:
+   WeasyPrint places an absolutely positioned pseudo-element of a grid
+   container into the first grid cell, so the strip spanned only the 52 mm
+   number column however it was sized. As its own block in the poster's flex
+   column it simply spans the sheet. */
+.he-strip{
+  height:2.2mm; flex:none;
   background:linear-gradient(90deg,
     var(--hema) 0%, var(--hema-lt) 26%, var(--eosin-lt) 62%, var(--eosin) 100%);
 }
 .num-box{
-  background:var(--hema);
+  background:var(--hema-wash);
+  color:var(--hema);
   border-radius:var(--rad);
   padding:5mm 3mm;
   text-align:center;
-  border:0.5mm solid var(--hema-lt);
+  border:0.6mm solid var(--hema-lt);
 }
+.num-col{ display:flex; flex-direction:column; gap:3mm; }
+.qr-head{ text-align:center; }
+.qr-head img{ width:34mm; height:34mm; display:block; margin:0 auto;
+              border:0.3mm solid var(--rule); border-radius:1mm; }
+.qr-head-label{ font-size:calc(9pt * var(--fit)); color:var(--ink-2);
+                margin-top:1.2mm; line-height:1.3; }
 .num-box .n{ font-size:calc(54pt * var(--fit)); font-weight:700; line-height:1; letter-spacing:-0.01em; }
-.num-box .s{ font-size:calc(11.5pt * var(--fit)); opacity:.8; margin-top:2.5mm; line-height:1.45; }
+.num-box .s{ font-size:calc(11.5pt * var(--fit)); color:var(--hema-lt); margin-top:2.5mm; line-height:1.45; }
 
 .h-title{ font-size:calc(52pt * var(--fit)); font-weight:700; line-height:1.10; letter-spacing:-0.01em; }
 .h-authors{ font-size:calc(23pt * var(--fit)); margin-top:4.5mm; }
 .h-authors sup{ font-size:calc(13pt * var(--fit)); }
-.h-affil{ font-size:calc(15pt * var(--fit)); margin-top:2mm; opacity:.86; line-height:1.5; }
+.h-affil{ font-size:calc(15pt * var(--fit)); margin-top:2mm; color:var(--ink-2); line-height:1.5; }
 .h-affil sup{ font-size:calc(10.5pt * var(--fit)); }
 .h-meta{
   display:flex; align-items:center; gap:3.5mm; flex-wrap:wrap;
   margin-top:4mm; padding-top:3.5mm;
-  border-top:0.3mm solid rgba(255,255,255,.24);
-  font-size:calc(12.5pt * var(--fit)); opacity:.9;
+  border-top:0.3mm solid var(--rule);
+  font-size:calc(12.5pt * var(--fit)); color:var(--ink-2);
 }
 .h-takeaway{
   display:flex; align-items:center; gap:3mm; flex-wrap:wrap;
   margin-top:4mm; padding:2.2mm 3mm;
-  border-radius:1.4mm; border:0.35mm solid rgba(255,255,255,.28);
-  background:rgba(255,255,255,.10); font-size:calc(14.5pt * var(--fit));
+  border-radius:1.4mm; border:0.35mm solid #c3b6e0;
+  background:var(--hema-wash); font-size:calc(14.5pt * var(--fit));
   line-height:1.35;
 }
-.h-takeaway strong{ color:#fff; }
-.h-takeaway .arrow{ color:var(--eosin-lt); font-size:calc(18pt * var(--fit)); }
-.chip{ border-radius:1.6mm; padding:1mm 3mm; font-weight:700; font-size:calc(14pt * var(--fit)); }
+.h-takeaway strong{ color:var(--hema); }
+.h-takeaway .arrow{ color:var(--eosin); font-size:calc(18pt * var(--fit)); }
+.chip{ border-radius:1.6mm; padding:1mm 3mm; font-weight:700; color:#fff;
+       font-size:calc(14pt * var(--fit)); }
 .chip-conf { background:var(--teal); }
 .chip-draft{ background:var(--amber); font-size:calc(12.5pt * var(--fit)); }
 .chip-modal{ background:var(--eosin); font-size:calc(12.5pt * var(--fit)); }
 .coi-box{
-  background:rgba(255,255,255,.11);
-  border:0.3mm solid rgba(255,255,255,.24);
+  background:#f2f5f8;
+  border:0.3mm solid var(--rule);
   border-radius:1.4mm; padding:1mm 3mm; font-size:calc(12pt * var(--fit));
 }
 
@@ -191,22 +211,49 @@ header::after{
    BODY GRID
    ============================================================ */
 .body{
+  /* Block, NOT flex. A grid nested inside a flex column computes to zero
+     height in WeasyPrint 69: the bands below collapsed, their content
+     overflowed the page box and was silently clipped - and because nothing
+     paginated, Cell 6's page-count assertion still reported one A0 page.
+     A clipped poster that passes its own check is the worst failure mode
+     here, so the bands are plain block-level grids that stack normally. */
   flex:1;
-  display:grid;
-  /* Draft 11 widens the outer columns from 248 mm at the middle column's
-     expense. Figures are capped by their column's inner width, so the only
-     way to enlarge Figs 4 and 5 (left and right) is to take width from the
-     middle. Keep this in sync with _LEFT_COL / _RIGHT_COL in Cell 3. */
-  grid-template-columns:270mm 1fr 270mm;
-  gap:var(--gap);
+  display:block;
   padding:var(--gap) var(--pad);
+  min-height:0;
+}
+.body > * + *{ margin-top:var(--gap); }
+/* Each band is an INDEPENDENT three-column grid, and the key-message band is
+   a plain full-width block between them. The obvious encoding - one grid with
+   the band as a `grid-column:1/-1` item - renders correctly in browsers and
+   is mangled by WeasyPrint 69, which mis-places every auto-placed item around
+   the spanning one: columns came out reordered, overlapping and the wrong
+   width. Since the PDF export is the deliverable, the layout is expressed in
+   the subset WeasyPrint gets right. Do not "simplify" this back into a single
+   grid without re-running Cell 6 and looking at the result. */
+.band{
+  display:grid;
+  /* Draft 12 widened the middle for Fig. 5; see the Draft 12 note above.
+     Keep in sync with _LEFT_COL / _RIGHT_COL in Cell 3. */
+  grid-template-columns:252mm 1fr 252mm;
+  gap:var(--gap);
   min-height:0;
 }
 .col{ display:flex; flex-direction:column; gap:var(--gap); min-height:0; }
 
+/* Key-message band. Spans every grid column, so the three columns above it
+   and the three below form separate bands rather than one continuous run.
+   grid-column:1/-1 is what makes the span independent of how many columns
+   the grid has, so changing the column count does not silently un-span it. */
+.hero{ min-width:0; }
+.hero .panel{ border-top-width:1.6mm; }
+.hero .fcap{ margin-top:1.6mm; }
+
+/* Section bars: tinted ground, coloured text, heavy left accent. The accent
+   bar does the work the solid navy fill used to do. */
 .sec{
-  background:var(--navy);
-  color:#a9c8dc;
+  background:#e4ecf4;
+  color:var(--navy);
   font-size:calc(16pt * var(--fit)); font-weight:700;
   text-transform:uppercase; letter-spacing:.12em;
   padding:1.8mm 4mm;
@@ -214,9 +261,9 @@ header::after{
   border-radius:0 var(--rad) var(--rad) 0;
 }
 .sec.path{
-  color:#e7d9f2;
+  color:var(--hema);
   border-left-color:var(--eosin);
-  background:linear-gradient(90deg, var(--hema) 0%, #2b2450 100%);
+  background:var(--hema-wash);
 }
 
 /* ============================================================
@@ -274,14 +321,18 @@ header::after{
    TABLES
    ============================================================ */
 table.mt{ width:100%; border-collapse:collapse; font-size:var(--fs-table); margin-top:2mm; }
+/* Header rows carry their colour as text plus a rule under the row, rather
+   than a solid bar. Tables are numerous on this poster - as solid fills they
+   were one of the larger ink costs after the header and footer. */
 table.mt th{
-  background:var(--navy); color:#fff;
+  background:#e4ecf4; color:var(--navy);
+  border-bottom:0.7mm solid var(--navy);
   padding:1.5mm 2mm; text-align:left;
-  font-size:calc(12.5pt * var(--fit)); font-weight:600;
+  font-size:calc(12.5pt * var(--fit)); font-weight:700;
 }
-table.mt.s th{ background:var(--sky); }
-table.mt.h th{ background:var(--hema); }
-table.mt.e th{ background:var(--eosin); }
+table.mt.s th{ background:#e2eef7; color:var(--sky);   border-bottom-color:var(--sky); }
+table.mt.h th{ background:var(--hema-wash);  color:var(--hema);  border-bottom-color:var(--hema); }
+table.mt.e th{ background:var(--eosin-wash); color:var(--eosin); border-bottom-color:var(--eosin); }
 table.mt td{ padding:1.2mm 2mm; border-bottom:0.25mm solid #eaf0f6; }
 table.mt tr:nth-child(even) td{ background:#f5f9fd; }
 table.mt.h tr:nth-child(even) td{ background:var(--hema-wash); }
@@ -306,11 +357,15 @@ table.mt.h tr:nth-child(even) td{ background:var(--hema-wash); }
 /* ---- VIRTUAL SLIDE MOUNT --------------------------------
    Frames a whole-slide / spatial image like a glass slide
    on a microscope stage, with a frosted label strip.       */
+/* Draft 12: the mount was a near-black gradient behind a full-width Visium
+   panel - on its own the single largest block of ink on the sheet. It now
+   reads as a slide on a light stage: pale ground, defined border, eosin
+   label strip. The framing metaphor survives; the toner does not. */
 .slide-mount{
-  background:linear-gradient(160deg,#1d2530 0%, #121820 100%);
+  background:#eceff3;
   border-radius:1.6mm;
   padding:2.4mm;
-  border:0.4mm solid #39434f;
+  border:0.5mm solid #b8c4d2;
   position:relative;
 }
 .slide-label{
@@ -331,9 +386,9 @@ table.mt.h tr:nth-child(even) td{ background:var(--hema-wash); }
 .slide-label .sl-meta{ color:#5a6473; font-size:calc(10.5pt * var(--fit)); }
 .slide-mount img{ width:100%; max-width:100%; margin-left:0; display:block; border-radius:0.9mm; }
 .slide-foot{
-  margin-top:2mm; font-size:calc(11pt * var(--fit)); color:#b9c4d2; line-height:1.45;
+  margin-top:2mm; font-size:calc(11pt * var(--fit)); color:var(--ink-2); line-height:1.45;
 }
-.slide-foot strong{ color:#fff; }
+.slide-foot strong{ color:var(--ink); }
 
 /* ---- SLIDE TRAY: one card per specimen ------------------ */
 .tray{ display:grid; grid-template-columns:repeat(5,1fr); gap:2mm; margin-top:2.5mm; }
@@ -451,7 +506,7 @@ table.mt.h tr:nth-child(even) td{ background:var(--hema-wash); }
 .twocol-32{ display:grid; grid-template-columns:3fr 2fr; gap:3.5mm; }
 
 footer{
-  background:var(--navy); color:#93a7bb;
+  background:var(--panel); color:var(--ink-2);
   font-size:calc(11.5pt * var(--fit)); padding:2.4mm 8mm;
   display:flex; justify-content:space-between; align-items:center; gap:6mm;
   border-top:1.1mm solid var(--hema);
@@ -464,9 +519,19 @@ footer{
 
 <!-- ══════════════════ HEADER ══════════════════ -->
 <header>
-  <div class="num-box">
-    <div class="n">{{ABSTRACT_NO}}</div>
-    <div class="s">Abstract No.<br>{{CONF_NAME}}</div>
+  <!-- The QR returned here in the final draft after the Repository panel was
+       cut for the key-message band. This column is 52 mm wide and only the
+       number box was using it, so the code sits in space the header already
+       reserved and costs the body no column height. -->
+  <div class="num-col">
+    <div class="num-box">
+      <div class="n">{{ABSTRACT_NO}}</div>
+      <div class="s">Abstract No.<br>{{CONF_NAME}}</div>
+    </div>
+    <div class="qr-head">
+      {{IMG_QR}}
+      <div class="qr-head-label">Code, result tables,<br>notebooks &amp; drafts</div>
+    </div>
   </div>
   <div>
     <div class="h-title">{{TITLE}}</div>
@@ -491,10 +556,12 @@ footer{
     </div>
   </div>
 </header>
+<div class="he-strip"></div>
 
 <div class="body">
 
-<!-- ══════════════════ LEFT ══════════════════ -->
+<!-- ---------- top band ---------- -->
+<div class="band">
 <div class="col">
   <div class="sec">A &middot; Question, Cohort &amp; Method</div>
 
@@ -513,14 +580,6 @@ footer{
       by quantitative spatial pathology.</p>
   </div>
 
-  <!-- Plain-language explainer. Deliberately placed before any results:
-       most JSDP attendees are clinicians and wet-lab biologists for whom
-       "in silico perturbation" is not a familiar method, and every number
-       in sections B and C is a perturbation shift. The schematic is inline
-       SVG rather than a PNG so it stays sharp at A0 and needs no figure
-       file; its text is sized in viewBox units, so it scales with the
-       column width (fixed at 248mm) and NOT with --fit. Check it stays
-       above ~9pt if the column geometry ever changes. -->
   <div class="panel">
     <h2>What Is an <em>In Silico</em> Perturbation?</h2>
     <p style="font-size:calc(14.5pt * var(--fit));">Geneformer reads a cell as an
@@ -667,92 +726,8 @@ footer{
       the {{ACC}} test accuracy is therefore measured on individuals the model never saw.
     </p>
   </div>
-
-  <div class="panel green">
-    <h2>Workflow &amp; Validation Hierarchy</h2>
-    <div class="wf">
-      <div class="ws">HTAN<br>T cells</div><div class="wa">&rarr;</div>
-      <div class="ws">Tokenise<br>fine-tune</div><div class="wa">&rarr;</div>
-      <div class="ws">Disease<br>classifier</div><div class="wa">&rarr;</div>
-      <div class="ws">Bidirectional<br>perturbation</div><div class="wa">&rarr;</div>
-      <div class="ws">Spatial<br>pathology</div>
-    </div>
-    <ul class="ladder" style="margin-top:3mm;">
-      <li data-lv="L1">Donor leakage audit &mdash; zero leakage across 42 donors; cross-disease
-        guard for paired tumour-normal donors</li>
-      <li data-lv="L2">Held-out test &mdash; {{ACC}} accuracy, macro F1 {{MACRO_F1}}
-        ({{N_TEST_CELLS}} cells, {{N_TEST_DONORS}} donors)</li>
-      <li data-lv="L3">Internal positive control &mdash; ASCL1 / NEUROD1 reproduce expected
-        SCLC master regulator behaviour</li>
-      <li data-lv="L4">Bidirectional concordance &mdash; {{N_CONCORDANT}} concordant hits,
-        {{N_FULLY}} fully donor-consistent</li>
-      <li data-lv="L5" class="path">Spatial pathology &mdash; independent Visium cohort,
-        pooled rho {{RHO}} [{{CI_LOW}}, {{CI_HIGH}}]</li>
-    </ul>
-  </div>
-
-  <div class="panel hema">
-    <h2>Digital Pathology Pipeline</h2>
-    <div class="wf path">
-      <div class="ws">Fresh-frozen<br>tumour block</div><div class="wa">&rarr;</div>
-      <div class="ws">Cryosection<br>onto array</div><div class="wa">&rarr;</div>
-      <div class="ws">Barcoded<br>capture</div><div class="wa">&rarr;</div>
-      <div class="ws">Spot-level<br>transcriptome</div><div class="wa">&rarr;</div>
-      <div class="ws">Quantitative<br>score map</div>
-    </div>
-    <p style="margin-top:2.5mm;">
-      Each tissue section is resolved into thousands of spatially indexed transcriptomes.
-      Two <em>disjoint</em> marker panels are scored per spot &mdash; T-cell abundance
-      (CD3D/E/G, CD2, CD5, CD28, TRBC1/2, IL7R, CD8A/B, CD4) and T-cell dysfunction
-      (PDCD1, CTLA4, HAVCR2, LAG3, TIGIT, TOX, LAYN) &mdash; so their correlation cannot
-      be a self-correlation.
-    </p>
-    <div class="spec-strip">
-      <span class="spec"><b>Platform</b> 10x Visium</span>
-      <span class="spec"><b>Spot</b> 55 &micro;m diameter</span>
-      <span class="spec"><b>Pitch</b> 100 &micro;m centre-to-centre</span>
-      <span class="spec"><b>Specimens</b> {{N_SLIDES}} fresh-frozen SCLC</span>
-    </div>
-    <div class="caveat">
-      Spot geometry is the manufacturer platform specification, not a measurement from
-      these sections. Marker scores are a proxy for composition, not deconvolved
-      cell-type proportions.
-    </div>
-  </div>
-
-  <div class="panel amber">
-    <h2>Computational Requirements</h2>
-    <div class="cg">
-      <div class="ci"><div class="cl">GPU</div>
-        <div class="cv">NVIDIA GB10 &middot; 119 GiB unified memory</div></div>
-      <div class="ci"><div class="cl">Screen scale</div>
-        <div class="cv">~5.88M cell-gene perturbations &middot; 137 shards</div></div>
-      <div class="ci"><div class="cl">Wall-clock</div>
-        <div class="cv">~48 h GPU, delete + overexpress</div></div>
-      <div class="ci"><div class="cl">Fine-tuning</div>
-        <div class="cv">1 epoch &middot; LR 5e-5 &middot; 6 frozen layers</div></div>
-    </div>
-  </div>
-
-  {{EXTRA_LEFT_PANELS}}
-
-  <!-- References sit at the foot of column A, not column D. The right column
-       carries sections C and D plus a figure panel and was the only column
-       overrunning A0; the left column had ~120 mm spare. Bottom-left is a
-       conventional home for them, so this costs the reader nothing. -->
-  <div class="panel mid">
-    <h2>References</h2>
-    <p style="font-size:calc(12.5pt * var(--fit));line-height:1.55;">
-      1. Theodoris CV et al. (2023) Transfer learning enables predictions in network biology.
-         <em>Nature</em> 618, 616&ndash;624.<br>
-      2. HTAN MSK collection, CELLxGENE dataset 6fde3ad9.<br>
-      3. GSE263196 &mdash; 10x Visium SCLC fresh-frozen tumour sections, NCBI GEO.<br>
-      4. KEGG, Reactome and GO:BP pathway databases.
-    </p>
-  </div>
 </div>
 
-<!-- ══════════════════ MIDDLE ══════════════════ -->
 <div class="col">
   <div class="sec">B &middot; Model, Screen &amp; Candidate Hits</div>
 
@@ -807,28 +782,8 @@ footer{
       in at least 100 source cells. These are reliable candidates, not the largest nominal effects.
     </p>
   </div>
-
-  {{EXTRA_MIDDLE_PANELS}}
-
-  <!-- QR block moved out of column D for the same reason as the references:
-       the right column carries C and D plus a figure panel and was the only
-       one over A0. The foot of the middle column is the sheet's bottom-centre,
-       which is if anything easier for a passer-by to find and scan. -->
-  <div class="panel sky">
-    <h2>Repository &amp; Digital Version</h2>
-    <div class="qr-wrap">
-      {{IMG_QR}}
-      <div class="ql">
-        <strong>Scan for the repository</strong><br>
-        {{GITHUB_URL}}<br>
-        <span style="font-size:calc(11pt * var(--fit));color:#77839a;">Code, result tables, notebooks
-          and all poster drafts</span>
-      </div>
-    </div>
-  </div>
 </div>
 
-<!-- ══════════════════ RIGHT ══════════════════ -->
 <div class="col">
   <div class="sec path">C &middot; Spatial Pathology &mdash; Independent SCLC Tissue Cohort</div>
 
@@ -874,7 +829,103 @@ footer{
       SCLC-specificity of the association is untested; correlational design in archival tissue.
     </div>
   </div>
+</div>
+</div><!-- /top band -->
 
+<!-- ══════════════ KEY-MESSAGE BAND (spans all three columns) ══════════════
+     Placed between the two column bands rather than at the top or bottom: it
+     answers "what did you actually do", and a reader who starts anywhere in
+     the top band arrives here next. Spanning the full width is the point - it
+     is the only element on the sheet not owned by a single column, which is
+     what makes it read as the key message rather than as another panel.
+     Cost to know about: the band forces the three columns above it onto a
+     shared baseline, so the top band is as tall as its tallest column and
+     the other two carry whitespace. Keep the top band's three columns close
+     in height, or that whitespace grows. -->
+<div class="hero">
+  <div class="panel hema">
+    <h2>One Deletion at a Time, Every Gene, Every Cell &mdash; a Perturb-seq Screen Run <em>In Silico</em></h2>
+    {{IMG_HERO}}
+    <div class="fcap">Fig. 9 &mdash; The screen in three acts: the Perturb-seq analogy and its
+      scale (A); each deletion&rsquo;s measured effect on cell state, shown against the published
+      STRING interaction map for the checkpoint genes (B); and the funnel from every gene-level
+      test down to the four edits that replicate on every criterion (C).</div>
+  </div>
+</div>
+
+<!-- ---------- bottom band ---------- -->
+<div class="band">
+<div class="col">
+  <div class="panel green">
+    <h2>Workflow &amp; Validation Hierarchy</h2>
+    <div class="wf">
+      <div class="ws">HTAN<br>T cells</div><div class="wa">&rarr;</div>
+      <div class="ws">Tokenise<br>fine-tune</div><div class="wa">&rarr;</div>
+      <div class="ws">Disease<br>classifier</div><div class="wa">&rarr;</div>
+      <div class="ws">Bidirectional<br>perturbation</div><div class="wa">&rarr;</div>
+      <div class="ws">Spatial<br>pathology</div>
+    </div>
+    <ul class="ladder" style="margin-top:3mm;">
+      <li data-lv="L1">Donor leakage audit &mdash; zero leakage across 42 donors; cross-disease
+        guard for paired tumour-normal donors</li>
+      <li data-lv="L2">Held-out test &mdash; {{ACC}} accuracy, macro F1 {{MACRO_F1}}
+        ({{N_TEST_CELLS}} cells, {{N_TEST_DONORS}} donors)</li>
+      <li data-lv="L3">Internal positive control &mdash; ASCL1 / NEUROD1 reproduce expected
+        SCLC master regulator behaviour</li>
+      <li data-lv="L4">Bidirectional concordance &mdash; {{N_CONCORDANT}} concordant hits,
+        {{N_FULLY}} fully donor-consistent</li>
+      <li data-lv="L5" class="path">Spatial pathology &mdash; independent Visium cohort,
+        pooled rho {{RHO}} [{{CI_LOW}}, {{CI_HIGH}}]</li>
+    </ul>
+  </div>
+
+  <div class="panel hema">
+    <h2>Digital Pathology Pipeline</h2>
+    <div class="wf path">
+      <div class="ws">Fresh-frozen<br>tumour block</div><div class="wa">&rarr;</div>
+      <div class="ws">Cryosection<br>onto array</div><div class="wa">&rarr;</div>
+      <div class="ws">Barcoded<br>capture</div><div class="wa">&rarr;</div>
+      <div class="ws">Spot-level<br>transcriptome</div><div class="wa">&rarr;</div>
+      <div class="ws">Quantitative<br>score map</div>
+    </div>
+    <p style="margin-top:2.5mm;">
+      Each tissue section is resolved into thousands of spatially indexed transcriptomes.
+      Two <em>disjoint</em> marker panels are scored per spot &mdash; T-cell abundance
+      (CD3D/E/G, CD2, CD5, CD28, TRBC1/2, IL7R, CD8A/B, CD4) and T-cell dysfunction
+      (PDCD1, CTLA4, HAVCR2, LAG3, TIGIT, TOX, LAYN) &mdash; so their correlation cannot
+      be a self-correlation.
+    </p>
+    <div class="spec-strip">
+      <span class="spec"><b>Platform</b> 10x Visium</span>
+      <span class="spec"><b>Spot</b> 55 &micro;m diameter</span>
+      <span class="spec"><b>Pitch</b> 100 &micro;m centre-to-centre</span>
+      <span class="spec"><b>Specimens</b> {{N_SLIDES}} fresh-frozen SCLC</span>
+    </div>
+    <div class="caveat">
+      Spot geometry is the manufacturer platform specification, not a measurement from
+      these sections. Marker scores are a proxy for composition, not deconvolved
+      cell-type proportions.
+    </div>
+  </div>
+
+  {{EXTRA_LEFT_PANELS}}
+
+  <div class="panel amber">
+    <h2>Future Directions</h2>
+    <div class="fd">{{FUTURE}}</div>
+  </div>
+</div>
+
+<div class="col">
+  {{EXTRA_MIDDLE_PANELS}}
+
+  <div class="panel mid">
+    <h2>Limitations</h2>
+    <ul>{{LIMITATIONS}}</ul>
+  </div>
+</div>
+
+<div class="col">
   <div class="panel hema">
     <h2>Validation Cohort &mdash; GSE263196 Specimens &amp; QC</h2>
       <p><strong>Independent cohort:</strong> GSE263196, five fresh-frozen SCLC sections
@@ -890,26 +941,19 @@ footer{
     <ul class="concl">{{CONCLUSIONS}}</ul>
   </div>
 
-  <div class="panel mid">
-    <h2>Limitations</h2>
-    <ul>{{LIMITATIONS}}</ul>
-  </div>
-
-  <div class="panel amber">
-    <h2>Future Directions</h2>
-    <div class="fd">{{FUTURE}}</div>
-  </div>
-
   {{EXTRA_RIGHT_PANELS}}
-
 </div>
-
+</div><!-- /bottom band -->
 </div><!-- /body -->
 
 <footer>
   <span>{{AUTHOR1}} &amp; {{AUTHOR2}} &middot; {{AFFIL}} &middot;
         {{CONF_NAME}} {{ABSTRACT_NO}} &middot; <strong>{{DRAFT_LABEL}}</strong></span>
-  <span>A0 portrait 841 &times; 1189 mm &middot; {{EMAIL}}</span>
+  <!-- Draft 12 dropped the Repository panel and its QR code to make room for
+       the key-message band. The repository is still the poster's pointer to
+       code, tables and notebooks, so the URL moves here, where it costs no
+       column height. -->
+  <span>{{EMAIL}} &middot; <strong>{{GITHUB_URL}}</strong></span>
 </footer>
 
 </div>
