@@ -48,8 +48,11 @@ OUT = PRIM / "figures"
 OUT.mkdir(parents=True, exist_ok=True)
 
 # Spans the full A0 body width (817 mm inner). Everything is scaled up ~1.34x
-# on the sheet, so a 9 pt label here prints near 12 pt.
-FIGSIZE = (24, 3.8)
+# on the sheet, so a 9 pt label here prints near 12 pt. Height is the knob of
+# last resort for the whole sheet: the band is full width, so every millimetre
+# off this height is a millimetre off the poster, and --fit is already near
+# its readability floor.
+FIGSIZE = (24, 3.48)
 
 INK = "#16202c"
 INK2 = "#4a5768"

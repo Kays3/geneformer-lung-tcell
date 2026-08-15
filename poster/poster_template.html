@@ -65,7 +65,7 @@
      Draft 12 fell to 0.98, and the reason is worth knowing before trying to
      raise it. The light-ink theme costs nothing in height - fills became
      tints. What cost height was geometry: the middle column widened from
-     273 to 309 mm for Fig. 6, so the two outer columns lost 18 mm each, and
+     273 to 309 mm for Fig. 7, so the two outer columns lost 18 mm each, and
      text that used to fit in N lines there now takes N+1. Total content
      measures ~1187 mm against 1189 mm available at --fit 1.00 - it fits on
      height alone and still paginates onto a second page, because a panel
@@ -233,7 +233,7 @@ header{
    grid without re-running Cell 6 and looking at the result. */
 .band{
   display:grid;
-  /* Draft 12 widened the middle for Fig. 6; see the Draft 12 note above.
+  /* Draft 12 widened the middle for Fig. 7; see the Draft 12 note above.
      Keep in sync with _LEFT_COL / _RIGHT_COL in Cell 3. */
   grid-template-columns:252mm 1fr 252mm;
   gap:var(--gap);
@@ -588,109 +588,9 @@ footer{
       question: <em>if this gene changed, would the cell look more like a different
       disease state?</em></p>
 
-    <!-- viewBox height is trimmed to just past the lowest element: the SVG's
-         aspect ratio sets its rendered height (238mm wide / 700 units), so
-         slack units here become dead millimetres in the left column. -->
-    <svg viewBox="0 0 700 200" style="width:100%;height:68mm;display:block;margin:1.5mm 0;"
-         xmlns="http://www.w3.org/2000/svg" role="img"
-         aria-label="Four-step schematic: rank a cell's genes, edit one gene, re-read the cell, measure the shift">
-
-      <!-- ---------- stage 1: one cell ---------- -->
-      <circle cx="19" cy="15" r="9" fill="#17608f"/>
-      <text x="19" y="19.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
-      <text x="34" y="20" font-size="14" font-weight="700" fill="#10243c">One T cell</text>
-
-      <circle cx="85" cy="108" r="45" fill="#e9f2fa" stroke="#17608f" stroke-width="2"/>
-      <ellipse cx="85" cy="108" rx="21" ry="17" fill="#cfe1f1" stroke="#17608f" stroke-width="1.5"/>
-      <circle cx="58" cy="86"  r="3.2" fill="#17608f"/>
-      <circle cx="112" cy="90" r="3.2" fill="#17608f"/>
-      <circle cx="60" cy="131" r="3.2" fill="#17608f"/>
-      <circle cx="110" cy="133" r="3.2" fill="#17608f"/>
-      <circle cx="85" cy="72"  r="3.2" fill="#17608f"/>
-      <text x="85" y="112" font-size="10" fill="#10243c" text-anchor="middle">nucleus</text>
-
-      <!-- ---------- stage 2: rank the genes ---------- -->
-      <polygon points="163,102 175,108 163,114" fill="#93a3b5"/>
-      <line x1="152" y1="108" x2="164" y2="108" stroke="#93a3b5" stroke-width="2"/>
-
-      <circle cx="189" cy="15" r="9" fill="#17608f"/>
-      <text x="189" y="19.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
-      <text x="204" y="20" font-size="14" font-weight="700" fill="#10243c">Rank its genes</text>
-
-      <text x="180" y="42" font-size="10" fill="#4a5768">most expressed</text>
-      <rect x="180" y="48"  width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
-      <text x="186" y="62" font-size="12" fill="#16202c">CD3D</text>
-      <rect x="262" y="53" width="52" height="10" rx="2" fill="#17608f"/>
-      <rect x="180" y="71"  width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
-      <text x="186" y="85" font-size="12" fill="#16202c">IL7R</text>
-      <rect x="262" y="76" width="41" height="10" rx="2" fill="#17608f"/>
-      <rect x="180" y="94"  width="140" height="20" rx="3" fill="#fdf0f3" stroke="#e2aeba"/>
-      <text x="186" y="108" font-size="12" font-weight="700" fill="#b8465e">TIGIT</text>
-      <rect x="262" y="99" width="30" height="10" rx="2" fill="#b8465e"/>
-      <rect x="180" y="117" width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
-      <text x="186" y="131" font-size="12" fill="#16202c">GZMB</text>
-      <rect x="262" y="122" width="22" height="10" rx="2" fill="#17608f"/>
-      <rect x="180" y="140" width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
-      <text x="186" y="154" font-size="12" fill="#16202c">TOX</text>
-      <rect x="262" y="145" width="14" height="10" rx="2" fill="#17608f"/>
-      <text x="180" y="174" font-size="12" fill="#93a3b5">&#8942;</text>
-      <text x="250" y="174" font-size="10" fill="#4a5768" text-anchor="middle">least expressed</text>
-
-      <!-- ---------- stage 3: edit one gene ---------- -->
-      <polygon points="333,102 345,108 333,114" fill="#93a3b5"/>
-      <line x1="322" y1="108" x2="334" y2="108" stroke="#93a3b5" stroke-width="2"/>
-
-      <circle cx="359" cy="15" r="9" fill="#b8465e"/>
-      <text x="359" y="19.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
-      <text x="374" y="20" font-size="14" font-weight="700" fill="#10243c">Edit one gene</text>
-
-      <text x="350" y="42" font-size="11" font-weight="700" fill="#b8465e">DELETE &mdash; drop it out</text>
-      <rect x="350" y="48"  width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
-      <text x="356" y="62" font-size="12" fill="#16202c">CD3D</text>
-      <rect x="350" y="71"  width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
-      <text x="356" y="85" font-size="12" fill="#16202c">IL7R</text>
-      <rect x="350" y="94"  width="140" height="20" rx="3" fill="#eef1f5" stroke="#c9d3de"
-            stroke-dasharray="4 3"/>
-      <text x="356" y="108" font-size="12" fill="#93a3b5">TIGIT</text>
-      <line x1="353" y1="104" x2="404" y2="104" stroke="#b8465e" stroke-width="2"/>
-      <text x="472" y="108" font-size="13" font-weight="700" fill="#b8465e" text-anchor="middle">&#10005;</text>
-      <rect x="350" y="117" width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
-      <text x="356" y="131" font-size="12" fill="#16202c">GZMB</text>
-      <polygon points="437,134 443,126 449,134" fill="#0b6f6a"/>
-      <rect x="350" y="140" width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
-      <text x="356" y="154" font-size="12" fill="#16202c">TOX</text>
-      <polygon points="437,157 443,149 449,157" fill="#0b6f6a"/>
-      <!-- Kept clear of x=520: the stage-4 box is painted after these lines
-           and would cover anything that runs under it. -->
-      <text x="350" y="176" font-size="10.5" fill="#4a5768">the rest move up a rank</text>
-      <text x="350" y="192" font-size="10.5" fill="#4a5768">
-        <tspan font-weight="700" fill="#0b6f6a">OVEREXPRESS</tspan> &mdash; move it to the top
-      </text>
-
-      <!-- ---------- stage 4: measure the shift ---------- -->
-      <polygon points="503,102 515,108 503,114" fill="#93a3b5"/>
-      <line x1="492" y1="108" x2="504" y2="108" stroke="#93a3b5" stroke-width="2"/>
-
-      <circle cx="529" cy="15" r="9" fill="#0b6f6a"/>
-      <text x="529" y="19.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">4</text>
-      <text x="544" y="20" font-size="14" font-weight="700" fill="#10243c">Measure the move</text>
-
-      <rect x="520" y="34" width="172" height="140" rx="4" fill="#fff" stroke="#d5dee7"/>
-      <text x="606" y="48" font-size="10" fill="#4a5768" text-anchor="middle">model&#8217;s map of cell states</text>
-
-      <ellipse cx="562" cy="132" rx="36" ry="27" fill="#f0edf9" stroke="#3d2f6b"
-               stroke-width="1.5" stroke-dasharray="5 3"/>
-      <text x="562" y="136" font-size="12" font-weight="700" fill="#3d2f6b" text-anchor="middle">SCLC</text>
-      <ellipse cx="648" cy="80" rx="36" ry="26" fill="#e9f7f1" stroke="#0b6f6a"
-               stroke-width="1.5" stroke-dasharray="5 3"/>
-      <text x="648" y="84" font-size="12" font-weight="700" fill="#0b6f6a" text-anchor="middle">Normal</text>
-
-      <circle cx="566" cy="118" r="5" fill="#3d2f6b"/>
-      <line x1="571" y1="114" x2="616" y2="92" stroke="#b8465e" stroke-width="2.5"/>
-      <polygon points="616,86 626,88 617,97" fill="#b8465e"/>
-      <circle cx="624" cy="90" r="5" fill="#b8465e"/>
-      <text x="576" y="168" font-size="11" font-style="italic" fill="#b8465e">shift toward Normal</text>
-    </svg>
+    {{IMG_EXPLAINER}}
+    <div class="fcap">Fig. 1 &mdash; What an <em>in silico</em> perturbation does: rank a
+      cell&rsquo;s genes, edit one of them, re-read the cell, measure how far it moved.</div>
 
     <div class="caveat" style="margin-top:0.5mm;">
       Nothing is edited in a laboratory here. The edit is made to the model&rsquo;s input and
@@ -746,11 +646,11 @@ footer{
     <div class="twocol" style="margin-top:3mm;">
       <div>
         {{IMG_CM}}
-        <div class="fcap">Fig. 1 &mdash; Held-out test confusion matrix.</div>
+        <div class="fcap">Fig. 2 &mdash; Held-out test confusion matrix.</div>
       </div>
       <div>
         {{IMG_QUALIFIED}}
-        <div class="fcap">Fig. 2 &mdash; Qualified genes supporting the denoised programme.</div>
+        <div class="fcap">Fig. 3 &mdash; Qualified genes supporting the denoised programme.</div>
       </div>
     </div>
     <p style="margin-top:2.5mm;font-size:calc(13pt * var(--fit));color:var(--ink-2);">
@@ -810,7 +710,7 @@ footer{
       </div>
       {{IMG_SPATIAL}}
       <div class="slide-foot">
-        <strong>Fig. 3 &mdash; Quantitative marker-score maps across SCLC tumour sections.</strong>
+        <strong>Fig. 4 &mdash; Quantitative marker-score maps across SCLC tumour sections.</strong>
         T-cell abundance and T-cell dysfunction are scored from disjoint gene panels at every
         spatially indexed spot, then correlated within each specimen.
       </div>
@@ -846,7 +746,7 @@ footer{
   <div class="panel hema">
     <h2>One Deletion at a Time, Every Gene, Every Cell &mdash; a Perturb-seq Screen Run <em>In Silico</em></h2>
     {{IMG_HERO}}
-    <div class="fcap">Fig. 4 &mdash; The screen in three acts: the Perturb-seq analogy and its
+    <div class="fcap">Fig. 5 &mdash; The screen in three acts: the Perturb-seq analogy and its
       scale (A); each deletion&rsquo;s measured effect on cell state, shown against the published
       STRING interaction map for the checkpoint genes (B); and the funnel from every gene-level
       test down to the four edits that replicate on every criterion (C).</div>

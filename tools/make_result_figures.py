@@ -46,24 +46,29 @@ def confusion_matrix_figure():
     counts = cm.values
     row_pct = counts / counts.sum(axis=1, keepdims=True) * 100
 
-    fig, ax = plt.subplots(figsize=(6.2, 5.6), dpi=200)
+    # Sized for readability at A0. This renders about 148 mm wide on the sheet
+    # (WIDTH_MM["cm_pair"]), so a 5 in canvas scales up ~1.16x and the cell
+    # labels land near 16 pt - the panel's own heading and the figure caption
+    # already say what it is, so the in-figure title stays to one short line
+    # rather than the two-line sentence that used to crowd the plot.
+    fig, ax = plt.subplots(figsize=(5.0, 4.6), dpi=200)
     im = ax.imshow(row_pct, cmap="Blues", vmin=0, vmax=100)
     for i in range(3):
         for j in range(3):
             val = row_pct[i, j]
             ax.text(j, i, f"{counts[i, j]:,}\n{val:.1f}%", ha="center", va="center",
-                    fontsize=13, fontweight="bold",
+                    fontsize=14, fontweight="bold",
                     color="white" if val > 50 else "#1a1a1a")
     ax.set_xticks(range(3)); ax.set_xticklabels(labels, fontsize=12)
     ax.set_yticks(range(3)); ax.set_yticklabels(labels, fontsize=12)
-    ax.set_xlabel("Predicted disease", fontsize=12)
-    ax.set_ylabel("Actual disease", fontsize=12)
+    ax.set_xlabel("Predicted disease", fontsize=11.5)
+    ax.set_ylabel("Actual disease", fontsize=11.5)
     n_total = counts.sum()
-    ax.set_title(f"Current T-cell classifier: held-out confusion matrix\n"
-                 f"Labels show cell count and percentage within each actual class (n={n_total:,}).",
-                 fontsize=12, fontweight="bold", loc="left")
+    ax.set_title(f"Held-out test set (n = {n_total:,}) · count and row %",
+                 fontsize=10.5, fontweight="bold", loc="left", pad=8)
     cbar = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
-    cbar.set_label("Row percentage", fontsize=11)
+    cbar.set_label("Row percentage", fontsize=10.5)
+    cbar.ax.tick_params(labelsize=9.5)
     fig.tight_layout()
     out = OUT_PERTURB / "sclc_confusion_matrix.png"
     fig.savefig(out, dpi=200, bbox_inches="tight")
