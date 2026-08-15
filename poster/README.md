@@ -461,12 +461,33 @@ Generated posters are big — a rendered HTML carries ~10 MB of embedded figures
 and the exported PDF is similar. Committing every revision would bloat the
 repository permanently, so they are git-ignored:
 
-| Path | Tracked? |
-|---|---|
-| `poster/poster_template*.html`, `generate_poster.ipynb`, `README.md` | yes — source |
-| `poster/poster_<draft>.html` | no — regenerate from the notebook |
-| `output/pdf/*.pdf`, `tmp/` | no — exported deliverables |
-| `snapshots/*.png` | **yes** — small PNG previews |
+The rule is simple: **code is tracked, artifacts are not.** Everything in the
+"no" rows below is reproducible from something in the "yes" rows.
+
+| Path | Tracked? | Rebuild with |
+|---|---|---|
+| `poster/poster_template*.html`, `generate_poster.ipynb`, `README.md` | yes — source | — |
+| `tools/make_*.py`, `*/scripts/make_*.py`, `talk/build_deck.js`, `talk/make_assets.py` | yes — generators | — |
+| `poster/poster_<draft>.html`, `.pdf` | no | `generate_poster.ipynb` |
+| `talk/JSDP_P25_talk.pptx` | no | `node talk/build_deck.js` |
+| `talk/JSDP_P25_talk.pdf` | no | export the `.pptx` |
+| `talk/assets/*.png` | no | `python talk/make_assets.py` |
+| `output/pdf/*.pdf`, `tmp/` | no | — |
+| `snapshots/poster__poster_final.png` | **yes** | the one preview `README.md` shows on the front page |
+| `snapshots/*` (everything else) | no | `python tools/make_snapshots.py` |
+
+`talk/assets/*.png` used to be tracked because they are *inputs* to
+`build_deck.js`, not outputs, so losing them left a clone unable to build the
+deck. `make_assets.py` removed that argument — it rebuilds every one of them
+from the poster's own figures, verified byte-identical from an empty
+`talk/assets/`.
+
+**Untracking a file does not delete it, but changing branches can.** These
+artifacts stay in your working tree. If you switch to a commit where one was
+still tracked and back again, git removes it on the way through, because it was
+tracked *there* and the new ignore rule does not protect a file git is already
+deleting. Rebuild it, or recover it with
+`git show <commit>:<path> > <path>`.
 
 So the repository still shows what was produced, render a preview after
 exporting a PDF:
