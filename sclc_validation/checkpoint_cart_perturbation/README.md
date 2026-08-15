@@ -84,9 +84,18 @@ this analysis stated before correction.
 
 **Ranked among immune/lineage genes only** (excluding ambient/technical
 transcripts such as surfactant, haemoglobin, and S100 genes that dominate
-the unfiltered top ranks), the four candidates sit mid-table: TIM-3 5th,
-TIGIT 6th, CTLA-4 8th, IL7R 9th of the 24 immune genes detected in ≥100
+the unfiltered top ranks), the four candidates sit mid-table: TIM-3 4th,
+TIGIT 5th, CTLA-4 7th, IL7R 8th of the 20 immune genes detected in ≥100
 cells. Real, replicated, adequately detected — not standout.
+
+These ranks are computed by `scripts/make_detection_figure.py` from
+`tables/cart_overexpression_vs_deletion.csv`, under the filter this paragraph
+states: not `technical_or_ambient`, and `detection_n_cells >= 100`. An earlier
+version of this file read "TIM-3 5th, TIGIT 6th, CTLA-4 8th, IL7R 9th of the 24
+immune genes" — that does not reproduce from the shipped tables and predates
+them. The filter selects 20 genes, not 24. If you change the threshold, re-run
+the generator rather than editing the numbers here; the poster reads its copy
+from the same table and would otherwise disagree with this file.
 
 **The checkpoint programme's direction reverses between goals.** Comparing
 overexpression toward Normal against overexpression toward LUAD for the
