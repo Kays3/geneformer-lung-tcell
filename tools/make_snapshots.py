@@ -21,6 +21,8 @@ from __future__ import annotations
 
 import argparse
 import io
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -89,11 +91,52 @@ def discover() -> list[Path]:
     return sorted(set(found))
 
 
+DECK_PPTX = REPO / "talk" / "JSDP_P25_talk.pptx"
+DECK_BUILDER = REPO / "talk" / "build_deck.js"
+
+
+def ensure_deck(check_only: bool) -> None:
+    """Rebuild the talk deck if it is missing.
+
+    talk/JSDP_P25_talk.pptx is git-ignored - it is 3.7 MB of regenerable build
+    output - so a fresh clone does not have one. `node talk/build_deck.js`
+    rebuilds it from talk/assets/, and this runs that rather than leaving the
+    deck to be reconstructed by hand.
+
+    Only when it is MISSING. This does not try to detect staleness: the deck's
+    real inputs are the assets, which talk/make_assets.py rebuilds from the
+    poster's figures, and rebuilding a present deck on every snapshot run would
+    rewrite a multi-megabyte binary for no reason. To refresh the deck after
+    the poster's figures change, run make_assets.py then build_deck.js.
+    """
+    if DECK_PPTX.exists() or not DECK_BUILDER.exists():
+        return
+    if check_only:
+        print(f"  MISSING     {DECK_PPTX.relative_to(REPO)} "
+              f"(run: node {DECK_BUILDER.relative_to(REPO)})")
+        return
+    if shutil.which("node") is None:
+        print(f"  SKIPPED     {DECK_PPTX.relative_to(REPO)} - node not on PATH; "
+              f"run `node {DECK_BUILDER.relative_to(REPO)}` where it is")
+        return
+    print(f"  building    {DECK_PPTX.relative_to(REPO)} from build_deck.js")
+    result = subprocess.run(["node", str(DECK_BUILDER)], cwd=str(DECK_BUILDER.parent),
+                            capture_output=True, text=True)
+    if result.returncode != 0:
+        # Not fatal: the snapshots of everything else are still worth writing.
+        tail = (result.stderr or result.stdout).strip().splitlines()[-3:]
+        print(f"  FAILED      build_deck.js exited {result.returncode}")
+        for line in tail:
+            print(f"                {line}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--check", action="store_true",
                     help="report missing or stale snapshots, write nothing")
     args = ap.parse_args()
+
+    ensure_deck(args.check)
 
     sources = discover()
     if not sources:
