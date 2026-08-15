@@ -7,9 +7,17 @@ outputs, and reporting environment to another machine, see the
 For creating a project-agnostic Geneformer environment with `uv` on a clean
 machine, see the [general Geneformer + uv setup](geneformer_uv_setup/README.md).
 
-## Poster Draft 2
+## Poster — 24JSDP P25 (final)
 
-[![Poster Draft 2](snapshots/poster__poster_draft_2.png)](poster/poster_draft_2_show.png)
+[![JSDP poster P25, A0 portrait](snapshots/poster__poster_final.png)](snapshots/poster__poster_final.png)
+
+A0 portrait, 841 × 1189 mm, one page. Rebuild it with `poster/generate_poster.ipynb`
+(see [poster/README.md](poster/README.md)) — every number on the sheet is read from a
+result table at run time, so a rerun after new analysis picks up new values.
+
+The rendered HTML and the exported PDF are git-ignored because each carries ~10 MB of
+embedded figures; this preview is the tracked record of what was produced. Scan the QR in
+the poster's top-left corner to reach this repository.
 
 This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
 21,000 naturally balanced CD4/CD8 T cells, a three-state LUAD/LUSC/normal
