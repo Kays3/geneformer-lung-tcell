@@ -14,9 +14,12 @@ pathology narrative (single-cell perturbation → spatial validation in tissue).
 | `poster_template.html` | A0 layout and wording. Edit to move panels or change prose. |
 | `poster_template_90x210.html` | Previous 90 × 210 cm layout, kept for the full JSDP board. |
 | `poster_<draft>.html` | Generated output. Not committed by default. |
-| `../tools/make_hero_figure.py` | Builds Fig. 4, the full-width key-message band. |
+| `../tools/make_hero_figure.py` | Builds Fig. 5, the full-width key-message band. |
 | `../tools/make_snapshots.py` | Writes the tracked PNG preview of the final PDF. |
-| `../sclc_validation/checkpoint_cart_perturbation/scripts/make_network_figure.py` | Builds Fig. 6. |
+| `../tools/make_explainer_figure.py` | Builds Fig. 1, the explainer. |
+| `../sclc_validation/checkpoint_cart_perturbation/scripts/make_network_figure.py` | Builds Fig. 7. |
+| `../sclc_validation/checkpoint_cart_perturbation/scripts/make_detection_figure.py` | Builds Fig. 6. |
+| `../sclc_validation/checkpoint_cart_perturbation/scripts/make_ici_cart_figure.py` | Builds Fig. 8. |
 
 ## Sheet size note
 
@@ -185,36 +188,63 @@ Two things to keep in mind before editing this layout:
 
 ## Figures
 
-Eight figures, numbered in reading order: top band left→right, then the
+Nine figures, numbered in reading order: top band left→right, then the
 key-message band, then the bottom band left→right. **Keep them consecutive** —
-an earlier draft dropped the forest plot and left the sheet numbering 1, 2, 4–9
-with no Fig. 3, which reads as a mistake to anyone at the poster.
+an earlier draft dropped a figure and left the sheet numbering 1, 2, 4–9 with
+no Fig. 3, which reads as a mistake to anyone at the poster.
 
-| Figure | Panel / column | Source data | Generator |
-|---|---|---|---|
-| 1 Confusion matrix | Classifier, middle top | `test_confusion_matrix.csv` | `tools/make_result_figures.py` — see "Confusion-matrix fix" |
-| 2 Qualified genes heatmap | Classifier, middle top | `primary_test_perturbation/tables/` | `primary_test_perturbation/scripts/build_denoised_notebook.py` |
-| 3 Spatial score maps | Section C, right top | `spatial_validation/results/*` | pre-existing Visium tissue panel |
-| 4 Key-message band | Full-width band | several committed tables | **`tools/make_hero_figure.py`** |
-| 5 Detection/effect confound | Checkpoint screen, left bottom | `checkpoint_cart_perturbation/tables/cart_overexpression_vs_deletion.csv` | no committed generator |
-| 6 Perturbation network | Network context, middle bottom | `checkpoint_cart_perturbation/tables/{network_node_perturbation,string_network_edges}.csv` | **`checkpoint_cart_perturbation/scripts/make_network_figure.py`** |
-| 7 ICI / CAR-T candidates | ICI/CAR-T, middle bottom | `checkpoint_cart_perturbation/tables/` | no committed generator |
-| 8 Denoised bidirectional | Denoised programs, right bottom | `primary_test_perturbation/tables/immune_cancer_candidates.csv` | `build_denoised_notebook.py` (`_plot_bidirectional`) |
+**Every figure now has a committed generator.** That was not true until late:
+two figures existed only as PNGs, and Fig. 7 could not be resized when it needed
+to be, because the notebook that made it was never committed. If a figure needs
+to change, change its generator and re-run it — do not edit the PNG.
 
-Figure numbers appear both as captions and as cross-references in panel prose,
-in `poster_template.html` **and** in `EXTRA_PANELS` in Cell 1. Renumber both
-together or the references drift from the captions.
+| Figure | Panel / column | Generator |
+|---|---|---|
+| 1 What an *in silico* perturbation does | Explainer, left top | `tools/make_explainer_figure.py` |
+| 2 Confusion matrix | Classifier, middle top | `tools/make_result_figures.py` |
+| 3 Qualified genes heatmap | Classifier, middle top | `primary_test_perturbation/scripts/build_denoised_notebook.py` |
+| 4 Spatial score maps | Section C, right top | pre-existing Visium tissue panel — **no generator** |
+| 5 Key-message band | Full-width band | `tools/make_hero_figure.py` |
+| 6 Detection/effect confound | Checkpoint screen, left bottom | `checkpoint_cart_perturbation/scripts/make_detection_figure.py` |
+| 7 Perturbation network | Network context, middle bottom | `checkpoint_cart_perturbation/scripts/make_network_figure.py` |
+| 8 ICI / CAR-T candidates | ICI/CAR-T, middle bottom | `checkpoint_cart_perturbation/scripts/make_ici_cart_figure.py` |
+| 9 Denoised bidirectional | Denoised programs, right bottom | `build_denoised_notebook.py` (`_plot_bidirectional`) |
 
-Two figures still have no committed generator (5 and 7). Fig. 6 had none either
-until it needed resizing and could not be rebuilt — that is what the
-`make_network_figure.py` docstring records. If either of these two ever needs to
-change, write the generator rather than editing the PNG.
+Fig. 4 is the one exception left: it is an upstream Visium panel, not built here.
 
-**Fig. 4 carries a constraint.** Its panel B paints per-gene effects on cell
-state onto prior-knowledge STRING edges; the screen contains no gene-to-gene
-measurements. The edges are deliberately pale and unweighted and the caveat is
-inside the axes. `make_hero_figure.py` has a do-not-remove note explaining this;
-restyling those edges would make the figure claim something never measured.
+### Sizing a figure for the sheet
+
+The single most common mistake. Matplotlib text is in **points and does not
+scale with the canvas**, but the PNG is scaled to its column width. So the
+canvas width sets the rendered text size:
+
+    rendered_pt ≈ font_pt × column_mm / (figsize_in × 25.4)
+
+A *wider* canvas makes text *smaller* on the poster. Fig. 6 at 13.5 in put its
+gene labels near 7 pt, under the 9 pt floor; at 9.5 in they render about 1:1.
+Height is not free either — 31 stacked labels at ≥9 pt need ~100 mm whatever
+the width.
+
+### Renumbering
+
+Figure numbers appear as captions **and** as cross-references in panel prose, in
+`poster_template.html` **and** in `EXTRA_PANELS` in Cell 1. Renumber both
+together, and shift through a placeholder (`Fig. §n§`) so that a `7 → 2` mapping
+is not then re-hit by `2 → 3`. Doing one file alone drifts references away from
+captions with no error.
+
+### Fig. 5 carries a constraint
+
+Its panel B paints per-gene effects on cell state onto prior-knowledge STRING
+edges; the screen contains no gene-to-gene measurements. The edges are
+deliberately pale and unweighted and the caveat is inside the axes.
+`make_hero_figure.py` has a do-not-remove note; restyling those edges would make
+the figure claim something never measured.
+
+Figs. 7 and 8 could not recover their original node coordinates — those were
+never saved. Both use a deterministic ring layout instead: stable run to run,
+not pixel-identical to the superseded PNGs. Position carries no meaning in
+either; the layout is held constant so that only colour varies.
 
 ## Cohort panels
 
