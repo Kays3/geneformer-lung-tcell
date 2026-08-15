@@ -87,3 +87,15 @@ poster/poster_*.pdf
 Thumbs.db
 .idea/
 .vscode/
+
+# Node dependencies for the talk-deck generator (talk/build_deck.js).
+node_modules/
+
+# Superseded poster drafts. Only the final poster's PNG preview is tracked;
+# every draft is regenerable from the notebook by setting DRAFT_LABEL.
+snapshots/poster__poster_draft_*.png
+poster/poster_draft_*
+poster/posterdown_draft*
+
+# R session leftovers
+.Rhistory

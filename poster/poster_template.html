@@ -51,26 +51,35 @@
      Measured against the current content by rendering at each value
      and checking the WeasyPrint page count (see Cell 6's assertion):
 
-       1.00  title 40pt, body 17.5pt, smallest 10.5pt  - original fit
-       1.10  title 44pt, body 19.3pt, smallest 11.6pt  <- current value
-       1.12  title 45pt, body 19.6pt, smallest 11.8pt  - last value that
-                                                            still fits 1 page
-       1.15  spills onto a 2nd A0 page
+       0.96  title 38pt, body 16.8pt, smallest 10.1pt  - Draft 3 default
+       0.99  title 40pt, body 17.3pt, smallest 10.4pt  - measured, fits
+       1.00  title 40pt, body 17.5pt, smallest 10.5pt  <- current value,
+                                                            measured, fits
+       1.12  title 45pt, body 19.6pt, smallest 11.8pt  - Draft 3 ceiling
 
      The ceiling is content-dependent, NOT a fixed property of the layout.
      It was 1.60 before the discovery-cohort and validation-cohort detail
      panels were added; that content costs roughly 107 mm of column height
-     and pulled the ceiling down to 1.12. Adding or removing content moves
-     it again - re-measure with Cell 6's page-count assertion rather than
+     and pulled the ceiling down to 1.12. Draft 4 then added ~291 mm more
+     (the perturbation explainer and the checkpoint/CAR-T panel) and paid
+     for it by dropping Figs. 4 and 5, which left enough slack to take the
+     type back up from 0.96 to 1.00. The Draft 4 ceiling above 1.00 was not
+     measured - re-measure with Cell 6's page-count assertion rather than
      assuming any value here still holds.
 
      If content spills past the red dashed A0 edge rule on screen,
      lower this; if there is slack above it, raise it (up to the
      current one-page ceiling above).
 
+     Draft 10 ("Final") rebalanced the columns: section C moved from the
+     middle column to the top of the right one, the middle denoising
+     figures grew to full panel width, and the left column regained the
+     detection-confound figure panel. Measured at --fit 1.00: column
+     fills 89 / 89 / 95% (left / middle / right), one A0 page.
+
      Floor: below ~0.88 the smallest labels drop under 9pt and stop
      being readable at normal poster viewing distance.             */
-  --fit: 0.96;
+  --fit: 1.00;
 
   /* type scale for A0 (read at ~1 m) */
   --fs-body:  calc(17.5pt * var(--fit));
@@ -148,7 +157,7 @@ header::after{
 .num-box .n{ font-size:calc(54pt * var(--fit)); font-weight:700; line-height:1; letter-spacing:-0.01em; }
 .num-box .s{ font-size:calc(11.5pt * var(--fit)); opacity:.8; margin-top:2.5mm; line-height:1.45; }
 
-.h-title{ font-size:calc(40pt * var(--fit)); font-weight:700; line-height:1.16; letter-spacing:-0.005em; }
+.h-title{ font-size:calc(52pt * var(--fit)); font-weight:700; line-height:1.10; letter-spacing:-0.01em; }
 .h-authors{ font-size:calc(23pt * var(--fit)); margin-top:4.5mm; }
 .h-authors sup{ font-size:calc(13pt * var(--fit)); }
 .h-affil{ font-size:calc(15pt * var(--fit)); margin-top:2mm; opacity:.86; line-height:1.5; }
@@ -159,6 +168,15 @@ header::after{
   border-top:0.3mm solid rgba(255,255,255,.24);
   font-size:calc(12.5pt * var(--fit)); opacity:.9;
 }
+.h-takeaway{
+  display:flex; align-items:center; gap:3mm; flex-wrap:wrap;
+  margin-top:4mm; padding:2.2mm 3mm;
+  border-radius:1.4mm; border:0.35mm solid rgba(255,255,255,.28);
+  background:rgba(255,255,255,.10); font-size:calc(14.5pt * var(--fit));
+  line-height:1.35;
+}
+.h-takeaway strong{ color:#fff; }
+.h-takeaway .arrow{ color:var(--eosin-lt); font-size:calc(18pt * var(--fit)); }
 .chip{ border-radius:1.6mm; padding:1mm 3mm; font-weight:700; font-size:calc(14pt * var(--fit)); }
 .chip-conf { background:var(--teal); }
 .chip-draft{ background:var(--amber); font-size:calc(12.5pt * var(--fit)); }
@@ -175,7 +193,11 @@ header::after{
 .body{
   flex:1;
   display:grid;
-  grid-template-columns:248mm 1fr 248mm;
+  /* Draft 11 widens the outer columns from 248 mm at the middle column's
+     expense. Figures are capped by their column's inner width, so the only
+     way to enlarge Figs 4 and 5 (left and right) is to take width from the
+     middle. Keep this in sync with _LEFT_COL / _RIGHT_COL in Cell 3. */
+  grid-template-columns:270mm 1fr 270mm;
   gap:var(--gap);
   padding:var(--gap) var(--pad);
   min-height:0;
@@ -270,7 +292,7 @@ table.mt.h tr:nth-child(even) td{ background:var(--hema-wash); }
 /* ============================================================
    FIGURES
    ============================================================ */
-.fig{ width:100%; border-radius:1.4mm; border:0.3mm solid var(--rule); display:block; }
+.fig{ width:100%; max-width:100%; margin-left:0; border-radius:1.4mm; border:0.3mm solid var(--rule); display:block; }
 .fcap{
   font-size:var(--fs-cap); color:var(--ink-2);
   margin-top:1.2mm; line-height:1.4; font-style:italic;
@@ -307,7 +329,7 @@ table.mt.h tr:nth-child(even) td{ background:var(--hema-wash); }
   font-size:calc(10.5pt * var(--fit)); font-weight:600; letter-spacing:.03em;
 }
 .slide-label .sl-meta{ color:#5a6473; font-size:calc(10.5pt * var(--fit)); }
-.slide-mount img{ width:100%; display:block; border-radius:0.9mm; }
+.slide-mount img{ width:100%; max-width:100%; margin-left:0; display:block; border-radius:0.9mm; }
 .slide-foot{
   margin-top:2mm; font-size:calc(11pt * var(--fit)); color:#b9c4d2; line-height:1.45;
 }
@@ -460,6 +482,13 @@ footer{
       <span class="coi-box"><strong>COI:</strong> {{COI}}</span>
       <span>HTAN MSK CELLxGENE &middot; GSE263196 10x Visium &middot; Geneformer-V2-104M</span>
     </div>
+    <div class="h-takeaway">
+      <strong>Take-home:</strong> model-derived dysfunction candidates in SCLC
+      <span class="arrow">&rarr;</span>
+      <strong>antigen-presentation program</strong>
+      <span class="arrow">&rarr;</span>
+      associated with T-cell abundance in independent tumour tissue
+    </div>
   </div>
 </header>
 
@@ -467,10 +496,10 @@ footer{
 
 <!-- ══════════════════ LEFT ══════════════════ -->
 <div class="col">
-  <div class="sec">A &middot; Background &amp; Cohort</div>
+  <div class="sec">A &middot; Question, Cohort &amp; Method</div>
 
   <div class="panel">
-    <h2>Background</h2>
+    <h2>Why This Matters</h2>
     <p><strong>Small cell lung cancer (SCLC)</strong> is the most aggressive thoracic
       malignancy and responds poorly to immune checkpoint blockade despite a high tumour
       mutational burden. T-cell dysfunction in the tumour microenvironment is a candidate
@@ -482,6 +511,135 @@ footer{
     <p><strong>Approach.</strong> Geneformer-V2-104M fine-tuned on HTAN SCLC T cells, then
       bidirectional <em>in silico</em> perturbation, with findings tested in intact tissue
       by quantitative spatial pathology.</p>
+  </div>
+
+  <!-- Plain-language explainer. Deliberately placed before any results:
+       most JSDP attendees are clinicians and wet-lab biologists for whom
+       "in silico perturbation" is not a familiar method, and every number
+       in sections B and C is a perturbation shift. The schematic is inline
+       SVG rather than a PNG so it stays sharp at A0 and needs no figure
+       file; its text is sized in viewBox units, so it scales with the
+       column width (fixed at 248mm) and NOT with --fit. Check it stays
+       above ~9pt if the column geometry ever changes. -->
+  <div class="panel">
+    <h2>What Is an <em>In Silico</em> Perturbation?</h2>
+    <p style="font-size:calc(14.5pt * var(--fit));">Geneformer reads a cell as an
+      <strong>ordered list of its genes</strong>, most-expressed first. Deleting or
+      inserting one gene in that list and re-reading the cell asks a counterfactual
+      question: <em>if this gene changed, would the cell look more like a different
+      disease state?</em></p>
+
+    <!-- viewBox height is trimmed to just past the lowest element: the SVG's
+         aspect ratio sets its rendered height (238mm wide / 700 units), so
+         slack units here become dead millimetres in the left column. -->
+    <svg viewBox="0 0 700 200" style="width:100%;height:68mm;display:block;margin:1.5mm 0;"
+         xmlns="http://www.w3.org/2000/svg" role="img"
+         aria-label="Four-step schematic: rank a cell's genes, edit one gene, re-read the cell, measure the shift">
+
+      <!-- ---------- stage 1: one cell ---------- -->
+      <circle cx="19" cy="15" r="9" fill="#17608f"/>
+      <text x="19" y="19.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+      <text x="34" y="20" font-size="14" font-weight="700" fill="#10243c">One T cell</text>
+
+      <circle cx="85" cy="108" r="45" fill="#e9f2fa" stroke="#17608f" stroke-width="2"/>
+      <ellipse cx="85" cy="108" rx="21" ry="17" fill="#cfe1f1" stroke="#17608f" stroke-width="1.5"/>
+      <circle cx="58" cy="86"  r="3.2" fill="#17608f"/>
+      <circle cx="112" cy="90" r="3.2" fill="#17608f"/>
+      <circle cx="60" cy="131" r="3.2" fill="#17608f"/>
+      <circle cx="110" cy="133" r="3.2" fill="#17608f"/>
+      <circle cx="85" cy="72"  r="3.2" fill="#17608f"/>
+      <text x="85" y="112" font-size="10" fill="#10243c" text-anchor="middle">nucleus</text>
+
+      <!-- ---------- stage 2: rank the genes ---------- -->
+      <polygon points="163,102 175,108 163,114" fill="#93a3b5"/>
+      <line x1="152" y1="108" x2="164" y2="108" stroke="#93a3b5" stroke-width="2"/>
+
+      <circle cx="189" cy="15" r="9" fill="#17608f"/>
+      <text x="189" y="19.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+      <text x="204" y="20" font-size="14" font-weight="700" fill="#10243c">Rank its genes</text>
+
+      <text x="180" y="42" font-size="10" fill="#4a5768">most expressed</text>
+      <rect x="180" y="48"  width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
+      <text x="186" y="62" font-size="12" fill="#16202c">CD3D</text>
+      <rect x="262" y="53" width="52" height="10" rx="2" fill="#17608f"/>
+      <rect x="180" y="71"  width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
+      <text x="186" y="85" font-size="12" fill="#16202c">IL7R</text>
+      <rect x="262" y="76" width="41" height="10" rx="2" fill="#17608f"/>
+      <rect x="180" y="94"  width="140" height="20" rx="3" fill="#fdf0f3" stroke="#e2aeba"/>
+      <text x="186" y="108" font-size="12" font-weight="700" fill="#b8465e">TIGIT</text>
+      <rect x="262" y="99" width="30" height="10" rx="2" fill="#b8465e"/>
+      <rect x="180" y="117" width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
+      <text x="186" y="131" font-size="12" fill="#16202c">GZMB</text>
+      <rect x="262" y="122" width="22" height="10" rx="2" fill="#17608f"/>
+      <rect x="180" y="140" width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
+      <text x="186" y="154" font-size="12" fill="#16202c">TOX</text>
+      <rect x="262" y="145" width="14" height="10" rx="2" fill="#17608f"/>
+      <text x="180" y="174" font-size="12" fill="#93a3b5">&#8942;</text>
+      <text x="250" y="174" font-size="10" fill="#4a5768" text-anchor="middle">least expressed</text>
+
+      <!-- ---------- stage 3: edit one gene ---------- -->
+      <polygon points="333,102 345,108 333,114" fill="#93a3b5"/>
+      <line x1="322" y1="108" x2="334" y2="108" stroke="#93a3b5" stroke-width="2"/>
+
+      <circle cx="359" cy="15" r="9" fill="#b8465e"/>
+      <text x="359" y="19.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+      <text x="374" y="20" font-size="14" font-weight="700" fill="#10243c">Edit one gene</text>
+
+      <text x="350" y="42" font-size="11" font-weight="700" fill="#b8465e">DELETE &mdash; drop it out</text>
+      <rect x="350" y="48"  width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
+      <text x="356" y="62" font-size="12" fill="#16202c">CD3D</text>
+      <rect x="350" y="71"  width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
+      <text x="356" y="85" font-size="12" fill="#16202c">IL7R</text>
+      <rect x="350" y="94"  width="140" height="20" rx="3" fill="#eef1f5" stroke="#c9d3de"
+            stroke-dasharray="4 3"/>
+      <text x="356" y="108" font-size="12" fill="#93a3b5">TIGIT</text>
+      <line x1="353" y1="104" x2="404" y2="104" stroke="#b8465e" stroke-width="2"/>
+      <text x="472" y="108" font-size="13" font-weight="700" fill="#b8465e" text-anchor="middle">&#10005;</text>
+      <rect x="350" y="117" width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
+      <text x="356" y="131" font-size="12" fill="#16202c">GZMB</text>
+      <polygon points="437,134 443,126 449,134" fill="#0b6f6a"/>
+      <rect x="350" y="140" width="140" height="20" rx="3" fill="#f6f8fb" stroke="#d5dee7"/>
+      <text x="356" y="154" font-size="12" fill="#16202c">TOX</text>
+      <polygon points="437,157 443,149 449,157" fill="#0b6f6a"/>
+      <!-- Kept clear of x=520: the stage-4 box is painted after these lines
+           and would cover anything that runs under it. -->
+      <text x="350" y="176" font-size="10.5" fill="#4a5768">the rest move up a rank</text>
+      <text x="350" y="192" font-size="10.5" fill="#4a5768">
+        <tspan font-weight="700" fill="#0b6f6a">OVEREXPRESS</tspan> &mdash; move it to the top
+      </text>
+
+      <!-- ---------- stage 4: measure the shift ---------- -->
+      <polygon points="503,102 515,108 503,114" fill="#93a3b5"/>
+      <line x1="492" y1="108" x2="504" y2="108" stroke="#93a3b5" stroke-width="2"/>
+
+      <circle cx="529" cy="15" r="9" fill="#0b6f6a"/>
+      <text x="529" y="19.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+      <text x="544" y="20" font-size="14" font-weight="700" fill="#10243c">Measure the move</text>
+
+      <rect x="520" y="34" width="172" height="140" rx="4" fill="#fff" stroke="#d5dee7"/>
+      <text x="606" y="48" font-size="10" fill="#4a5768" text-anchor="middle">model&#8217;s map of cell states</text>
+
+      <ellipse cx="562" cy="132" rx="36" ry="27" fill="#f0edf9" stroke="#3d2f6b"
+               stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text x="562" y="136" font-size="12" font-weight="700" fill="#3d2f6b" text-anchor="middle">SCLC</text>
+      <ellipse cx="648" cy="80" rx="36" ry="26" fill="#e9f7f1" stroke="#0b6f6a"
+               stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text x="648" y="84" font-size="12" font-weight="700" fill="#0b6f6a" text-anchor="middle">Normal</text>
+
+      <circle cx="566" cy="118" r="5" fill="#3d2f6b"/>
+      <line x1="571" y1="114" x2="616" y2="92" stroke="#b8465e" stroke-width="2.5"/>
+      <polygon points="616,86 626,88 617,97" fill="#b8465e"/>
+      <circle cx="624" cy="90" r="5" fill="#b8465e"/>
+      <text x="576" y="168" font-size="11" font-style="italic" fill="#b8465e">shift toward Normal</text>
+    </svg>
+
+    <div class="caveat" style="margin-top:0.5mm;">
+      Nothing is edited in a laboratory here. The edit is made to the model&rsquo;s input and
+      the result is the model&rsquo;s <em>predicted</em> change in cell state, averaged over
+      thousands of real cells &mdash; a hypothesis generator, not a knockout experiment.
+      A gene counts as a hit only when deleting and overexpressing it move cells in
+      <strong>opposite</strong> directions, which is what the next panels report.
+    </div>
   </div>
 
   <div class="panel sky">
@@ -504,16 +662,9 @@ footer{
       <strong style="color:var(--green);">{{LEAKAGE_STATUS}}</strong>.
     </p>
 
-    <table class="mt s" style="margin-top:2.5mm;">
-      <tr><th>Paired donor</th><th>Tumour</th><th class="num">Cells</th>
-          <th class="num">Normal cells</th><th>Split</th></tr>
-      {{PAIRED_ROWS}}
-    </table>
     <p style="margin-top:2mm;font-size:calc(12pt * var(--fit));color:var(--ink-2);">
-      {{N_PAIRED_DONORS}} donors give both tumour and normal tissue, so a naive split
-      could place the same individual on both sides of a train/test boundary. Each is
-      confined to one split, making the {{ACC}} test accuracy a measurement on
-      individuals the model never saw.
+      {{N_PAIRED_DONORS}} paired tumour-normal donors were confined to one split;
+      the {{ACC}} test accuracy is therefore measured on individuals the model never saw.
     </p>
   </div>
 
@@ -584,11 +735,26 @@ footer{
   </div>
 
   {{EXTRA_LEFT_PANELS}}
+
+  <!-- References sit at the foot of column A, not column D. The right column
+       carries sections C and D plus a figure panel and was the only column
+       overrunning A0; the left column had ~120 mm spare. Bottom-left is a
+       conventional home for them, so this costs the reader nothing. -->
+  <div class="panel mid">
+    <h2>References</h2>
+    <p style="font-size:calc(12.5pt * var(--fit));line-height:1.55;">
+      1. Theodoris CV et al. (2023) Transfer learning enables predictions in network biology.
+         <em>Nature</em> 618, 616&ndash;624.<br>
+      2. HTAN MSK collection, CELLxGENE dataset 6fde3ad9.<br>
+      3. GSE263196 &mdash; 10x Visium SCLC fresh-frozen tumour sections, NCBI GEO.<br>
+      4. KEGG, Reactome and GO:BP pathway databases.
+    </p>
+  </div>
 </div>
 
 <!-- ══════════════════ MIDDLE ══════════════════ -->
 <div class="col">
-  <div class="sec">B &middot; Classifier &amp; Perturbation</div>
+  <div class="sec">B &middot; Model, Screen &amp; Candidate Hits</div>
 
   <div class="panel">
     <h2>Classifier Performance &mdash; SCLC vs LUAD vs Normal</h2>
@@ -598,52 +764,75 @@ footer{
       <div class="sb"><div class="v">{{N_TEST_CELLS}}</div><div class="l">Held-out cells</div></div>
       <div class="sb"><div class="v">{{N_TEST_DONORS}}</div><div class="l">Test donors</div></div>
     </div>
-    <div style="margin-top:3mm;">
+    <!-- Draft 11 pairs the confusion matrix with the qualified-genes heatmap.
+         Stacked in separate panels they cost two lots of panel chrome and the
+         sum of both figure heights; side by side the block is one panel and
+         max(height) instead, which is what pays for the wider outer columns. -->
+    <div class="twocol" style="margin-top:3mm;">
       <div>
         {{IMG_CM}}
         <div class="fcap">Fig. 1 &mdash; Held-out test confusion matrix.</div>
       </div>
       <div>
-        <table class="mt">
-          <tr><th>True \ Pred</th><th class="num">SCLC</th><th class="num">Normal</th>
-              <th class="num">LUAD</th><th class="num">Recall</th></tr>
-          {{CM_ROWS}}
-        </table>
-        <p style="margin-top:2.5mm;font-size:calc(14pt * var(--fit));">
-          <strong>Internal control.</strong> Deleting ASCL1 or NEUROD1 shifts SCLC cells
-          toward LUAD (+0.157 and +0.378, p &lt; 1e-7); overexpression reinforces SCLC
-          identity. Recovering these canonical master regulators confirms the perturbation
-          pipeline reproduces known biology.
-        </p>
+        {{IMG_QUALIFIED}}
+        <div class="fcap">Fig. 7 &mdash; Qualified genes supporting the denoised programme.</div>
       </div>
     </div>
+    <p style="margin-top:2.5mm;font-size:calc(13pt * var(--fit));color:var(--ink-2);">
+      Donor-held-out performance separates SCLC, Normal and LUAD sufficiently for the
+      downstream perturbation screen. The antigen-presentation programme that led both
+      the denoised screen and the spatial validation holds up alongside it:
+      <strong>no listed MHC gene is donor-inconsistent</strong> in any transition, and
+      unassessable entries reflect transitions with too few source donors rather than
+      contradictory evidence.
+    </p>
   </div>
 
   <div class="panel sky">
-    <h2>Bidirectional Perturbation &mdash; SCLC-Source Concordant Hits</h2>
+    <h2>Detection-Aware Applied Screen &mdash; Four Replicated Edits</h2>
     <div class="sg sg4">
-      <div class="sb"><div class="v">300</div><div class="l">Gene-runs</div></div>
-      <div class="sb"><div class="v">{{N_CONCORDANT}}</div><div class="l">Concordant hits</div></div>
-      <div class="sb"><div class="v t">{{N_FULLY}}</div><div class="l">Fully donor-consistent</div></div>
-      <div class="sb"><div class="v">21/21</div><div class="l">Panel genes with a hit</div></div>
+      <div class="sb"><div class="v">50</div><div class="l">Screened genes</div></div>
+      <div class="sb"><div class="v t">4</div><div class="l">Replicated edits</div></div>
+      <div class="sb"><div class="v">&minus;0.60</div><div class="l">Detection vs |effect|<br>Spearman rho</div></div>
+      <div class="sb"><div class="v">8</div><div class="l">No deletion result</div></div>
     </div>
     <table class="mt s" style="margin-top:3mm;">
-      <tr><th>Gene</th><th>Comparison</th><th class="num">Delete</th>
-          <th class="num">Overexpress</th><th class="num">N cells</th><th>Donors</th></tr>
+      <tr><th>Gene</th><th class="num">Delete &rarr; Normal</th>
+          <th class="num">Overexpress</th><th class="num">Detected</th><th>Donors / tier</th></tr>
       {{HIT_ROWS}}
     </table>
     <p style="margin-top:2mm;font-size:calc(12.5pt * var(--fit));color:var(--ink-2);">
-      Values are mean cosine shift toward the goal state. A gene is concordant when deletion
-      and overexpression move cells in opposite directions with FDR &lt; 0.05 in both arms.
+      Values are mean cosine shifts toward Normal. A replicated edit is concordant at
+      FDR &lt; 0.05 in both arms, has the same sign in all 3 SCLC donors, and is detected
+      in at least 100 source cells. These are reliable candidates, not the largest nominal effects.
     </p>
   </div>
 
   {{EXTRA_MIDDLE_PANELS}}
 
+  <!-- QR block moved out of column D for the same reason as the references:
+       the right column carries C and D plus a figure panel and was the only
+       one over A0. The foot of the middle column is the sheet's bottom-centre,
+       which is if anything easier for a passer-by to find and scan. -->
+  <div class="panel sky">
+    <h2>Repository &amp; Digital Version</h2>
+    <div class="qr-wrap">
+      {{IMG_QR}}
+      <div class="ql">
+        <strong>Scan for the repository</strong><br>
+        {{GITHUB_URL}}<br>
+        <span style="font-size:calc(11pt * var(--fit));color:#77839a;">Code, result tables, notebooks
+          and all poster drafts</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ RIGHT ══════════════════ -->
+<div class="col">
   <div class="sec path">C &middot; Spatial Pathology &mdash; Independent SCLC Tissue Cohort</div>
 
-
-  <div class="panel eosin" style="flex:1;display:flex;flex-direction:column;">
+  <div class="panel eosin">
     <h2>T-Cell Dysfunction Co-Localises with T-Cell Abundance in Tumour Tissue</h2>
 
     <div class="sg sg3">
@@ -672,24 +861,6 @@ footer{
       </div>
     </div>
 
-    <!-- slide tray: per-specimen effect -->
-    <div class="tray">{{SLIDE_CARDS}}</div>
-
-    <div style="margin-top:3.5mm;">
-      <div>
-        {{IMG_FOREST}}
-        <div class="fcap">Fig. 3 &mdash; Per-specimen Spearman rho with 95% CI; pooled estimate
-          by Fisher-z meta-analysis.</div>
-      </div>
-      <div>
-        <table class="mt e">
-          <tr><th>Specimen</th><th class="num">Spots</th><th class="num">rho</th>
-              <th class="num">95% CI</th><th class="num">p</th></tr>
-          {{SPATIAL_ROWS}}
-        </table>
-      </div>
-    </div>
-
     <div class="callout">
       <strong>Interpretation.</strong> In intact tumour tissue, regions with greater T-cell
       infiltration also carry higher co-inhibitory programme expression &mdash; the same
@@ -703,11 +874,16 @@ footer{
       SCLC-specificity of the association is untested; correlational design in archival tissue.
     </div>
   </div>
-</div>
 
-<!-- ══════════════════ RIGHT ══════════════════ -->
-<div class="col">
-  <div class="sec">D &middot; Conclusions &amp; Outlook</div>
+  <div class="panel hema">
+    <h2>Validation Cohort &mdash; GSE263196 Specimens &amp; QC</h2>
+      <p><strong>Independent cohort:</strong> GSE263196, five fresh-frozen SCLC sections
+      and {{N_SPOTS}} analysed spots. All 21 marker genes are present; no donor, cell or
+      read is shared with the discovery atlas. This tests replication in intact tissue,
+      not SCLC specificity.</p>
+  </div>
+
+  <div class="sec">D &middot; Take-home &amp; Next Steps</div>
 
   <div class="panel">
     <h2>Conclusions</h2>
@@ -726,52 +902,6 @@ footer{
 
   {{EXTRA_RIGHT_PANELS}}
 
-  <div class="panel hema">
-    <h2>Validation Cohort &mdash; GSE263196 Specimens &amp; QC</h2>
-    <p>An <strong>entirely separate cohort</strong> from the HTAN discovery atlas: different
-      patients, different assay (10x Visium spatial transcriptomics rather than
-      single-cell), different laboratory. No donor, cell or read is shared with the
-      data the classifier was trained on, so agreement here is external validation
-      rather than internal consistency.</p>
-    <table class="mt s" style="margin-top:2.5mm;">
-      <tr><th>GSM</th><th>Specimen</th><th class="num">In-tissue spots</th>
-          <th class="num">Analysed</th><th class="num">Genes detected</th>
-          <th class="num">Panel genes</th></tr>
-      {{VALIDATION_ROWS}}
-    </table>
-    <p style="margin-top:2.5mm;font-size:calc(12.5pt * var(--fit));">
-      10x Visium, spot 55 &micro;m / pitch 100 &micro;m, fresh-frozen sections.
-      Retained <strong>{{VAL_RETENTION}}</strong>; matrix/barcode/position integrity
-      <strong style="color:var(--green);">{{VAL_INTEGRITY}}</strong>;
-      {{VAL_PANEL_GENES}} present in every specimen.
-      <span style="color:var(--ink-2);">All five specimens are SCLC &mdash; the cohort has
-      no Normal or LUAD sections, so these data test whether the association holds in
-      intact SCLC tissue, not whether it is specific to SCLC.</span>
-    </p>
-  </div>
-  <div class="panel mid">
-    <h2>References</h2>
-    <p style="font-size:calc(12.5pt * var(--fit));line-height:1.55;">
-      1. Theodoris CV et al. (2023) Transfer learning enables predictions in network biology.
-         <em>Nature</em> 618, 616&ndash;624.<br>
-      2. HTAN MSK collection, CELLxGENE dataset 6fde3ad9.<br>
-      3. GSE263196 &mdash; 10x Visium SCLC fresh-frozen tumour sections, NCBI GEO.<br>
-      4. KEGG, Reactome and GO:BP pathway databases.
-    </p>
-  </div>
-
-  <div class="panel sky">
-    <h2>Repository &amp; Digital Version</h2>
-    <div class="qr-wrap">
-      {{IMG_QR}}
-      <div class="ql">
-        <strong>Scan for the repository</strong><br>
-        {{GITHUB_URL}}<br>
-        <span style="font-size:calc(11pt * var(--fit));color:#77839a;">Code, result tables, notebooks
-          and all poster drafts</span>
-      </div>
-    </div>
-  </div>
 </div>
 
 </div><!-- /body -->
