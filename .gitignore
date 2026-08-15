@@ -88,6 +88,18 @@ Thumbs.db
 .idea/
 .vscode/
 
+# The poster and talk sources are kept out of the repository entirely, by
+# request - neither directory appears on GitHub. Both stay in the working tree
+# and are unaffected locally; this only controls what is published.
+#
+# Consequence worth knowing: the poster and the deck are no longer reproducible
+# from a clone. generate_poster.ipynb, poster_template.html, build_deck.js and
+# make_assets.py all live only on the machines that already have them, so they
+# are not backed up by this repository either. The figure generators under
+# tools/ and sclc_validation/*/scripts/ are NOT affected and stay tracked.
+poster/
+talk/
+
 # Built poster and talk artifacts. Sources are tracked, outputs are not:
 # everything below is reproducible from committed code, so it lives on disk
 # rather than in history.
