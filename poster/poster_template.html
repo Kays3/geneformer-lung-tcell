@@ -193,7 +193,11 @@ header::after{
 .body{
   flex:1;
   display:grid;
-  grid-template-columns:248mm 1fr 248mm;
+  /* Draft 11 widens the outer columns from 248 mm at the middle column's
+     expense. Figures are capped by their column's inner width, so the only
+     way to enlarge Figs 4 and 5 (left and right) is to take width from the
+     middle. Keep this in sync with _LEFT_COL / _RIGHT_COL in Cell 3. */
+  grid-template-columns:270mm 1fr 270mm;
   gap:var(--gap);
   padding:var(--gap) var(--pad);
   min-height:0;
@@ -760,18 +764,28 @@ footer{
       <div class="sb"><div class="v">{{N_TEST_CELLS}}</div><div class="l">Held-out cells</div></div>
       <div class="sb"><div class="v">{{N_TEST_DONORS}}</div><div class="l">Test donors</div></div>
     </div>
-    <div style="margin-top:3mm;">
+    <!-- Draft 11 pairs the confusion matrix with the qualified-genes heatmap.
+         Stacked in separate panels they cost two lots of panel chrome and the
+         sum of both figure heights; side by side the block is one panel and
+         max(height) instead, which is what pays for the wider outer columns. -->
+    <div class="twocol" style="margin-top:3mm;">
       <div>
         {{IMG_CM}}
         <div class="fcap">Fig. 1 &mdash; Held-out test confusion matrix.</div>
       </div>
       <div>
-        <p style="margin-top:2.5mm;font-size:calc(13pt * var(--fit));color:var(--ink-2);">
-          Donor-held-out performance separates SCLC, Normal and LUAD sufficiently for the
-          downstream perturbation screen.
-        </p>
+        {{IMG_QUALIFIED}}
+        <div class="fcap">Fig. 7 &mdash; Qualified genes supporting the denoised programme.</div>
       </div>
     </div>
+    <p style="margin-top:2.5mm;font-size:calc(13pt * var(--fit));color:var(--ink-2);">
+      Donor-held-out performance separates SCLC, Normal and LUAD sufficiently for the
+      downstream perturbation screen. The antigen-presentation programme that led both
+      the denoised screen and the spatial validation holds up alongside it:
+      <strong>no listed MHC gene is donor-inconsistent</strong> in any transition, and
+      unassessable entries reflect transitions with too few source donors rather than
+      contradictory evidence.
+    </p>
   </div>
 
   <div class="panel sky">

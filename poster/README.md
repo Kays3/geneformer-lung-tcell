@@ -281,6 +281,19 @@ EXTRA_PANELS = [
 A figure or table path that does not exist yet renders as a dashed "Pending"
 box, so the poster still builds while an analysis is in flight.
 
+There is also an `"html"` key, rendered verbatim just after `"text"`. Use it
+when a panel needs a curated table — chosen columns, formatted numbers, units
+in the header — rather than the whole-CSV dump `"table"` produces. The
+checkpoint/CAR-T panel uses it; build the row markup in Cell 1 from the
+dataframe so the numbers still come from the result files.
+
+Every column a figure panel can sit in needs its own `WIDTH_MM` entry. If the
+key is missing, `render_panel` passes `width_mm=None`, the image gets no inline
+height, and WeasyPrint silently re-splits the poster across several
+mostly-blank pages instead of erroring. Cell 3 defines `left_full` and
+`right_full`, and the cell after it adds `middle_full`; add a matching entry
+before putting a figure in any new column.
+
 ## Exporting a PDF
 
 **Preferred: Cell 6 in the notebook.** Renders the HTML with WeasyPrint,
