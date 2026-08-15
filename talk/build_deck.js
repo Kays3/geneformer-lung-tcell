@@ -46,6 +46,7 @@ const INK = "16202C";
 const INK2 = "4A5768";
 const MUTED = "7A8798";
 const RULE = "D5DEE7";
+const BG   = "EEF1F5";   // poster --bg; slide grounds are light, never navy
 const WASH = "F2F5F9";
 const HEMA_WASH = "F0EDF9";
 const EOSIN_WASH = "FDF0F3";
@@ -147,28 +148,23 @@ function cap(slide, text, x, y, w) {
 /* ======================= SLIDE 1 — title ============================== */
 {
   const s = pres.addSlide();
-  s.background = { color: NAVY };
-
-  s.addText("24JSDP  ·  ABSTRACT P25", {
-    x: ML, y: 0.55, w: CW, h: 0.3, fontFace: BODY, fontSize: 12, bold: true,
-    charSpacing: 2, color: "8FB3C9", margin: 0,
-  });
+  s.background = { color: BG };
 
   s.addText(
     "A foundation model points to antigen presentation in SCLC T-cell dysfunction — and independent tissue agrees",
-    { x: ML, y: 1.0, w: CW - 0.2, h: 1.8, fontFace: HEAD, fontSize: 30, bold: true, color: WHITE, margin: 0, valign: "top" }
+    { x: ML, y: 1.0, w: CW - 0.2, h: 1.8, fontFace: HEAD, fontSize: 30, bold: true, color: NAVY, margin: 0, valign: "top" }
   );
 
   s.addText(
     [
-      { text: "Kaisar Dauyey", options: { bold: true, color: WHITE } },
-      { text: "  ·  ", options: { color: "6E8AA6" } },
-      { text: "Shinji Nakaoka", options: { bold: true, color: WHITE } },
+      { text: "Kaisar Dauyey", options: { bold: true, color: NAVY } },
+      { text: "  ·  ", options: { color: "93A3B5" } },
+      { text: "Shinji Nakaoka", options: { bold: true, color: NAVY } },
     ],
     { x: ML, y: 2.92, w: CW, h: 0.3, fontFace: BODY, fontSize: 15, margin: 0 }
   );
   s.addText("Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University", {
-    x: ML, y: 3.22, w: CW, h: 0.3, fontFace: BODY, fontSize: 12, color: "9DB4C8", margin: 0,
+    x: ML, y: 3.22, w: CW, h: 0.3, fontFace: BODY, fontSize: 12, color: "4A5768", margin: 0,
   });
 
   // three-node take-home flow
@@ -183,28 +179,28 @@ function cap(slide, text, x, y, w) {
     const x = ML + i * (nw + gap);
     s.addShape(pres.ShapeType.roundRect, {
       x, y: ny, w: nw, h: nh, rectRadius: 0.08,
-      fill: { color: "1B3454" }, line: { color: col, width: 1.5 },
+      fill: { color: WHITE }, line: { color: col, width: 1.5 },
     });
     s.addText(txt, {
       x: x + 0.12, y: ny, w: nw - 0.24, h: nh, fontFace: BODY, fontSize: 12.5,
-      color: WHITE, align: "center", valign: "middle", margin: 0,
+      color: NAVY, align: "center", valign: "middle", margin: 0,
     });
     if (i < 2) {
       s.addText("→", {
         x: x + nw, y: ny, w: gap, h: nh, fontFace: BODY, fontSize: 20,
-        color: "6E8AA6", align: "center", valign: "middle", margin: 0,
+        color: "93A3B5", align: "center", valign: "middle", margin: 0,
       });
     }
   });
 
   s.addText("Hypothesis generator, tissue-validated — not a knockout screen", {
     x: ML, y: 5.62, w: CW - 1.45, h: 0.34, fontFace: BODY, fontSize: 13.5, bold: true, italic: true,
-    color: "F0C9D3", margin: 0,
+    color: "B8465E", margin: 0,
   });
 
   s.addImage({ path: A("qr.png"), x: W - MR - 1.18, y: 5.62, w: 1.18, h: 1.18 });
   s.addText("github.com/Kays3/geneformer-lung-tcell", {
-    x: ML, y: 6.42, w: 7.5, h: 0.3, fontFace: BODY, fontSize: 11, color: "8FB3C9", margin: 0,
+    x: ML, y: 6.42, w: 7.5, h: 0.3, fontFace: BODY, fontSize: 11, color: "4A5768", margin: 0,
   });
 
   s.addNotes(
@@ -480,11 +476,11 @@ function cap(slide, text, x, y, w) {
   s.addTable(
     [
       [
-        { text: "Disease", options: { bold: true, color: WHITE, fill: { color: NAVY } } },
-        { text: "Train", options: { bold: true, color: WHITE, fill: { color: NAVY }, align: "right" } },
-        { text: "Eval", options: { bold: true, color: WHITE, fill: { color: NAVY }, align: "right" } },
-        { text: "Test", options: { bold: true, color: WHITE, fill: { color: NAVY }, align: "right" } },
-        { text: "Donors", options: { bold: true, color: WHITE, fill: { color: NAVY }, align: "right" } },
+        { text: "Disease", options: { bold: true, color: NAVY, fill: { color: "E4ECF4" } } },
+        { text: "Train", options: { bold: true, color: NAVY, fill: { color: "E4ECF4" }, align: "right" } },
+        { text: "Eval", options: { bold: true, color: NAVY, fill: { color: "E4ECF4" }, align: "right" } },
+        { text: "Test", options: { bold: true, color: NAVY, fill: { color: "E4ECF4" }, align: "right" } },
+        { text: "Donors", options: { bold: true, color: NAVY, fill: { color: "E4ECF4" }, align: "right" } },
       ],
       [
         { text: "SCLC", options: { bold: true } },
@@ -630,10 +626,10 @@ function cap(slide, text, x, y, w) {
   s.addTable(
     [
       [
-        { text: "Gene", options: { bold: true, color: WHITE, fill: { color: NAVY } } },
-        { text: "Delete → Normal", options: { bold: true, color: WHITE, fill: { color: NAVY }, align: "right" } },
-        { text: "Overexpress", options: { bold: true, color: WHITE, fill: { color: NAVY }, align: "right" } },
-        { text: "Detected", options: { bold: true, color: WHITE, fill: { color: NAVY }, align: "right" } },
+        { text: "Gene", options: { bold: true, color: NAVY, fill: { color: "E4ECF4" } } },
+        { text: "Delete → Normal", options: { bold: true, color: NAVY, fill: { color: "E4ECF4" }, align: "right" } },
+        { text: "Overexpress", options: { bold: true, color: NAVY, fill: { color: "E4ECF4" }, align: "right" } },
+        { text: "Detected", options: { bold: true, color: NAVY, fill: { color: "E4ECF4" }, align: "right" } },
       ],
       [
         { text: "HAVCR2 (TIM-3)", options: { bold: true } },
@@ -862,11 +858,11 @@ function cap(slide, text, x, y, w) {
 
   s.addShape(pres.ShapeType.roundRect, {
     x: ML, y: 1.68, w: iw, h: 0.32, rectRadius: 0.03,
-    fill: { color: NAVY }, line: { color: NAVY, width: 0 },
+    fill: { color: "E4ECF4" }, line: { color: RULE, width: 1 },
   });
   s.addText("GSE263196  ·  10x Visium  ·  5 specimens  ·  15,632 spots", {
     x: ML + 0.12, y: 1.68, w: iw - 0.24, h: 0.32, fontFace: BODY, fontSize: 8.5,
-    color: "CFE0EC", valign: "middle", margin: 0,
+    color: NAVY, valign: "middle", margin: 0,
   });
   s.addImage({ ...fitBox(A("spatial.png"), iw, ih), x: ML, y: 2.0 });
   cap(s, "A: T-cell identity.  B: dysfunction.  C: per-specimen and pooled ρ.", ML, 4.97, iw);
@@ -1041,10 +1037,10 @@ function cap(slide, text, x, y, w) {
 /* =============== SLIDE 12 — summary & next steps ====================== */
 {
   const s = pres.addSlide();
-  s.background = { color: NAVY };
+  s.background = { color: BG };
 
   s.addText("A tissue-validated hypothesis, and the CRISPR experiment that would test it", {
-    x: ML, y: 0.42, w: CW - 0.2, h: 1.15, fontFace: HEAD, fontSize: 28, bold: true, color: WHITE, margin: 0, valign: "top",
+    x: ML, y: 0.42, w: CW - 0.2, h: 1.15, fontFace: HEAD, fontSize: 28, bold: true, color: NAVY, margin: 0, valign: "top",
   });
 
   // closed loop
@@ -1059,7 +1055,7 @@ function cap(slide, text, x, y, w) {
     const x = ML + i * (nw + gap);
     s.addShape(pres.ShapeType.roundRect, {
       x, y: ny, w: nw, h: nh, rectRadius: 0.08,
-      fill: { color: "1B3454" }, line: { color: col, width: 1.5 },
+      fill: { color: WHITE }, line: { color: col, width: 1.5 },
     });
     s.addText("✓", {
       x: x + 0.16, y: ny, w: 0.4, h: nh, fontFace: BODY, fontSize: 15, bold: true,
@@ -1067,15 +1063,15 @@ function cap(slide, text, x, y, w) {
     });
     s.addText(
       [
-        { text: h, options: { bold: true, color: WHITE, fontSize: 13, breakLine: true } },
-        { text: d, options: { color: "9DB4C8", fontSize: 11 } },
+        { text: h, options: { bold: true, color: NAVY, fontSize: 13, breakLine: true } },
+        { text: d, options: { color: "4A5768", fontSize: 11 } },
       ],
       { x: x + 0.6, y: ny, w: nw - 0.75, h: nh, fontFace: BODY, valign: "middle", margin: 0 }
     );
     if (i < 2) {
       s.addText("→", {
         x: x + nw, y: ny, w: gap, h: nh, fontFace: BODY, fontSize: 17,
-        color: "6E8AA6", align: "center", valign: "middle", margin: 0,
+        color: "93A3B5", align: "center", valign: "middle", margin: 0,
       });
     }
   });
@@ -1088,7 +1084,7 @@ function cap(slide, text, x, y, w) {
       const x = ML + i * (cw2 + 0.45);
       s.addShape(pres.ShapeType.roundRect, {
         x, y: 2.85, w: cw2, h: 2.0, rectRadius: 0.08,
-        fill: { color: "18304E" }, line: { color: "2B4A6E", width: 1 },
+        fill: { color: WHITE }, line: { color: RULE, width: 1 },
       });
       s.addText(h.toUpperCase(), {
         x: x + 0.28, y: 3.0, w: cw2 - 0.56, h: 0.3, fontFace: BODY, fontSize: 11.5, bold: true,
@@ -1096,27 +1092,27 @@ function cap(slide, text, x, y, w) {
       });
       s.addText(
         items.map((t, j) => ({ text: t, options: { bullet: { indent: 14 }, breakLine: j !== items.length - 1 } })),
-        { x: x + 0.28, y: 3.38, w: cw2 - 0.56, h: 1.35, fontFace: BODY, fontSize: 12.5, color: "DCE7F0", lineSpacing: 19, paraSpaceAfter: 6, margin: 0, valign: "top" }
+        { x: x + 0.28, y: 3.38, w: cw2 - 0.56, h: 1.35, fontFace: BODY, fontSize: 12.5, color: "16202C", lineSpacing: 19, paraSpaceAfter: 6, margin: 0, valign: "top" }
       );
     });
 
   // open question hook
   s.addShape(pres.ShapeType.roundRect, {
     x: ML, y: 5.1, w: CW - 1.85, h: 0.8, rectRadius: 0.08,
-    fill: { color: "3A2230" }, line: { color: EOSIN, width: 1.25 },
+    fill: { color: EOSIN_WASH }, line: { color: EOSIN, width: 1.25 },
   });
   s.addText("Still open: why does the model order Normal < SCLC < LUAD on the exhaustion axis?", {
     x: ML + 0.28, y: 5.1, w: CW - 2.4, h: 0.8, fontFace: BODY, fontSize: 14, bold: true,
-    color: "F0C9D3", valign: "middle", margin: 0,
+    color: "B8465E", valign: "middle", margin: 0,
   });
 
   s.addImage({ path: A("qr.png"), x: W - MR - 1.5, y: 5.1, w: 1.5, h: 1.5 });
 
   s.addText("github.com/Kays3/geneformer-lung-tcell  ·  snakaoka@sci.hokudai.ac.jp", {
-    x: ML, y: 6.1, w: CW - 1.85, h: 0.35, fontFace: BODY, fontSize: 11.5, color: "8FB3C9", margin: 0, valign: "middle",
+    x: ML, y: 6.1, w: CW - 1.85, h: 0.35, fontFace: BODY, fontSize: 11.5, color: "4A5768", margin: 0, valign: "middle",
   });
-  s.addText("Kaisar Dauyey & Shinji Nakaoka  ·  Hokkaido University  ·  24JSDP P25", {
-    x: ML, y: 6.5, w: CW - 1.85, h: 0.35, fontFace: BODY, fontSize: 10.5, color: "6E8AA6", margin: 0, valign: "middle",
+  s.addText("Kaisar Dauyey & Shinji Nakaoka  ·  Hokkaido University", {
+    x: ML, y: 6.5, w: CW - 1.85, h: 0.35, fontFace: BODY, fontSize: 10.5, color: "93A3B5", margin: 0, valign: "middle",
   });
 
   s.addNotes(
