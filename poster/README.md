@@ -212,6 +212,31 @@ to change, change its generator and re-run it — do not edit the PNG.
 
 Fig. 4 is the one exception left: it is an upstream Visium panel, not built here.
 
+### Keeping the talk deck in step
+
+`talk/` is built from the same figures. Its assets used to be hand-made crops
+with no generator, so the deck silently kept showing superseded figures after
+the poster was rebuilt. Two commands, in order:
+
+```
+python talk/make_assets.py     # rebuild talk/assets/ from the poster's figures
+node talk/build_deck.js        # rebuild the .pptx from those assets
+```
+
+`make_assets.py` copies whole figures where the deck uses the whole figure, and
+re-renders single panels from the poster generator's own panel functions where
+it uses one panel — rather than pixel-cropping the composite, which breaks
+silently whenever the source layout shifts.
+
+`build_deck.js` reads each PNG's real dimensions (`pngSize`) and derives the
+aspect from the file, so a resized asset changes size on a slide but is never
+stretched. Use `fitBox` where the slide reserves a fixed height; `fitW` alone
+lets a figure that got taller run over whatever sits below it.
+
+The `.pptx` is git-ignored. `tools/make_snapshots.py` rebuilds it when missing
+so a fresh clone can produce the deck, but it does not detect staleness — after
+changing figures, run the two commands above.
+
 ### Sizing a figure for the sheet
 
 The single most common mistake. Matplotlib text is in **points and does not
