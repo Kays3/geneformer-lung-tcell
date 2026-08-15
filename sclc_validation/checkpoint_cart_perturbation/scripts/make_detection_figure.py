@@ -122,12 +122,12 @@ def _panel_scatter(ax, panel: pd.DataFrame, replicated: list[str]) -> None:
     ax.set_xlabel(f"Detection: cells expressing the gene "
                   f"(of {int(panel.source_cells.iloc[0]):,} SCLC source cells)", fontsize=13)
     ax.set_ylabel("|Deletion shift|", fontsize=13)
-    ax.set_title("Largest effects come from the least-detected genes\n"
+    ax.set_title("Largest effects come from\nthe least-detected genes\n"
                  f"(Spearman ρ = {rho:.2f}, p = {pval:.0e}, n = {len(testable)})",
-                 fontsize=13.5, loc="left")
+                 fontsize=10.5, loc="left")
     ax.tick_params(labelsize=11)
     ax.grid(alpha=0.15)
-    ax.text(-0.075, 1.10, "a", transform=ax.transAxes, fontsize=17,
+    ax.text(-0.085, 1.19, "a", transform=ax.transAxes, fontsize=15,
             fontweight="bold", va="top")
 
 
@@ -179,19 +179,22 @@ def _panel_rank(ax, panel: pd.DataFrame, replicated: list[str]) -> None:
                   fontsize=13)
     top = ", ".join(f"{g} {rank[g]}{'st' if rank[g]==1 else 'nd' if rank[g]==2 else 'rd' if rank[g]==3 else 'th'}"
                     for g in replicated[:2])
-    ax.set_title(f"All {len(immune)} immune / lineage genes (detection in brackets)\n"
-                 f"Rank among the {len(detected)} detected in ≥{LOW_DETECTION} cells: {top}",
-                 fontsize=12.5, loc="left")
+    # Keep each line under ~48 characters: the axes is about 4.3 in wide here
+    # and matplotlib does not wrap or clip a title, it just runs off the canvas.
+    ax.set_title(f"All {len(immune)} immune / lineage genes\n"
+                 f"(count in brackets)\n"
+                 f"{len(detected)} detected ≥{LOW_DETECTION} cells — {top}",
+                 fontsize=10.5, loc="left")
     ax.tick_params(axis="x", labelsize=11)
     ax.grid(axis="x", alpha=0.15)
-    ax.text(-0.30, 1.10, "b", transform=ax.transAxes, fontsize=17,
+    ax.text(-0.34, 1.19, "b", transform=ax.transAxes, fontsize=15,
             fontweight="bold", va="top")
 
 
 def main() -> Path:
     panel, replicated = _load()
     fig, axes = plt.subplots(1, 2, figsize=FIGSIZE,
-                             gridspec_kw={"width_ratios": [1.0, 1.0], "wspace": 0.30})
+                             gridspec_kw={"width_ratios": [1.0, 1.0], "wspace": 0.34})
     _panel_scatter(axes[0], panel, replicated)
     _panel_rank(axes[1], panel, replicated)
 
@@ -213,7 +216,7 @@ def main() -> Path:
     fig.legend(handles=handles, loc="lower center", ncol=2, frameon=False,
                fontsize=9.5, bbox_to_anchor=(0.5, -0.005))
 
-    fig.subplots_adjust(left=0.105, right=0.985, top=0.86, bottom=0.22)
+    fig.subplots_adjust(left=0.105, right=0.985, top=0.80, bottom=0.22)
     out = FIGURES / "cart_overexpression.png"
     fig.savefig(out, dpi=200)
     plt.close(fig)

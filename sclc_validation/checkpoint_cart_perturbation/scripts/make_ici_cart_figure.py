@@ -70,6 +70,20 @@ DRUG_NAME = {"CTLA4": "CTLA-4", "PDCD1": "PD-1", "LAG3": "LAG-3",
 FIGSIZE = (16, 5.6)
 
 
+def _panel_letter(ax, letter: str, dx: float) -> None:
+    """Put the panel letter above the title block, not beside it.
+
+    Placing it at a fixed axes fraction puts it at the same height as the
+    title, and these titles are left-aligned and three lines deep - the "c"
+    landed on top of "bold = panel b candidate". Offsetting in POINTS from the
+    axes' top-left corner clears the title whatever the axes' pixel height,
+    which an axes fraction does not. dx moves it left past the tick labels.
+    """
+    ax.annotate(letter, xy=(0, 1), xycoords="axes fraction",
+                xytext=(dx, 46), textcoords="offset points",
+                fontsize=16, fontweight="bold", va="bottom", ha="left")
+
+
 def _replicated(cart: pd.DataFrame) -> list[str]:
     goal = cart[cart.comparison == GOAL]
     hits = goal[goal.concordant & goal.tier.eq("all donors agree")
@@ -108,8 +122,7 @@ def _panel_ici(ax, ici: pd.DataFrame) -> pd.DataFrame:
     ax.tick_params(axis="x", labelsize=10)
     ax.xaxis.set_major_locator(plt.MaxNLocator(5))
     ax.grid(axis="x", alpha=0.15)
-    ax.text(-0.28, 1.14, "a", transform=ax.transAxes, fontsize=16,
-            fontweight="bold", va="top")
+    _panel_letter(ax, "a", -46)
     return ici
 
 
@@ -143,8 +156,7 @@ def _panel_rank(ax, cart: pd.DataFrame, replicated: list[str]) -> None:
                  fontsize=11, loc="left")
     ax.tick_params(axis="x", labelsize=10)
     ax.grid(axis="x", alpha=0.15)
-    ax.text(-0.24, 1.14, "b", transform=ax.transAxes, fontsize=16,
-            fontweight="bold", va="top")
+    _panel_letter(ax, "b", -44)
 
 
 def _panel_network(ax, nodes: pd.DataFrame, edges: pd.DataFrame,
@@ -204,8 +216,7 @@ def _panel_network(ax, nodes: pd.DataFrame, edges: pd.DataFrame,
     ax.set_title(f"All {len(candidates)} candidates on the STRING map;\n"
                  "bold = panel b candidate,\ncolour = its SCLC→Normal shift",
                  fontsize=11, loc="left")
-    ax.text(0.0, 1.14, "c", transform=ax.transAxes, fontsize=16,
-            fontweight="bold", va="top")
+    _panel_letter(ax, "c", -8)
 
     bar = ax.inset_axes([0.30, 0.02, 0.46, 0.035])
     colorbar = plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap),
@@ -248,7 +259,7 @@ def main() -> Path:
                fontsize=10.5, bbox_to_anchor=(0.035, -0.01),
                title="Donor replication", title_fontsize=10.5)
 
-    fig.subplots_adjust(left=0.075, right=0.995, top=0.78, bottom=0.30)
+    fig.subplots_adjust(left=0.075, right=0.995, top=0.74, bottom=0.30)
     out = FIGURES / "ici_cart_perturbation_network.png"
     fig.savefig(out, dpi=200)
     plt.close(fig)
