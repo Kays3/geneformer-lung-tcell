@@ -88,21 +88,22 @@ Thumbs.db
 .idea/
 .vscode/
 
-# Built talk deck. The .pptx is written by `node talk/build_deck.js` and is
-# 3.7 MB a revision, so it is regenerable bulk and stays out of history.
+# Built poster and talk artifacts. Sources are tracked, outputs are not:
+# everything below is reproducible from committed code, so it lives on disk
+# rather than in history.
 #
-# The .pdf is NOT ignored, deliberately. It is 928 KB, it is the form anyone
-# actually reads, and no committed script produces it - it is the .pptx
-# exported by hand. The usual alternative, ignore it and track a PNG preview,
-# saves nothing here: the preview comes out about the same size as the PDF
-# while being less useful. Snapshots exist to stand in for multi-megabyte
-# artifacts, and this one is not that.
+#   node talk/build_deck.js        -> JSDP_P25_talk.pptx   (then export the PDF)
+#   python talk/make_assets.py     -> talk/assets/*.png
+#   poster/generate_poster.ipynb   -> poster/poster_*.html and .pdf
+#
+# talk/assets/*.png were previously kept tracked on the grounds that they are
+# inputs to build_deck.js rather than outputs, and losing them would leave a
+# clone unable to build the deck at all. make_assets.py removed that argument:
+# it rebuilds every asset from the poster's own figures, so they are now
+# derived files like the rest.
 talk/JSDP_P25_talk.pptx
-
-# Deliberate exception, do not "clean up": talk/assets/*.png are INPUTS that
-# build_deck.js reads with addImage(), not outputs it writes. Ignoring them
-# would leave a fresh clone unable to build the deck at all - the same reason
-# spatial_tissue_validation_panel.png stays tracked for the poster.
+talk/JSDP_P25_talk.pdf
+talk/assets/*.png
 
 # Node dependencies for the talk-deck generator (talk/build_deck.js).
 node_modules/
@@ -110,6 +111,11 @@ node_modules/
 # Superseded poster drafts. Only the final poster's PNG preview is tracked;
 # every draft is regenerable from the notebook by setting DRAFT_LABEL.
 snapshots/poster__poster_draft_*.png
+
+# Snapshots: only the preview README.md puts on the repository's front page is
+# tracked. The full-board export's preview is not shown anywhere, and previews
+# of a git-ignored PDF are not worth carrying.
+snapshots/output__pdf__*.png
 poster/poster_draft_*
 poster/posterdown_draft*
 
