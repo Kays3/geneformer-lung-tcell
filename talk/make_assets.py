@@ -73,7 +73,10 @@ def _panel(name: str, figsize, draw) -> Path:
     """Render one panel standalone, using the poster figure's own code."""
     fig, ax = plt.subplots(figsize=figsize)
     draw(ax)
-    fig.subplots_adjust(left=0.16, right=0.98, top=0.84, bottom=0.20)
+    # Room above the axes for the three-line title AND the panel letter, which
+    # the poster figure offsets 46 pt above the axes top. At top=0.84 the letter
+    # was cropped off the canvas.
+    fig.subplots_adjust(left=0.16, right=0.98, top=0.72, bottom=0.20)
     out = ASSETS / name
     fig.savefig(out, dpi=200)
     plt.close(fig)
