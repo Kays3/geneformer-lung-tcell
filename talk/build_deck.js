@@ -2,8 +2,39 @@
 // Palette and motif mirror poster_final.pdf so the deck and the board read as one project.
 const pptxgen = require("pptxgenjs");
 const path = require("path");
+const fs = require("fs");
 
 const A = (f) => path.join(__dirname, "assets", f);
+
+// Read a PNG's real pixel size from its IHDR chunk (bytes 16-24 of the file).
+// Slide images used to carry a hard-coded height multiplier per call, which is
+// silently wrong the moment an asset is regenerated at a different aspect - and
+// talk/make_assets.py now regenerates all of them from the poster's figures.
+// Deriving the aspect from the file means a resized asset changes size on the
+// slide but is never stretched.
+function pngSize(file) {
+  const head = Buffer.alloc(24);
+  const fd = fs.openSync(file, "r");
+  fs.readSync(fd, head, 0, 24, 0);
+  fs.closeSync(fd);
+  if (head.toString("ascii", 12, 16) !== "IHDR") {
+    throw new Error(`not a PNG (no IHDR): ${file}`);
+  }
+  return { w: head.readUInt32BE(16), h: head.readUInt32BE(20) };
+}
+
+// Fit an asset to a given width, height following from its own aspect ratio.
+function fitW(file, w) {
+  const { w: pw, h: ph } = pngSize(file);
+  return { path: file, w, h: (w * ph) / pw };
+}
+
+// Fit an asset inside a box, whichever dimension binds first.
+function fitBox(file, maxW, maxH) {
+  const { w: pw, h: ph } = pngSize(file);
+  const scale = Math.min(maxW / pw, maxH / ph);
+  return { path: file, w: pw * scale, h: ph * scale };
+}
 
 // ---- palette (from poster_template.html :root) --------------------------
 const NAVY = "10243C";
@@ -548,7 +579,7 @@ function cap(slide, text, x, y, w) {
   stat(s, ML + 2 * (sw + 0.3), 1.62, sw, "9,377", "Held-out cells", NAVY);
   stat(s, ML + 3 * (sw + 0.3), 1.62, sw, "8", "Test donors", NAVY);
 
-  s.addImage({ path: A("confusion.png"), x: ML, y: 2.85, w: 5.9, h: 3.74 });
+  s.addImage({ ...fitBox(A("confusion.png"), 5.9, 3.74), x: ML, y: 2.85 });
   cap(s, "Held-out test confusion matrix, row-normalised.", ML, 6.66, 5.9);
 
   const rx = ML + 6.55;
@@ -661,8 +692,8 @@ function cap(slide, text, x, y, w) {
 
   const rx = ML + tw + 0.4;
   const rw = CW - tw - 0.4;
-  const bw = 3.72, bh = bw * 0.8834;
-  s.addImage({ path: A("screen_b.png"), x: rx + (rw - bw) / 2, y: 2.85, w: bw, h: bh });
+  const shot = fitBox(A("screen_b.png"), 3.72, 3.29);
+  s.addImage({ ...shot, x: rx + (rw - shot.w) / 2, y: 2.85 });
   cap(s, "SCLC → normal: four knockouts replicate across all 3 donors.", rx, 6.20, rw);
 
   s.addNotes(
@@ -680,7 +711,9 @@ function cap(slide, text, x, y, w) {
   footer(s, 7, "Detection confound & the open axis");
 
   const lw = 7.0;
-  s.addImage({ path: A("detection.png"), x: ML, y: 1.75, w: lw, h: lw * 0.5036 });
+  // fitBox, not fitW: the slide reserves ~3.5 in of height here, and the
+  // detection figure got taller when it was re-plotted for the poster.
+  s.addImage({ ...fitBox(A("detection.png"), lw, 3.5), x: ML, y: 1.75 });
   cap(s, "Detection vs absolute deletion effect across the full 50-gene panel.", ML, 5.34, lw);
 
   bullets(s, [
@@ -835,7 +868,7 @@ function cap(slide, text, x, y, w) {
     x: ML + 0.12, y: 1.68, w: iw - 0.24, h: 0.32, fontFace: BODY, fontSize: 8.5,
     color: "CFE0EC", valign: "middle", margin: 0,
   });
-  s.addImage({ path: A("spatial.png"), x: ML, y: 2.0, w: iw, h: ih });
+  s.addImage({ ...fitBox(A("spatial.png"), iw, ih), x: ML, y: 2.0 });
   cap(s, "A: T-cell identity.  B: dysfunction.  C: per-specimen and pooled ρ.", ML, 4.97, iw);
 
   card(s, ML, 5.45, iw, 1.32, WASH);
@@ -910,7 +943,7 @@ function cap(slide, text, x, y, w) {
   footer(s, 10, "STRING literature overlay");
 
   const iw = 6.5;
-  s.addImage({ path: A("network_c.png"), x: ML, y: 1.7, w: iw, h: iw * 0.6726 });
+  s.addImage({ ...fitW(A("network_c.png"), iw), x: ML, y: 1.7 });
   cap(s, "All 11 ICI/CAR-T candidates on the STRING map; colour = SCLC→Normal deletion shift.", ML, 6.12, iw);
 
   const rx = ML + iw + 0.45;
