@@ -1,0 +1,7 @@
+program,from_normal_same_sign,from_luad_same_sign,from_sclc_opposite_sign,consistent_1d
+cytotoxicity,0.6666666666666666,0.0,0.6666666666666666,0.0
+exhaustion,0.0,0.8571428571428571,0.7142857142857143,0.0
+none,0.3103448275862069,0.2413793103448276,0.7241379310344828,0.0
+progenitor,0.25,0.25,0.75,0.0
+sclc_subtype_tf,0.5,0.75,1.0,0.25
+all_50_genes,0.32,0.34,0.74,0.02

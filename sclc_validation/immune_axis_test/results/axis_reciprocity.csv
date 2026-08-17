@@ -1,0 +1,4 @@
+pair,frac_opposite_sign,pearson_r,n_genes
+sclc_to_luad / luad_to_sclc,0.78,-0.46938480181761083,50
+sclc_to_normal / normal_to_sclc,0.18,0.7055714026767194,50
+luad_to_normal / normal_to_luad,0.84,-0.7927947298992816,50
