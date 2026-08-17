@@ -1,0 +1,328 @@
+# Plan — replacing the Perturb-seq analogy with an overexpression test of the disease axis
+
+**Status:** plan. Test 1 is run and its numbers are below; tests 2–4 are specified
+but not executed. Nothing here has changed the poster or the talk.
+
+## 1. The claim under test
+
+Poster conclusion 5, and the "OPEN QUESTION" half of talk slide 7:
+
+> The model implies Normal < SCLC < LUAD on the checkpoint axis. This conflicts
+> with the clinical tumour-level picture of SCLC as cold and ICI-resistant, so it
+> remains an open question rather than a reconciled conclusion.
+
+The evidence offered for the ordering is one gene from one source state: TIGIT
+overexpression moves SCLC cells toward LUAD (+0.0256) and away from Normal
+(−0.0082). Two shifts from a single starting point are read as a position on a
+line. That inference is only valid if the three states actually lie on a line,
+which has never been tested.
+
+## 2. Why the current hero figure cannot test it
+
+Fig. 5 ("One deletion at a time, every gene, every cell — a Perturb-seq screen
+run in silico") is an explainer: it conveys the analogy, the scale of the sweep,
+a STRING overlay, and the filtering funnel. It is illustrative, not inferential,
+and it is built on the deletion arm, which is the wrong instrument for this
+question on three counts.
+
+- **Deletion is detection-limited.** It can only remove a gene from cells that
+  already express it. Of the 50 panel genes, only 47 are testable in LUAD, 42 in
+  SCLC and 40 in Normal, and per-gene N spans 1 to 6,281 with medians of 631,
+  165 and 35 respectively. The three source states are therefore measured on
+  different gene sets with power differing by orders of magnitude, and detection
+  anti-correlates with apparent effect at ρ = −0.60.
+- **Deletion cannot ask the immune-cold question at all.** "Immune cold" is a
+  claim that the exhaustion program is *absent* from SCLC. You cannot delete what
+  is not there. The counterfactual that matters — *if these SCLC T cells carried
+  the exhaustion program, where would they sit?* — is a gain-of-function
+  question by construction.
+- **One source state cannot establish an ordering.** Positions on a line need at
+  least the three pairwise contrasts to agree with each other.
+
+## 3. Why overexpression is the right instrument
+
+The overexpression arm is **census-complete**: `InSilicoPerturber` applies no
+token filter, so every held-out cell of the source is perturbed for every gene.
+N is a constant per state — 6,387 LUAD, 2,424 SCLC, 566 Normal — identical
+across all 50 genes and all 6 directed comparisons. The detection confound that
+dominates the deletion arm is eliminated by construction, and the design is a
+complete balanced factorial: **50 genes × 3 source states × 2 goals**, already
+computed and committed under
+[`targeted_panel/results/overexpress/`](../perturbation_workflow/targeted_panel/results/overexpress).
+
+That balance is what makes an axis test possible: the same edit can be applied
+from all three starting states and the answers compared directly.
+
+## 4. Test 1 — axis self-consistency (run; laptop only)
+
+`axis_consistency.py` reads the committed stats tables and applies three
+predictions that any genuine one-dimensional ordering must satisfy. Outputs land
+in [`results/`](results).
+
+```bash
+python3 sclc_validation/immune_axis_test/axis_consistency.py
+```
+
+### T1a — collinearity
+
+If the states lie on a line in the order Normal < SCLC < LUAD, then a gene that
+raises the coordinate must move cells **from Normal toward both** other states
+(same sign, Normal is one end), **from LUAD away from both** (same sign, LUAD is
+the other end), and **from SCLC toward one and away from the other** (opposite
+sign, SCLC is the middle). All three must hold for the same gene.
+
+Fraction of genes satisfying each prediction:
+
+| Program | from Normal, same sign | from LUAD, same sign | from SCLC, opposite sign | all three |
+|---|---:|---:|---:|---:|
+| Exhaustion (7 genes) | **0.000** | 0.857 | 0.714 | 0.00 |
+| Cytotoxicity (6) | 0.667 | 0.000 | 0.667 | 0.00 |
+| Progenitor/memory (4) | 0.250 | 0.250 | 0.750 | 0.00 |
+| SCLC subtype TF (4) | 0.500 | 0.750 | 1.000 | 0.25 |
+| All 50 | 0.320 | 0.340 | 0.740 | 0.02 |
+
+**1 gene of 50 satisfies all three.** For the exhaustion program specifically —
+the program the claim is actually about — the "from Normal" prediction fails for
+**all seven genes**: raising PDCD1, CTLA4, HAVCR2, LAG3, TIGIT, TOX or LAYN in a
+Normal T cell moves it toward LUAD and *away from* SCLC, every time. That is the
+opposite of what SCLC-in-the-middle requires.
+
+### T1b — reciprocity
+
+A displacement along a fixed direction must raise similarity to one state
+exactly as it lowers similarity to the other, so shift(A→B) and shift(B→A) must
+carry opposite signs.
+
+| Reciprocal pair | fraction opposite sign | Pearson r |
+|---|---:|---:|
+| SCLC→LUAD / LUAD→SCLC | 0.78 | −0.47 |
+| LUAD→Normal / Normal→LUAD | 0.84 | −0.79 |
+| **SCLC→Normal / Normal→SCLC** | **0.18** | **+0.71** |
+
+The two LUAD-involving contrasts behave like a real axis. The SCLC–Normal
+contrast does not: for 82% of genes the edit moves SCLC away from Normal *and*
+Normal away from SCLC. That is geometrically impossible for a displacement lying
+in the SCLC–Normal plane, and it is the signature of a displacement that is
+largely **orthogonal** to that contrast. Neither number is evidence about where
+SCLC and Normal sit relative to one another.
+
+### T1c — is the second goal an independent measurement?
+
+Regressing the second-goal shift on the first, across the 50 genes:
+
+| Source | model | slope | R² |
+|---|---|---:|---:|
+| SCLC | →Normal from →LUAD | −0.20 | **0.71** |
+| Normal | →SCLC from →LUAD | −0.40 | **0.62** |
+| LUAD | →SCLC from →Normal | −0.56 | 0.33 |
+
+From SCLC and from Normal, most of the "away from the third state" signal is a
+fixed-slope shadow of the movement toward LUAD — a geometric consequence of
+rotating away from it, not an independent readout. The −0.0082 that anchors the
+poster's claim is, to first order, just −0.2 × the +0.0256.
+
+### T1d — dimensionality
+
+One component carries **74%** of the variance in the 6-comparison response, and
+it loads almost entirely on `sclc_to_luad` (0.90). Its extreme genes are HBB,
+HSPA1B, EEF1G, HBA2, S100A8/S100A9 — precisely the ambient-RNA / heat-shock /
+rank-abundant class the repo already flags as
+[contamination candidates](../perturbation_workflow/targeted_panel/RESULTS.md).
+PC2 (19%) is the antisymmetric LUAD↔Normal contrast that behaves properly.
+
+The single comparison the axis claim rests on is the one whose variance is
+dominated by the flagged gene class, and the ambient correction is still on the
+"not done yet" list.
+
+## 5. Working resolution (to be confirmed by tests 2–4)
+
+The three states form a **triangle, not a line**. There is one dominant
+exhaustion direction in the model's embedding and it points at **LUAD**; SCLC
+and Normal both sit at the low end of it and are separated from each other along
+a different, roughly orthogonal direction. Reading two shifts from a single
+source as a position on a line collapsed that triangle onto one axis and
+produced an ordering that no other source state agrees with.
+
+If this holds, the model's position is **SCLC ≲ Normal < LUAD on the exhaustion
+coordinate** — the T cells present in SCLC are *not* checkpoint-high. That
+**agrees** with the immune-cold phenotype rather than contradicting it, and it
+points at a specific mechanism: exhaustion requires chronic antigen stimulation,
+SCLC's low MHC-I means it is not delivered, so SCLC T cells are closer to
+ignorant than to exhausted. Different mechanism of ICI resistance, same clinical
+outcome.
+
+Note what this does **not** touch: the four replicated hits (TIM-3, TIGIT,
+CTLA-4, IL7R) are SCLC→Normal internal comparisons and stand or fall on their
+own concordance, donor agreement and detection evidence. The axis reading is a
+separate claim layered on top of them.
+
+## 6. Tests 2–4 — what is still needed
+
+Ordered by cost. Each is worth running independently of the others.
+
+### T2 — measured baseline expression (no GPU, ~2 h, needs the atlas)
+
+The control the whole argument depends on and which has never been run: **what
+is the actual per-cell checkpoint expression in SCLC vs LUAD vs Normal T cells
+in this atlas?** Compute per-donor mean expression and detection rate for each
+of the four programs, on the held-out test cells, stratified by donor and by
+CD4/CD8.
+
+This decides whether the model is describing the data or distorting it. If SCLC
+T cells genuinely carry less exhaustion transcript than LUAD T cells, the model
+is right about its input and the tension is between two different measurements —
+a tumour-level immune phenotype and a per-T-cell transcript level — not between
+the model and the clinic.
+
+Runs on the compute host against `heldout_test.dataset`; needs no perturbation
+output.
+
+### T3 — embedding geometry (no GPU, ~4 h, needs one small file)
+
+Load the three state centroids from
+`state_embeddings/training_donor_disease_centroids.pkl`, compute the triangle
+they span (pairwise cosine distances and interior angles), and project each
+gene's overexpression displacement into that plane. Two shifts per gene give two
+projections, which is exactly enough to place the displacement in the plane once
+the centroid geometry is known.
+
+This turns T1's sign tests into measured vectors and produces the figure's
+central panel. It also makes T1c analytic rather than empirical: with the
+centroids known, the expected complement slope can be computed and compared to
+the fitted −0.20 / −0.40 / −0.56.
+
+**Recommendation:** the centroids are three vectors — a few KB. Commit them as a
+tracked `.npz` so this analysis and the figure can be rebuilt on the laptop,
+consistent with the poster's rule that every number is read from a result table
+at build time.
+
+### T4 — program-level overexpression (GPU, ~6–12 h)
+
+Single-gene edits are small (|shift| ~0.01–0.03) and each gene carries its own
+idiosyncrasies. The axis claim is about a *program*, so perturb the program.
+
+`InSilicoPerturber` already takes a list for `genes_to_perturb` with `combos=0`,
+which perturbs the set together — `run_targeted_panel.py` passes a
+single-element list today, so this is a parameter change, not new machinery.
+
+- **Program overexpression.** All 7 exhaustion genes as one set, from all 3
+  sources. Plus cytotoxicity, progenitor and the SCLC-subtype-TF set as
+  contrasts. 4 programs × 3 sources = 12 runs.
+- **Dose–response by nested set size.** Geneformer's overexpression promotes a
+  token to the front of the rank list; there is **no dose parameter**, so a
+  graded dose is not available. The supported substitute is a size titration:
+  overexpress the 1, 2, 3, … 7 highest-ranked exhaustion genes as nested sets and
+  test whether the shift toward LUAD increases monotonically with set size. A
+  real axis gives monotone dose–response; an artifact need not.
+- **Matched null.** For each program, expression-matched random gene sets of the
+  same size, so "the shift is big" can be read against a null of the same rank
+  profile. The spatial validation already uses an expression-matched null; reuse
+  that construction.
+- **Subtype stratification.** Composition is a live confounder — if SCLC and
+  LUAD source cells differ in CD8/CD4/Treg proportions, an apparent state axis
+  may be a subtype axis. Report every program result split by CD4/CD8, which the
+  poster's future-directions list already calls for.
+- **Ambient sensitivity.** Re-run T1a–T1d with the flagged ambient/stress/
+  ribosomal genes excluded, and report both. Given PC1's loadings this is not
+  optional.
+
+## 7. The figure — Fig. 5-alt, "One gain-of-function, three starting states"
+
+Replaces the Perturb-seq analogy band in the hero slot. Same full width. The
+method explainer it currently carries is already covered by Fig. 1, so little is
+lost; the funnel can move to the panel-B margin.
+
+The figure makes one argument in four steps: *the design lets us start anywhere
+→ the same edit points the same way from everywhere → so the states are a
+triangle, not a line → and once you read the triangle, the model and the clinic
+agree.*
+
+**Panel A — why overexpression.** Two paired bars per source state: genes
+testable by deletion (47/50 LUAD, 42/50 SCLC, 40/50 Normal, annotated with the
+median N — 631, 165, 35) versus by overexpression (50/50, N constant at 6,387 /
+2,424 / 566). One line: *deletion asks what a cell loses; only overexpression can
+ask what a cold state would become.* Establishes the instrument in one glance.
+
+**Panel B — the triangle (the load-bearing panel).** The three centroids in the
+plane they span, sized by test-cell count. From each centroid, the measured
+overexpression displacement vector for the exhaustion program (T3), plus faint
+per-gene vectors behind it. The visual claim: **all three arrows point the same
+way — at LUAD — regardless of where they start.** A dashed line shows the
+Normal—SCLC—LUAD ordering the poster currently asserts, visibly not the geometry
+the arrows describe. If T4 runs, the nested-set titration appears as graded arrow
+lengths from the SCLC vertex.
+
+**Panel C — the consistency test.** The 50 × 3 sign matrix from T1a, genes as
+rows, the three predictions as columns, exhaustion program bold at the top. One
+column of the exhaustion block is entirely negative. Right of it, the SCLC↔Normal
+reciprocity scatter with the two "impossible" same-sign quadrants shaded and 82%
+of genes sitting in them. Caption carries the single number that matters: *1 of
+50 genes is consistent with a one-dimensional ordering.*
+
+**Panel D — the reconciliation.** Three registers side by side on a common
+exhaustion scale: **measured** per-donor transcript level per state (T2),
+**model** position on the exhaustion direction (T3), and **clinical** tumour-level
+phenotype as a separate labelled register — explicitly a different quantity, not
+a third data point. Ends the panel with the resolution in one line: *the model
+places SCLC T cells at the low end of the exhaustion axis, which is what "cold"
+predicts; the earlier contradiction came from projecting a triangle onto a line.*
+
+If poster space forces a cut, **B and D** carry the argument; A and C become
+supplementary.
+
+### Colour and build
+
+Reuse the poster's system: teal for in-silico content, hematoxylin violet for
+anything measured, eosin rose reserved for the clinical register in panel D so
+it cannot be misread as a model output. Generator at
+`sclc_validation/immune_axis_test/make_axis_figure.py`, following
+`make_hero_figure.py`; every number read from `results/`, no literals in the
+figure code.
+
+## 8. What would overturn this
+
+State it before running, so the tests are answerable either way.
+
+- **T2 shows SCLC T cells at equal or higher exhaustion expression than LUAD T
+  cells.** Then the model's LUAD-ward direction is not tracking exhaustion level,
+  the resolution in §5 fails, and the contradiction stands — in a sharper form.
+- **T3 shows the three centroids are near-collinear** (interior angle at SCLC
+  approaching 180°). Then the 1-D reading was geometrically fair and T1's sign
+  failures need another explanation.
+- **T4's nested-set titration is non-monotone**, or the program shift falls
+  inside the expression-matched null. Then neither the poster's axis nor §5's
+  replacement is supported, and the honest position is that the shift metric does
+  not measure program level at all.
+- **T1a–T1d reverse when ambient/stress genes are excluded.** PC1's loadings make
+  this a live possibility; it would mean the axis signal was contamination.
+
+## 9. Caveats that constrain every result here
+
+- **Normal rests on one test donor** (566 cells, 1 donor). Every Normal-source
+  number is a single-patient measurement, including the collinearity failures in
+  T1a. Report per-donor throughout and never state a Normal result without the
+  donor count attached.
+- **The ambient correction has not been run.** PC1 is loaded on HBB/HSPA1B/
+  ribosomal genes; until T4's sensitivity arm is done, treat every magnitude here
+  as provisional.
+- **Shift is movement toward a centroid, not a program score.** Two states differ
+  in many ways at once, so "toward LUAD" is not by itself "more exhausted". T2 and
+  T3 exist precisely to license that translation; without them, panel D's middle
+  register is not earned.
+- **T1 is exploratory.** It was run after seeing the poster's claim, on the same
+  data the claim came from. It is strong enough to justify tests 2–4 and to stop
+  the current wording from being asserted, not strong enough to be the new
+  headline on its own.
+
+## 10. If the resolution holds
+
+Poster conclusion 5 changes from an unresolved contradiction to a resolved one,
+and the talk gains a better slide 7 — the confound control stays, the "OPEN
+QUESTION" half becomes a geometric correction with a figure behind it. Slide 12's
+Q&A hook (*"why does the model order Normal < SCLC < LUAD?"*) is retired and
+replaced with the substantive open question underneath it: **if SCLC T cells are
+not exhausted, what are they, and why does ICI still fail?** That is a better
+question, and T2's subtype-stratified baseline is the first step toward it.
+
+Do not change any poster or talk wording before T2 and T3 are run. Until then the
+correct state is "the axis claim is under test", not a replacement claim.

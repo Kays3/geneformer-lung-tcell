@@ -1,0 +1,4 @@
+source_state,predictor,response,slope,intercept,r_squared
+sclc,sclc_to_luad,sclc_to_normal,-0.20172074822396738,-0.001948234305133463,0.7130227088651448
+normal,normal_to_luad,normal_to_sclc,-0.3973859493973821,0.0010597722197978462,0.617913277352535
+luad,luad_to_normal,luad_to_sclc,-0.5628528388852351,-0.001589494492375547,0.3286631136386182
