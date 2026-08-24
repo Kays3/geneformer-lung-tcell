@@ -237,12 +237,40 @@ pre-registered gene list: **is "exhaustion," as this atlas actually measures it,
 the right 7 genes at all**, and would an unbiased, genome-wide differential
 expression test surface a different, better-supported dysfunction signature?
 
-**Design.** Pairwise DE (SCLC vs LUAD, SCLC vs Normal, LUAD vs Normal) across all
-~24,540 genes on the same held-out test cells T2 used, `scanpy.tl.rank_genes_groups`
-(Wilcoxon), log1p-CP10k, BH-adjusted p-values. Same atlas load as T2, so the
-marginal cost is one more subsetting pass, not a new pipeline — and given T2's
-measured runtime (PLAN.md §9), "no GPU, needs the atlas" almost certainly means
-seconds to low minutes, not hours.
+T5 has two variants with different cell populations, on purpose, not by
+oversight — see the rationale below before the design details.
+
+**Why two variants.** T2 (and an earlier draft of T5) restricted to held-out
+test cells, mirroring the ISP pipeline's own decision boundary in
+`build_primary_report.py` (only test-cell perturbations against training-only
+reference centroids count as primary evidence). That boundary exists because
+ISP shift is measured in the *fine-tuned model's embedding*, which saw the
+training cells' labels — a real leakage concern for anything model-derived.
+T5 never touches the model or its embedding; it reads raw counts directly from
+the H5AD, so that leakage concern does not apply here. Checking donor
+composition directly (read-only query against the prepared H5AD) found the
+splits are **donor-disjoint but not resampled from the same donors** — each
+split holds different individual patients:
+
+| Disease | train | eval | test | total unique donors |
+|---|---:|---:|---:|---:|
+| Normal | 2 (RU682, RU685) | 1 (RU684) | 1 (RU675) | **4** |
+| SCLC | 13 | 3 | 3 | up to 19 |
+| LUAD | 14 | 4 | 4 | up to 22 |
+
+Restricting to test-only means Normal's DE rests on **one donor** when three
+more sit unused in train/eval — the exact "single-patient measurement" problem
+§9 already flags as this module's biggest weakness, made worse rather than
+better by carrying the ISP work's test-only rule into an analysis that doesn't
+need it.
+
+#### T5a — complete-atlas differential expression (primary variant, goals 1–2)
+
+**Design.** Pairwise DE (SCLC vs LUAD, SCLC vs Normal, LUAD vs Normal) across
+all ~24,540 genes on **all 46,140 T cells (train + eval + test combined)**,
+`scanpy.tl.rank_genes_groups` (Wilcoxon), log1p-CP10k, BH-adjusted p-values.
+Given T2's measured runtime (§9), "no GPU, needs the atlas" almost certainly
+means seconds to low minutes even at this size, not hours.
 
 **What it would decide.**
 1. **Where do the 7 pre-registered exhaustion genes rank** among all genome-wide
@@ -254,14 +282,6 @@ seconds to low minutes, not hours.
    compared against the curated exhaustion program's score. Agreement would be
    reassuring; disagreement would say the curated program is the wrong lens for
    what this atlas calls SCLC T-cell dysfunction.
-3. **Overlap with the whole-genome ISP hit lists** (`primary_test_perturbation`'s
-   delete-vs-overexpress concordant hits and goal-vs-alt significant movers): what
-   fraction of ISP hits are *also* genome-wide DE-significant, using a real
-   statistical test rather than the detection-fraction proxy the HK-gene review
-   report used. This is a stronger version of that proxy check, and a partial,
-   narrow answer to that report's Comment 2 (an independent, non-ISP signal to
-   compare hits against) — narrow because DE agreement shows the input differs
-   between states, not that the model's ISP shift is causally tracking it.
 
 **What would overturn or weaken the current framing:** if the 7 exhaustion genes
 rank in the bottom half of genome-wide DE significance for SCLC vs LUAD, or if
@@ -269,25 +289,52 @@ the data-driven top-K dysfunction score and the curated exhaustion score disagre
 in direction, that is evidence the pre-registered program — not just T1's
 reading of it — needs revisiting.
 
+#### T5b — held-out-test differential expression (ISP cross-check only, goal 3)
+
+**Design.** Same pairwise DE, same statistics, restricted to the same held-out
+test cells T2 used (6,387 LUAD / 2,424 SCLC / 566 Normal, 1 Normal donor).
+Kept deliberately narrow and separate from T5a: **only** for cross-referencing
+against the whole-genome ISP hit lists (`primary_test_perturbation`'s
+delete-vs-overexpress concordant hits and goal-vs-alt significant movers),
+because those hit lists were themselves computed from test-only cells.
+Comparing DE-on-the-complete-atlas against ISP-hits-from-test-only would mix
+two different cell populations into one comparison — a real, avoidable
+confound for this specific check, which is why T5a is not simply used for
+goal 3 as well.
+
+**What it would decide.** What fraction of ISP hits are *also* DE-significant
+in the same cell population the hits were computed from, using a real
+statistical test rather than the detection-fraction proxy the HK-gene review
+report used. This is a stronger version of that proxy check, and a partial,
+narrow answer to that report's Comment 2 (an independent, non-ISP signal to
+compare hits against) — narrow because DE agreement shows the input differs
+between states, not that the model's ISP shift is causally tracking it.
+
 **Caveats to carry in before running, given T2's experience:**
-- **Normal's single donor is a bigger problem here than in T2.** T2 compared 21
-  genes; a genome-wide test multiplies-testing-corrects across ~20,000, and any
-  Normal-specific technical or biological idiosyncrasy in that one donor can
-  populate a large share of "significant" hits for every comparison involving
-  Normal. Cell-level Wilcoxon (the standard scanpy default) cannot distinguish
-  that from a real donor-independent effect for Normal, structurally, no matter
-  how small the p-value.
-- **SCLC (3 donors) and LUAD (4 donors) support pseudobulk aggregation**, which
-  scanpy's Wilcoxon does not do by default; a donor-level pseudobulk test (sum
-  counts per donor, then a low-replicate test, or at minimum report per-donor
-  direction of effect the way `donor_consistency_allgene.py` already does for
-  ISP hits) is worth the extra step for those two comparisons even though it
-  cannot fix the Normal side.
-- **This still is not a closed loop.** A gene both DE-significant and an ISP hit
-  has two independent signals pointing the same way, which is more than either
-  alone — but neither signal is a measured perturbation response. Real
-  perturbation data remains the only thing that closes that gap (HK-gene review
-  report, Comment 2).
+- **Normal's single donor is a T5b problem, not a T5a problem.** T5b inherits
+  it in full — any Normal-specific technical or biological idiosyncrasy in that
+  one donor can populate a large share of "significant" hits for every
+  comparison involving Normal, and cell-level Wilcoxon (the standard scanpy
+  default) cannot distinguish that from a real donor-independent effect,
+  structurally, no matter how small the p-value. T5a's four Normal donors don't
+  eliminate this concern but substantially reduce it.
+- **T5a's larger donor pools are a real donor-disjoint composition, not a
+  resample of the same patients** — something nothing else in this module has
+  stress-tested. CD4/CD8 proportions or other cohort characteristics could
+  differ by split for reasons unrelated to disease state, since train/eval/test
+  are different literal patients. Report T5a results per-donor, not just
+  pooled, so a single outlier donor in the larger pool is still visible.
+- **SCLC and LUAD support pseudobulk aggregation** in either variant (up to 19
+  and 22 donors respectively in T5a, 3 and 4 in T5b), which scanpy's Wilcoxon
+  does not do by default; a donor-level pseudobulk test (sum counts per donor,
+  then a low-replicate test, or at minimum report per-donor direction of effect
+  the way `donor_consistency_allgene.py` already does for ISP hits) is worth
+  the extra step, though it cannot fix T5b's single-donor Normal side.
+- **This still is not a closed loop, in either variant.** A gene both
+  DE-significant and an ISP hit has two independent signals pointing the same
+  way, which is more than either alone — but neither signal is a measured
+  perturbation response. Real perturbation data remains the only thing that
+  closes that gap (HK-gene review report, Comment 2).
 
 ## 7. The figure — Fig. 5-alt, "One gain-of-function, three starting states"
 
