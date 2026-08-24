@@ -28,14 +28,37 @@ the seven-gene exhaustion program the "SCLC in the middle" prediction fails from
 the Normal source for every gene. See PLAN.md §4 for the full result and §5 for
 the working interpretation.
 
+```bash
+# on the compute host, needs the prepared H5AD:
+python3 sclc_validation/immune_axis_test/measure_baseline_expression.py
+# back on the laptop, needs the two CSVs measure_baseline_expression.py wrote:
+python3 sclc_validation/immune_axis_test/analyze_baseline_expression.py
+```
+
+Headline: SCLC sits measurably **below** LUAD on the exhaustion program (both
+detection rate and expression), so T2 does **not** trigger the pre-registered
+falsification criterion — but it also does not confirm the specific "SCLC ≲
+Normal" claim: measured exhaustion is Normal < SCLC < LUAD, the poster's
+original ordering, reached by direct measurement rather than the invalid
+two-shift argument. See [RESULTS_T2.md](RESULTS_T2.md) for the full picture.
+
 ## Status
 
-Test 1 run. Tests 2 (measured baseline expression), 3 (embedding geometry) and 4
-(program-level overexpression, GPU) are specified but not executed. **No poster
-or talk wording has been changed** — see PLAN.md §10.
+Tests 1 and 2 run. Test 2 (measured baseline expression) does **not** trigger
+PLAN.md's pre-registered falsification criterion (SCLC sits measurably below LUAD
+on the exhaustion program, both by detection rate and expression) — see
+[RESULTS_T2.md](RESULTS_T2.md) for the full picture, including per-gene
+heterogeneity and the single-donor Normal caveat. Tests 3 (embedding geometry)
+and 4 (program-level overexpression, GPU) are specified but not executed.
+**No poster or talk wording has been changed** — see PLAN.md §10, which requires
+both T2 and T3 before that.
 
 ```text
-PLAN.md               the plan; read this first
-axis_consistency.py   test 1, runs on the laptop
-results/              its six output tables
+PLAN.md                        the plan; read this first
+RESULTS_T2.md                  T2 results
+axis_consistency.py            test 1, runs on the laptop
+measure_baseline_expression.py test 2, runs on the compute host (needs the atlas)
+analyze_baseline_expression.py test 2 analysis and figures, runs on the laptop
+results/                       output tables for both tests
+figures/                       test 2 figures
 ```

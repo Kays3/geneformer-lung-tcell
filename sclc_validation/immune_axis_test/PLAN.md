@@ -1,7 +1,8 @@
 # Plan — replacing the Perturb-seq analogy with an overexpression test of the disease axis
 
-**Status:** plan. Test 1 is run and its numbers are below; tests 2–4 are specified
-but not executed. Nothing here has changed the poster or the talk.
+**Status:** plan. Tests 1 and 2 are run (numbers below and in
+[RESULTS_T2.md](RESULTS_T2.md)); tests 3–4 are specified but not executed. Nothing here
+has changed the poster or the talk.
 
 ## 1. The claim under test
 
@@ -160,7 +161,7 @@ separate claim layered on top of them.
 
 Ordered by cost. Each is worth running independently of the others.
 
-### T2 — measured baseline expression (no GPU, ~2 h, needs the atlas)
+### T2 — measured baseline expression (no GPU, ~2 h, needs the atlas) — **run, see [RESULTS_T2.md](RESULTS_T2.md)**
 
 The control the whole argument depends on and which has never been run: **what
 is the actual per-cell checkpoint expression in SCLC vs LUAD vs Normal T cells

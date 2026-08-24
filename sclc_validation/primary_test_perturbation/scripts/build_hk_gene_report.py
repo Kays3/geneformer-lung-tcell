@@ -66,6 +66,18 @@ for this purpose. It does not resolve either concern in the abstract; it
 quantifies how large each effect actually is in <em>this</em> project's hit
 lists, gene by gene, and states plainly what remains a hypothesis.</p>
 
+<p style="background:#eef2f5;border:1px solid #ccd;border-radius:4px;padding:.7rem 1rem">
+<strong>Update:</strong> T2 (measured differential expression, named below as
+the concrete next step) has since been run against the atlas directly for
+these 155 HK-flagged concordant genes. It confirms the detection-fraction
+proxy used throughout this report exactly (Pearson r&nbsp;=&nbsp;1.000,
+n&nbsp;=&nbsp;397 gene-state pairs) and adds real expression magnitude for the
+same genes, which agrees with the interpretive split drawn below (<code>B2M</code>,
+<code>EIF1</code>, <code>RPL27A</code> still show no state difference;
+<code>HSPA1A/B</code>, <code>DNAJA1/B1</code> still show large, LUAD-specific
+increases). See
+<a href="../../immune_axis_test/RESULTS_T2.md">immune_axis_test/RESULTS_T2.md</a>.</p>
+
 <h1>Comment 1 &mdash; housekeeping/ubiquitous genes among top ISP hits</h1>
 <p>The concern: a substantial fraction of top ISP hits are housekeeping (HK)
 genes, which could reflect genuine biology (essential-gene perturbation
@@ -265,13 +277,13 @@ paper's own result, it was not sufficient even at a much higher accuracy
 <tr><td>Are HK/ubiquitous genes over-represented among this project's ISP hits?</td>
 <td><strong>Yes, demonstrated.</strong> 2.7&ndash;9.6&times; enrichment over background, every comparison, both arms, both hit-selection criteria (p &lt; 1e-6 throughout).</td></tr>
 <tr><td>Is that enrichment uniform across those genes?</td>
-<td><strong>No.</strong> ~24% of HK-flagged concordant hits show no detectable expression-prevalence difference between states (favors artifact); a distinct subset (heat-shock, OXPHOS) shows large differences (favors real biology). Gene-by-gene, not a blanket verdict.</td></tr>
+<td><strong>No, and T2 confirms it directly (not just via the proxy).</strong> ~24% of HK-flagged concordant hits show no detectable expression difference between states (favors artifact); a distinct subset (heat-shock, OXPHOS) shows large differences (favors real biology). Gene-by-gene, not a blanket verdict.</td></tr>
 <tr><td>Is this pipeline open-loop in the reviewed paper's sense?</td>
 <td><strong>Yes, stated plainly.</strong> No experimental perturbation data informs training or evaluation anywhere in this project.</td></tr>
 <tr><td>Does anything in this project substitute for closed-loop validation?</td>
 <td><strong>No single existing check does.</strong> Several partial, narrower checks exist (concordance, specificity, donor consistency, ambient-risk, spatial signature validation); none tests perturbation causality directly.</td></tr>
 <tr><td>What is the concrete next step?</td>
-<td>Run T2 (measured differential expression) against the HK-flagged hit lists here, generalizing the already-scoped immune-axis analysis; pursue real perturbation data if it becomes available before treating any individual HK-flagged gene as a validated target.</td></tr>
+<td><strong>T2 is done</strong> (see update above and <a href="../../immune_axis_test/RESULTS_T2.md">RESULTS_T2.md</a>). Remaining: pursue real perturbation data if it becomes available, before treating any individual HK-flagged gene as a validated target.</td></tr>
 </table>
 
 <h1>Provenance</h1>
