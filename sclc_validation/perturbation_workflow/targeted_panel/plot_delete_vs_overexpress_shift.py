@@ -43,6 +43,7 @@ INK2 = "#4a5768"
 
 DPI = 400
 N_LABELED = 10
+STATE_LABEL = {"normal": "Normal T cells", "sclc": "SCLC T cells", "luad": "LUAD T cells"}
 
 plt.rcParams.update({
     "font.family": "sans-serif",
@@ -89,7 +90,7 @@ def plot_one(comparison: str, df: pd.DataFrame, n_min: float, n_max: float, out:
         adjust_text(texts, ax=ax, arrowprops=dict(arrowstyle="-", color=INK2, lw=0.5))
 
     source, goal = comparison.split("_to_")
-    ax.set_title(f"{source} → {goal}", fontsize=11, color=INK, loc="left", pad=10, fontweight="bold")
+    ax.set_title(f"{STATE_LABEL[source]} → {STATE_LABEL[goal]}", fontsize=11, color=INK, loc="left", pad=10, fontweight="bold")
     ax.set_xlabel("delete shift toward goal", fontsize=9.5, color=INK2)
     ax.set_ylabel("overexpress shift toward goal", fontsize=9.5, color=INK2)
     ax.tick_params(labelsize=8.5, colors=INK2, direction="out")
@@ -115,7 +116,7 @@ def plot_one(comparison: str, df: pd.DataFrame, n_min: float, n_max: float, out:
               frameon=False, fontsize=8.5, ncol=1, title="min(N detections)", title_fontsize=8.5,
               handletextpad=0.8, labelspacing=1.1)
     ax.add_artist(leg1)
-    fig.suptitle("Targeted 50-gene panel", fontsize=9.5, color=INK2, y=1.0, x=0.02, ha="left")
+    fig.suptitle("T cells — targeted 50-gene panel", fontsize=9.5, color=INK2, y=1.0, x=0.02, ha="left")
     fig.tight_layout()
     fig.savefig(out, dpi=DPI, bbox_inches="tight")
     print(f"Wrote {out.relative_to(HERE.parent.parent.parent)}")

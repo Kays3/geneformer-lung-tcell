@@ -125,8 +125,14 @@ def main() -> None:
     allgene_goal_alt = allgene_goal_alt_summary(pd.read_csv(ALLGENE_GOAL_ALT_CSV))
 
     body = f"""
-<h1>Perturbation shift report: goal-vs-alt specificity and delete-vs-overexpress concordance</h1>
+<h1>T-cell perturbation shift report: goal-vs-alt specificity and delete-vs-overexpress concordance</h1>
 <p><strong>Generated:</strong> {datetime.now(timezone.utc).isoformat()}</p>
+
+<p><strong>Scope: T cells only.</strong> "Normal", "SCLC", and "LUAD" below name the
+tumor context a T cell was sampled from &mdash; T cells recovered from normal lung,
+from SCLC tumors, or from LUAD tumors &mdash; not tumor or epithelial cells
+themselves. Every shift, classifier, and gene hit in this report describes the
+T-cell compartment.</p>
 
 <p>Two datasets, same underlying perturbations, at two scales:</p>
 <ul>
@@ -205,7 +211,7 @@ reading the same <code>stats/</code> tables, writing
 """
     document = (
         "<html><head><meta charset='utf-8'>"
-        "<title>Delete vs overexpress shift</title>"
+        "<title>T-cell delete vs overexpress shift</title>"
         "<style>body{font-family:system-ui;max-width:1200px;margin:2rem auto;"
         "line-height:1.5;padding:0 1rem} table{border-collapse:collapse;margin:1rem 0}"
         " th,td{border:1px solid #ccd;padding:.35rem .6rem;text-align:right}"

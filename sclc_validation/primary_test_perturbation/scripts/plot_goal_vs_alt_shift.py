@@ -45,6 +45,8 @@ INK2 = "#4a5768"
 
 DPI = 400
 N_LABELED = 12
+STATE_LABEL = {"normal": "Normal T cells", "sclc": "SCLC T cells", "luad": "LUAD T cells"}
+ALT_LABEL = {"normal": "Normal T cells", "lung adenocarcinoma": "LUAD T cells", "small cell lung carcinoma": "SCLC T cells"}
 
 plt.rcParams.update({
     "font.family": "sans-serif",
@@ -114,7 +116,8 @@ def plot_one(arm: str, comparison: str, df: pd.DataFrame, n_min: float, n_max: f
         adjust_text(texts, ax=ax, arrowprops=dict(arrowstyle="-", color=INK2, lw=0.5))
 
     source, goal = comparison.split("_to_")
-    ax.set_title(f"{source} → {goal}  (alt: {alt_name})", fontsize=11, color=INK, loc="left", pad=10, fontweight="bold")
+    ax.set_title(f"{STATE_LABEL[source]} → {STATE_LABEL[goal]}  (alt: {ALT_LABEL.get(alt_name.lower(), alt_name)})",
+                 fontsize=11, color=INK, loc="left", pad=10, fontweight="bold")
     ax.text(1.0, 1.02, f"n={len(df)}, {outside} outside frame", transform=ax.transAxes,
             fontsize=7.5, color=INK2, ha="right", va="bottom")
     ax.set_xlabel("shift toward goal state", fontsize=9.5, color=INK2)
@@ -142,7 +145,7 @@ def plot_one(arm: str, comparison: str, df: pd.DataFrame, n_min: float, n_max: f
               frameon=False, fontsize=8.5, ncol=1, title="N detections", title_fontsize=8.5,
               handletextpad=0.8, labelspacing=1.1)
     ax.add_artist(leg1)
-    fig.suptitle(f"Whole-genome screen — {arm} (axes clipped to 1st-99th pct)",
+    fig.suptitle(f"T cells — whole-genome screen — {arm} (axes clipped to 1st-99th pct)",
                  fontsize=9.5, color=INK2, y=1.0, x=0.02, ha="left")
     fig.tight_layout()
     fig.savefig(out, dpi=DPI, bbox_inches="tight")
