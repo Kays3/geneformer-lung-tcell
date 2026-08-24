@@ -1,7 +1,7 @@
 # Plan — replacing the Perturb-seq analogy with an overexpression test of the disease axis
 
 **Status:** plan. Tests 1 and 2 are run (numbers below and in
-[RESULTS_T2.md](RESULTS_T2.md)); tests 3–4 are specified but not executed. Nothing here
+[RESULTS_T2.md](RESULTS_T2.md)); tests 3–5 are specified but not executed. Nothing here
 has changed the poster or the talk.
 
 ## 1. The claim under test
@@ -157,7 +157,7 @@ CTLA-4, IL7R) are SCLC→Normal internal comparisons and stand or fall on their
 own concordance, donor agreement and detection evidence. The axis reading is a
 separate claim layered on top of them.
 
-## 6. Tests 2–4 — what is still needed
+## 6. Tests 2–5 — what is still needed
 
 Ordered by cost. Each is worth running independently of the others.
 
@@ -226,6 +226,68 @@ single-element list today, so this is a parameter change, not new machinery.
 - **Ambient sensitivity.** Re-run T1a–T1d with the flagged ambient/stress/
   ribosomal genes excluded, and report both. Given PC1's loadings this is not
   optional.
+
+### T5 — genome-wide differential expression for a data-driven dysfunction score (no GPU, needs the atlas) — **specified, not run**
+
+T2 answered "is the curated 21-gene panel differentially expressed" and found a
+mixed picture: the exhaustion-program *average* sits Normal < SCLC < LUAD, but
+only 3 of the 7 genes individually increase monotonically to LUAD (RESULTS_T2.md).
+That leaves open a question T2 cannot answer because it never looked outside the
+pre-registered gene list: **is "exhaustion," as this atlas actually measures it,
+the right 7 genes at all**, and would an unbiased, genome-wide differential
+expression test surface a different, better-supported dysfunction signature?
+
+**Design.** Pairwise DE (SCLC vs LUAD, SCLC vs Normal, LUAD vs Normal) across all
+~24,540 genes on the same held-out test cells T2 used, `scanpy.tl.rank_genes_groups`
+(Wilcoxon), log1p-CP10k, BH-adjusted p-values. Same atlas load as T2, so the
+marginal cost is one more subsetting pass, not a new pipeline — and given T2's
+measured runtime (PLAN.md §9), "no GPU, needs the atlas" almost certainly means
+seconds to low minutes, not hours.
+
+**What it would decide.**
+1. **Where do the 7 pre-registered exhaustion genes rank** among all genome-wide
+   DE genes for SCLC vs LUAD? If they sit outside, say, the top 5% of DE
+   significance, the exhaustion-program *selection* — not just the axis argument
+   T1 already questioned — is itself weakly supported by this atlas.
+2. **A data-driven dysfunction score**, built from the top-K genome-wide SCLC-vs-LUAD
+   DE genes (whichever genes the data actually nominates, not a curated list),
+   compared against the curated exhaustion program's score. Agreement would be
+   reassuring; disagreement would say the curated program is the wrong lens for
+   what this atlas calls SCLC T-cell dysfunction.
+3. **Overlap with the whole-genome ISP hit lists** (`primary_test_perturbation`'s
+   delete-vs-overexpress concordant hits and goal-vs-alt significant movers): what
+   fraction of ISP hits are *also* genome-wide DE-significant, using a real
+   statistical test rather than the detection-fraction proxy the HK-gene review
+   report used. This is a stronger version of that proxy check, and a partial,
+   narrow answer to that report's Comment 2 (an independent, non-ISP signal to
+   compare hits against) — narrow because DE agreement shows the input differs
+   between states, not that the model's ISP shift is causally tracking it.
+
+**What would overturn or weaken the current framing:** if the 7 exhaustion genes
+rank in the bottom half of genome-wide DE significance for SCLC vs LUAD, or if
+the data-driven top-K dysfunction score and the curated exhaustion score disagree
+in direction, that is evidence the pre-registered program — not just T1's
+reading of it — needs revisiting.
+
+**Caveats to carry in before running, given T2's experience:**
+- **Normal's single donor is a bigger problem here than in T2.** T2 compared 21
+  genes; a genome-wide test multiplies-testing-corrects across ~20,000, and any
+  Normal-specific technical or biological idiosyncrasy in that one donor can
+  populate a large share of "significant" hits for every comparison involving
+  Normal. Cell-level Wilcoxon (the standard scanpy default) cannot distinguish
+  that from a real donor-independent effect for Normal, structurally, no matter
+  how small the p-value.
+- **SCLC (3 donors) and LUAD (4 donors) support pseudobulk aggregation**, which
+  scanpy's Wilcoxon does not do by default; a donor-level pseudobulk test (sum
+  counts per donor, then a low-replicate test, or at minimum report per-donor
+  direction of effect the way `donor_consistency_allgene.py` already does for
+  ISP hits) is worth the extra step for those two comparisons even though it
+  cannot fix the Normal side.
+- **This still is not a closed loop.** A gene both DE-significant and an ISP hit
+  has two independent signals pointing the same way, which is more than either
+  alone — but neither signal is a measured perturbation response. Real
+  perturbation data remains the only thing that closes that gap (HK-gene review
+  report, Comment 2).
 
 ## 7. The figure — Fig. 5-alt, "One gain-of-function, three starting states"
 
@@ -314,6 +376,18 @@ State it before running, so the tests are answerable either way.
   data the claim came from. It is strong enough to justify tests 2–4 and to stop
   the current wording from being asserted, not strong enough to be the new
   headline on its own.
+- **The "~2h" estimate above for T2 was a pre-registered guess, not a profiled
+  number, and it was off by roughly four orders of magnitude.** Measured runtime
+  was ~1.3s. The estimate did not account for how far `H5AD[test_mask, gene_ids]`
+  in backed mode shrinks the working set before anything is computed: the actual
+  job touches 176 of 24,540 genes and 9,377 of 46,140 cells (a ~130x reduction),
+  and the per-donor/CD4-CD8 stratified means and detection rates on that subset
+  are a few thousand vectorized arithmetic operations, not a search or a model
+  pass. The GPU stages elsewhere in this repo (the all-gene ISP screen, ~5 days
+  on 2 nodes) are a different kind of cost entirely — one Geneformer forward pass
+  per perturbed cell-gene pair, millions of them — and that distinction is why T2
+  was scoped "no GPU" in the first place. Treat every remaining time estimate in
+  this plan (T3, T4) with the same skepticism until profiled.
 
 ## 10. If the resolution holds
 

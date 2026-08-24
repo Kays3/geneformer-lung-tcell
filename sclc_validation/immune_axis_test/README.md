@@ -48,8 +48,9 @@ Tests 1 and 2 run. Test 2 (measured baseline expression) does **not** trigger
 PLAN.md's pre-registered falsification criterion (SCLC sits measurably below LUAD
 on the exhaustion program, both by detection rate and expression) — see
 [RESULTS_T2.md](RESULTS_T2.md) for the full picture, including per-gene
-heterogeneity and the single-donor Normal caveat. Tests 3 (embedding geometry)
-and 4 (program-level overexpression, GPU) are specified but not executed.
+heterogeneity and the single-donor Normal caveat. Tests 3 (embedding geometry),
+4 (program-level overexpression, GPU), and 5 (genome-wide differential
+expression, PLAN.md §6) are specified but not executed.
 **No poster or talk wording has been changed** — see PLAN.md §10, which requires
 both T2 and T3 before that.
 
