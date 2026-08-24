@@ -23,12 +23,12 @@ HERE = Path(__file__).resolve().parents[1]
 ROOT = HERE.parent.parent
 TARGETED_DIR = ROOT / "sclc_validation/perturbation_workflow/targeted_panel"
 TARGETED_CSV = TARGETED_DIR / "results/targeted_panel_delete_overexpress_merged.csv"
-TARGETED_FIGURE = TARGETED_DIR / "figures/delete_vs_overexpress_shift.png"
 TARGETED_GOAL_ALT_FIGURES = TARGETED_DIR / "figures/goal_vs_alt_shift"
+TARGETED_DVO_FIGURES = TARGETED_DIR / "figures/delete_vs_overexpress_shift"
 ALLGENE_CSV = HERE / "tables/allgene_delete_overexpress_shift.csv"
-ALLGENE_FIGURE = HERE / "figures/allgene_delete_vs_overexpress_shift.png"
 ALLGENE_GOAL_ALT_CSV = HERE / "tables/allgene_goal_vs_alt_shift.csv"
 ALLGENE_GOAL_ALT_FIGURES = HERE / "figures/goal_vs_alt_shift"
+ALLGENE_DVO_FIGURES = HERE / "figures/delete_vs_overexpress_shift"
 OUT = HERE / "reports/delete_vs_overexpress_shift_report.html"
 
 
@@ -107,6 +107,15 @@ def goal_alt_image_grid(figures_dir: Path) -> str:
     return f'<table class="figure-grid"><thead><tr>{header}</tr></thead><tbody>{"".join(rows)}</tbody></table>'
 
 
+def delete_overexpress_image_grid(figures_dir: Path, columns: int = 2) -> str:
+    cells = [
+        f'<td><img src="{embed(figures_dir / f"{c}.png")}" alt="{c} delete vs overexpress shift"></td>'
+        for c in COMPARISONS
+    ]
+    rows = ["<tr>" + "".join(cells[i:i + columns]) + "</tr>" for i in range(0, len(cells), columns)]
+    return f'<table class="figure-grid"><tbody>{"".join(rows)}</tbody></table>'
+
+
 def main() -> None:
     targeted = pd.read_csv(TARGETED_CSV)
     allgene = pd.read_csv(ALLGENE_CSV)
@@ -114,9 +123,6 @@ def main() -> None:
     allgene_summary = summarize(allgene)
     targeted_goal_alt = targeted_goal_alt_summary()
     allgene_goal_alt = allgene_goal_alt_summary(pd.read_csv(ALLGENE_GOAL_ALT_CSV))
-
-    targeted_img = embed(TARGETED_FIGURE)
-    allgene_img = embed(ALLGENE_FIGURE)
 
     body = f"""
 <h1>Perturbation shift report: goal-vs-alt specificity and delete-vs-overexpress concordance</h1>
@@ -167,11 +173,11 @@ work: <code>delete_fdr &lt; 0.05</code>, <code>overexpress_fdr &lt; 0.05</code>,
 
 <h2>Targeted 50-gene panel</h2>
 {table_html(targeted_summary)}
-<img src="{targeted_img}" alt="Targeted panel: delete vs overexpress shift, one panel per comparison">
+{delete_overexpress_image_grid(TARGETED_DVO_FIGURES)}
 
 <h2>Whole-genome screen</h2>
 {table_html(allgene_summary)}
-<img src="{allgene_img}" alt="Whole-genome screen: delete vs overexpress shift, one panel per comparison">
+{delete_overexpress_image_grid(ALLGENE_DVO_FIGURES)}
 
 <h2>Reading the two together</h2>
 <p><code>luad_to_sclc</code> and <code>luad_to_normal</code> carry far more
