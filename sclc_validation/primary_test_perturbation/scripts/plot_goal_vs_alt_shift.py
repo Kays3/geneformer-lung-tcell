@@ -179,10 +179,12 @@ def main() -> None:
             print(f"No data found for arm={arm} under {STATS}")
             continue
         all_frames[arm] = frames
+        out_dir = FIGURES / "goal_vs_alt_shift" / arm
+        out_dir.mkdir(parents=True, exist_ok=True)
         all_n = pd.concat([f["N_Detections"] for f in frames.values()])
         n_min, n_max = max(1, all_n.min()), all_n.max()
         for comparison, df in frames.items():
-            plot_one(arm, comparison, df, n_min, n_max, FIGURES / f"allgene_{arm}_{comparison}_goal_vs_alt_shift.png")
+            plot_one(arm, comparison, df, n_min, n_max, out_dir / f"{comparison}.png")
     if all_frames:
         build_table(all_frames)
 

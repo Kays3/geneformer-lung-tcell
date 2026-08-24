@@ -13,6 +13,7 @@ build time; this script does not compute anything beyond summary statistics
 """
 from __future__ import annotations
 
+import base64
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -23,12 +24,20 @@ ROOT = HERE.parent.parent
 TARGETED_DIR = ROOT / "sclc_validation/perturbation_workflow/targeted_panel"
 TARGETED_CSV = TARGETED_DIR / "results/targeted_panel_delete_overexpress_merged.csv"
 TARGETED_FIGURE = TARGETED_DIR / "figures/delete_vs_overexpress_shift.png"
-TARGETED_GOAL_ALT_FIGURES = TARGETED_DIR / "figures"
+TARGETED_GOAL_ALT_FIGURES = TARGETED_DIR / "figures/goal_vs_alt_shift"
 ALLGENE_CSV = HERE / "tables/allgene_delete_overexpress_shift.csv"
 ALLGENE_FIGURE = HERE / "figures/allgene_delete_vs_overexpress_shift.png"
 ALLGENE_GOAL_ALT_CSV = HERE / "tables/allgene_goal_vs_alt_shift.csv"
-ALLGENE_GOAL_ALT_FIGURES = HERE / "figures"
+ALLGENE_GOAL_ALT_FIGURES = HERE / "figures/goal_vs_alt_shift"
 OUT = HERE / "reports/delete_vs_overexpress_shift_report.html"
+
+
+def embed(path: Path) -> str:
+    """Base64 data URI. A local HTML file's relative <img> links are silently
+    dropped by Safari's/WebKit's file:// sandbox for anything outside the
+    report's own directory tree, so this is the only cross-browser way to make
+    a self-contained report that just works when double-clicked."""
+    return f"data:image/png;base64,{base64.b64encode(path.read_bytes()).decode('ascii')}"
 
 COMPARISONS = [
     "normal_to_sclc", "normal_to_luad",
@@ -86,14 +95,13 @@ def allgene_goal_alt_summary(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def goal_alt_image_grid(figures_dir: Path, prefix: str = "") -> str:
+def goal_alt_image_grid(figures_dir: Path) -> str:
     rows = []
     for comparison in COMPARISONS:
         cells = []
         for arm in ARMS:
-            path = figures_dir / f"{prefix}{arm}_{comparison}_goal_vs_alt_shift.png"
-            src = path.relative_to(OUT.parent, walk_up=True)
-            cells.append(f'<td><img src="{src}" alt="{arm} {comparison} goal vs alt shift"></td>')
+            path = figures_dir / arm / f"{comparison}.png"
+            cells.append(f'<td><img src="{embed(path)}" alt="{arm} {comparison} goal vs alt shift"></td>')
         rows.append(f"<tr>{''.join(cells)}</tr>")
     header = "".join(f"<th>{arm}</th>" for arm in ARMS)
     return f'<table class="figure-grid"><thead><tr>{header}</tr></thead><tbody>{"".join(rows)}</tbody></table>'
@@ -107,8 +115,8 @@ def main() -> None:
     targeted_goal_alt = targeted_goal_alt_summary()
     allgene_goal_alt = allgene_goal_alt_summary(pd.read_csv(ALLGENE_GOAL_ALT_CSV))
 
-    targeted_img = TARGETED_FIGURE.relative_to(OUT.parent, walk_up=True)
-    allgene_img = ALLGENE_FIGURE.relative_to(OUT.parent, walk_up=True)
+    targeted_img = embed(TARGETED_FIGURE)
+    allgene_img = embed(ALLGENE_FIGURE)
 
     body = f"""
 <h1>Perturbation shift report: goal-vs-alt specificity and delete-vs-overexpress concordance</h1>
@@ -144,7 +152,7 @@ are labeled.</p>
 (heavy-tailed response); the panel title reports how many points fall outside
 the drawn frame.</p>
 {table_html(allgene_goal_alt)}
-{goal_alt_image_grid(ALLGENE_GOAL_ALT_FIGURES, prefix="allgene_")}
+{goal_alt_image_grid(ALLGENE_GOAL_ALT_FIGURES)}
 
 <h1>Part 2 &mdash; deletion vs overexpression concordance</h1>
 <p>Each gene-comparison pair also has two shift measurements toward the same

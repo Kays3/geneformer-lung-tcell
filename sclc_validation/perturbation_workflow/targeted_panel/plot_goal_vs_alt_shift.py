@@ -135,13 +135,14 @@ def plot_one(arm: str, comparison: str, df: pd.DataFrame, n_min: float, n_max: f
 
 
 def main() -> None:
-    FIGURES.mkdir(parents=True, exist_ok=True)
     for arm in ARMS:
+        out_dir = FIGURES / "goal_vs_alt_shift" / arm
+        out_dir.mkdir(parents=True, exist_ok=True)
         frames = load_arm(arm)
         all_n = pd.concat([f["N_Detections"] for f in frames.values()])
         n_min, n_max = max(1, all_n.min()), all_n.max()
         for comparison, df in frames.items():
-            plot_one(arm, comparison, df, n_min, n_max, FIGURES / f"{arm}_{comparison}_goal_vs_alt_shift.png")
+            plot_one(arm, comparison, df, n_min, n_max, out_dir / f"{comparison}.png")
 
 
 if __name__ == "__main__":
