@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""Build the delete-vs-overexpress shift report (targeted panel + whole-genome).
+"""Build the shift report: goal-vs-alt specificity, and delete-vs-overexpress
+concordance, each at targeted-panel and whole-genome scale.
 
-Reads the two merged per-gene tables already on disk -- the targeted panel's
-committed `targeted_panel_delete_overexpress_merged.csv` and the whole-genome
-`allgene_delete_overexpress_shift.csv` written by
-`plot_delete_vs_overexpress_shift.py` -- and the two PNGs those scripts produce.
-Every number in the report is read from these tables at build time; this script
-does not compute anything itself, only summarizes and lays out what the two
-upstream scripts already wrote.
+Reads the merged per-gene tables already on disk -- the targeted panel's
+committed `targeted_panel_delete_overexpress_merged.csv`, its per-arm
+per-comparison `results/{arm}/targeted_{arm}_{comparison}.csv` tables, and the
+whole-genome `allgene_delete_overexpress_shift.csv` / `allgene_goal_vs_alt_shift.csv`
+written by the two `plot_*.py` scripts in this repo -- plus the PNGs those
+scripts produce. Every number in the report is read from these tables at
+build time; this script does not compute anything beyond summary statistics
+(counts, Pearson r) from what the upstream scripts already wrote.
 """
 from __future__ import annotations
 
-import html
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -19,10 +20,14 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parents[1]
 ROOT = HERE.parent.parent
-TARGETED_CSV = ROOT / "sclc_validation/perturbation_workflow/targeted_panel/results/targeted_panel_delete_overexpress_merged.csv"
-TARGETED_FIGURE = ROOT / "sclc_validation/perturbation_workflow/targeted_panel/figures/delete_vs_overexpress_shift.png"
+TARGETED_DIR = ROOT / "sclc_validation/perturbation_workflow/targeted_panel"
+TARGETED_CSV = TARGETED_DIR / "results/targeted_panel_delete_overexpress_merged.csv"
+TARGETED_FIGURE = TARGETED_DIR / "figures/delete_vs_overexpress_shift.png"
+TARGETED_GOAL_ALT_FIGURES = TARGETED_DIR / "figures"
 ALLGENE_CSV = HERE / "tables/allgene_delete_overexpress_shift.csv"
 ALLGENE_FIGURE = HERE / "figures/allgene_delete_vs_overexpress_shift.png"
+ALLGENE_GOAL_ALT_CSV = HERE / "tables/allgene_goal_vs_alt_shift.csv"
+ALLGENE_GOAL_ALT_FIGURES = HERE / "figures"
 OUT = HERE / "reports/delete_vs_overexpress_shift_report.html"
 
 COMPARISONS = [
@@ -30,6 +35,7 @@ COMPARISONS = [
     "sclc_to_normal", "sclc_to_luad",
     "luad_to_normal", "luad_to_sclc",
 ]
+ARMS = ("delete", "overexpress")
 
 
 def summarize(df: pd.DataFrame) -> pd.DataFrame:
@@ -51,30 +57,64 @@ def table_html(df: pd.DataFrame) -> str:
     return df.to_html(index=False, classes="data", border=0)
 
 
+def targeted_goal_alt_summary() -> pd.DataFrame:
+    rows = []
+    for arm in ARMS:
+        for comparison in COMPARISONS:
+            df = pd.read_csv(TARGETED_DIR / "results" / arm / f"targeted_{arm}_{comparison}.csv")
+            alt_col = next(c for c in df.columns if c.startswith("Shift_to_alt_end_"))
+            sig = df[df["Sig"] == 1]
+            rows.append({
+                "arm": arm, "comparison": comparison, "n_genes": len(df),
+                "n_significant": len(sig),
+                "pearson_r_goal_alt": round(sig["Shift_to_goal_end"].corr(sig[alt_col]), 3) if len(sig) > 2 else float("nan"),
+            })
+    return pd.DataFrame(rows)
+
+
+def allgene_goal_alt_summary(df: pd.DataFrame) -> pd.DataFrame:
+    rows = []
+    for arm in ARMS:
+        for comparison in COMPARISONS:
+            sub = df[(df["arm"] == arm) & (df["comparison"] == comparison)]
+            sig = sub[sub["sig"] == 1]
+            rows.append({
+                "arm": arm, "comparison": comparison, "n_genes": len(sub),
+                "n_significant": len(sig),
+                "pearson_r_goal_alt": round(sig["shift_to_goal"].corr(sig["shift_to_alt"]), 3) if len(sig) > 2 else float("nan"),
+            })
+    return pd.DataFrame(rows)
+
+
+def goal_alt_image_grid(figures_dir: Path, prefix: str = "") -> str:
+    rows = []
+    for comparison in COMPARISONS:
+        cells = []
+        for arm in ARMS:
+            path = figures_dir / f"{prefix}{arm}_{comparison}_goal_vs_alt_shift.png"
+            src = path.relative_to(OUT.parent, walk_up=True)
+            cells.append(f'<td><img src="{src}" alt="{arm} {comparison} goal vs alt shift"></td>')
+        rows.append(f"<tr>{''.join(cells)}</tr>")
+    header = "".join(f"<th>{arm}</th>" for arm in ARMS)
+    return f'<table class="figure-grid"><thead><tr>{header}</tr></thead><tbody>{"".join(rows)}</tbody></table>'
+
+
 def main() -> None:
     targeted = pd.read_csv(TARGETED_CSV)
     allgene = pd.read_csv(ALLGENE_CSV)
     targeted_summary = summarize(targeted)
     allgene_summary = summarize(allgene)
+    targeted_goal_alt = targeted_goal_alt_summary()
+    allgene_goal_alt = allgene_goal_alt_summary(pd.read_csv(ALLGENE_GOAL_ALT_CSV))
 
     targeted_img = TARGETED_FIGURE.relative_to(OUT.parent, walk_up=True)
     allgene_img = ALLGENE_FIGURE.relative_to(OUT.parent, walk_up=True)
 
     body = f"""
-<h1>Deletion vs overexpression shift toward the goal state</h1>
+<h1>Perturbation shift report: goal-vs-alt specificity and delete-vs-overexpress concordance</h1>
 <p><strong>Generated:</strong> {datetime.now(timezone.utc).isoformat()}</p>
 
-<p>Each gene-comparison pair has two shift measurements toward the same goal
-state: one from deleting the gene, one from overexpressing it. If the gene
-genuinely drives the model toward or away from that state, the two shifts
-should be significant, adequately detected, and opposite in sign &mdash;
-overexpression pushing one way, deletion undoing it. That is the
-<code>concordant</code> criterion used throughout this repo's perturbation
-work: <code>delete_fdr &lt; 0.05</code>, <code>overexpress_fdr &lt; 0.05</code>,
-<code>delete_shift &times; overexpress_shift &lt; 0</code>, and
-<code>delete_n &ge; 25</code>.</p>
-
-<p>Two datasets, same question at two scales:</p>
+<p>Two datasets, same underlying perturbations, at two scales:</p>
 <ul>
 <li><strong>Targeted 50-gene panel</strong> &mdash; the pre-registered 21-gene
 immune panel plus 29 top drivers from the prior NSCLC screen, both arms
@@ -84,16 +124,44 @@ held-out cell's token sequence, delete and overexpress arms, computed on
 thinkstation2.</li>
 </ul>
 
+<h1>Part 1 &mdash; shift to goal vs shift to alt state</h1>
+<p>Every perturbed cell has two off-target-free readouts from the <em>same</em>
+edit: how far it moved toward the comparison's goal state, and how far it
+moved toward the third, unnamed "alt" state. A gene whose effect is specific
+to the goal sits near the x-axis (large goal shift, &asymp;0 alt shift); a gene
+near the dashed y&nbsp;=&nbsp;x line is moving the cell toward both other
+states about equally &mdash; not specific to the goal at all. Marker area
+scales with N detections (per-gene cell count); color marks whether the goal
+shift is FDR-significant. The most-displaced significant genes in each panel
+are labeled.</p>
+
+<h2>Targeted 50-gene panel</h2>
+{table_html(targeted_goal_alt)}
+{goal_alt_image_grid(TARGETED_GOAL_ALT_FIGURES)}
+
+<h2>Whole-genome screen</h2>
+<p>Axes in each panel are clipped to that panel's 1st&ndash;99th percentile
+(heavy-tailed response); the panel title reports how many points fall outside
+the drawn frame.</p>
+{table_html(allgene_goal_alt)}
+{goal_alt_image_grid(ALLGENE_GOAL_ALT_FIGURES, prefix="allgene_")}
+
+<h1>Part 2 &mdash; deletion vs overexpression concordance</h1>
+<p>Each gene-comparison pair also has two shift measurements toward the same
+goal state: one from deleting the gene, one from overexpressing it. If the
+gene genuinely drives the model toward or away from that state, the two
+shifts should be significant, adequately detected, and opposite in sign
+&mdash; overexpression pushing one way, deletion undoing it. That is the
+<code>concordant</code> criterion used throughout this repo's perturbation
+work: <code>delete_fdr &lt; 0.05</code>, <code>overexpress_fdr &lt; 0.05</code>,
+<code>delete_shift &times; overexpress_shift &lt; 0</code>, and
+<code>delete_n &ge; 25</code>.</p>
+
 <h2>Targeted 50-gene panel</h2>
 {table_html(targeted_summary)}
 <img src="{targeted_img}" alt="Targeted panel: delete vs overexpress shift, one panel per comparison">
 
 <h2>Whole-genome screen</h2>
-<p>Genome-scale response is heavy-tailed (a handful of genes exceed
-&#124;shift&#124; &gt; 0.3 against a typical scale of &plusmn;0.03), so each
-panel below clips its axes to that panel's 1st&ndash;99th percentile; the
-figure's own panel titles report how many points fall outside the drawn
-frame.</p>
 {table_html(allgene_summary)}
 <img src="{allgene_img}" alt="Whole-genome screen: delete vs overexpress shift, one panel per comparison">
 
@@ -108,12 +176,17 @@ driver.</p>
 
 <h2>Provenance</h2>
 <ul>
-<li>Targeted panel: <code>sclc_validation/perturbation_workflow/targeted_panel/plot_delete_vs_overexpress_shift.py</code>
-reading the committed <code>results/targeted_panel_delete_overexpress_merged.csv</code>.</li>
-<li>Whole-genome: <code>sclc_validation/primary_test_perturbation/scripts/plot_delete_vs_overexpress_shift.py</code>
+<li>Targeted panel, goal vs alt: <code>sclc_validation/perturbation_workflow/targeted_panel/plot_goal_vs_alt_shift.py</code>
+reading the committed <code>results/{{delete,overexpress}}/targeted_*.csv</code> tables.</li>
+<li>Whole-genome, goal vs alt: <code>sclc_validation/primary_test_perturbation/scripts/plot_goal_vs_alt_shift.py</code>
 reading <code>stats/{{delete,overexpress}}/heldout_allgene_*.csv</code> under
-<code>SCLC_PERTURBATION_ROOT</code> (thinkstation2), writing the full per-gene
-table to <code>tables/allgene_delete_overexpress_shift.csv</code>.</li>
+<code>SCLC_PERTURBATION_ROOT</code> (thinkstation2), writing
+<code>tables/allgene_goal_vs_alt_shift.csv</code>.</li>
+<li>Targeted panel, delete vs overexpress: <code>sclc_validation/perturbation_workflow/targeted_panel/plot_delete_vs_overexpress_shift.py</code>
+reading the committed <code>results/targeted_panel_delete_overexpress_merged.csv</code>.</li>
+<li>Whole-genome, delete vs overexpress: <code>sclc_validation/primary_test_perturbation/scripts/plot_delete_vs_overexpress_shift.py</code>
+reading the same <code>stats/</code> tables, writing
+<code>tables/allgene_delete_overexpress_shift.csv</code>.</li>
 </ul>
 """
     document = (
@@ -124,7 +197,10 @@ table to <code>tables/allgene_delete_overexpress_shift.csv</code>.</li>
         " th,td{border:1px solid #ccd;padding:.35rem .6rem;text-align:right}"
         " th{background:#eef2f5} td:first-child,th:first-child{text-align:left}"
         " code{background:#f4f4f4;padding:0 .2rem} img{max-width:100%;height:auto;"
-        "border:1px solid #ddd;margin:.5rem 0 1.5rem}</style></head><body>"
+        "border:1px solid #ddd;margin:.5rem 0 1.5rem}"
+        " table.figure-grid{width:100%} table.figure-grid td,table.figure-grid th{border:none;"
+        "padding:.25rem;text-align:center;text-transform:capitalize}"
+        " table.figure-grid img{margin:0}</style></head><body>"
         + body +
         "</body></html>"
     )
