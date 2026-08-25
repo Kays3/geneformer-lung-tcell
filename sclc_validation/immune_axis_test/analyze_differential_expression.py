@@ -69,7 +69,9 @@ def goal1_exhaustion_rank(de_complete: pd.DataFrame) -> pd.DataFrame:
     sub = sub.sort_values(["padj", "pval"]).reset_index(drop=True)
     sub["rank"] = np.arange(1, len(sub) + 1)
     sub["percentile"] = 100 * sub["rank"] / len(sub)
-    result = sub[sub["gene"].isin(EXHAUSTION_GENES)][["gene", "log2fc", "pval", "padj", "rank", "percentile"]]
+    result = sub[sub["gene_symbol"].isin(EXHAUSTION_GENES)][
+        ["gene_symbol", "log2fc", "pval", "padj", "rank", "percentile"]
+    ].rename(columns={"gene_symbol": "gene"})
     result.to_csv(RESULTS / "t5a_exhaustion_gene_rank.csv", index=False)
     return result.sort_values("percentile")
 
@@ -78,12 +80,12 @@ def goal2_dysfunction_score(de_complete: pd.DataFrame, pooled_complete: pd.DataF
     sub = de_complete[de_complete["comparison"] == "sclc_vs_luad"]
     # group=sclc, reference=luad: negative log2fc means higher in LUAD.
     luad_up = sub[sub["log2fc"] < 0].sort_values("padj").head(TOP_K)
-    data_driven_genes = luad_up["gene"].tolist()
+    data_driven_genes = luad_up["gene_symbol"].tolist()
 
     def program_score(genes: list[str], label: str) -> pd.DataFrame:
         rows = []
         for state in ("normal", "sclc", "luad"):
-            vals = pooled_complete[(pooled_complete["gene"].isin(genes)) & (pooled_complete["state"] == state)]
+            vals = pooled_complete[(pooled_complete["gene_symbol"].isin(genes)) & (pooled_complete["state"] == state)]
             rows.append({"program": label, "state": state, "n_genes": len(genes),
                          "mean_detect_rate": vals["detect_rate"].mean(),
                          "mean_expression": vals["mean_log1p_cp10k"].mean()})
@@ -103,8 +105,10 @@ def goal3_isp_overlap(de_test_only: pd.DataFrame) -> pd.DataFrame:
     goal_alt = pd.read_csv(ISP_GOAL_ALT)
     rows = []
     for pair, isp_comparisons in PAIR_TO_ISP_COMPARISONS.items():
-        de_tested_genes = set(de_test_only[de_test_only["comparison"] == pair]["gene"])
-        de_sig_genes_genome = set(de_test_only[(de_test_only["comparison"] == pair) & (de_test_only["padj"] < FDR)]["gene"])
+        de_tested_genes = set(de_test_only[de_test_only["comparison"] == pair]["gene_symbol"])
+        de_sig_genes_genome = set(
+            de_test_only[(de_test_only["comparison"] == pair) & (de_test_only["padj"] < FDR)]["gene_symbol"]
+        )
 
         concordant_genes = set(dvo[dvo["comparison"].isin(isp_comparisons) & dvo["concordant"]]["Gene_name"])
         # Universe for the Fisher test is genes tested in BOTH ISP (this pair)

@@ -46,6 +46,10 @@ H5AD = Path(os.environ.get(
     "HTAN_H5AD",
     Path.home() / "workspace/KD/sclc_luad_normal_htan_finetune/data/htan_sclc_luad_normal_tcells_prepared.h5ad",
 ))
+STATS_ROOT = Path(os.environ.get(
+    "SCLC_PERTURBATION_ROOT",
+    Path.home() / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
+)) / "stats"
 POPULATION = os.environ.get("POPULATION", "complete")
 OUT_DIR = Path(__file__).resolve().parent / "results"
 
@@ -62,6 +66,20 @@ PAIRS = [("sclc", "luad"), ("sclc", "normal"), ("luad", "normal")]
 
 if POPULATION not in ("complete", "test_only"):
     raise SystemExit(f"POPULATION must be 'complete' or 'test_only', got {POPULATION!r}")
+
+
+def ensembl_to_symbol() -> dict[str, str]:
+    """H5AD var_names are Ensembl IDs with no symbol column of their own,
+    but every ISP stats table already carries Gene_name/Ensembl_ID pairs for
+    the genes it tested -- same source measure_baseline_expression.py uses
+    (inverted here: Ensembl ID -> symbol, since var_names is Ensembl)."""
+    mapping: dict[str, str] = {}
+    for path in sorted(STATS_ROOT.glob("*/heldout_allgene_*.csv")):
+        frame = pd.read_csv(path, usecols=["Gene_name", "Ensembl_ID"])
+        mapping.update(dict(zip(frame.Ensembl_ID, frame.Gene_name)))
+    if not mapping:
+        raise SystemExit(f"No stats tables found under {STATS_ROOT}; cannot map gene symbols")
+    return mapping
 
 
 def load_population() -> ad.AnnData:
@@ -133,17 +151,26 @@ def main() -> None:
     print(f"POPULATION={POPULATION}: {sub.n_obs} cells x {sub.n_vars} genes")
     print(sub.obs.groupby("state", observed=True).agg(n_cells=("individual", "size"), n_donors=("individual", "nunique")))
 
+    ens2sym = ensembl_to_symbol()
+    unmapped = sum(1 for g in sub.var_names if g not in ens2sym)
+    print(f"gene_symbol: {len(sub.var_names) - unmapped}/{len(sub.var_names)} Ensembl IDs mapped to a symbol "
+          f"from {STATS_ROOT} ({unmapped} left as the bare Ensembl ID -- genes the ISP screen never tested)")
+
     de = run_de(sub)
+    de.insert(de.columns.get_loc("gene") + 1, "gene_symbol", de["gene"].map(ens2sym).fillna(de["gene"]))
     de_path = OUT_DIR / f"differential_expression_{POPULATION}.csv"
     de.to_csv(de_path, index=False)
     print(f"\nWrote {de_path} ({len(de)} rows)")
 
     pseudobulk = per_donor_pseudobulk(sub)
+    pseudobulk.insert(pseudobulk.columns.get_loc("gene") + 1, "gene_symbol",
+                       pseudobulk["gene"].map(ens2sym).fillna(pseudobulk["gene"]))
     pb_path = OUT_DIR / f"pseudobulk_per_donor_{POPULATION}.csv"
     pseudobulk.to_csv(pb_path, index=False)
     print(f"Wrote {pb_path} ({len(pseudobulk)} rows)")
 
     pooled = state_pooled_expression(sub)
+    pooled.insert(pooled.columns.get_loc("gene") + 1, "gene_symbol", pooled["gene"].map(ens2sym).fillna(pooled["gene"]))
     pooled_path = OUT_DIR / f"state_pooled_expression_{POPULATION}.csv"
     pooled.to_csv(pooled_path, index=False)
     print(f"Wrote {pooled_path} ({len(pooled)} rows)")
