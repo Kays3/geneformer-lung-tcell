@@ -1,8 +1,8 @@
 # Plan — replacing the Perturb-seq analogy with an overexpression test of the disease axis
 
-**Status:** plan. Tests 1 and 2 are run (numbers below and in
-[RESULTS_T2.md](RESULTS_T2.md)); tests 3–5 are specified but not executed. Nothing here
-has changed the poster or the talk.
+**Status:** plan. Tests 1, 2, and 5 (T5a/T5b) are run (numbers below and in
+[RESULTS_T2.md](RESULTS_T2.md), [RESULTS_T5.md](RESULTS_T5.md)); tests 3–4 are specified
+but not executed. Nothing here has changed the poster or the talk.
 
 ## 1. The claim under test
 
@@ -227,7 +227,7 @@ single-element list today, so this is a parameter change, not new machinery.
   ribosomal genes excluded, and report both. Given PC1's loadings this is not
   optional.
 
-### T5 — genome-wide differential expression for a data-driven dysfunction score (no GPU, needs the atlas) — **specified, not run**
+### T5 — genome-wide differential expression for a data-driven dysfunction score (no GPU, needs the atlas) — **run, see [RESULTS_T5.md](RESULTS_T5.md)**
 
 T2 answered "is the curated 21-gene panel differentially expressed" and found a
 mixed picture: the exhaustion-program *average* sits Normal < SCLC < LUAD, but

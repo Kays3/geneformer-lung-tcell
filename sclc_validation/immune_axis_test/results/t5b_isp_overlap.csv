@@ -1,0 +1,4 @@
+pair,isp_hit_type,n_isp_hits,n_isp_hits_also_de_sig,pct_isp_hits_also_de_sig,background_pct_de_sig_isp_universe,background_pct_de_sig_genomewide,odds_ratio,fisher_p
+sclc_vs_luad,delete_overexpress_concordant,1356,786,58.0,16.06,10.49,10.0,4.900948132201869e-308
+sclc_vs_normal,delete_overexpress_concordant,434,251,57.8,7.76,4.71,20.648,1.4111961776860734e-169
+luad_vs_normal,delete_overexpress_concordant,1290,389,30.2,5.78,3.7,11.805,1.2042771754924667e-196
