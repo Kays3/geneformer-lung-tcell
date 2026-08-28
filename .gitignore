@@ -70,6 +70,14 @@ poster/poster_*.pdf
 !poster/poster_template.html
 !poster/poster_template_90x210.html
 
+# Perturbation results: HTML report (~28 MB) and pseudobulk CSV (~56 MB) were
+# stripped from history 2026-08-28 and moved to the NAS at
+# thinkstation2:/mnt/nas/kaisar/geneformer-lung-tcell/ (see TRANSFER_MANIFEST.sha256
+# there). Both are regenerable from sclc_validation/primary_test_perturbation/
+# and sclc_validation/immune_axis_test/ scripts.
+sclc_validation/primary_test_perturbation/reports/delete_vs_overexpress_shift_report.html
+sclc_validation/immune_axis_test/results/pseudobulk_per_donor_complete.csv
+
 # PNG previews of the above are deliberately committed.
 !snapshots/
 !snapshots/*.png
