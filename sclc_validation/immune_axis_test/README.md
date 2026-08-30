@@ -61,6 +61,35 @@ in all three state pairs; and the curated exhaustion program's SCLC-vs-LUAD orde
 SCLC's held-out test split being 75% one atypically low-exhaustion donor, not a pipeline
 error. See RESULTS_T5.md for the full picture.
 
+### T3 — embedding geometry
+
+T3 is implemented in [`embedding_geometry.py`](embedding_geometry.py). It needs the
+three aggregate training-donor centroids, which are deliberately stored outside Git
+with the larger experiment. On a compute host, export the trusted pickle to a portable,
+reviewable `.npz` (three vectors only; no cell- or donor-level records):
+
+```bash
+python3 sclc_validation/immune_axis_test/export_state_centroids.py \
+  --input /srv/lab/KD/sclc_luad_normal_htan_heldout_allgene_perturbation/state_embeddings/training_donor_disease_centroids.pkl \
+  --output sclc_validation/immune_axis_test/results/training_donor_disease_centroids.npz
+```
+
+Copy the `.npz` and its adjacent `.json` manifest back to the same path in this
+checkout, then run:
+
+```bash
+python3 sclc_validation/immune_axis_test/embedding_geometry.py
+python3 sclc_validation/immune_axis_test/test_embedding_geometry.py
+```
+
+The analysis measures pairwise centroid distances and triangle angles, reconstructs
+the unique **in-plane** displacement consistent with each gene's two retained
+overexpression scores, summarizes the four programs, and writes the T3 figure. Two
+scores cannot identify an out-of-plane displacement, so every vector output records
+that assumption. Likewise, centroid geometry alone does not determine T1c's regression
+slope without an assumption about displacement covariance; T3 reports full-space and
+centroid-plane isotropic references instead of presenting either as a unique prediction.
+
 ## Status
 
 Tests 1, 2, and 5 (T5a/T5b) run. Test 2 (measured baseline expression) does **not**
@@ -87,6 +116,9 @@ analyze_baseline_expression.py     test 2 analysis and figures, runs on the lapt
 differential_expression.py         test 5 (T5a/T5b), runs on the compute host (needs the atlas)
 analyze_differential_expression.py test 5 analysis and figures, runs on the laptop
 check_donor_composition.py         test 5 donor-composition diagnostic, runs on the laptop
+export_state_centroids.py          aggregate-vector export, runs on the compute host
+embedding_geometry.py              test 3 analysis and figure, runs on the laptop
+test_embedding_geometry.py         synthetic T3 geometry regression tests
 results/                           output tables for all tests
 figures/                           test 2 and test 5 figures
 ```
