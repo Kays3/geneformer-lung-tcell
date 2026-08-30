@@ -1,0 +1,4 @@
+vertex_state,toward_state_a,toward_state_b,interior_angle_degrees
+normal,sclc,luad,56.96825996651519
+sclc,normal,luad,61.94405540630552
+luad,normal,sclc,61.087684627179286

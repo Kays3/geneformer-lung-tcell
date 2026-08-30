@@ -1,0 +1,3 @@
+scenario,n_genes,n_consistent_1d,frac_consistent_1d,frac_from_normal_same_sign,frac_from_luad_same_sign,frac_from_sclc_opposite_sign,pc1_variance_explained,pc2_variance_explained
+all_50_genes,50,1,0.02,0.32,0.34,0.74,0.7400063283936205,0.19336748592119388
+exclude_ambient_stress_ribosomal,31,1,0.03225806451612903,0.3548387096774194,0.3870967741935484,0.7419354838709677,0.7272979881721422,0.2331286954776188

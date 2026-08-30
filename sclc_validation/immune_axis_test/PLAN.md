@@ -1,8 +1,11 @@
 # Plan — replacing the Perturb-seq analogy with an overexpression test of the disease axis
 
-**Status:** plan. Tests 1, 2, and 5 (T5a/T5b) are run (numbers below and in
-[RESULTS_T2.md](RESULTS_T2.md), [RESULTS_T5.md](RESULTS_T5.md)); tests 3–4 are specified
-but not executed. Nothing here has changed the poster or the talk.
+**Status:** plan plus partial execution. Tests 1, 2, 3, and 5 (T5a/T5b) are run
+(numbers below and in [RESULTS_T2.md](RESULTS_T2.md), [RESULTS_T3.md](RESULTS_T3.md),
+[RESULTS_T5.md](RESULTS_T5.md)). T4's deterministic manifest, GPU runner, and
+analysis pipeline are implemented; its ambient/stress/ribosomal sensitivity arm
+is run, while the GPU phases remain unexecuted. Nothing here has changed the
+poster or the talk.
 
 ## 1. The claim under test
 
@@ -178,7 +181,7 @@ the model and the clinic.
 Runs on the compute host against `heldout_test.dataset`; needs no perturbation
 output.
 
-### T3 — embedding geometry (no GPU, ~4 h, needs one small file)
+### T3 — embedding geometry (run; no GPU, see [RESULTS_T3.md](RESULTS_T3.md))
 
 Load the three state centroids from
 `state_embeddings/training_donor_disease_centroids.pkl`, compute the triangle
@@ -187,17 +190,19 @@ gene's overexpression displacement into that plane. Two shifts per gene give two
 projections, which is exactly enough to place the displacement in the plane once
 the centroid geometry is known.
 
-This turns T1's sign tests into measured vectors and produces the figure's
-central panel. It also makes T1c analytic rather than empirical: with the
-centroids known, the expected complement slope can be computed and compared to
-the fitted −0.20 / −0.40 / −0.56.
+This turns T1's sign tests into an explicitly assumed in-plane reconstruction
+and produces the figure's central panel. It also lets T1c be compared against
+specified displacement models. Centroid geometry alone does **not** determine a
+unique complement slope: the slope depends on the displacement covariance.
+T3 therefore reports full-space and centroid-plane isotropic references beside
+the fitted −0.20 / −0.40 / −0.56, rather than calling either one the prediction.
 
-**Recommendation:** the centroids are three vectors — a few KB. Commit them as a
-tracked `.npz` so this analysis and the figure can be rebuilt on the laptop,
-consistent with the poster's rule that every number is read from a result table
-at build time.
+The three-vector export is a few KB and is retained as a portable `.npz` beside
+its provenance manifest, so this analysis and the figure can be rebuilt on the
+laptop. The export contains aggregate vectors only; no cell- or donor-level
+records are included.
 
-### T4 — program-level overexpression (GPU, ~6–12 h)
+### T4 — program-level overexpression (GPU runtime unprofiled; implementation ready)
 
 Single-gene edits are small (|shift| ~0.01–0.03) and each gene carries its own
 idiosyncrasies. The axis claim is about a *program*, so perturb the program.
@@ -226,6 +231,20 @@ single-element list today, so this is a parameter change, not new machinery.
 - **Ambient sensitivity.** Re-run T1a–T1d with the flagged ambient/stress/
   ribosomal genes excluded, and report both. Given PC1's loadings this is not
   optional.
+
+**Implementation status (30 August 2026).** The manifest fixes seed 43, 20
+expression bins, 20 matched-null sets per program, and a cell-count-weighted
+held-out-test expression profile shared across sources. This is 273 resumable
+GPU units: 12 primary, 21 nested, and 240 null. Twenty null sets are deliberately
+the minimum that permits a one-sided empirical p-value below 0.05 (minimum
+1/21); treat it as a screening null, not high-resolution tail calibration.
+
+The laptop-only ambient/stress/ribosomal sensitivity is complete. Excluding 19
+flagged genes leaves 31/50: the all-three-sign 1-D consistency count remains
+**1 gene** (1/50 before, 1/31 after), and PC1 variance changes only from 0.740 to
+0.727. Under the operational reversal rule (at least half of remaining genes
+satisfy all three sign predictions), the conclusion does **not** reverse. The
+GPU program, nested-set, matched-null, donor, and CD4/CD8 results are not yet run.
 
 ### T5 — genome-wide differential expression for a data-driven dysfunction score (no GPU, needs the atlas) — **run, see [RESULTS_T5.md](RESULTS_T5.md)**
 
@@ -412,9 +431,11 @@ State it before running, so the tests are answerable either way.
   number is a single-patient measurement, including the collinearity failures in
   T1a. Report per-donor throughout and never state a Normal result without the
   donor count attached.
-- **The ambient correction has not been run.** PC1 is loaded on HBB/HSPA1B/
-  ribosomal genes; until T4's sensitivity arm is done, treat every magnitude here
-  as provisional.
+- **The ambient correction is a sensitivity analysis, not a correction.** The
+  laptop arm excluded 19 ambient/stress/ribosomal-associated genes and did not
+  reverse T1's conclusion (1/50 versus 1/31 genes satisfy all three signs).
+  Treat the original and filtered magnitudes as descriptive, not as a causal
+  correction.
 - **Shift is movement toward a centroid, not a program score.** Two states differ
   in many ways at once, so "toward LUAD" is not by itself "more exhausted". T2 and
   T3 exist precisely to license that translation; without them, panel D's middle
@@ -446,5 +467,8 @@ replaced with the substantive open question underneath it: **if SCLC T cells are
 not exhausted, what are they, and why does ICI still fail?** That is a better
 question, and T2's subtype-stratified baseline is the first step toward it.
 
-Do not change any poster or talk wording before T2 and T3 are run. Until then the
-correct state is "the axis claim is under test", not a replacement claim.
+T2 and T3 are now run, but no poster or talk wording has been changed
+automatically. T3 rejects the collinear-centroid premise, while T4's program,
+nested-set, matched-null, donor, and CD4/CD8 GPU results remain outstanding; the
+correct public state is therefore still a qualified geometric result, not a new
+unconditional replacement claim.

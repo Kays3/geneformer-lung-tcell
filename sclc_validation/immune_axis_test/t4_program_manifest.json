@@ -1,0 +1,7003 @@
+{
+  "schema_version": 1,
+  "design": {
+    "perturb_type": "overexpress",
+    "sources": [
+      "normal",
+      "sclc",
+      "luad"
+    ],
+    "random_seed": 43,
+    "expression_bins": 20,
+    "matched_null_sets_per_program": 20,
+    "empirical_one_sided_p_minimum": 0.047619047619047616,
+    "expression_profile": "cell-count-weighted held-out-test mean_log1p_cp10k across three states",
+    "null_reuse_across_sources": true,
+    "exhaustion_nested_order": [
+      "TIGIT",
+      "LAG3",
+      "CTLA4",
+      "PDCD1",
+      "TOX",
+      "HAVCR2",
+      "LAYN"
+    ],
+    "null_pool_size": 13296,
+    "null_pool_exclusions": {
+      "known_ambient_excluded": 39,
+      "high_ambient_risk_excluded": 2183,
+      "ambient_risk_threshold": 0.9501491080637672,
+      "pattern_exclusion": "^(?:RPL|RPS|MRPL|MRPS|MT-|HBA|HBB$|HBD$|HSPA1)"
+    }
+  },
+  "inputs": {
+    "expression": {
+      "path": "results/state_pooled_expression_test_only.csv",
+      "sha256": "67e4ad73a54801cbdd376ac0030493c644b8f302e63bad2a9586a4efd61bd12d"
+    },
+    "target_panel": {
+      "path": "../perturbation_workflow/targeted_panel/target_gene_panel.json",
+      "sha256": "0026562f35b6517405010745ce7663df4178246ec4c2710bc1d39f3e99aa2622"
+    },
+    "ambient_table": {
+      "path": "../primary_test_perturbation/tables/ambient_risk_all_genes.csv",
+      "sha256": "f7d94e6709316ce3c238d7465a8937d7ff532edfb78e84cd687ba45a878f27ca"
+    },
+    "ambient_manifest": {
+      "path": "../primary_test_perturbation/tables/ambient_risk_manifest.json",
+      "sha256": "a69a4c6739cba72146a770b16e5d9fb6b07fe0eb22c16d40946d8a3924ffcf0d"
+    }
+  },
+  "run_counts": {
+    "program_definitions": 4,
+    "nested_definitions": 7,
+    "null_definitions": 80,
+    "gpu_runs_all_sources": 273
+  },
+  "runs": [
+    {
+      "id": "program_exhaustion",
+      "phase": "program",
+      "program": "exhaustion",
+      "genes": [
+        {
+          "gene": "PDCD1",
+          "ensembl_id": "ENSG00000188389"
+        },
+        {
+          "gene": "CTLA4",
+          "ensembl_id": "ENSG00000163599"
+        },
+        {
+          "gene": "HAVCR2",
+          "ensembl_id": "ENSG00000135077"
+        },
+        {
+          "gene": "LAG3",
+          "ensembl_id": "ENSG00000089692"
+        },
+        {
+          "gene": "TIGIT",
+          "ensembl_id": "ENSG00000181847"
+        },
+        {
+          "gene": "TOX",
+          "ensembl_id": "ENSG00000198846"
+        },
+        {
+          "gene": "LAYN",
+          "ensembl_id": "ENSG00000204381"
+        }
+      ]
+    },
+    {
+      "id": "program_cytotoxicity",
+      "phase": "program",
+      "program": "cytotoxicity",
+      "genes": [
+        {
+          "gene": "NKG7",
+          "ensembl_id": "ENSG00000105374"
+        },
+        {
+          "gene": "GNLY",
+          "ensembl_id": "ENSG00000115523"
+        },
+        {
+          "gene": "PRF1",
+          "ensembl_id": "ENSG00000180644"
+        },
+        {
+          "gene": "GZMB",
+          "ensembl_id": "ENSG00000100453"
+        },
+        {
+          "gene": "GZMH",
+          "ensembl_id": "ENSG00000100450"
+        },
+        {
+          "gene": "IFNG",
+          "ensembl_id": "ENSG00000111537"
+        }
+      ]
+    },
+    {
+      "id": "program_progenitor",
+      "phase": "program",
+      "program": "progenitor",
+      "genes": [
+        {
+          "gene": "TCF7",
+          "ensembl_id": "ENSG00000081059"
+        },
+        {
+          "gene": "SLAMF6",
+          "ensembl_id": "ENSG00000162739"
+        },
+        {
+          "gene": "IL7R",
+          "ensembl_id": "ENSG00000168685"
+        },
+        {
+          "gene": "CCR7",
+          "ensembl_id": "ENSG00000126353"
+        }
+      ]
+    },
+    {
+      "id": "program_sclc_subtype_tf",
+      "phase": "program",
+      "program": "sclc_subtype_tf",
+      "genes": [
+        {
+          "gene": "ASCL1",
+          "ensembl_id": "ENSG00000139352"
+        },
+        {
+          "gene": "NEUROD1",
+          "ensembl_id": "ENSG00000162992"
+        },
+        {
+          "gene": "POU2F3",
+          "ensembl_id": "ENSG00000137709"
+        },
+        {
+          "gene": "YAP1",
+          "ensembl_id": "ENSG00000137693"
+        }
+      ]
+    },
+    {
+      "id": "exhaustion_nested_01",
+      "phase": "nested",
+      "program": "exhaustion",
+      "nested_size": 1,
+      "genes": [
+        {
+          "gene": "TIGIT",
+          "ensembl_id": "ENSG00000181847"
+        }
+      ]
+    },
+    {
+      "id": "exhaustion_nested_02",
+      "phase": "nested",
+      "program": "exhaustion",
+      "nested_size": 2,
+      "genes": [
+        {
+          "gene": "TIGIT",
+          "ensembl_id": "ENSG00000181847"
+        },
+        {
+          "gene": "LAG3",
+          "ensembl_id": "ENSG00000089692"
+        }
+      ]
+    },
+    {
+      "id": "exhaustion_nested_03",
+      "phase": "nested",
+      "program": "exhaustion",
+      "nested_size": 3,
+      "genes": [
+        {
+          "gene": "TIGIT",
+          "ensembl_id": "ENSG00000181847"
+        },
+        {
+          "gene": "LAG3",
+          "ensembl_id": "ENSG00000089692"
+        },
+        {
+          "gene": "CTLA4",
+          "ensembl_id": "ENSG00000163599"
+        }
+      ]
+    },
+    {
+      "id": "exhaustion_nested_04",
+      "phase": "nested",
+      "program": "exhaustion",
+      "nested_size": 4,
+      "genes": [
+        {
+          "gene": "TIGIT",
+          "ensembl_id": "ENSG00000181847"
+        },
+        {
+          "gene": "LAG3",
+          "ensembl_id": "ENSG00000089692"
+        },
+        {
+          "gene": "CTLA4",
+          "ensembl_id": "ENSG00000163599"
+        },
+        {
+          "gene": "PDCD1",
+          "ensembl_id": "ENSG00000188389"
+        }
+      ]
+    },
+    {
+      "id": "exhaustion_nested_05",
+      "phase": "nested",
+      "program": "exhaustion",
+      "nested_size": 5,
+      "genes": [
+        {
+          "gene": "TIGIT",
+          "ensembl_id": "ENSG00000181847"
+        },
+        {
+          "gene": "LAG3",
+          "ensembl_id": "ENSG00000089692"
+        },
+        {
+          "gene": "CTLA4",
+          "ensembl_id": "ENSG00000163599"
+        },
+        {
+          "gene": "PDCD1",
+          "ensembl_id": "ENSG00000188389"
+        },
+        {
+          "gene": "TOX",
+          "ensembl_id": "ENSG00000198846"
+        }
+      ]
+    },
+    {
+      "id": "exhaustion_nested_06",
+      "phase": "nested",
+      "program": "exhaustion",
+      "nested_size": 6,
+      "genes": [
+        {
+          "gene": "TIGIT",
+          "ensembl_id": "ENSG00000181847"
+        },
+        {
+          "gene": "LAG3",
+          "ensembl_id": "ENSG00000089692"
+        },
+        {
+          "gene": "CTLA4",
+          "ensembl_id": "ENSG00000163599"
+        },
+        {
+          "gene": "PDCD1",
+          "ensembl_id": "ENSG00000188389"
+        },
+        {
+          "gene": "TOX",
+          "ensembl_id": "ENSG00000198846"
+        },
+        {
+          "gene": "HAVCR2",
+          "ensembl_id": "ENSG00000135077"
+        }
+      ]
+    },
+    {
+      "id": "exhaustion_nested_07",
+      "phase": "nested",
+      "program": "exhaustion",
+      "nested_size": 7,
+      "genes": [
+        {
+          "gene": "TIGIT",
+          "ensembl_id": "ENSG00000181847"
+        },
+        {
+          "gene": "LAG3",
+          "ensembl_id": "ENSG00000089692"
+        },
+        {
+          "gene": "CTLA4",
+          "ensembl_id": "ENSG00000163599"
+        },
+        {
+          "gene": "PDCD1",
+          "ensembl_id": "ENSG00000188389"
+        },
+        {
+          "gene": "TOX",
+          "ensembl_id": "ENSG00000198846"
+        },
+        {
+          "gene": "HAVCR2",
+          "ensembl_id": "ENSG00000135077"
+        },
+        {
+          "gene": "LAYN",
+          "ensembl_id": "ENSG00000204381"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_01",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 1,
+      "genes": [
+        {
+          "gene": "ATOX1",
+          "ensembl_id": "ENSG00000177556"
+        },
+        {
+          "gene": "ITGAL",
+          "ensembl_id": "ENSG00000005844"
+        },
+        {
+          "gene": "ACSS1",
+          "ensembl_id": "ENSG00000154930"
+        },
+        {
+          "gene": "PHF3",
+          "ensembl_id": "ENSG00000118482"
+        },
+        {
+          "gene": "TMEM160",
+          "ensembl_id": "ENSG00000130748"
+        },
+        {
+          "gene": "XIAP",
+          "ensembl_id": "ENSG00000101966"
+        },
+        {
+          "gene": "PM20D2",
+          "ensembl_id": "ENSG00000146281"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_02",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 2,
+      "genes": [
+        {
+          "gene": "UBE2E3",
+          "ensembl_id": "ENSG00000170035"
+        },
+        {
+          "gene": "MX1",
+          "ensembl_id": "ENSG00000157601"
+        },
+        {
+          "gene": "FLYWCH2",
+          "ensembl_id": "ENSG00000162076"
+        },
+        {
+          "gene": "ATF6B",
+          "ensembl_id": "ENSG00000213676"
+        },
+        {
+          "gene": "DGUOK",
+          "ensembl_id": "ENSG00000114956"
+        },
+        {
+          "gene": "IRAG2",
+          "ensembl_id": "ENSG00000118308"
+        },
+        {
+          "gene": "ZNF677",
+          "ensembl_id": "ENSG00000197928"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_03",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 3,
+      "genes": [
+        {
+          "gene": "IRS2",
+          "ensembl_id": "ENSG00000185950"
+        },
+        {
+          "gene": "NUDT5",
+          "ensembl_id": "ENSG00000165609"
+        },
+        {
+          "gene": "CCNY",
+          "ensembl_id": "ENSG00000108100"
+        },
+        {
+          "gene": "MTIF3",
+          "ensembl_id": "ENSG00000122033"
+        },
+        {
+          "gene": "CCT2",
+          "ensembl_id": "ENSG00000166226"
+        },
+        {
+          "gene": "ZDHHC6",
+          "ensembl_id": "ENSG00000023041"
+        },
+        {
+          "gene": "SLC9B2",
+          "ensembl_id": "ENSG00000164038"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_04",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 4,
+      "genes": [
+        {
+          "gene": "COPS8",
+          "ensembl_id": "ENSG00000198612"
+        },
+        {
+          "gene": "PSMC6",
+          "ensembl_id": "ENSG00000100519"
+        },
+        {
+          "gene": "YLPM1",
+          "ensembl_id": "ENSG00000119596"
+        },
+        {
+          "gene": "CNOT7",
+          "ensembl_id": "ENSG00000198791"
+        },
+        {
+          "gene": "PGLS",
+          "ensembl_id": "ENSG00000130313"
+        },
+        {
+          "gene": "SLC5A3",
+          "ensembl_id": "ENSG00000198743"
+        },
+        {
+          "gene": "PM20D2",
+          "ensembl_id": "ENSG00000146281"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_05",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 5,
+      "genes": [
+        {
+          "gene": "STK24",
+          "ensembl_id": "ENSG00000102572"
+        },
+        {
+          "gene": "NFKB1",
+          "ensembl_id": "ENSG00000109320"
+        },
+        {
+          "gene": "PDZD8",
+          "ensembl_id": "ENSG00000165650"
+        },
+        {
+          "gene": "PHF3",
+          "ensembl_id": "ENSG00000118482"
+        },
+        {
+          "gene": "CLTB",
+          "ensembl_id": "ENSG00000175416"
+        },
+        {
+          "gene": "PAN3",
+          "ensembl_id": "ENSG00000152520"
+        },
+        {
+          "gene": "SPAST",
+          "ensembl_id": "ENSG00000021574"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_06",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 6,
+      "genes": [
+        {
+          "gene": "COPS8",
+          "ensembl_id": "ENSG00000198612"
+        },
+        {
+          "gene": "CEP57",
+          "ensembl_id": "ENSG00000166037"
+        },
+        {
+          "gene": "ARL5A",
+          "ensembl_id": "ENSG00000162980"
+        },
+        {
+          "gene": "SUSD3",
+          "ensembl_id": "ENSG00000157303"
+        },
+        {
+          "gene": "PFKFB3",
+          "ensembl_id": "ENSG00000170525"
+        },
+        {
+          "gene": "ZDHHC6",
+          "ensembl_id": "ENSG00000023041"
+        },
+        {
+          "gene": "SLC1A4",
+          "ensembl_id": "ENSG00000115902"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_07",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 7,
+      "genes": [
+        {
+          "gene": "UBE2E3",
+          "ensembl_id": "ENSG00000170035"
+        },
+        {
+          "gene": "CD5",
+          "ensembl_id": "ENSG00000110448"
+        },
+        {
+          "gene": "GLYR1",
+          "ensembl_id": "ENSG00000140632"
+        },
+        {
+          "gene": "ATP6V1E1",
+          "ensembl_id": "ENSG00000131100"
+        },
+        {
+          "gene": "SAMHD1",
+          "ensembl_id": "ENSG00000101347"
+        },
+        {
+          "gene": "BABAM2",
+          "ensembl_id": "ENSG00000158019"
+        },
+        {
+          "gene": "ZNF827",
+          "ensembl_id": "ENSG00000151612"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_08",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 8,
+      "genes": [
+        {
+          "gene": "COPS8",
+          "ensembl_id": "ENSG00000198612"
+        },
+        {
+          "gene": "CEP57",
+          "ensembl_id": "ENSG00000166037"
+        },
+        {
+          "gene": "KYAT3",
+          "ensembl_id": "ENSG00000137944"
+        },
+        {
+          "gene": "ATP6V1E1",
+          "ensembl_id": "ENSG00000131100"
+        },
+        {
+          "gene": "CLNS1A",
+          "ensembl_id": "ENSG00000074201"
+        },
+        {
+          "gene": "EIF4G1",
+          "ensembl_id": "ENSG00000114867"
+        },
+        {
+          "gene": "ZNF677",
+          "ensembl_id": "ENSG00000197928"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_09",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 9,
+      "genes": [
+        {
+          "gene": "MIS18BP1",
+          "ensembl_id": "ENSG00000129534"
+        },
+        {
+          "gene": "WDR74",
+          "ensembl_id": "ENSG00000133316"
+        },
+        {
+          "gene": "CHD8",
+          "ensembl_id": "ENSG00000100888"
+        },
+        {
+          "gene": "INPP4B",
+          "ensembl_id": "ENSG00000109452"
+        },
+        {
+          "gene": "GLRX",
+          "ensembl_id": "ENSG00000173221"
+        },
+        {
+          "gene": "PAN3",
+          "ensembl_id": "ENSG00000152520"
+        },
+        {
+          "gene": "VILL",
+          "ensembl_id": "ENSG00000136059"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_10",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 10,
+      "genes": [
+        {
+          "gene": "SBNO1",
+          "ensembl_id": "ENSG00000139697"
+        },
+        {
+          "gene": "GRPEL1",
+          "ensembl_id": "ENSG00000109519"
+        },
+        {
+          "gene": "CDR2",
+          "ensembl_id": "ENSG00000140743"
+        },
+        {
+          "gene": "SP140",
+          "ensembl_id": "ENSG00000079263"
+        },
+        {
+          "gene": "HSD17B11",
+          "ensembl_id": "ENSG00000198189"
+        },
+        {
+          "gene": "MIDEAS",
+          "ensembl_id": "ENSG00000156030"
+        },
+        {
+          "gene": "MYO6",
+          "ensembl_id": "ENSG00000196586"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_11",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 11,
+      "genes": [
+        {
+          "gene": "CDC37L1",
+          "ensembl_id": "ENSG00000106993"
+        },
+        {
+          "gene": "WDR74",
+          "ensembl_id": "ENSG00000133316"
+        },
+        {
+          "gene": "SETD3",
+          "ensembl_id": "ENSG00000183576"
+        },
+        {
+          "gene": "INPP4B",
+          "ensembl_id": "ENSG00000109452"
+        },
+        {
+          "gene": "AKIRIN1",
+          "ensembl_id": "ENSG00000174574"
+        },
+        {
+          "gene": "KPNA6",
+          "ensembl_id": "ENSG00000025800"
+        },
+        {
+          "gene": "SPRYD7",
+          "ensembl_id": "ENSG00000123178"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_12",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 12,
+      "genes": [
+        {
+          "gene": "YIPF4",
+          "ensembl_id": "ENSG00000119820"
+        },
+        {
+          "gene": "OTUB1",
+          "ensembl_id": "ENSG00000167770"
+        },
+        {
+          "gene": "ACSS1",
+          "ensembl_id": "ENSG00000154930"
+        },
+        {
+          "gene": "IL6ST",
+          "ensembl_id": "ENSG00000134352"
+        },
+        {
+          "gene": "CLTB",
+          "ensembl_id": "ENSG00000175416"
+        },
+        {
+          "gene": "PAN3",
+          "ensembl_id": "ENSG00000152520"
+        },
+        {
+          "gene": "VCL",
+          "ensembl_id": "ENSG00000035403"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_13",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 13,
+      "genes": [
+        {
+          "gene": "BLOC1S4",
+          "ensembl_id": "ENSG00000186222"
+        },
+        {
+          "gene": "OTUB1",
+          "ensembl_id": "ENSG00000167770"
+        },
+        {
+          "gene": "SETD3",
+          "ensembl_id": "ENSG00000183576"
+        },
+        {
+          "gene": "NMRK1",
+          "ensembl_id": "ENSG00000106733"
+        },
+        {
+          "gene": "VAMP5",
+          "ensembl_id": "ENSG00000168899"
+        },
+        {
+          "gene": "GFER",
+          "ensembl_id": "ENSG00000127554"
+        },
+        {
+          "gene": "TPSAB1",
+          "ensembl_id": "ENSG00000172236"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_14",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 14,
+      "genes": [
+        {
+          "gene": "BNIP2",
+          "ensembl_id": "ENSG00000140299"
+        },
+        {
+          "gene": "ANXA2R",
+          "ensembl_id": "ENSG00000177721"
+        },
+        {
+          "gene": "SETD3",
+          "ensembl_id": "ENSG00000183576"
+        },
+        {
+          "gene": "RAB1A",
+          "ensembl_id": "ENSG00000138069"
+        },
+        {
+          "gene": "ARHGAP45",
+          "ensembl_id": "ENSG00000180448"
+        },
+        {
+          "gene": "EEF1E1",
+          "ensembl_id": "ENSG00000124802"
+        },
+        {
+          "gene": "PM20D2",
+          "ensembl_id": "ENSG00000146281"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_15",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 15,
+      "genes": [
+        {
+          "gene": "IRS2",
+          "ensembl_id": "ENSG00000185950"
+        },
+        {
+          "gene": "NCOA7",
+          "ensembl_id": "ENSG00000111912"
+        },
+        {
+          "gene": "TSPAN31",
+          "ensembl_id": "ENSG00000135452"
+        },
+        {
+          "gene": "INPP4B",
+          "ensembl_id": "ENSG00000109452"
+        },
+        {
+          "gene": "DGUOK",
+          "ensembl_id": "ENSG00000114956"
+        },
+        {
+          "gene": "ZC3H18",
+          "ensembl_id": "ENSG00000158545"
+        },
+        {
+          "gene": "SPATS2",
+          "ensembl_id": "ENSG00000123352"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_16",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 16,
+      "genes": [
+        {
+          "gene": "CDC37L1",
+          "ensembl_id": "ENSG00000106993"
+        },
+        {
+          "gene": "BCL7C",
+          "ensembl_id": "ENSG00000099385"
+        },
+        {
+          "gene": "TSPAN31",
+          "ensembl_id": "ENSG00000135452"
+        },
+        {
+          "gene": "PTPN1",
+          "ensembl_id": "ENSG00000196396"
+        },
+        {
+          "gene": "JOSD1",
+          "ensembl_id": "ENSG00000100221"
+        },
+        {
+          "gene": "XIAP",
+          "ensembl_id": "ENSG00000101966"
+        },
+        {
+          "gene": "TPSAB1",
+          "ensembl_id": "ENSG00000172236"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_17",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 17,
+      "genes": [
+        {
+          "gene": "IRS2",
+          "ensembl_id": "ENSG00000185950"
+        },
+        {
+          "gene": "MX1",
+          "ensembl_id": "ENSG00000157601"
+        },
+        {
+          "gene": "YLPM1",
+          "ensembl_id": "ENSG00000119596"
+        },
+        {
+          "gene": "ATP6V1E1",
+          "ensembl_id": "ENSG00000131100"
+        },
+        {
+          "gene": "VAMP5",
+          "ensembl_id": "ENSG00000168899"
+        },
+        {
+          "gene": "IRAG2",
+          "ensembl_id": "ENSG00000118308"
+        },
+        {
+          "gene": "FLNB",
+          "ensembl_id": "ENSG00000136068"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_18",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 18,
+      "genes": [
+        {
+          "gene": "BOLA3",
+          "ensembl_id": "ENSG00000163170"
+        },
+        {
+          "gene": "WDR74",
+          "ensembl_id": "ENSG00000133316"
+        },
+        {
+          "gene": "YLPM1",
+          "ensembl_id": "ENSG00000119596"
+        },
+        {
+          "gene": "MTIF3",
+          "ensembl_id": "ENSG00000122033"
+        },
+        {
+          "gene": "MT1X",
+          "ensembl_id": "ENSG00000187193"
+        },
+        {
+          "gene": "ACIN1",
+          "ensembl_id": "ENSG00000100813"
+        },
+        {
+          "gene": "HSPBAP1",
+          "ensembl_id": "ENSG00000169087"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_19",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 19,
+      "genes": [
+        {
+          "gene": "SLC66A3",
+          "ensembl_id": "ENSG00000162976"
+        },
+        {
+          "gene": "CEP57",
+          "ensembl_id": "ENSG00000166037"
+        },
+        {
+          "gene": "CCNY",
+          "ensembl_id": "ENSG00000108100"
+        },
+        {
+          "gene": "SUSD3",
+          "ensembl_id": "ENSG00000157303"
+        },
+        {
+          "gene": "M6PR",
+          "ensembl_id": "ENSG00000003056"
+        },
+        {
+          "gene": "CDK17",
+          "ensembl_id": "ENSG00000059758"
+        },
+        {
+          "gene": "ZNF677",
+          "ensembl_id": "ENSG00000197928"
+        }
+      ]
+    },
+    {
+      "id": "null_exhaustion_20",
+      "phase": "null",
+      "program": "exhaustion",
+      "null_iteration": 20,
+      "genes": [
+        {
+          "gene": "SBNO1",
+          "ensembl_id": "ENSG00000139697"
+        },
+        {
+          "gene": "BIRC2",
+          "ensembl_id": "ENSG00000110330"
+        },
+        {
+          "gene": "YLPM1",
+          "ensembl_id": "ENSG00000119596"
+        },
+        {
+          "gene": "SMC4",
+          "ensembl_id": "ENSG00000113810"
+        },
+        {
+          "gene": "GLRX",
+          "ensembl_id": "ENSG00000173221"
+        },
+        {
+          "gene": "DNAJB11",
+          "ensembl_id": "ENSG00000090520"
+        },
+        {
+          "gene": "SLC1A4",
+          "ensembl_id": "ENSG00000115902"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_01",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 1,
+      "genes": [
+        {
+          "gene": "CCNI",
+          "ensembl_id": "ENSG00000118816"
+        },
+        {
+          "gene": "PTGER4",
+          "ensembl_id": "ENSG00000171522"
+        },
+        {
+          "gene": "PSMA1",
+          "ensembl_id": "ENSG00000129084"
+        },
+        {
+          "gene": "PGAM1",
+          "ensembl_id": "ENSG00000171314"
+        },
+        {
+          "gene": "SF3B1",
+          "ensembl_id": "ENSG00000115524"
+        },
+        {
+          "gene": "RPAIN",
+          "ensembl_id": "ENSG00000129197"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_02",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 2,
+      "genes": [
+        {
+          "gene": "EIF4A2",
+          "ensembl_id": "ENSG00000156976"
+        },
+        {
+          "gene": "MBNL1",
+          "ensembl_id": "ENSG00000152601"
+        },
+        {
+          "gene": "CASP4",
+          "ensembl_id": "ENSG00000196954"
+        },
+        {
+          "gene": "LYAR",
+          "ensembl_id": "ENSG00000145220"
+        },
+        {
+          "gene": "TMEM123",
+          "ensembl_id": "ENSG00000152558"
+        },
+        {
+          "gene": "CCT5",
+          "ensembl_id": "ENSG00000150753"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_03",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 3,
+      "genes": [
+        {
+          "gene": "GMFG",
+          "ensembl_id": "ENSG00000130755"
+        },
+        {
+          "gene": "MYADM",
+          "ensembl_id": "ENSG00000179820"
+        },
+        {
+          "gene": "PSMA1",
+          "ensembl_id": "ENSG00000129084"
+        },
+        {
+          "gene": "LYAR",
+          "ensembl_id": "ENSG00000145220"
+        },
+        {
+          "gene": "RBX1",
+          "ensembl_id": "ENSG00000100387"
+        },
+        {
+          "gene": "PPP4R3A",
+          "ensembl_id": "ENSG00000100796"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_04",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 4,
+      "genes": [
+        {
+          "gene": "CCNI",
+          "ensembl_id": "ENSG00000118816"
+        },
+        {
+          "gene": "RESF1",
+          "ensembl_id": "ENSG00000174718"
+        },
+        {
+          "gene": "CEMIP2",
+          "ensembl_id": "ENSG00000135048"
+        },
+        {
+          "gene": "CKS2",
+          "ensembl_id": "ENSG00000123975"
+        },
+        {
+          "gene": "ATF4",
+          "ensembl_id": "ENSG00000128272"
+        },
+        {
+          "gene": "TMEM167A",
+          "ensembl_id": "ENSG00000174695"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_05",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 5,
+      "genes": [
+        {
+          "gene": "CHCHD2",
+          "ensembl_id": "ENSG00000106153"
+        },
+        {
+          "gene": "MBNL1",
+          "ensembl_id": "ENSG00000152601"
+        },
+        {
+          "gene": "EIF1AX",
+          "ensembl_id": "ENSG00000173674"
+        },
+        {
+          "gene": "PRMT9",
+          "ensembl_id": "ENSG00000164169"
+        },
+        {
+          "gene": "DDX18",
+          "ensembl_id": "ENSG00000088205"
+        },
+        {
+          "gene": "THEM4",
+          "ensembl_id": "ENSG00000159445"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_06",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 6,
+      "genes": [
+        {
+          "gene": "GMFG",
+          "ensembl_id": "ENSG00000130755"
+        },
+        {
+          "gene": "CACYBP",
+          "ensembl_id": "ENSG00000116161"
+        },
+        {
+          "gene": "ECH1",
+          "ensembl_id": "ENSG00000104823"
+        },
+        {
+          "gene": "PGAM1",
+          "ensembl_id": "ENSG00000171314"
+        },
+        {
+          "gene": "DUSP4",
+          "ensembl_id": "ENSG00000120875"
+        },
+        {
+          "gene": "CCT5",
+          "ensembl_id": "ENSG00000150753"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_07",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 7,
+      "genes": [
+        {
+          "gene": "SSR4",
+          "ensembl_id": "ENSG00000180879"
+        },
+        {
+          "gene": "NSD3",
+          "ensembl_id": "ENSG00000147548"
+        },
+        {
+          "gene": "UBE2I",
+          "ensembl_id": "ENSG00000103275"
+        },
+        {
+          "gene": "SRI",
+          "ensembl_id": "ENSG00000075142"
+        },
+        {
+          "gene": "DHX36",
+          "ensembl_id": "ENSG00000174953"
+        },
+        {
+          "gene": "RPAIN",
+          "ensembl_id": "ENSG00000129197"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_08",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 8,
+      "genes": [
+        {
+          "gene": "CD48",
+          "ensembl_id": "ENSG00000117091"
+        },
+        {
+          "gene": "ARHGDIA",
+          "ensembl_id": "ENSG00000141522"
+        },
+        {
+          "gene": "UBE2S",
+          "ensembl_id": "ENSG00000108106"
+        },
+        {
+          "gene": "LYAR",
+          "ensembl_id": "ENSG00000145220"
+        },
+        {
+          "gene": "CD164",
+          "ensembl_id": "ENSG00000135535"
+        },
+        {
+          "gene": "GIMAP2",
+          "ensembl_id": "ENSG00000106560"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_09",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 9,
+      "genes": [
+        {
+          "gene": "GZMA",
+          "ensembl_id": "ENSG00000145649"
+        },
+        {
+          "gene": "RAP1A",
+          "ensembl_id": "ENSG00000116473"
+        },
+        {
+          "gene": "NAP1L4",
+          "ensembl_id": "ENSG00000205531"
+        },
+        {
+          "gene": "EIF3A",
+          "ensembl_id": "ENSG00000107581"
+        },
+        {
+          "gene": "DHX36",
+          "ensembl_id": "ENSG00000174953"
+        },
+        {
+          "gene": "CCT5",
+          "ensembl_id": "ENSG00000150753"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_10",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 10,
+      "genes": [
+        {
+          "gene": "CYTIP",
+          "ensembl_id": "ENSG00000115165"
+        },
+        {
+          "gene": "RAP1A",
+          "ensembl_id": "ENSG00000116473"
+        },
+        {
+          "gene": "ENY2",
+          "ensembl_id": "ENSG00000120533"
+        },
+        {
+          "gene": "LAMTOR5",
+          "ensembl_id": "ENSG00000134248"
+        },
+        {
+          "gene": "DUSP4",
+          "ensembl_id": "ENSG00000120875"
+        },
+        {
+          "gene": "GALM",
+          "ensembl_id": "ENSG00000143891"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_11",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 11,
+      "genes": [
+        {
+          "gene": "EIF3K",
+          "ensembl_id": "ENSG00000178982"
+        },
+        {
+          "gene": "NCOR1",
+          "ensembl_id": "ENSG00000141027"
+        },
+        {
+          "gene": "UBE2S",
+          "ensembl_id": "ENSG00000108106"
+        },
+        {
+          "gene": "PBXIP1",
+          "ensembl_id": "ENSG00000163346"
+        },
+        {
+          "gene": "SCAF11",
+          "ensembl_id": "ENSG00000139218"
+        },
+        {
+          "gene": "RGPD5",
+          "ensembl_id": "ENSG00000015568"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_12",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 12,
+      "genes": [
+        {
+          "gene": "ARPC3",
+          "ensembl_id": "ENSG00000111229"
+        },
+        {
+          "gene": "RAP1A",
+          "ensembl_id": "ENSG00000116473"
+        },
+        {
+          "gene": "EIF3I",
+          "ensembl_id": "ENSG00000084623"
+        },
+        {
+          "gene": "LAMTOR5",
+          "ensembl_id": "ENSG00000134248"
+        },
+        {
+          "gene": "SOCS3",
+          "ensembl_id": "ENSG00000184557"
+        },
+        {
+          "gene": "KDM2A",
+          "ensembl_id": "ENSG00000173120"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_13",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 13,
+      "genes": [
+        {
+          "gene": "GZMA",
+          "ensembl_id": "ENSG00000145649"
+        },
+        {
+          "gene": "ARHGDIA",
+          "ensembl_id": "ENSG00000141522"
+        },
+        {
+          "gene": "RHOG",
+          "ensembl_id": "ENSG00000177105"
+        },
+        {
+          "gene": "PRDX6",
+          "ensembl_id": "ENSG00000117592"
+        },
+        {
+          "gene": "SF3B1",
+          "ensembl_id": "ENSG00000115524"
+        },
+        {
+          "gene": "RPAIN",
+          "ensembl_id": "ENSG00000129197"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_14",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 14,
+      "genes": [
+        {
+          "gene": "EIF3K",
+          "ensembl_id": "ENSG00000178982"
+        },
+        {
+          "gene": "REEP5",
+          "ensembl_id": "ENSG00000129625"
+        },
+        {
+          "gene": "UBE2S",
+          "ensembl_id": "ENSG00000108106"
+        },
+        {
+          "gene": "CD27",
+          "ensembl_id": "ENSG00000139193"
+        },
+        {
+          "gene": "VPS28",
+          "ensembl_id": "ENSG00000160948"
+        },
+        {
+          "gene": "GRK6",
+          "ensembl_id": "ENSG00000198055"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_15",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 15,
+      "genes": [
+        {
+          "gene": "GZMA",
+          "ensembl_id": "ENSG00000145649"
+        },
+        {
+          "gene": "REEP5",
+          "ensembl_id": "ENSG00000129625"
+        },
+        {
+          "gene": "EIF1AX",
+          "ensembl_id": "ENSG00000173674"
+        },
+        {
+          "gene": "PRMT9",
+          "ensembl_id": "ENSG00000164169"
+        },
+        {
+          "gene": "EPC1",
+          "ensembl_id": "ENSG00000120616"
+        },
+        {
+          "gene": "RPAIN",
+          "ensembl_id": "ENSG00000129197"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_16",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 16,
+      "genes": [
+        {
+          "gene": "TNFAIP3",
+          "ensembl_id": "ENSG00000118503"
+        },
+        {
+          "gene": "CD8A",
+          "ensembl_id": "ENSG00000153563"
+        },
+        {
+          "gene": "EIF3I",
+          "ensembl_id": "ENSG00000084623"
+        },
+        {
+          "gene": "SEPTIN1",
+          "ensembl_id": "ENSG00000180096"
+        },
+        {
+          "gene": "VPS28",
+          "ensembl_id": "ENSG00000160948"
+        },
+        {
+          "gene": "GALM",
+          "ensembl_id": "ENSG00000143891"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_17",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 17,
+      "genes": [
+        {
+          "gene": "CLIC1",
+          "ensembl_id": "ENSG00000213719"
+        },
+        {
+          "gene": "RESF1",
+          "ensembl_id": "ENSG00000174718"
+        },
+        {
+          "gene": "PTPN7",
+          "ensembl_id": "ENSG00000143851"
+        },
+        {
+          "gene": "EIF3A",
+          "ensembl_id": "ENSG00000107581"
+        },
+        {
+          "gene": "SNRPF",
+          "ensembl_id": "ENSG00000139343"
+        },
+        {
+          "gene": "PPP4R3A",
+          "ensembl_id": "ENSG00000100796"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_18",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 18,
+      "genes": [
+        {
+          "gene": "EIF3K",
+          "ensembl_id": "ENSG00000178982"
+        },
+        {
+          "gene": "REEP5",
+          "ensembl_id": "ENSG00000129625"
+        },
+        {
+          "gene": "BSG",
+          "ensembl_id": "ENSG00000172270"
+        },
+        {
+          "gene": "LYAR",
+          "ensembl_id": "ENSG00000145220"
+        },
+        {
+          "gene": "EPC1",
+          "ensembl_id": "ENSG00000120616"
+        },
+        {
+          "gene": "GALM",
+          "ensembl_id": "ENSG00000143891"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_19",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 19,
+      "genes": [
+        {
+          "gene": "JUN",
+          "ensembl_id": "ENSG00000177606"
+        },
+        {
+          "gene": "CFLAR",
+          "ensembl_id": "ENSG00000003402"
+        },
+        {
+          "gene": "ENSA",
+          "ensembl_id": "ENSG00000143420"
+        },
+        {
+          "gene": "CDC42SE1",
+          "ensembl_id": "ENSG00000197622"
+        },
+        {
+          "gene": "EPC1",
+          "ensembl_id": "ENSG00000120616"
+        },
+        {
+          "gene": "RPAIN",
+          "ensembl_id": "ENSG00000129197"
+        }
+      ]
+    },
+    {
+      "id": "null_cytotoxicity_20",
+      "phase": "null",
+      "program": "cytotoxicity",
+      "null_iteration": 20,
+      "genes": [
+        {
+          "gene": "TNFAIP3",
+          "ensembl_id": "ENSG00000118503"
+        },
+        {
+          "gene": "CACYBP",
+          "ensembl_id": "ENSG00000116161"
+        },
+        {
+          "gene": "PTPN7",
+          "ensembl_id": "ENSG00000143851"
+        },
+        {
+          "gene": "PGAM1",
+          "ensembl_id": "ENSG00000171314"
+        },
+        {
+          "gene": "DDX18",
+          "ensembl_id": "ENSG00000088205"
+        },
+        {
+          "gene": "RPAIN",
+          "ensembl_id": "ENSG00000129197"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_01",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 1,
+      "genes": [
+        {
+          "gene": "TYMP",
+          "ensembl_id": "ENSG00000025708"
+        },
+        {
+          "gene": "MEI1",
+          "ensembl_id": "ENSG00000167077"
+        },
+        {
+          "gene": "HCST",
+          "ensembl_id": "ENSG00000126264"
+        },
+        {
+          "gene": "EIF4A3",
+          "ensembl_id": "ENSG00000141543"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_02",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 2,
+      "genes": [
+        {
+          "gene": "AHSA1",
+          "ensembl_id": "ENSG00000100591"
+        },
+        {
+          "gene": "FBXO21",
+          "ensembl_id": "ENSG00000135108"
+        },
+        {
+          "gene": "KLF6",
+          "ensembl_id": "ENSG00000067082"
+        },
+        {
+          "gene": "NDUFS6",
+          "ensembl_id": "ENSG00000145494"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_03",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 3,
+      "genes": [
+        {
+          "gene": "MDH1",
+          "ensembl_id": "ENSG00000014641"
+        },
+        {
+          "gene": "SLC35E1",
+          "ensembl_id": "ENSG00000127526"
+        },
+        {
+          "gene": "COMMD6",
+          "ensembl_id": "ENSG00000188243"
+        },
+        {
+          "gene": "POLR2K",
+          "ensembl_id": "ENSG00000147669"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_04",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 4,
+      "genes": [
+        {
+          "gene": "NONO",
+          "ensembl_id": "ENSG00000147140"
+        },
+        {
+          "gene": "TNPO1",
+          "ensembl_id": "ENSG00000083312"
+        },
+        {
+          "gene": "ANXA1",
+          "ensembl_id": "ENSG00000135046"
+        },
+        {
+          "gene": "KIF5B",
+          "ensembl_id": "ENSG00000170759"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_05",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 5,
+      "genes": [
+        {
+          "gene": "HMOX2",
+          "ensembl_id": "ENSG00000103415"
+        },
+        {
+          "gene": "WDR45B",
+          "ensembl_id": "ENSG00000141580"
+        },
+        {
+          "gene": "FXYD5",
+          "ensembl_id": "ENSG00000089327"
+        },
+        {
+          "gene": "SRP9",
+          "ensembl_id": "ENSG00000143742"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_06",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 6,
+      "genes": [
+        {
+          "gene": "OGA",
+          "ensembl_id": "ENSG00000198408"
+        },
+        {
+          "gene": "TFAM",
+          "ensembl_id": "ENSG00000108064"
+        },
+        {
+          "gene": "ANXA1",
+          "ensembl_id": "ENSG00000135046"
+        },
+        {
+          "gene": "ZNF706",
+          "ensembl_id": "ENSG00000120963"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_07",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 7,
+      "genes": [
+        {
+          "gene": "TOMM22",
+          "ensembl_id": "ENSG00000100216"
+        },
+        {
+          "gene": "TNPO1",
+          "ensembl_id": "ENSG00000083312"
+        },
+        {
+          "gene": "COMMD6",
+          "ensembl_id": "ENSG00000188243"
+        },
+        {
+          "gene": "NDUFS6",
+          "ensembl_id": "ENSG00000145494"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_08",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 8,
+      "genes": [
+        {
+          "gene": "MDH1",
+          "ensembl_id": "ENSG00000014641"
+        },
+        {
+          "gene": "MEI1",
+          "ensembl_id": "ENSG00000167077"
+        },
+        {
+          "gene": "FXYD5",
+          "ensembl_id": "ENSG00000089327"
+        },
+        {
+          "gene": "ZNF706",
+          "ensembl_id": "ENSG00000120963"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_09",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 9,
+      "genes": [
+        {
+          "gene": "KMT2A",
+          "ensembl_id": "ENSG00000118058"
+        },
+        {
+          "gene": "LARS1",
+          "ensembl_id": "ENSG00000133706"
+        },
+        {
+          "gene": "CD3E",
+          "ensembl_id": "ENSG00000198851"
+        },
+        {
+          "gene": "PDIA6",
+          "ensembl_id": "ENSG00000143870"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_10",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 10,
+      "genes": [
+        {
+          "gene": "LSM5",
+          "ensembl_id": "ENSG00000106355"
+        },
+        {
+          "gene": "NSFL1C",
+          "ensembl_id": "ENSG00000088833"
+        },
+        {
+          "gene": "FXYD5",
+          "ensembl_id": "ENSG00000089327"
+        },
+        {
+          "gene": "NDUFS6",
+          "ensembl_id": "ENSG00000145494"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_11",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 11,
+      "genes": [
+        {
+          "gene": "KMT2A",
+          "ensembl_id": "ENSG00000118058"
+        },
+        {
+          "gene": "USP11",
+          "ensembl_id": "ENSG00000102226"
+        },
+        {
+          "gene": "ZFP36",
+          "ensembl_id": "ENSG00000128016"
+        },
+        {
+          "gene": "KIF5B",
+          "ensembl_id": "ENSG00000170759"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_12",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 12,
+      "genes": [
+        {
+          "gene": "BANF1",
+          "ensembl_id": "ENSG00000175334"
+        },
+        {
+          "gene": "MAGEH1",
+          "ensembl_id": "ENSG00000187601"
+        },
+        {
+          "gene": "EEF2",
+          "ensembl_id": "ENSG00000167658"
+        },
+        {
+          "gene": "BCLAF1",
+          "ensembl_id": "ENSG00000029363"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_13",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 13,
+      "genes": [
+        {
+          "gene": "AHSA1",
+          "ensembl_id": "ENSG00000100591"
+        },
+        {
+          "gene": "USP11",
+          "ensembl_id": "ENSG00000102226"
+        },
+        {
+          "gene": "ATP5MG",
+          "ensembl_id": "ENSG00000167283"
+        },
+        {
+          "gene": "NIBAN1",
+          "ensembl_id": "ENSG00000135842"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_14",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 14,
+      "genes": [
+        {
+          "gene": "HMOX2",
+          "ensembl_id": "ENSG00000103415"
+        },
+        {
+          "gene": "GIMAP6",
+          "ensembl_id": "ENSG00000133561"
+        },
+        {
+          "gene": "FXYD5",
+          "ensembl_id": "ENSG00000089327"
+        },
+        {
+          "gene": "EIF4A3",
+          "ensembl_id": "ENSG00000141543"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_15",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 15,
+      "genes": [
+        {
+          "gene": "AHSA1",
+          "ensembl_id": "ENSG00000100591"
+        },
+        {
+          "gene": "NSFL1C",
+          "ensembl_id": "ENSG00000088833"
+        },
+        {
+          "gene": "HMGB1",
+          "ensembl_id": "ENSG00000189403"
+        },
+        {
+          "gene": "ZNF706",
+          "ensembl_id": "ENSG00000120963"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_16",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 16,
+      "genes": [
+        {
+          "gene": "KMT2A",
+          "ensembl_id": "ENSG00000118058"
+        },
+        {
+          "gene": "NSFL1C",
+          "ensembl_id": "ENSG00000088833"
+        },
+        {
+          "gene": "PTPRC",
+          "ensembl_id": "ENSG00000081237"
+        },
+        {
+          "gene": "GADD45A",
+          "ensembl_id": "ENSG00000116717"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_17",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 17,
+      "genes": [
+        {
+          "gene": "TOMM22",
+          "ensembl_id": "ENSG00000100216"
+        },
+        {
+          "gene": "MEI1",
+          "ensembl_id": "ENSG00000167077"
+        },
+        {
+          "gene": "ANXA1",
+          "ensembl_id": "ENSG00000135046"
+        },
+        {
+          "gene": "TUFM",
+          "ensembl_id": "ENSG00000178952"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_18",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 18,
+      "genes": [
+        {
+          "gene": "VASP",
+          "ensembl_id": "ENSG00000125753"
+        },
+        {
+          "gene": "WDR45B",
+          "ensembl_id": "ENSG00000141580"
+        },
+        {
+          "gene": "PPIA",
+          "ensembl_id": "ENSG00000196262"
+        },
+        {
+          "gene": "RBMS1",
+          "ensembl_id": "ENSG00000153250"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_19",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 19,
+      "genes": [
+        {
+          "gene": "NME3",
+          "ensembl_id": "ENSG00000103024"
+        },
+        {
+          "gene": "YBEY",
+          "ensembl_id": "ENSG00000182362"
+        },
+        {
+          "gene": "ZFP36",
+          "ensembl_id": "ENSG00000128016"
+        },
+        {
+          "gene": "KIF5B",
+          "ensembl_id": "ENSG00000170759"
+        }
+      ]
+    },
+    {
+      "id": "null_progenitor_20",
+      "phase": "null",
+      "program": "progenitor",
+      "null_iteration": 20,
+      "genes": [
+        {
+          "gene": "VASP",
+          "ensembl_id": "ENSG00000125753"
+        },
+        {
+          "gene": "WDR45B",
+          "ensembl_id": "ENSG00000141580"
+        },
+        {
+          "gene": "TXNIP",
+          "ensembl_id": "ENSG00000265972"
+        },
+        {
+          "gene": "SRP9",
+          "ensembl_id": "ENSG00000143742"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_01",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 1,
+      "genes": [
+        {
+          "gene": "FANCB",
+          "ensembl_id": "ENSG00000181544"
+        },
+        {
+          "gene": "GSDME",
+          "ensembl_id": "ENSG00000105928"
+        },
+        {
+          "gene": "SNX31",
+          "ensembl_id": "ENSG00000174226"
+        },
+        {
+          "gene": "HBM",
+          "ensembl_id": "ENSG00000206177"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_02",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 2,
+      "genes": [
+        {
+          "gene": "ST6GALNAC1",
+          "ensembl_id": "ENSG00000070526"
+        },
+        {
+          "gene": "LONRF2",
+          "ensembl_id": "ENSG00000170500"
+        },
+        {
+          "gene": "VSX2",
+          "ensembl_id": "ENSG00000119614"
+        },
+        {
+          "gene": "DIRAS3",
+          "ensembl_id": "ENSG00000162595"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_03",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 3,
+      "genes": [
+        {
+          "gene": "TMEM143",
+          "ensembl_id": "ENSG00000161558"
+        },
+        {
+          "gene": "CHADL",
+          "ensembl_id": "ENSG00000100399"
+        },
+        {
+          "gene": "HES5",
+          "ensembl_id": "ENSG00000197921"
+        },
+        {
+          "gene": "ULBP1",
+          "ensembl_id": "ENSG00000111981"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_04",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 4,
+      "genes": [
+        {
+          "gene": "ST6GALNAC1",
+          "ensembl_id": "ENSG00000070526"
+        },
+        {
+          "gene": "STAC3",
+          "ensembl_id": "ENSG00000185482"
+        },
+        {
+          "gene": "LIX1",
+          "ensembl_id": "ENSG00000145721"
+        },
+        {
+          "gene": "GPRIN1",
+          "ensembl_id": "ENSG00000169258"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_05",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 5,
+      "genes": [
+        {
+          "gene": "TNS3",
+          "ensembl_id": "ENSG00000136205"
+        },
+        {
+          "gene": "AGBL2",
+          "ensembl_id": "ENSG00000165923"
+        },
+        {
+          "gene": "VTCN1",
+          "ensembl_id": "ENSG00000134258"
+        },
+        {
+          "gene": "SEMA6A",
+          "ensembl_id": "ENSG00000092421"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_06",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 6,
+      "genes": [
+        {
+          "gene": "AXIN2",
+          "ensembl_id": "ENSG00000168646"
+        },
+        {
+          "gene": "PNMT",
+          "ensembl_id": "ENSG00000141744"
+        },
+        {
+          "gene": "TERT",
+          "ensembl_id": "ENSG00000164362"
+        },
+        {
+          "gene": "HBM",
+          "ensembl_id": "ENSG00000206177"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_07",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 7,
+      "genes": [
+        {
+          "gene": "PTPRF",
+          "ensembl_id": "ENSG00000142949"
+        },
+        {
+          "gene": "ADGRF5",
+          "ensembl_id": "ENSG00000069122"
+        },
+        {
+          "gene": "VWA5B1",
+          "ensembl_id": "ENSG00000158816"
+        },
+        {
+          "gene": "TCAP",
+          "ensembl_id": "ENSG00000173991"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_08",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 8,
+      "genes": [
+        {
+          "gene": "PDZD4",
+          "ensembl_id": "ENSG00000067840"
+        },
+        {
+          "gene": "FGB",
+          "ensembl_id": "ENSG00000171564"
+        },
+        {
+          "gene": "LRRC8E",
+          "ensembl_id": "ENSG00000171017"
+        },
+        {
+          "gene": "TCAP",
+          "ensembl_id": "ENSG00000173991"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_09",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 9,
+      "genes": [
+        {
+          "gene": "GABBR1",
+          "ensembl_id": "ENSG00000204681"
+        },
+        {
+          "gene": "FBXO15",
+          "ensembl_id": "ENSG00000141665"
+        },
+        {
+          "gene": "BPI",
+          "ensembl_id": "ENSG00000101425"
+        },
+        {
+          "gene": "ULBP1",
+          "ensembl_id": "ENSG00000111981"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_10",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 10,
+      "genes": [
+        {
+          "gene": "FEZ1",
+          "ensembl_id": "ENSG00000149557"
+        },
+        {
+          "gene": "FBXO15",
+          "ensembl_id": "ENSG00000141665"
+        },
+        {
+          "gene": "C8A",
+          "ensembl_id": "ENSG00000157131"
+        },
+        {
+          "gene": "CDK18",
+          "ensembl_id": "ENSG00000117266"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_11",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 11,
+      "genes": [
+        {
+          "gene": "GPR146",
+          "ensembl_id": "ENSG00000164849"
+        },
+        {
+          "gene": "CHADL",
+          "ensembl_id": "ENSG00000100399"
+        },
+        {
+          "gene": "SNX31",
+          "ensembl_id": "ENSG00000174226"
+        },
+        {
+          "gene": "CLEC18A",
+          "ensembl_id": "ENSG00000157322"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_12",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 12,
+      "genes": [
+        {
+          "gene": "ZNF365",
+          "ensembl_id": "ENSG00000138311"
+        },
+        {
+          "gene": "CAMP",
+          "ensembl_id": "ENSG00000164047"
+        },
+        {
+          "gene": "LRRC8E",
+          "ensembl_id": "ENSG00000171017"
+        },
+        {
+          "gene": "CLEC18A",
+          "ensembl_id": "ENSG00000157322"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_13",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 13,
+      "genes": [
+        {
+          "gene": "FCSK",
+          "ensembl_id": "ENSG00000157353"
+        },
+        {
+          "gene": "ZNF491",
+          "ensembl_id": "ENSG00000177599"
+        },
+        {
+          "gene": "FREM1",
+          "ensembl_id": "ENSG00000164946"
+        },
+        {
+          "gene": "DIRAS3",
+          "ensembl_id": "ENSG00000162595"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_14",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 14,
+      "genes": [
+        {
+          "gene": "ZNF597",
+          "ensembl_id": "ENSG00000167981"
+        },
+        {
+          "gene": "PLAC9",
+          "ensembl_id": "ENSG00000189129"
+        },
+        {
+          "gene": "VSX2",
+          "ensembl_id": "ENSG00000119614"
+        },
+        {
+          "gene": "ULBP1",
+          "ensembl_id": "ENSG00000111981"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_15",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 15,
+      "genes": [
+        {
+          "gene": "ABTB3",
+          "ensembl_id": "ENSG00000151136"
+        },
+        {
+          "gene": "FGB",
+          "ensembl_id": "ENSG00000171564"
+        },
+        {
+          "gene": "VSX2",
+          "ensembl_id": "ENSG00000119614"
+        },
+        {
+          "gene": "SPDYE1",
+          "ensembl_id": "ENSG00000136206"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_16",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 16,
+      "genes": [
+        {
+          "gene": "ABTB3",
+          "ensembl_id": "ENSG00000151136"
+        },
+        {
+          "gene": "SPTBN4",
+          "ensembl_id": "ENSG00000160460"
+        },
+        {
+          "gene": "HES5",
+          "ensembl_id": "ENSG00000197921"
+        },
+        {
+          "gene": "CACNB4",
+          "ensembl_id": "ENSG00000182389"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_17",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 17,
+      "genes": [
+        {
+          "gene": "PAQR6",
+          "ensembl_id": "ENSG00000160781"
+        },
+        {
+          "gene": "OAZ3",
+          "ensembl_id": "ENSG00000143450"
+        },
+        {
+          "gene": "RHBDL2",
+          "ensembl_id": "ENSG00000158315"
+        },
+        {
+          "gene": "IGLL5",
+          "ensembl_id": "ENSG00000254709"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_18",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 18,
+      "genes": [
+        {
+          "gene": "GABBR1",
+          "ensembl_id": "ENSG00000204681"
+        },
+        {
+          "gene": "SMIM10",
+          "ensembl_id": "ENSG00000184785"
+        },
+        {
+          "gene": "LRRC8E",
+          "ensembl_id": "ENSG00000171017"
+        },
+        {
+          "gene": "ZNF556",
+          "ensembl_id": "ENSG00000172000"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_19",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 19,
+      "genes": [
+        {
+          "gene": "DLG5",
+          "ensembl_id": "ENSG00000151208"
+        },
+        {
+          "gene": "PLAC9",
+          "ensembl_id": "ENSG00000189129"
+        },
+        {
+          "gene": "LIX1",
+          "ensembl_id": "ENSG00000145721"
+        },
+        {
+          "gene": "VIL1",
+          "ensembl_id": "ENSG00000127831"
+        }
+      ]
+    },
+    {
+      "id": "null_sclc_subtype_tf_20",
+      "phase": "null",
+      "program": "sclc_subtype_tf",
+      "null_iteration": 20,
+      "genes": [
+        {
+          "gene": "PDZD4",
+          "ensembl_id": "ENSG00000067840"
+        },
+        {
+          "gene": "AGBL2",
+          "ensembl_id": "ENSG00000165923"
+        },
+        {
+          "gene": "VSX2",
+          "ensembl_id": "ENSG00000119614"
+        },
+        {
+          "gene": "TCAP",
+          "ensembl_id": "ENSG00000173991"
+        }
+      ]
+    }
+  ],
+  "null_match_audit": [
+    {
+      "program": "exhaustion",
+      "iteration": 1,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "ATOX1",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1782174695514557
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 1,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "ITGAL",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22926618034339338
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 1,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "ACSS1",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08661903772165938
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 1,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "PHF3",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2423502928015357
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 1,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "TMEM160",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3410796765063453
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 1,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "XIAP",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.1279386217681561
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 1,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "PM20D2",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03449315551562333
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 2,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "UBE2E3",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1779553226501013
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 2,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "MX1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22784649377839394
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 2,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "FLYWCH2",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08629550428207315
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 2,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "ATF6B",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2436492335651061
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 2,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "DGUOK",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3421474200202624
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 2,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "IRAG2",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12837392706622586
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 2,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "ZNF677",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.034546503323024426
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 3,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "IRS2",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1787952134179375
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 3,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "NUDT5",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22899421337847928
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 3,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "CCNY",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08641545819131918
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 3,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "MTIF3",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24123887786072307
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 3,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "CCT2",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3410556840855284
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 3,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "ZDHHC6",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12817165167324307
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 3,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "SLC9B2",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03446638805662791
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 4,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "COPS8",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.179374281236003
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 4,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "PSMC6",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22906680144289218
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 4,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "YLPM1",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08679970236301589
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 4,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "CNOT7",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24149704719633147
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 4,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "PGLS",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3437601127183534
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 4,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "SLC5A3",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12755540110696384
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 4,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "PM20D2",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03449315551562333
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 5,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "STK24",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.17929353086488214
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 5,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "NFKB1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22790529697728484
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 5,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "PDZD8",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08668991019782447
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 5,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "PHF3",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2423502928015357
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 5,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "CLTB",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.34126065685827023
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 5,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "PAN3",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12774901596246133
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 5,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "SPAST",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03451981321318119
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 6,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "COPS8",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.179374281236003
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 6,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "CEP57",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22846290893676016
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 6,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "ARL5A",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.0867950196491415
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 6,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "SUSD3",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24321051985603076
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 6,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "PFKFB3",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.34116421250719847
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 6,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "ZDHHC6",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12817165167324307
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 6,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "SLC1A4",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03434752483651488
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 7,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "UBE2E3",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1779553226501013
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 7,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "CD5",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22965733372080624
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 7,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "GLYR1",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.0868149362962568
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 7,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "ATP6V1E1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24329712771888665
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 7,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "SAMHD1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3452894148597633
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 7,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "BABAM2",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.1284362326488216
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 7,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "ZNF827",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.034312201917884186
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 8,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "COPS8",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.179374281236003
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 8,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "CEP57",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22846290893676016
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 8,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "KYAT3",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08649211389890157
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 8,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "ATP6V1E1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24329712771888665
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 8,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "CLNS1A",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.34324677025061323
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 8,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "EIF4G1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12843271398741601
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 8,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "ZNF677",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.034546503323024426
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 9,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "MIS18BP1",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1786907216551136
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 9,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "WDR74",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22830916690626002
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 9,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "CHD8",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.0865248131973979
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 9,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "INPP4B",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24310345971846006
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 9,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "GLRX",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3400781795883545
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 9,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "PAN3",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12774901596246133
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 9,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "VILL",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03432435487746614
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 10,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "SBNO1",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.17903723203369948
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 10,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "GRPEL1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22775468955529485
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 10,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "CDR2",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08649148128495254
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 10,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "SP140",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2411295836194945
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 10,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "HSD17B11",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3411663674725392
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 10,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "MIDEAS",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12782392450570543
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 10,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "MYO6",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03434165722384558
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 11,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "CDC37L1",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.17815948467100354
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 11,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "WDR74",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22830916690626002
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 11,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "SETD3",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.0866950165748107
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 11,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "INPP4B",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24310345971846006
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 11,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "AKIRIN1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.345299450682521
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 11,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "KPNA6",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12817270225765168
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 11,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "SPRYD7",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03440788627770075
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 12,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "YIPF4",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1784862157353098
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 12,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "OTUB1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2277969181913192
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 12,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "ACSS1",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08661903772165938
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 12,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "IL6ST",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24145283079663005
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 12,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "CLTB",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.34126065685827023
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 12,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "PAN3",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12774901596246133
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 12,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "VCL",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.0344026616415698
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 13,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "BLOC1S4",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1781579194166578
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 13,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "OTUB1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2277969181913192
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 13,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "SETD3",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.0866950165748107
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 13,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "NMRK1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2427975297173936
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 13,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "VAMP5",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.34505023538231844
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 13,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "GFER",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12817856942945505
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 13,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "TPSAB1",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.0343147314846966
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 14,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "BNIP2",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1785373257545057
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 14,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "ANXA2R",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22902786692545588
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 14,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "SETD3",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.0866950165748107
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 14,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "RAB1A",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24169676397781806
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 14,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "ARHGAP45",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3457535143457396
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 14,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "EEF1E1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12779523620774236
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 14,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "PM20D2",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03449315551562333
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 15,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "IRS2",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1787952134179375
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 15,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "NCOA7",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22838051766876402
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 15,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "TSPAN31",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08654073495744907
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 15,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "INPP4B",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24310345971846006
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 15,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "DGUOK",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3421474200202624
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 15,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "ZC3H18",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.127726704303082
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 15,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "SPATS2",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03433761308712808
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 16,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "CDC37L1",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.17815948467100354
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 16,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "BCL7C",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22736337188333156
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 16,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "TSPAN31",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08654073495744907
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 16,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "PTPN1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24114728230990726
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 16,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "JOSD1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.34282100820838224
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 16,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "XIAP",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.1279386217681561
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 16,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "TPSAB1",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.0343147314846966
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 17,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "IRS2",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1787952134179375
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 17,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "MX1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22784649377839394
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 17,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "YLPM1",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08679970236301589
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 17,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "ATP6V1E1",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24329712771888665
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 17,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "VAMP5",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.34505023538231844
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 17,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "IRAG2",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12837392706622586
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 17,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "FLNB",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03433405422405887
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 18,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "BOLA3",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.17810095864775516
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 18,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "WDR74",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22830916690626002
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 18,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "YLPM1",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08679970236301589
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 18,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "MTIF3",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24123887786072307
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 18,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "MT1X",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3415889932995627
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 18,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "ACIN1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12804472939959474
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 18,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "HSPBAP1",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03447067217510932
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 19,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "SLC66A3",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.1785080537090754
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 19,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "CEP57",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22846290893676016
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 19,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "CCNY",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08641545819131918
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 19,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "SUSD3",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24321051985603076
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 19,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "M6PR",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.34597355245707584
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 19,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "CDK17",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12765112535992323
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 19,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "ZNF677",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.034546503323024426
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 20,
+      "target_gene": "PDCD1",
+      "target_expression_bin": 16,
+      "target_mean_log1p_cp10k": 0.17861158894422524,
+      "matched_gene": "SBNO1",
+      "matched_expression_bin": 16,
+      "matched_mean_log1p_cp10k": 0.17903723203369948
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 20,
+      "target_gene": "CTLA4",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.22848747358110272,
+      "matched_gene": "BIRC2",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.22957541106323984
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 20,
+      "target_gene": "HAVCR2",
+      "target_expression_bin": 14,
+      "target_mean_log1p_cp10k": 0.0865036997301909,
+      "matched_gene": "YLPM1",
+      "matched_expression_bin": 14,
+      "matched_mean_log1p_cp10k": 0.08679970236301589
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 20,
+      "target_gene": "LAG3",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.2422477511282926,
+      "matched_gene": "SMC4",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.24095996791084567
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 20,
+      "target_gene": "TIGIT",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.34276314501013116,
+      "matched_gene": "GLRX",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3400781795883545
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 20,
+      "target_gene": "TOX",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12793096726671643,
+      "matched_gene": "DNAJB11",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12765019010557746
+    },
+    {
+      "program": "exhaustion",
+      "iteration": 20,
+      "target_gene": "LAYN",
+      "target_expression_bin": 10,
+      "target_mean_log1p_cp10k": 0.034432892408232905,
+      "matched_gene": "SLC1A4",
+      "matched_expression_bin": 10,
+      "matched_mean_log1p_cp10k": 0.03434752483651488
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 1,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "CCNI",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3580218752586113
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 1,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "PTGER4",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5991418119835767
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 1,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "PSMA1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5044460909246027
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 1,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "PGAM1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4922364829423056
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 1,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "SF3B1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5648992438615762
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 1,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "RPAIN",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2368220852959369
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 2,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "EIF4A2",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3461232639543563
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 2,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "MBNL1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.6029072412445345
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 2,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "CASP4",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5065000756084036
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 2,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "LYAR",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.49075149558494185
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 2,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "TMEM123",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5665047715463367
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 2,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "CCT5",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2371251465362056
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 3,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "GMFG",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3653536100565213
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 3,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "MYADM",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5929464211666844
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 3,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "PSMA1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5044460909246027
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 3,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "LYAR",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.49075149558494185
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 3,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "RBX1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5672420032313107
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 3,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "PPP4R3A",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.23841782697237923
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 4,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "CCNI",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3580218752586113
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 4,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "RESF1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5999901747787139
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 4,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "CEMIP2",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5050538073925562
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 4,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "CKS2",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4952843157619708
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 4,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "ATF4",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5646524026682308
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 4,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "TMEM167A",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.23831009806974512
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 5,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "CHCHD2",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3844765305321534
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 5,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "MBNL1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.6029072412445345
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 5,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "EIF1AX",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5065678436173616
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 5,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "PRMT9",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4911616786648182
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 5,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "DDX18",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5646767191105898
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 5,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "THEM4",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2369004942678895
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 6,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "GMFG",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3653536100565213
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 6,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "CACYBP",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.6007755262695957
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 6,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "ECH1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5050378423578971
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 6,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "PGAM1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4922364829423056
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 6,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "DUSP4",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5748969005353525
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 6,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "CCT5",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2371251465362056
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 7,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "SSR4",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.2886072410045857
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 7,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "NSD3",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5933366812296044
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 7,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "UBE2I",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5086726124058867
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 7,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "SRI",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.497037683979951
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 7,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "DHX36",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5728610691383171
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 7,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "RPAIN",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2368220852959369
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 8,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "CD48",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3843008235683054
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 8,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "ARHGDIA",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5993550810941666
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 8,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "UBE2S",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5084365868849312
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 8,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "LYAR",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.49075149558494185
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 8,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "CD164",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5660854759816573
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 8,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "GIMAP2",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2373640184280687
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 9,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "GZMA",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.2984591486509545
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 9,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "RAP1A",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5994201104724325
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 9,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "NAP1L4",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5048607630926735
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 9,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "EIF3A",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4863302695446305
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 9,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "DHX36",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5728610691383171
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 9,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "CCT5",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2371251465362056
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 10,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "CYTIP",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3047334032313105
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 10,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "RAP1A",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5994201104724325
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 10,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "ENY2",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5093810781817212
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 10,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "LAMTOR5",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4903278009704596
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 10,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "DUSP4",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5748969005353525
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 10,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "GALM",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.23862466755252212
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 11,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "EIF3K",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.2915024136610858
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 11,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "NCOR1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5996991036621521
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 11,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "UBE2S",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5084365868849312
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 11,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "PBXIP1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.48735278310120506
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 11,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "SCAF11",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.575869962365362
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 11,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "RGPD5",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.23677653503252638
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 12,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "ARPC3",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3830981236002986
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 12,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "RAP1A",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5994201104724325
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 12,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "EIF3I",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5088695600213288
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 12,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "LAMTOR5",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4903278009704596
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 12,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "SOCS3",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5740665067633571
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 12,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "KDM2A",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2375831426319719
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 13,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "GZMA",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.2984591486509545
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 13,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "ARHGDIA",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5993550810941666
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 13,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "RHOG",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5103834373285699
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 13,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "PRDX6",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4899640169073264
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 13,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "SF3B1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5648992438615762
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 13,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "RPAIN",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2368220852959369
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 14,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "EIF3K",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.2915024136610858
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 14,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "REEP5",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5949596842294976
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 14,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "UBE2S",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5084365868849312
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 14,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "CD27",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4966231713789058
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 14,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "VPS28",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5757767364338274
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 14,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "GRK6",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.23757191326970242
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 15,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "GZMA",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.2984591486509545
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 15,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "REEP5",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5949596842294976
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 15,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "EIF1AX",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5065678436173616
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 15,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "PRMT9",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4911616786648182
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 15,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "EPC1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5721665499648075
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 15,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "RPAIN",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2368220852959369
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 16,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "TNFAIP3",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3197127624080196
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 16,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "CD8A",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.602060847661299
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 16,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "EIF3I",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5088695600213288
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 16,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "SEPTIN1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.48840693564146315
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 16,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "VPS28",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5757767364338274
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 16,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "GALM",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.23862466755252212
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 17,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "CLIC1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3709493761437561
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 17,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "RESF1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5999901747787139
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 17,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "PTPN7",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5075794824410793
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 17,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "EIF3A",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4863302695446305
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 17,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "SNRPF",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5663848134328677
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 17,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "PPP4R3A",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.23841782697237923
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 18,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "EIF3K",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.2915024136610858
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 18,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "REEP5",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5949596842294976
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 18,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "BSG",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5073167206068039
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 18,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "LYAR",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.49075149558494185
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 18,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "EPC1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5721665499648075
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 18,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "GALM",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.23862466755252212
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 19,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "JUN",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3765336792534926
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 19,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "CFLAR",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5936837506387971
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 19,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "ENSA",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5084500000597206
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 19,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "CDC42SE1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.492375385337528
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 19,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "EPC1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5721665499648075
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 19,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "RPAIN",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2368220852959369
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 20,
+      "target_gene": "NKG7",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.339832238018556,
+      "matched_gene": "TNFAIP3",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.3197127624080196
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 20,
+      "target_gene": "GNLY",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5976568125786499,
+      "matched_gene": "CACYBP",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.6007755262695957
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 20,
+      "target_gene": "PRF1",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5073631021776688,
+      "matched_gene": "PTPN7",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5075794824410793
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 20,
+      "target_gene": "GZMB",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.5009363527354164,
+      "matched_gene": "PGAM1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4922364829423056
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 20,
+      "target_gene": "GZMH",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 0.5706695748213715,
+      "matched_gene": "DDX18",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 0.5646767191105898
+    },
+    {
+      "program": "cytotoxicity",
+      "iteration": 20,
+      "target_gene": "IFNG",
+      "target_expression_bin": 17,
+      "target_mean_log1p_cp10k": 0.23778727418364082,
+      "matched_gene": "RPAIN",
+      "matched_expression_bin": 17,
+      "matched_mean_log1p_cp10k": 0.2368220852959369
+    },
+    {
+      "program": "progenitor",
+      "iteration": 1,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "TYMP",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.32861952674416123
+    },
+    {
+      "program": "progenitor",
+      "iteration": 1,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "MEI1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12435563034872561
+    },
+    {
+      "program": "progenitor",
+      "iteration": 1,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "HCST",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6985267594219897
+    },
+    {
+      "program": "progenitor",
+      "iteration": 1,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "EIF4A3",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4383288743734669
+    },
+    {
+      "program": "progenitor",
+      "iteration": 2,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "AHSA1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3279761256286659
+    },
+    {
+      "program": "progenitor",
+      "iteration": 2,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "FBXO21",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.1240008845541218
+    },
+    {
+      "program": "progenitor",
+      "iteration": 2,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "KLF6",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6460975925562547
+    },
+    {
+      "program": "progenitor",
+      "iteration": 2,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "NDUFS6",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.44153620681028055
+    },
+    {
+      "program": "progenitor",
+      "iteration": 3,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "MDH1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3290387557950304
+    },
+    {
+      "program": "progenitor",
+      "iteration": 3,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "SLC35E1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.1238746813778394
+    },
+    {
+      "program": "progenitor",
+      "iteration": 3,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "COMMD6",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6057667513277167
+    },
+    {
+      "program": "progenitor",
+      "iteration": 3,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "POLR2K",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4405529488695745
+    },
+    {
+      "program": "progenitor",
+      "iteration": 4,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "NONO",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.32963177679641675
+    },
+    {
+      "program": "progenitor",
+      "iteration": 4,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "TNPO1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12386785441612455
+    },
+    {
+      "program": "progenitor",
+      "iteration": 4,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "ANXA1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6936507552628772
+    },
+    {
+      "program": "progenitor",
+      "iteration": 4,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "KIF5B",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4445325142337635
+    },
+    {
+      "program": "progenitor",
+      "iteration": 5,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "HMOX2",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.32935664470512954
+    },
+    {
+      "program": "progenitor",
+      "iteration": 5,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "WDR45B",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12391290593260106
+    },
+    {
+      "program": "progenitor",
+      "iteration": 5,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "FXYD5",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.5950125461128293
+    },
+    {
+      "program": "progenitor",
+      "iteration": 5,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "SRP9",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.44155879065586007
+    },
+    {
+      "program": "progenitor",
+      "iteration": 6,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "OGA",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.33093574279193777
+    },
+    {
+      "program": "progenitor",
+      "iteration": 6,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "TFAM",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12408257315719315
+    },
+    {
+      "program": "progenitor",
+      "iteration": 6,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "ANXA1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6936507552628772
+    },
+    {
+      "program": "progenitor",
+      "iteration": 6,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "ZNF706",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.43849447426682303
+    },
+    {
+      "program": "progenitor",
+      "iteration": 7,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "TOMM22",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.33101525922469877
+    },
+    {
+      "program": "progenitor",
+      "iteration": 7,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "TNPO1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12386785441612455
+    },
+    {
+      "program": "progenitor",
+      "iteration": 7,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "COMMD6",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6057667513277167
+    },
+    {
+      "program": "progenitor",
+      "iteration": 7,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "NDUFS6",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.44153620681028055
+    },
+    {
+      "program": "progenitor",
+      "iteration": 8,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "MDH1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3290387557950304
+    },
+    {
+      "program": "progenitor",
+      "iteration": 8,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "MEI1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12435563034872561
+    },
+    {
+      "program": "progenitor",
+      "iteration": 8,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "FXYD5",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.5950125461128293
+    },
+    {
+      "program": "progenitor",
+      "iteration": 8,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "ZNF706",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.43849447426682303
+    },
+    {
+      "program": "progenitor",
+      "iteration": 9,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "KMT2A",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.32751613758131604
+    },
+    {
+      "program": "progenitor",
+      "iteration": 9,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "LARS1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12335343720806229
+    },
+    {
+      "program": "progenitor",
+      "iteration": 9,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "CD3E",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6206782719099926
+    },
+    {
+      "program": "progenitor",
+      "iteration": 9,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "PDIA6",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4415735309405993
+    },
+    {
+      "program": "progenitor",
+      "iteration": 10,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "LSM5",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3312250609128719
+    },
+    {
+      "program": "progenitor",
+      "iteration": 10,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "NSFL1C",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12422147231182681
+    },
+    {
+      "program": "progenitor",
+      "iteration": 10,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "FXYD5",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.5950125461128293
+    },
+    {
+      "program": "progenitor",
+      "iteration": 10,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "NDUFS6",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.44153620681028055
+    },
+    {
+      "program": "progenitor",
+      "iteration": 11,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "KMT2A",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.32751613758131604
+    },
+    {
+      "program": "progenitor",
+      "iteration": 11,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "USP11",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12409586052682096
+    },
+    {
+      "program": "progenitor",
+      "iteration": 11,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "ZFP36",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.7155924627066226
+    },
+    {
+      "program": "progenitor",
+      "iteration": 11,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "KIF5B",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4445325142337635
+    },
+    {
+      "program": "progenitor",
+      "iteration": 12,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "BANF1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3306552743755999
+    },
+    {
+      "program": "progenitor",
+      "iteration": 12,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "MAGEH1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12379433400021327
+    },
+    {
+      "program": "progenitor",
+      "iteration": 12,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "EEF2",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.772356215996587
+    },
+    {
+      "program": "progenitor",
+      "iteration": 12,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "BCLAF1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.44111526730510825
+    },
+    {
+      "program": "progenitor",
+      "iteration": 13,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "AHSA1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3279761256286659
+    },
+    {
+      "program": "progenitor",
+      "iteration": 13,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "USP11",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12409586052682096
+    },
+    {
+      "program": "progenitor",
+      "iteration": 13,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "ATP5MG",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.7469921169883758
+    },
+    {
+      "program": "progenitor",
+      "iteration": 13,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "NIBAN1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.44036010333688813
+    },
+    {
+      "program": "progenitor",
+      "iteration": 14,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "HMOX2",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.32935664470512954
+    },
+    {
+      "program": "progenitor",
+      "iteration": 14,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "GIMAP6",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12361878986626852
+    },
+    {
+      "program": "progenitor",
+      "iteration": 14,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "FXYD5",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.5950125461128293
+    },
+    {
+      "program": "progenitor",
+      "iteration": 14,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "EIF4A3",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4383288743734669
+    },
+    {
+      "program": "progenitor",
+      "iteration": 15,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "AHSA1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3279761256286659
+    },
+    {
+      "program": "progenitor",
+      "iteration": 15,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "NSFL1C",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12422147231182681
+    },
+    {
+      "program": "progenitor",
+      "iteration": 15,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "HMGB1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.7782217212861255
+    },
+    {
+      "program": "progenitor",
+      "iteration": 15,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "ZNF706",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.43849447426682303
+    },
+    {
+      "program": "progenitor",
+      "iteration": 16,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "KMT2A",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.32751613758131604
+    },
+    {
+      "program": "progenitor",
+      "iteration": 16,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "NSFL1C",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12422147231182681
+    },
+    {
+      "program": "progenitor",
+      "iteration": 16,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "PTPRC",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6675062786925456
+    },
+    {
+      "program": "progenitor",
+      "iteration": 16,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "GADD45A",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.43725012583555506
+    },
+    {
+      "program": "progenitor",
+      "iteration": 17,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "TOMM22",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.33101525922469877
+    },
+    {
+      "program": "progenitor",
+      "iteration": 17,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "MEI1",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12435563034872561
+    },
+    {
+      "program": "progenitor",
+      "iteration": 17,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "ANXA1",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6936507552628772
+    },
+    {
+      "program": "progenitor",
+      "iteration": 17,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "TUFM",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.44192312590380717
+    },
+    {
+      "program": "progenitor",
+      "iteration": 18,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "VASP",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3326824402154207
+    },
+    {
+      "program": "progenitor",
+      "iteration": 18,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "WDR45B",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12391290593260106
+    },
+    {
+      "program": "progenitor",
+      "iteration": 18,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "PPIA",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.6731199412392024
+    },
+    {
+      "program": "progenitor",
+      "iteration": 18,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "RBMS1",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4376704669339874
+    },
+    {
+      "program": "progenitor",
+      "iteration": 19,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "NME3",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.33328491210621736
+    },
+    {
+      "program": "progenitor",
+      "iteration": 19,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "YBEY",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12378674254559026
+    },
+    {
+      "program": "progenitor",
+      "iteration": 19,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "ZFP36",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.7155924627066226
+    },
+    {
+      "program": "progenitor",
+      "iteration": 19,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "KIF5B",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.4445325142337635
+    },
+    {
+      "program": "progenitor",
+      "iteration": 20,
+      "target_gene": "TCF7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.330358033795457,
+      "matched_gene": "VASP",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.3326824402154207
+    },
+    {
+      "program": "progenitor",
+      "iteration": 20,
+      "target_gene": "SLAMF6",
+      "target_expression_bin": 15,
+      "target_mean_log1p_cp10k": 0.12385355517649568,
+      "matched_gene": "WDR45B",
+      "matched_expression_bin": 15,
+      "matched_mean_log1p_cp10k": 0.12391290593260106
+    },
+    {
+      "program": "progenitor",
+      "iteration": 20,
+      "target_gene": "IL7R",
+      "target_expression_bin": 19,
+      "target_mean_log1p_cp10k": 1.692646842433614,
+      "matched_gene": "TXNIP",
+      "matched_expression_bin": 19,
+      "matched_mean_log1p_cp10k": 1.7103138356403966
+    },
+    {
+      "program": "progenitor",
+      "iteration": 20,
+      "target_gene": "CCR7",
+      "target_expression_bin": 18,
+      "target_mean_log1p_cp10k": 0.44121138372187263,
+      "matched_gene": "SRP9",
+      "matched_expression_bin": 18,
+      "matched_mean_log1p_cp10k": 0.44155879065586007
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 1,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "FANCB",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011144811556254667
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 1,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "GSDME",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016396606395222351
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 1,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "SNX31",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.704750823610965e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 1,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "HBM",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002040757034509971
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 2,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "ST6GALNAC1",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011120087372272582
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 2,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "LONRF2",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016307471470704917
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 2,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "VSX2",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.28493958686147e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 2,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "DIRAS3",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0020309725282606377
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 3,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "TMEM143",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011238787126234403
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 3,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "CHADL",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016388038007465074
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 3,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "HES5",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.569593266823077e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 3,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "ULBP1",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0020475305828324625
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 4,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "ST6GALNAC1",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011120087372272582
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 4,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "STAC3",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016285128289367603
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 4,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "LIX1",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.571046127119547e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 4,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "GPRIN1",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002042409128644556
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 5,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "TNS3",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011023969397333902
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 5,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "AGBL2",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016253469984749919
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 5,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "VTCN1",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.635506670896875e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 5,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "SEMA6A",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0020544263564786177
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 6,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "AXIN2",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011180327334691265
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 6,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "PNMT",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016416048057907647
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 6,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "TERT",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.551470997227259e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 6,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "HBM",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002040757034509971
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 7,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "PTPRF",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.01134248185699051
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 7,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "ADGRF5",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016209740808787458
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 7,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "VWA5B1",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.737921520742243e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 7,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "TCAP",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002048702083555508
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 8,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "PDZD4",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011317286379492376
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 8,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "FGB",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016326471604990935
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 8,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "LRRC8E",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.569593266823077e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 8,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "TCAP",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002048702083555508
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 9,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "GABBR1",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011341971711101633
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 9,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "FBXO15",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.001629296426362376
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 9,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "BPI",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.554364457395755e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 9,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "ULBP1",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0020475305828324625
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 10,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "FEZ1",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011091267405182894
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 10,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "FBXO15",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.001629296426362376
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 10,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "C8A",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.578319283352885e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 10,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "CDK18",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0020482850788845048
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 11,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "GPR146",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011051924456329316
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 11,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "CHADL",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016388038007465074
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 11,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "SNX31",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.704750823610965e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 11,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "CLEC18A",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002037829333176922
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 12,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "ZNF365",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011099129124944013
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 12,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "CAMP",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.001618348699511571
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 12,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "LRRC8E",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.569593266823077e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 12,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "CLEC18A",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002037829333176922
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 13,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "FCSK",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.0113394058589101
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 13,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "ZNF491",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016453168304041803
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 13,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "FREM1",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.64955847957769e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 13,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "DIRAS3",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0020309725282606377
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 14,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "ZNF597",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011222972094913086
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 14,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "PLAC9",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016404948538445133
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 14,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "VSX2",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.28493958686147e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 14,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "ULBP1",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0020475305828324625
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 15,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "ABTB3",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011326549191703105
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 15,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "FGB",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016326471604990935
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 15,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "VSX2",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.28493958686147e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 15,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "SPDYE1",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.00205515418115602
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 16,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "ABTB3",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011326549191703105
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 16,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "SPTBN4",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016252135289324945
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 16,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "HES5",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.569593266823077e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 16,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "CACNB4",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0020388658874480113
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 17,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "PAQR6",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011322619756318653
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 17,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "OAZ3",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016447201280366855
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 17,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "RHBDL2",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.548578899328143e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 17,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "IGLL5",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002042526261256265
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 18,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "GABBR1",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011341971711101633
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 18,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "SMIM10",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016475717270235683
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 18,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "LRRC8E",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.569593266823077e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 18,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "ZNF556",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0020355272868827984
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 19,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "DLG5",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011120030791191211
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 19,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "PLAC9",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016404948538445133
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 19,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "LIX1",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.571046127119547e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 19,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "VIL1",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002053636517127013
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 20,
+      "target_gene": "ASCL1",
+      "target_expression_bin": 7,
+      "target_mean_log1p_cp10k": 0.011181945306494613,
+      "matched_gene": "PDZD4",
+      "matched_expression_bin": 7,
+      "matched_mean_log1p_cp10k": 0.011317286379492376
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 20,
+      "target_gene": "NEUROD1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.0016329880772101952,
+      "matched_gene": "AGBL2",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.0016253469984749919
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 20,
+      "target_gene": "POU2F3",
+      "target_expression_bin": 0,
+      "target_mean_log1p_cp10k": 8.46630532110483e-05,
+      "matched_gene": "VSX2",
+      "matched_expression_bin": 0,
+      "matched_mean_log1p_cp10k": 8.28493958686147e-05
+    },
+    {
+      "program": "sclc_subtype_tf",
+      "iteration": 20,
+      "target_gene": "YAP1",
+      "target_expression_bin": 4,
+      "target_mean_log1p_cp10k": 0.002044706267100352,
+      "matched_gene": "TCAP",
+      "matched_expression_bin": 4,
+      "matched_mean_log1p_cp10k": 0.002048702083555508
+    }
+  ],
+  "null_pool_preview": [
+    {
+      "gene_symbol": "A1BG",
+      "gene": "ENSG00000121410",
+      "expression_bin": 17,
+      "mean_log1p_cp10k": 0.18607343580249544,
+      "detect_rate": 0.1427962034765916
+    },
+    {
+      "gene_symbol": "A1CF",
+      "gene": "ENSG00000148584",
+      "expression_bin": 0,
+      "mean_log1p_cp10k": 0.00010628346029753651,
+      "detect_rate": 0.00010664391596458242
+    },
+    {
+      "gene_symbol": "A4GALT",
+      "gene": "ENSG00000128274",
+      "expression_bin": 3,
+      "mean_log1p_cp10k": 0.0013071849091607125,
+      "detect_rate": 0.0008531513277166871
+    },
+    {
+      "gene_symbol": "AAAS",
+      "gene": "ENSG00000094914",
+      "expression_bin": 11,
+      "mean_log1p_cp10k": 0.04356743029071132,
+      "detect_rate": 0.035405780100245234
+    },
+    {
+      "gene_symbol": "AACS",
+      "gene": "ENSG00000081760",
+      "expression_bin": 9,
+      "mean_log1p_cp10k": 0.023180321756212006,
+      "detect_rate": 0.017809533966087195
+    },
+    {
+      "gene_symbol": "AADAC",
+      "gene": "ENSG00000114771",
+      "expression_bin": 3,
+      "mean_log1p_cp10k": 0.0011523984339127653,
+      "detect_rate": 0.0008531513277167276
+    },
+    {
+      "gene_symbol": "AAGAB",
+      "gene": "ENSG00000103591",
+      "expression_bin": 11,
+      "mean_log1p_cp10k": 0.04799119949408127,
+      "detect_rate": 0.0376453023355017
+    },
+    {
+      "gene_symbol": "AAK1",
+      "gene": "ENSG00000115977",
+      "expression_bin": 19,
+      "mean_log1p_cp10k": 0.7897200955209556,
+      "detect_rate": 0.4924816039244961
+    },
+    {
+      "gene_symbol": "AAMDC",
+      "gene": "ENSG00000087884",
+      "expression_bin": 12,
+      "mean_log1p_cp10k": 0.05940781804521701,
+      "detect_rate": 0.04724325477231522
+    },
+    {
+      "gene_symbol": "AAMP",
+      "gene": "ENSG00000127837",
+      "expression_bin": 16,
+      "mean_log1p_cp10k": 0.14068310668977288,
+      "detect_rate": 0.10962994561160282
+    },
+    {
+      "gene_symbol": "AANAT",
+      "gene": "ENSG00000129673",
+      "expression_bin": 1,
+      "mean_log1p_cp10k": 0.0001874050149834702,
+      "detect_rate": 0.00021328783192916485
+    },
+    {
+      "gene_symbol": "AAR2",
+      "gene": "ENSG00000131043",
+      "expression_bin": 11,
+      "mean_log1p_cp10k": 0.03734476895979524,
+      "detect_rate": 0.029860296470086322
+    },
+    {
+      "gene_symbol": "AARD",
+      "gene": "ENSG00000205002",
+      "expression_bin": 3,
+      "mean_log1p_cp10k": 0.001214550031481284,
+      "detect_rate": 0.0010664391596458755
+    },
+    {
+      "gene_symbol": "AARS1",
+      "gene": "ENSG00000090861",
+      "expression_bin": 11,
+      "mean_log1p_cp10k": 0.037231959975151975,
+      "detect_rate": 0.03071344779780311
+    },
+    {
+      "gene_symbol": "AASDHPPT",
+      "gene": "ENSG00000149313",
+      "expression_bin": 14,
+      "mean_log1p_cp10k": 0.09384260821424763,
+      "detect_rate": 0.07497067292310966
+    },
+    {
+      "gene_symbol": "AASS",
+      "gene": "ENSG00000008311",
+      "expression_bin": 6,
+      "mean_log1p_cp10k": 0.006498729165788632,
+      "detect_rate": 0.004798976218406682
+    },
+    {
+      "gene_symbol": "AATF",
+      "gene": "ENSG00000275700",
+      "expression_bin": 17,
+      "mean_log1p_cp10k": 0.19614127939212966,
+      "detect_rate": 0.14983470193025478
+    },
+    {
+      "gene_symbol": "AATK",
+      "gene": "ENSG00000181409",
+      "expression_bin": 3,
+      "mean_log1p_cp10k": 0.0009392477974725391,
+      "detect_rate": 0.0007465074117521537
+    },
+    {
+      "gene_symbol": "ABAT",
+      "gene": "ENSG00000183044",
+      "expression_bin": 9,
+      "mean_log1p_cp10k": 0.022009713619601152,
+      "detect_rate": 0.016849738722405857
+    },
+    {
+      "gene_symbol": "ABCA10",
+      "gene": "ENSG00000154263",
+      "expression_bin": 4,
+      "mean_log1p_cp10k": 0.0017234073043510714,
+      "detect_rate": 0.0012797269915750743
+    }
+  ]
+}

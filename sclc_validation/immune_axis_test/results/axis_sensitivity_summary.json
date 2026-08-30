@@ -1,0 +1,33 @@
+{
+  "status": "complete",
+  "exclusion_pattern": "^(?:HBA|HBB$|HBD$|HSPA1|RPL|RPS|MRPL|MRPS|S100A|SFTPA|EEF1)",
+  "n_excluded": 19,
+  "excluded_genes": [
+    "CCN1",
+    "CXCL8",
+    "EEF1G",
+    "HBA1",
+    "HBA2",
+    "HBB",
+    "HSPA1B",
+    "MGP",
+    "MNDA",
+    "PSMA6",
+    "RPL21",
+    "RPS26",
+    "RPS27",
+    "S100A2",
+    "S100A7",
+    "S100A8",
+    "S100A9",
+    "SFTPA1",
+    "SFTPA2"
+  ],
+  "n_remaining": 31,
+  "consistent_1d_before": 1,
+  "consistent_1d_after": 1,
+  "pc1_variance_before": 0.7400063283936205,
+  "pc1_variance_after": 0.7272979881721422,
+  "conclusion_reversed": false,
+  "decision_rule": "reversal requires at least half of remaining genes to satisfy all three 1-D sign predictions"
+}
