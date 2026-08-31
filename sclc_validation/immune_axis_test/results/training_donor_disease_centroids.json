@@ -1,0 +1,24 @@
+{
+  "created_utc": "2026-08-30T08:51:36.069899+00:00",
+  "source_file": "training_donor_disease_centroids.pkl",
+  "source_sha256": "04ef88587c39ae0fdfa26aa627c02eb77461652d4d7eef82e27f4532c372dc41",
+  "output_file": "training_donor_disease_centroids.npz",
+  "output_sha256": "154c1e687d9f5d9f290130d7aff4ee37718c9942a0a00785caa9d63378f88334",
+  "states": [
+    "normal",
+    "sclc",
+    "luad"
+  ],
+  "original_state_keys": {
+    "sclc": "small cell lung carcinoma",
+    "luad": "lung adenocarcinoma",
+    "normal": "normal"
+  },
+  "embedding_dimension": 768,
+  "vector_norms": {
+    "normal": 25.633617797818975,
+    "sclc": 26.790858311623445,
+    "luad": 25.892165658948496
+  },
+  "privacy": "three aggregate training-donor centroids; no cell- or donor-level records"
+}

@@ -1,0 +1,7 @@
+program,state,n_genes,mean_detect_rate,mean_expression
+curated_exhaustion,normal,7,0.07541087231352715,0.123045936
+curated_exhaustion,sclc,7,0.18096126585652492,0.2860200451428571
+curated_exhaustion,luad,7,0.1533838115352748,0.25985685771428574
+data_driven_top50_luad_up,normal,50,0.6830088495575223,2.12292668088
+data_driven_top50_luad_up,sclc,50,0.6723568823679078,1.8019518060200002
+data_driven_top50_luad_up,luad,50,0.7722243454356498,2.375655644

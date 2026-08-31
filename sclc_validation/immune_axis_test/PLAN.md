@@ -1,7 +1,11 @@
 # Plan — replacing the Perturb-seq analogy with an overexpression test of the disease axis
 
-**Status:** plan. Test 1 is run and its numbers are below; tests 2–4 are specified
-but not executed. Nothing here has changed the poster or the talk.
+**Status:** plan plus execution. Tests 1, 2, 3, 4, and 5 (T5a/T5b) are run
+(numbers below and in [RESULTS_T2.md](RESULTS_T2.md), [RESULTS_T3.md](RESULTS_T3.md),
+[RESULTS_T4.md](RESULTS_T4.md), and [RESULTS_T5.md](RESULTS_T5.md)). T4's
+deterministic manifest, CUDA-safe GPU runner, analysis pipeline, and
+ambient/stress/ribosomal sensitivity arm are complete. Nothing here has
+changed the poster or the talk.
 
 ## 1. The claim under test
 
@@ -156,11 +160,11 @@ CTLA-4, IL7R) are SCLC→Normal internal comparisons and stand or fall on their
 own concordance, donor agreement and detection evidence. The axis reading is a
 separate claim layered on top of them.
 
-## 6. Tests 2–4 — what is still needed
+## 6. Tests 2–5 — what is still needed
 
 Ordered by cost. Each is worth running independently of the others.
 
-### T2 — measured baseline expression (no GPU, ~2 h, needs the atlas)
+### T2 — measured baseline expression (no GPU, ~2 h, needs the atlas) — **run, see [RESULTS_T2.md](RESULTS_T2.md)**
 
 The control the whole argument depends on and which has never been run: **what
 is the actual per-cell checkpoint expression in SCLC vs LUAD vs Normal T cells
@@ -177,7 +181,7 @@ the model and the clinic.
 Runs on the compute host against `heldout_test.dataset`; needs no perturbation
 output.
 
-### T3 — embedding geometry (no GPU, ~4 h, needs one small file)
+### T3 — embedding geometry (run; no GPU, see [RESULTS_T3.md](RESULTS_T3.md))
 
 Load the three state centroids from
 `state_embeddings/training_donor_disease_centroids.pkl`, compute the triangle
@@ -186,17 +190,19 @@ gene's overexpression displacement into that plane. Two shifts per gene give two
 projections, which is exactly enough to place the displacement in the plane once
 the centroid geometry is known.
 
-This turns T1's sign tests into measured vectors and produces the figure's
-central panel. It also makes T1c analytic rather than empirical: with the
-centroids known, the expected complement slope can be computed and compared to
-the fitted −0.20 / −0.40 / −0.56.
+This turns T1's sign tests into an explicitly assumed in-plane reconstruction
+and produces the figure's central panel. It also lets T1c be compared against
+specified displacement models. Centroid geometry alone does **not** determine a
+unique complement slope: the slope depends on the displacement covariance.
+T3 therefore reports full-space and centroid-plane isotropic references beside
+the fitted −0.20 / −0.40 / −0.56, rather than calling either one the prediction.
 
-**Recommendation:** the centroids are three vectors — a few KB. Commit them as a
-tracked `.npz` so this analysis and the figure can be rebuilt on the laptop,
-consistent with the poster's rule that every number is read from a result table
-at build time.
+The three-vector export is a few KB and is retained as a portable `.npz` beside
+its provenance manifest, so this analysis and the figure can be rebuilt on the
+laptop. The export contains aggregate vectors only; no cell- or donor-level
+records are included.
 
-### T4 — program-level overexpression (GPU, ~6–12 h)
+### T4 — program-level overexpression (run; see [RESULTS_T4.md](RESULTS_T4.md))
 
 Single-gene edits are small (|shift| ~0.01–0.03) and each gene carries its own
 idiosyncrasies. The axis claim is about a *program*, so perturb the program.
@@ -225,6 +231,132 @@ single-element list today, so this is a parameter change, not new machinery.
 - **Ambient sensitivity.** Re-run T1a–T1d with the flagged ambient/stress/
   ribosomal genes excluded, and report both. Given PC1's loadings this is not
   optional.
+
+**Implementation status (30 August 2026).** The manifest fixes seed 43, 20
+expression bins, 20 matched-null sets per program, and a cell-count-weighted
+held-out-test expression profile shared across sources. This is 273 resumable
+GPU units: 12 primary, 21 nested, and 240 null. Twenty null sets are deliberately
+the minimum that permits a one-sided empirical p-value below 0.05 (minimum
+1/21); treat it as a screening null, not high-resolution tail calibration.
+
+The laptop-only ambient/stress/ribosomal sensitivity is complete. Excluding 19
+flagged genes leaves 31/50: the all-three-sign 1-D consistency count remains
+**1 gene** (1/50 before, 1/31 after), and PC1 variance changes only from 0.740 to
+0.727. Under the operational reversal rule (at least half of remaining genes
+satisfy all three sign predictions), the conclusion does **not** reverse. The
+GPU program, nested-set, matched-null, donor, and CD4/CD8 results are complete;
+see [RESULTS_T4.md](RESULTS_T4.md). The primary SCLC→LUAD exhaustion shift is
+positive across donors and strata but remains inside the expression-matched
+null, and the nested titration does not meet the strict monotonicity criterion.
+
+### T5 — genome-wide differential expression for a data-driven dysfunction score (no GPU, needs the atlas) — **run, see [RESULTS_T5.md](RESULTS_T5.md)**
+
+T2 answered "is the curated 21-gene panel differentially expressed" and found a
+mixed picture: the exhaustion-program *average* sits Normal < SCLC < LUAD, but
+only 3 of the 7 genes individually increase monotonically to LUAD (RESULTS_T2.md).
+That leaves open a question T2 cannot answer because it never looked outside the
+pre-registered gene list: **is "exhaustion," as this atlas actually measures it,
+the right 7 genes at all**, and would an unbiased, genome-wide differential
+expression test surface a different, better-supported dysfunction signature?
+
+T5 has two variants with different cell populations, on purpose, not by
+oversight — see the rationale below before the design details.
+
+**Why two variants.** T2 (and an earlier draft of T5) restricted to held-out
+test cells, mirroring the ISP pipeline's own decision boundary in
+`build_primary_report.py` (only test-cell perturbations against training-only
+reference centroids count as primary evidence). That boundary exists because
+ISP shift is measured in the *fine-tuned model's embedding*, which saw the
+training cells' labels — a real leakage concern for anything model-derived.
+T5 never touches the model or its embedding; it reads raw counts directly from
+the H5AD, so that leakage concern does not apply here. Checking donor
+composition directly (read-only query against the prepared H5AD) found the
+splits are **donor-disjoint but not resampled from the same donors** — each
+split holds different individual patients:
+
+| Disease | train | eval | test | total unique donors |
+|---|---:|---:|---:|---:|
+| Normal | 2 (RU682, RU685) | 1 (RU684) | 1 (RU675) | **4** |
+| SCLC | 13 | 3 | 3 | up to 19 |
+| LUAD | 14 | 4 | 4 | up to 22 |
+
+Restricting to test-only means Normal's DE rests on **one donor** when three
+more sit unused in train/eval — the exact "single-patient measurement" problem
+§9 already flags as this module's biggest weakness, made worse rather than
+better by carrying the ISP work's test-only rule into an analysis that doesn't
+need it.
+
+#### T5a — complete-atlas differential expression (primary variant, goals 1–2)
+
+**Design.** Pairwise DE (SCLC vs LUAD, SCLC vs Normal, LUAD vs Normal) across
+all ~24,540 genes on **all 46,140 T cells (train + eval + test combined)**,
+`scanpy.tl.rank_genes_groups` (Wilcoxon), log1p-CP10k, BH-adjusted p-values.
+Given T2's measured runtime (§9), "no GPU, needs the atlas" almost certainly
+means seconds to low minutes even at this size, not hours.
+
+**What it would decide.**
+1. **Where do the 7 pre-registered exhaustion genes rank** among all genome-wide
+   DE genes for SCLC vs LUAD? If they sit outside, say, the top 5% of DE
+   significance, the exhaustion-program *selection* — not just the axis argument
+   T1 already questioned — is itself weakly supported by this atlas.
+2. **A data-driven dysfunction score**, built from the top-K genome-wide SCLC-vs-LUAD
+   DE genes (whichever genes the data actually nominates, not a curated list),
+   compared against the curated exhaustion program's score. Agreement would be
+   reassuring; disagreement would say the curated program is the wrong lens for
+   what this atlas calls SCLC T-cell dysfunction.
+
+**What would overturn or weaken the current framing:** if the 7 exhaustion genes
+rank in the bottom half of genome-wide DE significance for SCLC vs LUAD, or if
+the data-driven top-K dysfunction score and the curated exhaustion score disagree
+in direction, that is evidence the pre-registered program — not just T1's
+reading of it — needs revisiting.
+
+#### T5b — held-out-test differential expression (ISP cross-check only, goal 3)
+
+**Design.** Same pairwise DE, same statistics, restricted to the same held-out
+test cells T2 used (6,387 LUAD / 2,424 SCLC / 566 Normal, 1 Normal donor).
+Kept deliberately narrow and separate from T5a: **only** for cross-referencing
+against the whole-genome ISP hit lists (`primary_test_perturbation`'s
+delete-vs-overexpress concordant hits and goal-vs-alt significant movers),
+because those hit lists were themselves computed from test-only cells.
+Comparing DE-on-the-complete-atlas against ISP-hits-from-test-only would mix
+two different cell populations into one comparison — a real, avoidable
+confound for this specific check, which is why T5a is not simply used for
+goal 3 as well.
+
+**What it would decide.** What fraction of ISP hits are *also* DE-significant
+in the same cell population the hits were computed from, using a real
+statistical test rather than the detection-fraction proxy the HK-gene review
+report used. This is a stronger version of that proxy check, and a partial,
+narrow answer to that report's Comment 2 (an independent, non-ISP signal to
+compare hits against) — narrow because DE agreement shows the input differs
+between states, not that the model's ISP shift is causally tracking it.
+
+**Caveats to carry in before running, given T2's experience:**
+- **Normal's single donor is a T5b problem, not a T5a problem.** T5b inherits
+  it in full — any Normal-specific technical or biological idiosyncrasy in that
+  one donor can populate a large share of "significant" hits for every
+  comparison involving Normal, and cell-level Wilcoxon (the standard scanpy
+  default) cannot distinguish that from a real donor-independent effect,
+  structurally, no matter how small the p-value. T5a's four Normal donors don't
+  eliminate this concern but substantially reduce it.
+- **T5a's larger donor pools are a real donor-disjoint composition, not a
+  resample of the same patients** — something nothing else in this module has
+  stress-tested. CD4/CD8 proportions or other cohort characteristics could
+  differ by split for reasons unrelated to disease state, since train/eval/test
+  are different literal patients. Report T5a results per-donor, not just
+  pooled, so a single outlier donor in the larger pool is still visible.
+- **SCLC and LUAD support pseudobulk aggregation** in either variant (up to 19
+  and 22 donors respectively in T5a, 3 and 4 in T5b), which scanpy's Wilcoxon
+  does not do by default; a donor-level pseudobulk test (sum counts per donor,
+  then a low-replicate test, or at minimum report per-donor direction of effect
+  the way `donor_consistency_allgene.py` already does for ISP hits) is worth
+  the extra step, though it cannot fix T5b's single-donor Normal side.
+- **This still is not a closed loop, in either variant.** A gene both
+  DE-significant and an ISP hit has two independent signals pointing the same
+  way, which is more than either alone — but neither signal is a measured
+  perturbation response. Real perturbation data remains the only thing that
+  closes that gap (HK-gene review report, Comment 2).
 
 ## 7. The figure — Fig. 5-alt, "One gain-of-function, three starting states"
 
@@ -302,9 +434,11 @@ State it before running, so the tests are answerable either way.
   number is a single-patient measurement, including the collinearity failures in
   T1a. Report per-donor throughout and never state a Normal result without the
   donor count attached.
-- **The ambient correction has not been run.** PC1 is loaded on HBB/HSPA1B/
-  ribosomal genes; until T4's sensitivity arm is done, treat every magnitude here
-  as provisional.
+- **The ambient correction is a sensitivity analysis, not a correction.** The
+  laptop arm excluded 19 ambient/stress/ribosomal-associated genes and did not
+  reverse T1's conclusion (1/50 versus 1/31 genes satisfy all three signs).
+  Treat the original and filtered magnitudes as descriptive, not as a causal
+  correction.
 - **Shift is movement toward a centroid, not a program score.** Two states differ
   in many ways at once, so "toward LUAD" is not by itself "more exhausted". T2 and
   T3 exist precisely to license that translation; without them, panel D's middle
@@ -313,6 +447,18 @@ State it before running, so the tests are answerable either way.
   data the claim came from. It is strong enough to justify tests 2–4 and to stop
   the current wording from being asserted, not strong enough to be the new
   headline on its own.
+- **The "~2h" estimate above for T2 was a pre-registered guess, not a profiled
+  number, and it was off by roughly four orders of magnitude.** Measured runtime
+  was ~1.3s. The estimate did not account for how far `H5AD[test_mask, gene_ids]`
+  in backed mode shrinks the working set before anything is computed: the actual
+  job touches 176 of 24,540 genes and 9,377 of 46,140 cells (a ~130x reduction),
+  and the per-donor/CD4-CD8 stratified means and detection rates on that subset
+  are a few thousand vectorized arithmetic operations, not a search or a model
+  pass. The GPU stages elsewhere in this repo (the all-gene ISP screen, ~5 days
+  on 2 nodes) are a different kind of cost entirely — one Geneformer forward pass
+  per perturbed cell-gene pair, millions of them — and that distinction is why T2
+  was scoped "no GPU" in the first place. Treat every remaining time estimate in
+  this plan (T3, T4) with the same skepticism until profiled.
 
 ## 10. If the resolution holds
 
@@ -324,5 +470,9 @@ replaced with the substantive open question underneath it: **if SCLC T cells are
 not exhausted, what are they, and why does ICI still fail?** That is a better
 question, and T2's subtype-stratified baseline is the first step toward it.
 
-Do not change any poster or talk wording before T2 and T3 are run. Until then the
-correct state is "the axis claim is under test", not a replacement claim.
+T2, T3, and T4 are now run, but no poster or talk wording has been changed
+automatically. T3 rejects the collinear-centroid premise; T4 adds a robust
+positive SCLC→LUAD direction but does not separate the curated exhaustion
+program from its matched null and does not meet the strict nested monotonicity
+criterion. The correct public state is therefore still a qualified geometric
+result, not a new unconditional replacement claim.

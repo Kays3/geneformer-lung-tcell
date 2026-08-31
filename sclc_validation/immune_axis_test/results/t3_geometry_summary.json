@@ -1,0 +1,16 @@
+{
+  "status": "complete",
+  "embedding_dimension": 768,
+  "sclc_interior_angle_degrees": 61.94405540630552,
+  "sclc_height_over_normal_luad_base": 0.8315969546960849,
+  "triangle_area_unit_centroid_space": 1.1589618219884865,
+  "common_plane_offset_norm_range": [
+    0.32440300386584436,
+    0.3244030038658444
+  ],
+  "n_genes": 50,
+  "n_sources": 3,
+  "arrow_display_scale": 20.12988036677187,
+  "reconstruction_assumption": "displacement lies in affine centroid direction plane",
+  "identifiability_warning": "Two retained goal shifts do not identify out-of-plane displacement. Complement slope is not fixed by centroids alone; isotropic reference slopes are reported."
+}

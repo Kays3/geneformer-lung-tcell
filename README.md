@@ -108,6 +108,18 @@ tissue regions: pooled **ρ = 0.161, 95% CI [0.146, 0.176]**, significant in 4 o
 
 [Spatial validation design and methods](sclc_validation/spatial_validation/README.md)
 
+### Immune-axis validation
+
+The follow-up immune-axis tests now include the completed T4 program-level
+overexpression run: all **273/273** GPU units (program, nested-set, and
+expression-matched null) completed with zero missing markers. The SCLC→LUAD
+exhaustion shift is positive but is not separated from the matched null
+(`p_directional = 0.4286`), and the nested titration is near- but not strictly
+monotone. See the [T4 results](sclc_validation/immune_axis_test/RESULTS_T4.md)
+and [analysis plan](sclc_validation/immune_axis_test/PLAN.md) for the
+qualified interpretation; poster and talk wording remain unchanged pending
+review.
+
 ## In silico perturbation concept
 
 ![Artistic T-cell in silico perturbation concept](current_workflow/visuals/tcell_in_silico_perturbation.png)
@@ -145,6 +157,7 @@ archived models and provide context for today's T-cell-specific workflow.
 ```text
 current_workflow/               active fine-tuning, results, monitor, visuals
 sclc_validation/                SCLC audit, SCLC/LUAD/normal perturbation, spatial validation
+sclc_validation/immune_axis_test/  immune-axis tests, T2–T5 results, and T4 summaries
 archive/prior_nsclc_workflow/   Step1-Step7 notebooks and earlier evidence
 requirements.txt                lightweight environment specification
 ```

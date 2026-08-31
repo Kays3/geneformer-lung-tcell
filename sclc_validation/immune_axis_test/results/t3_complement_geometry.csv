@@ -1,0 +1,4 @@
+source_state,predictor_goal,response_goal,observed_slope,full_space_isotropic_slope,centroid_plane_isotropic_slope,interpretation
+sclc,luad,normal,-0.2017207482239673,-0.39365808814444136,-0.5575728648876443,isotropic reference only; actual slope depends on displacement covariance
+normal,luad,sclc,-0.3973859493973821,-0.2577896071068191,-0.4057242435809164,isotropic reference only; actual slope depends on displacement covariance
+luad,normal,sclc,-0.5628528388852351,-0.3712349718313358,-0.5325124588866177,isotropic reference only; actual slope depends on displacement covariance
