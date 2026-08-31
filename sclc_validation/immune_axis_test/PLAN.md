@@ -1,11 +1,11 @@
 # Plan — replacing the Perturb-seq analogy with an overexpression test of the disease axis
 
-**Status:** plan plus partial execution. Tests 1, 2, 3, and 5 (T5a/T5b) are run
+**Status:** plan plus execution. Tests 1, 2, 3, 4, and 5 (T5a/T5b) are run
 (numbers below and in [RESULTS_T2.md](RESULTS_T2.md), [RESULTS_T3.md](RESULTS_T3.md),
-[RESULTS_T5.md](RESULTS_T5.md)). T4's deterministic manifest, GPU runner, and
-analysis pipeline are implemented; its ambient/stress/ribosomal sensitivity arm
-is run, while the GPU phases remain unexecuted. Nothing here has changed the
-poster or the talk.
+[RESULTS_T4.md](RESULTS_T4.md), and [RESULTS_T5.md](RESULTS_T5.md)). T4's
+deterministic manifest, CUDA-safe GPU runner, analysis pipeline, and
+ambient/stress/ribosomal sensitivity arm are complete. Nothing here has
+changed the poster or the talk.
 
 ## 1. The claim under test
 
@@ -202,7 +202,7 @@ its provenance manifest, so this analysis and the figure can be rebuilt on the
 laptop. The export contains aggregate vectors only; no cell- or donor-level
 records are included.
 
-### T4 — program-level overexpression (GPU runtime unprofiled; implementation ready)
+### T4 — program-level overexpression (run; see [RESULTS_T4.md](RESULTS_T4.md))
 
 Single-gene edits are small (|shift| ~0.01–0.03) and each gene carries its own
 idiosyncrasies. The axis claim is about a *program*, so perturb the program.
@@ -244,7 +244,10 @@ flagged genes leaves 31/50: the all-three-sign 1-D consistency count remains
 **1 gene** (1/50 before, 1/31 after), and PC1 variance changes only from 0.740 to
 0.727. Under the operational reversal rule (at least half of remaining genes
 satisfy all three sign predictions), the conclusion does **not** reverse. The
-GPU program, nested-set, matched-null, donor, and CD4/CD8 results are not yet run.
+GPU program, nested-set, matched-null, donor, and CD4/CD8 results are complete;
+see [RESULTS_T4.md](RESULTS_T4.md). The primary SCLC→LUAD exhaustion shift is
+positive across donors and strata but remains inside the expression-matched
+null, and the nested titration does not meet the strict monotonicity criterion.
 
 ### T5 — genome-wide differential expression for a data-driven dysfunction score (no GPU, needs the atlas) — **run, see [RESULTS_T5.md](RESULTS_T5.md)**
 
@@ -467,8 +470,9 @@ replaced with the substantive open question underneath it: **if SCLC T cells are
 not exhausted, what are they, and why does ICI still fail?** That is a better
 question, and T2's subtype-stratified baseline is the first step toward it.
 
-T2 and T3 are now run, but no poster or talk wording has been changed
-automatically. T3 rejects the collinear-centroid premise, while T4's program,
-nested-set, matched-null, donor, and CD4/CD8 GPU results remain outstanding; the
-correct public state is therefore still a qualified geometric result, not a new
-unconditional replacement claim.
+T2, T3, and T4 are now run, but no poster or talk wording has been changed
+automatically. T3 rejects the collinear-centroid premise; T4 adds a robust
+positive SCLC→LUAD direction but does not separate the curated exhaustion
+program from its matched null and does not meet the strict nested monotonicity
+criterion. The correct public state is therefore still a qualified geometric
+result, not a new unconditional replacement claim.

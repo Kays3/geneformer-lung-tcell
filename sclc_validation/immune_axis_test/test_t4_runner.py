@@ -10,6 +10,22 @@ import run_t4_overexpression as runner
 
 
 class T4RunnerTests(unittest.TestCase):
+    def test_cuda_safe_default_nproc_is_one(self):
+        self.assertEqual(runner.NPROC, 1)
+
+    def test_nonserial_nproc_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "require --nproc 1"):
+            runner.validate_nproc(2)
+
+    def test_stale_raw_outputs_are_cleared(self):
+        with tempfile.TemporaryDirectory() as directory:
+            raw_dir = Path(directory)
+            prefix = "t4_program_exhaustion_normal"
+            stale = raw_dir / f"in_silico_overexpress_{prefix}_old_raw.pickle"
+            stale.write_bytes(b"partial")
+            runner.clear_raw_outputs(raw_dir, prefix)
+            self.assertFalse(stale.exists())
+
     @classmethod
     def setUpClass(cls) -> None:
         cls.manifest = runner.load_manifest(runner.MANIFEST)

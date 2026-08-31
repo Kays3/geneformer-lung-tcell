@@ -1,0 +1,10 @@
+source_state,target_state,n_sizes,spearman_size_vs_shift,n_non_decreasing_steps,n_non_increasing_steps,fully_non_decreasing,fully_non_increasing,shift_at_size_1,shift_at_max_size,pre_registered_primary
+luad,luad,7,1.0,6,0,True,False,0.017612820200001492,0.05605932134806559,False
+luad,normal,7,-1.0,0,6,False,True,-0.00660601175082951,-0.034219191536944256,False
+luad,sclc,7,-0.7857142857142859,1,5,False,False,-0.012826756217840815,-0.029266137209799214,False
+normal,luad,7,1.0,6,0,True,False,0.028278910574690824,0.13756584021996693,False
+normal,normal,7,-1.0,0,6,False,True,-0.010530678522460452,-0.0681007133250523,False
+normal,sclc,7,-1.0,0,6,False,True,-0.013104928440213624,-0.05407506627665813,False
+sclc,luad,7,0.8928571428571429,5,1,False,False,0.02561850266810814,0.10083905355228732,True
+sclc,normal,7,-1.0,0,6,False,True,-0.008230082002213292,-0.025572064286558935,False
+sclc,sclc,7,-0.7857142857142859,1,5,False,False,-0.01832070560409709,-0.07500448294687807,False

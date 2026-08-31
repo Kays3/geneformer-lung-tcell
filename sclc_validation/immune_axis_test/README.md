@@ -10,8 +10,7 @@ This module tests it with the **overexpression arm**, which is census-complete
 therefore the only arm in which the three source states are directly comparable.
 
 [**PLAN.md**](PLAN.md) — the full plan: what is being tested, what has been run,
-the three analyses still needed, the replacement figure spec, and the results
-that would overturn the conclusion.
+the replacement figure spec, and the results that would overturn the conclusion.
 
 ## What runs today
 
@@ -91,9 +90,11 @@ slope without an assumption about displacement covariance; T3 reports full-space
 centroid-plane isotropic references instead of presenting either as a unique prediction.
 See [RESULTS_T3.md](RESULTS_T3.md) for the measured triangle and interpretation.
 
-### T4 — program-level overexpression
+### T4 — program-level overexpression (run; see [RESULTS_T4.md](RESULTS_T4.md))
 
-T4 is implemented but its GPU phases have **not** been run. The deterministic
+T4 is implemented and all **273/273** GPU units have completed on
+`thinkstation1`: 12 primary program runs, 21 nested exhaustion-set runs, and
+240 expression-matched null runs. The deterministic
 [`t4_program_manifest.json`](t4_program_manifest.json) contains 4 primary programs,
 7 nested exhaustion sets, and 20 expression-matched null sets per program. Rebuild
 and validate it on the laptop with:
@@ -124,11 +125,22 @@ python3 sclc_validation/immune_axis_test/run_t4_overexpression.py --phase null
 python3 sclc_validation/immune_axis_test/analyze_t4_overexpression.py
 ```
 
+The runner requires `--nproc 1` for CUDA safety: Geneformer's `datasets.map()`
+uses a separate fork-based `multiprocess` pool, and forking after CUDA
+initialization crashes. The runner rejects larger values for real executions;
+each run-specific raw glob is also cleaned when its completion marker is absent,
+so a crash between pickle and marker writes remains safely resumable.
+
 Override external paths with `SCLC_PERTURBATION_ROOT`, `HTAN_FINETUNE_ROOT`,
 `GENEFORMER_ROOT`, `GENEFORMER_TOKEN_DICT`, and `T4_RUN_DIR`. The analyzer writes
 cell-descriptive and donor-level summaries, CD4/CD8/Treg strata, matched-null tests,
 and nested-set monotonicity. Normal still has one held-out donor, so its donor-level
 uncertainty is not estimable.
+
+The analyzer found zero missing completion markers. The SCLC→LUAD exhaustion shift
+is positive across donors and CD4/CD8 strata, but it is not separated from the
+matched null (`p_directional = 0.4286`); the nested titration is near- but not
+strictly monotone. See [RESULTS_T4.md](RESULTS_T4.md) for the qualified interpretation.
 
 The laptop-only ambient/stress/ribosomal sensitivity arm **is complete**:
 19 flagged genes were excluded, leaving 31. The 1-D consistency result did not
@@ -137,7 +149,7 @@ See [`results/axis_sensitivity_summary.json`](results/axis_sensitivity_summary.j
 
 ## Status
 
-Tests 1, 2, 3, and 5 (T5a/T5b) run. Test 2 (measured baseline expression) does **not**
+Tests 1, 2, 3, 4, and 5 (T5a/T5b) run. Test 2 (measured baseline expression) does **not**
 trigger PLAN.md's pre-registered falsification criterion (SCLC sits measurably below LUAD
 on the exhaustion program, both by detection rate and expression) — see
 [RESULTS_T2.md](RESULTS_T2.md) for the full picture, including per-gene
@@ -147,13 +159,15 @@ exhaustion program's SCLC-vs-LUAD ordering is **not the same** on the complete
 population as on T2's test-only population, and the difference traces to donor
 composition (a single donor carrying 75% of SCLC's held-out test cells), not a
 computation error. Test 3's centroid geometry is complete and rejects the
-collinear-centroid premise; see [RESULTS_T3.md](RESULTS_T3.md). Test 4's pipeline
-and ambient sensitivity are implemented; its GPU phases remain unexecuted. **No
-poster or talk wording has been changed.**
+collinear-centroid premise; see [RESULTS_T3.md](RESULTS_T3.md). Test 4's GPU
+phases are complete, but the matched-null and strict nested-titration criteria
+do not support an unconditional program-specific axis claim; see
+[RESULTS_T4.md](RESULTS_T4.md). **No poster or talk wording has been changed.**
 ```text
 PLAN.md                            the plan; read this first
 RESULTS_T2.md                      T2 results
 RESULTS_T3.md                      T3 centroid geometry and identifiability results
+RESULTS_T4.md                      T4 program, nested, null, donor, and subtype results
 RESULTS_T5.md                      T5 (T5a/T5b) results
 axis_consistency.py                test 1, runs on the laptop
 measure_baseline_expression.py     test 2, runs on the compute host (needs the atlas)

@@ -1,0 +1,19 @@
+{
+  "created_utc": "2026-08-31T01:58:22.848539+00:00",
+  "phases": [
+    "nested",
+    "null",
+    "program"
+  ],
+  "allow_partial": false,
+  "n_summary_rows": 4095,
+  "n_donor_rows": 10920,
+  "n_missing_runs": 0,
+  "first_missing_runs": [],
+  "limitations": [
+    "cell-level standard errors are descriptive because cells within donors are not independent",
+    "donor summaries are the biological-replicate view",
+    "Normal has one held-out donor, so its donor uncertainty is not estimable",
+    "20 null sets give a minimum empirical one-sided p-value of 1/21"
+  ]
+}

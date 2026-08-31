@@ -65,7 +65,11 @@ STATE_NAMES = {
 STATE_SLUGS = {value: key for key, value in STATE_NAMES.items()}
 PHASES = ("program", "nested", "null")
 FORWARD_BATCH_SIZE = 128
-NPROC = 4
+# Geneformer's datasets.map() uses the separate ``multiprocess`` package,
+# whose workers fork even though this script sets stdlib multiprocessing to
+# spawn. Forking after CUDA initialization crashes, so the safe GPU default is
+# one worker. The CLI flag remains available for CPU-only experiments.
+NPROC = 1
 
 
 def utc_now() -> str:
@@ -99,6 +103,25 @@ def load_manifest(path: Path) -> dict:
 
 def completion_marker(run_dir: Path, run: dict, source: str) -> Path:
     return run_dir / "markers" / run["phase"] / run["id"] / f"{source}.complete.json"
+
+
+def clear_raw_outputs(raw_dir: Path, prefix: str) -> None:
+    """Remove incomplete outputs for one run before recomputation.
+
+    A worker can write its pickle and then fail before the completion marker is
+    written. Cleaning the run-specific glob whenever the marker is absent keeps
+    the normal resumable path safe without touching any other run's outputs.
+    """
+    for path in raw_dir.glob(f"in_silico_overexpress_{prefix}_*_raw.pickle"):
+        path.unlink()
+
+
+def validate_nproc(nproc: int) -> None:
+    if nproc != 1:
+        raise ValueError(
+            "T4 GPU runs require --nproc 1: Geneformer's datasets.map uses a "
+            "fork-based multiprocess pool that cannot safely run after CUDA initialization"
+        )
 
 
 def select_work(
@@ -206,9 +229,7 @@ def run_one(
     raw_dir = run_dir / "raw" / run["phase"] / run["id"] / source
     raw_dir.mkdir(parents=True, exist_ok=True)
     prefix = f"t4_{run['id']}_{source}"
-    if force:
-        for path in raw_dir.glob(f"in_silico_overexpress_{prefix}_*_raw.pickle"):
-            path.unlink()
+    clear_raw_outputs(raw_dir, prefix)
     data_path = source_dataset_path(run_dir, source, load_from_disk)
     genes = [gene["ensembl_id"] for gene in run["genes"]]
     started = time.time()
@@ -264,7 +285,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--item", action="append", help="Restrict to a manifest item ID; repeatable")
     parser.add_argument("--max-runs", type=int)
     parser.add_argument("--forward-batch-size", type=int, default=FORWARD_BATCH_SIZE)
-    parser.add_argument("--nproc", type=int, default=NPROC)
+    parser.add_argument(
+        "--nproc",
+        type=int,
+        default=NPROC,
+        help="datasets worker count; must remain 1 for CUDA runs (default: 1)",
+    )
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
@@ -287,6 +313,7 @@ def main() -> None:
     if args.dry_run or not work:
         return
 
+    validate_nproc(args.nproc)
     model_dir, _ = preflight(args.manifest, manifest)
     sys.path.insert(0, str(GENEFORMER_ROOT))
     import torch
