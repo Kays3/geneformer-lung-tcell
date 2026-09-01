@@ -1,11 +1,11 @@
 # Results — T5, genome-wide differential expression
 
 **Status: run** (both T5a and T5b). Tests 1 and 2 were already run
-([PLAN.md](PLAN.md), [RESULTS_T2.md](RESULTS_T2.md)); test 3 (embedding geometry) and
-test 4 (program-level overexpression) remain outstanding. Per
-[PLAN.md §10](PLAN.md#10-if-the-resolution-holds): **no poster or talk wording changes
-here** — both T2 and T3 are required before that, and neither T3 nor this test resolves
-the axis claim on its own.
+([PLAN.md](PLAN.md), [RESULTS_T2.md](RESULTS_T2.md)); tests 3 (embedding geometry) and
+4 (program-level overexpression) are now complete (see [RESULTS_T3.md](RESULTS_T3.md)
+and [RESULTS_T4.md](RESULTS_T4.md)). Per [PLAN.md §10](PLAN.md#10-if-the-resolution-holds):
+**no poster or talk wording changes here** — the combined evidence remains qualified
+and does not support an unconditional replacement claim.
 
 ## What ran
 
@@ -139,7 +139,9 @@ difference, only that the two signals point the same way more than chance predic
 
 ## What this does not do
 
-- Does not run T3 or T4. The axis claim remains **under test**, per PLAN.md §10.
+- This report does not replace the completed T3 and T4 analyses; see
+  [RESULTS_T3.md](RESULTS_T3.md) and [RESULTS_T4.md](RESULTS_T4.md). Taken together,
+  the axis claim remains **qualified**, not an unconditional replacement claim.
 - Does not settle whether SCLC or LUAD carries more curated-exhaustion transcript — see
   above; this is now an open disagreement between two measurements, not a confirmed
   number.
