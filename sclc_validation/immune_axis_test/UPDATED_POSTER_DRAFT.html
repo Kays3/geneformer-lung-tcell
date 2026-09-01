@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UPDATED DRAFT — Immune-axis evidence review</title>
+  <style>
+    :root { --ink:#202438; --muted:#536078; --teal:#087f7a; --violet:#5b3b8f;
+      --rose:#b8465e; --amber:#fff2c7; --paper:#fbfcff; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#d9dee8; color:var(--ink); font:16px/1.4 system-ui,-apple-system,sans-serif; }
+    main { max-width:1180px; margin:24px auto; padding:34px 42px 48px; background:var(--paper);
+      box-shadow:0 8px 30px #18233a33; }
+    .banner { padding:14px 18px; border:3px solid var(--rose); background:#fff0f3; color:#7b1f37;
+      font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    .meta { color:var(--muted); font-size:.95rem; }
+    h1 { margin:.7rem 0 .2rem; font-size:2.15rem; line-height:1.1; color:var(--violet); }
+    h2 { margin:1.5rem 0 .45rem; color:var(--teal); border-bottom:2px solid #b8d8d5; padding-bottom:.2rem; }
+    h3 { margin:.7rem 0 .25rem; color:var(--violet); }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .card { border:1px solid #c6cede; border-radius:8px; padding:15px 18px; background:white; }
+    table { width:100%; border-collapse:collapse; margin:.45rem 0 1rem; font-size:.94rem; }
+    th,td { padding:6px 8px; border-bottom:1px solid #d9dfeb; text-align:right; }
+    th:first-child,td:first-child { text-align:left; }
+    th { background:#edf3f5; color:#304356; }
+    .callout { border-left:5px solid var(--teal); padding:10px 14px; background:#eaf7f5; }
+    .caution { border-left:5px solid var(--rose); padding:10px 14px; background:#fff0f3; }
+    .small { font-size:.9rem; color:var(--muted); }
+    a { color:#075eaa; }
+    @media (max-width:760px) { main { margin:0; padding:22px; } .grid { grid-template-columns:1fr; } }
+    @media print { body { background:white; } main { margin:0; max-width:none; box-shadow:none; } }
+  </style>
+</head>
+<body>
+<main>
+  <div class="banner">Updated review draft — not the final poster — do not replace poster_final</div>
+  <h1>Immune-axis evidence review</h1>
+  <p class="meta">T3 centroid geometry + T4 program-level overexpression · 1 September 2026 · review-only companion to the canonical 24JSDP P25 poster</p>
+
+  <div class="caution"><strong>Use boundary:</strong> This is a newly created, clearly labeled evidence-update draft. The existing final poster and talk are unchanged. It does not authorize a revised public claim until scientific and editorial review are complete.</div>
+
+  <h2>What the new tests actually establish</h2>
+  <div class="grid">
+    <section class="card">
+      <h3>T3 · geometry</h3>
+      <p>The three normalized state centroids are non-collinear. The SCLC interior angle is <strong>61.944°</strong>; triangle area is <strong>1.15896</strong>; normalized SCLC/base height is <strong>0.83160</strong>.</p>
+      <p>All 150 gene/source in-plane reconstructions reproduce their retained scores with maximum error below <strong>7×10<sup>−17</sup></strong>. The original one-dimensional ordering is therefore not a geometrically sufficient description.</p>
+      <p class="small"><a href="RESULTS_T3.md">Full T3 report</a> · <a href="figures/t3_embedding_geometry.png">T3 geometry figure</a></p>
+    </section>
+    <section class="card">
+      <h3>T4 · program overexpression</h3>
+      <p>All <strong>273/273</strong> GPU units completed: 12 primary, 21 nested, and 240 expression-matched null units; zero completion markers are missing.</p>
+      <p>The SCLC→LUAD exhaustion direction is positive across donors and reported CD4/CD8 strata, but its observed shift is not separated from the matched null.</p>
+      <p class="small"><a href="RESULTS_T4.md">Full T4 report</a> · 4,095 shift rows · 10,920 donor rows</p>
+    </section>
+  </div>
+
+  <h2>T4 program result</h2>
+  <table>
+    <thead><tr><th>Program (SCLC → LUAD)</th><th>Observed</th><th>Null mean</th><th>Directional p</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Exhaustion</strong></td><td><strong>+0.0873</strong></td><td>+0.0816</td><td>0.4286</td></tr>
+      <tr><td>Cytotoxicity</td><td>−0.0020</td><td>+0.0152</td><td>0.3333</td></tr>
+      <tr><td>Progenitor/memory</td><td>+0.0179</td><td>+0.0243</td><td>0.2857</td></tr>
+      <tr><td>SCLC subtype TF</td><td>−0.0726</td><td>−0.0186</td><td>0.0476*</td></tr>
+    </tbody>
+  </table>
+  <p class="small">*Minimum one-sided resolution with 20 null sets; no multiplicity correction. The exhaustion two-sided empirical p-value is 0.8095.</p>
+
+  <h2>Nested exhaustion titration</h2>
+  <table>
+    <thead><tr><th>Nested set size</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+    <tbody><tr><td>SCLC → LUAD mean shift</td><td>0.0256</td><td>0.0172</td><td>0.0231</td><td>0.0269</td><td>0.0529</td><td>0.0813</td><td><strong>0.1008</strong></td></tr></tbody>
+  </table>
+  <div class="callout"><strong>Qualified reading:</strong> Spearman ρ = 0.893 and 5/6 steps are non-decreasing, but the first step decreases. The pre-registered strict monotonicity criterion is not met.</div>
+
+  <h2>Updated takeaway for review</h2>
+  <p>T3 shows that the states form a triangle rather than a single line. T4 shows a reproducible positive SCLC→LUAD exhaustion direction, but the shift is compatible with an expression-matched random set and the nested dose surrogate is not strictly monotone. These results do <strong>not</strong> justify replacing the original poster conclusion with an unconditional program-specific axis claim.</p>
+  <ul>
+    <li>Keep the canonical poster and talk unchanged pending review.</li>
+    <li>Carry donor counts and the single-Normal-donor limitation with every Normal-source result.</li>
+    <li>Prioritize donor-balanced/pseudobulk and composition-controlled follow-up before any public wording change.</li>
+  </ul>
+  <p class="meta">Canonical deliverables remain separate. This draft is intentionally labeled and may be revised or withdrawn after review.</p>
+</main>
+</body>
+</html>

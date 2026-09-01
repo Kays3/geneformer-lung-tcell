@@ -142,6 +142,11 @@ is positive across donors and CD4/CD8 strata, but it is not separated from the
 matched null (`p_directional = 0.4286`); the nested titration is near- but not
 strictly monotone. See [RESULTS_T4.md](RESULTS_T4.md) for the qualified interpretation.
 
+For a presentation-oriented review surface that leaves the canonical poster and
+talk untouched, see the [updated poster draft](UPDATED_POSTER_DRAFT.html) and
+[updated talk draft](UPDATED_TALK_DRAFT.html). Both files are explicitly labeled
+as drafts and are not approved replacements.
+
 The laptop-only ambient/stress/ribosomal sensitivity arm **is complete**:
 19 flagged genes were excluded, leaving 31. The 1-D consistency result did not
 reverse (1/50 genes before, 1/31 after); PC1 variance changed from 0.740 to 0.727.
@@ -169,6 +174,8 @@ RESULTS_T2.md                      T2 results
 RESULTS_T3.md                      T3 centroid geometry and identifiability results
 RESULTS_T4.md                      T4 program, nested, null, donor, and subtype results
 RESULTS_T5.md                      T5 (T5a/T5b) results
+UPDATED_POSTER_DRAFT.html          explicitly labeled review-only poster draft
+UPDATED_TALK_DRAFT.html            explicitly labeled review-only talk draft
 axis_consistency.py                test 1, runs on the laptop
 measure_baseline_expression.py     test 2, runs on the compute host (needs the atlas)
 analyze_baseline_expression.py     test 2 analysis and figures, runs on the laptop

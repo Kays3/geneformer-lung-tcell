@@ -18,6 +18,19 @@ The poster and talk sources are not published here, so this preview is the repos
 record of what was produced. The figures it is built from are tracked, and their
 generators live in `tools/` and `sclc_validation/*/scripts/`.
 
+### Updated review drafts — not the final poster or talk
+
+The original final poster and talk remain unchanged. For review of the completed
+T3/T4 immune-axis evidence, use these newly created, explicitly labeled drafts:
+
+- [**UPDATED POSTER DRAFT — T3/T4 evidence review**](sclc_validation/immune_axis_test/UPDATED_POSTER_DRAFT.html)
+- [**UPDATED TALK DRAFT — T3/T4 evidence review**](sclc_validation/immune_axis_test/UPDATED_TALK_DRAFT.html)
+
+These drafts are not canonical deliverables and do not replace
+`snapshots/poster__poster_final.png` or the existing talk deck. They present the
+non-collinear geometry, the positive-but-null-inseparable exhaustion shift, and
+the failed strict titration criterion without changing the approved wording.
+
 This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
 21,000 naturally balanced CD4/CD8 T cells, a three-state LUAD/LUSC/normal
 classifier, and an all-gene in silico deletion screen.

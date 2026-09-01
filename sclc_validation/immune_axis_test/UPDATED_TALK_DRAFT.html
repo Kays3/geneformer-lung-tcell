@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UPDATED DRAFT — Immune-axis talk review</title>
+  <style>
+    :root { --ink:#202438; --muted:#5c6880; --violet:#5b3b8f; --teal:#087f7a; --rose:#b8465e; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px; background:#e8ebf2; color:var(--ink); font:16px/1.4 system-ui,-apple-system,sans-serif; }
+    main { max-width:1100px; margin:auto; }
+    .banner { padding:14px 18px; border:3px solid var(--rose); background:#fff0f3; color:#7b1f37; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    h1 { color:var(--violet); margin:.8rem 0 .2rem; }
+    .meta { color:var(--muted); }
+    .slide { background:#fff; margin:20px 0; padding:26px 32px; min-height:270px; border:1px solid #c6cede; border-radius:10px; box-shadow:0 4px 16px #18233a1f; }
+    .slide h2 { color:var(--teal); margin-top:0; }
+    .tag { display:inline-block; padding:3px 8px; margin-bottom:8px; border-radius:99px; background:#e8dff5; color:#4d2f7c; font-weight:700; font-size:.85rem; }
+    .two { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
+    .stat { border-left:5px solid var(--teal); padding:10px 14px; background:#eaf7f5; }
+    .caution { border-left:5px solid var(--rose); padding:10px 14px; background:#fff0f3; }
+    table { width:100%; border-collapse:collapse; } th,td { padding:7px; border-bottom:1px solid #d9dfeb; text-align:right; } th:first-child,td:first-child{text-align:left;} th{background:#edf3f5;}
+    a { color:#075eaa; }
+    @media (max-width:760px) { body{padding:10px;} .slide{padding:20px;} .two{grid-template-columns:1fr;} }
+    @media print { body{background:white;} .slide{box-shadow:none; break-after:page;} }
+  </style>
+</head>
+<body>
+<main>
+  <div class="banner">Updated review draft — not the final talk — do not replace JSDP_P25_talk</div>
+  <h1>Immune-axis evidence update</h1>
+  <p class="meta">Slide-by-slide review companion · T3/T4 results · 1 September 2026</p>
+  <div class="caution"><strong>Use boundary:</strong> This is a new, labeled review draft. The existing talk deck is unchanged and remains the canonical presentation until explicit editorial approval.</div>
+
+  <section class="slide"><span class="tag">Slide 1 · framing</span><h2>What was tested after the open question?</h2><p>The original claim read Normal &lt; SCLC &lt; LUAD on a checkpoint axis. We tested whether that one-dimensional reading is supported by centroid geometry and program-level overexpression.</p><p><strong>Speaker note:</strong> This update is an evidence review, not a replacement of the approved talk.</p></section>
+
+  <section class="slide"><span class="tag">Slide 2 · T3 geometry</span><h2>The three states form a triangle, not a line</h2><div class="two"><div><p>Normalized centroids are non-collinear:</p><ul><li>SCLC interior angle: <strong>61.944°</strong></li><li>Triangle area: <strong>1.15896</strong></li><li>SCLC/base height: <strong>0.83160</strong></li></ul></div><div class="stat"><strong>Implication</strong><br>Two shifts from one source cannot establish a single ordering when the state geometry is triangular.</div></div><p><a href="figures/t3_embedding_geometry.png">Open the T3 geometry figure</a> · <a href="RESULTS_T3.md">Read the T3 report</a></p></section>
+
+  <section class="slide"><span class="tag">Slide 3 · T4 design</span><h2>Program overexpression tests the program claim directly</h2><p>Every held-out source cell was perturbed for each program. The run completed <strong>273/273</strong> units: 12 primary programs, 21 nested sets, and 240 expression-matched nulls.</p><table><tr><th>View</th><th>Result</th></tr><tr><td>Completeness</td><td>0 missing markers</td></tr><tr><td>Biological replicate view</td><td>Donor summaries retained</td></tr><tr><td>Null resolution</td><td>20 sets; minimum one-sided p = 1/21</td></tr></table></section>
+
+  <section class="slide"><span class="tag">Slide 4 · T4 result</span><h2>Positive direction, not program-specific evidence</h2><div class="two"><div class="stat"><strong>SCLC → LUAD exhaustion</strong><br><big>+0.0873</big><br>Matched-null mean +0.0816<br>Directional p = 0.4286</div><div class="stat"><strong>Nested titration</strong><br><big>ρ = 0.893</big><br>5/6 steps non-decreasing<br>Strict criterion: not met</div></div><p>Direction is consistent across SCLC donors and reported CD4/CD8 strata, but the observed shift remains inside the matched-null distribution.</p><p><a href="RESULTS_T4.md">Read the full T4 report</a></p></section>
+
+  <section class="slide"><span class="tag">Slide 5 · interpretation</span><h2>What we can and cannot say</h2><div class="two"><div><h3>Supported</h3><ul><li>State centroids are not collinear.</li><li>Exhaustion co-overexpression moves SCLC toward LUAD in this score.</li><li>That direction is donor- and stratum-consistent in the completed run.</li></ul></div><div><h3>Not supported yet</h3><ul><li>A curated exhaustion-specific effect above matched null.</li><li>A strict scalar dose response.</li><li>An unconditional replacement of the original public axis wording.</li></ul></div></div></section>
+
+  <section class="slide"><span class="tag">Slide 6 · next step</span><h2>Resolve donor composition before changing the headline</h2><p>Run donor-balanced/pseudobulk and leave-one-donor-out checks, with CD4/CD8 composition controls, to reconcile the T2/T5 donor-composition discrepancy. Then review whether a revised geometry/null figure belongs in a future deck.</p><p class="caution"><strong>Editorial status:</strong> Keep the canonical poster and talk unchanged. This labeled draft is the review surface for any future update.</p></section>
+</main>
+</body>
+</html>
