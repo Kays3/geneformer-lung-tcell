@@ -177,3 +177,8 @@ requirements.txt                lightweight environment specification
 
 Large atlases, tokenized datasets, embeddings, checkpoints, and model weights
 remain outside Git.
+
+For a searchable catalog of every existing and explicitly planned script, see the
+[scripts reference](docs/scripts-reference.html). Each entry records its status,
+inputs, outputs, dependencies, and expected outcome; planned items are labeled
+separately from runnable code.
