@@ -38,10 +38,10 @@ INPUTS - committed tables only, no raw per-cell data, CPU only
       T5a's per-donor exhaustion score for the complete population (45 donors: 22 LUAD,
       19 SCLC, 4 Normal).
 
-The two tables are produced by DIFFERENT pipelines and are NOT on a common scale (the
-T5 pipeline's values run ~0.79x T2's on the identical test cells; see RESULTS_T6.md).
-They are therefore never pooled or differenced across tables here - every comparison
-stays within one table.
+Both inputs use CP10k normalization from the current full-`X` row sum. T2 and T5 must
+therefore agree when evaluated on the same held-out cells and seven genes; the regression
+test records that invariant. This script still compares weighting schemes *within* each
+population rather than treating distinct patient populations as interchangeable.
 """
 from __future__ import annotations
 
@@ -328,9 +328,9 @@ def main() -> int:
         "monte_carlo_permutations": PERMUTATIONS,
         "inputs": ["results/baseline_expression_per_donor.csv",
                    "results/t5a_donor_composition_check.csv"],
-        "scale_warning": ("baseline_expression_per_donor.csv (T2 pipeline) and "
-                          "t5a_donor_composition_check.csv (T5 pipeline) are not on a common "
-                          "scale; no comparison here crosses the two tables."),
+        "normalization_note": ("T2 and T5 use the current full-X row sum for CP10k "
+                               "normalization. Matched test cells and genes must agree; "
+                               "population comparisons remain limited by donor composition."),
         "claim_status": ("reconciliation and robustness only; the axis conclusion remains "
                          "qualified by T4's matched null and the failed strict titration"),
     }

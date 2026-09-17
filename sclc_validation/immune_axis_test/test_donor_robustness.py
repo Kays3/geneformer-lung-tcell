@@ -193,10 +193,10 @@ class RealDataTests(unittest.TestCase):
         self.assertEqual(int(table.loc["normal", "n_donors"]), 1)
 
 
-class ScaleSeparationTests(unittest.TestCase):
-    """The two committed tables are not on a common scale; nothing may cross them."""
+class ScaleConsistencyTests(unittest.TestCase):
+    """Matched T2/T5 inputs must use the same canonical CP10k scale."""
 
-    def test_t2_and_t5_pipelines_disagree_on_the_same_test_cells(self) -> None:
+    def test_t2_and_t5_pipelines_agree_on_the_same_test_cells(self) -> None:
         other = RESULTS / "pseudobulk_per_donor_test_only.csv"
         if not other.exists():
             self.skipTest("pseudobulk_per_donor_test_only.csv absent")
@@ -205,19 +205,21 @@ class ScaleSeparationTests(unittest.TestCase):
         frame = frame[frame.gene_symbol.isin(m.EXHAUSTION)]
         donor = frame.groupby(["state", "donor"]).agg(
             score=("mean_log1p_cp10k", "mean"), n_cells=("n_cells", "first")).reset_index()
-        for state in ("sclc", "luad"):
+        for state in ("normal", "sclc", "luad"):
             sub = donor[donor.state == state]
             t5_value = np.average(sub.score, weights=sub.n_cells)
-            # Same cells, same genes, materially different value: they are not interchangeable.
-            self.assertLess(t5_value, t2.loc[state, "cell_weighted_mean"] * 0.95)
+            self.assertAlmostEqual(
+                t5_value, t2.loc[state, "cell_weighted_mean"], places=6,
+                msg=f"{state}: matched T2/T5 cells and genes must share the CP10k scale",
+            )
 
-    def test_manifest_records_the_scale_warning(self) -> None:
+    def test_manifest_records_the_normalization_invariant(self) -> None:
         path = RESULTS / "t6_manifest.json"
         if not path.exists():
             self.skipTest("t6_manifest.json absent; run donor_robustness.py")
         import json
         manifest = json.loads(path.read_text())
-        self.assertIn("not on a common scale", manifest["scale_warning"])
+        self.assertIn("must agree", manifest["normalization_note"])
         self.assertEqual(manifest["replication_unit"], "donor")
 
 
