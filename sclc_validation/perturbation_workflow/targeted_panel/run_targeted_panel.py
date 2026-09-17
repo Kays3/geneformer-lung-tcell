@@ -12,6 +12,20 @@ those that actually detect the target gene before perturbing (cheap). For
 "overexpress" that filter does not apply (a gene can be induced from
 undetected), so every held-out cell in the source is processed for every
 gene -- this is the more expensive of the two per gene, by design.
+
+OUTPUT LOCATION (changed 2026-09-17, bf16 precision-replication task): by
+default this script now writes under
+sclc_validation/bf16_bench/runs/<run-tag>/targeted_panel/ instead of any
+directory under this script's own location -- <run-tag> defaults to
+--dtype ("fp32" or "bf16") and can be set explicitly with --run-tag so
+parallel arms (e.g. an fp32 baseline vs its fp32 noise-floor repeat) don't
+clobber each other. A canonical full-panel run with no bf16-specific flags
+will land at .../bf16_bench/runs/fp32/targeted_panel/, NOT wherever it used
+to write -- check there first if a run seems to have vanished. (Separately,
+and pre-existing: check_status.sh and this README still reference
+TARGETED_PANEL_RUN_DIR / ~/workspace/KD/..., which this script has never
+actually written to in its current form -- that mismatch predates this
+task and is unrelated to the bf16_bench redirect; flagged, not fixed here.)
 """
 
 from __future__ import annotations

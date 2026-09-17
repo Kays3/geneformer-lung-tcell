@@ -34,8 +34,14 @@ induced from an undetected state.
 A specific-gene-list run also routes through a different internal code path
 (`isp_perturb_set*`) that forks worker processes for `Dataset.map()` even at
 `num_proc=1`; this crashes if CUDA is already initialized in the parent
-process ("Cannot re-initialize CUDA in forked subprocess"). Fixed by forcing
-the `spawn` multiprocessing start method before any CUDA-touching import.
+process ("Cannot re-initialize CUDA in forked subprocess"). Forcing the
+`spawn` multiprocessing start method before any CUDA-touching import does
+**not** fix this on its own -- that only changes stdlib `multiprocessing`'s
+default, but this fork comes from the separate `multiprocess` (dill-based)
+package that `datasets.map()` actually uses, which has its own default and
+ignores the stdlib setting. The real fix (2026-09-17, found via the bf16
+precision-replication task): `NPROC` must be 1 for any GPU run, same as
+`run_t4_overexpression.py` already does for the identical failure mode.
 
 Check a live or completed run with:
 
@@ -45,3 +51,12 @@ Check a live or completed run with:
 
 Override the compute-output directory with `TARGETED_PANEL_RUN_DIR` when the
 run is stored somewhere other than the default `~/workspace/KD/` location.
+**Note (2026-09-17): this script does not currently read `TARGETED_PANEL_RUN_DIR`
+and has never written under `~/workspace/KD/...` in its current form** --
+that mismatch between this README/`check_status.sh` and the actual code
+predates the bf16 task and is unrelated to it; flagged here, not fixed.
+Separately, as of the bf16 precision-replication task, a run invoked with
+`--dtype`/`--run-tag` (or with neither, which defaults `--run-tag` to
+`fp32`) writes under
+`sclc_validation/bf16_bench/runs/<run-tag>/targeted_panel/` instead --
+check there for any run made after 2026-09-17.

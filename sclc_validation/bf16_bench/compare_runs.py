@@ -182,28 +182,43 @@ def t4_command(args: argparse.Namespace) -> dict:
             "max_abs_diff": round(float(np.abs(x - y).max()), 6),
         })
 
-    null_a = pd.read_csv(args.a_null)
-    null_b = pd.read_csv(args.b_null)
-    nkey = ["program", "source_state", "target_state"]
-    nm = null_a.merge(null_b, on=nkey, suffixes=("_a", "_b"), how="inner")
-    nm["sig_a"] = nm["empirical_p_directional_a"] < args.alpha
-    nm["sig_b"] = nm["empirical_p_directional_b"] < args.alpha
-    flips = nm[nm["sig_a"] != nm["sig_b"]]
-    null_result = {
-        "n_rows": int(len(nm)),
-        "alpha": args.alpha,
-        "n_flips": int(len(flips)),
-        "flipped": flips[nkey + ["sig_a", "sig_b", "empirical_p_directional_a", "empirical_p_directional_b"]]
-                   .to_dict(orient="records"),
-    }
+    # --a-null/--b-null are optional: a program-phase-only arm (e.g. our
+    # 12/273-unit optional T4 arm) has no null-phase data to compare, since
+    # the matched-null test needs the separate 240-unit null phase, out of
+    # scope for that arm. Without them this is a shift-vector-correlation-only
+    # check -- weaker than the full gate, but still real signal on whether
+    # bf16 preserves the set-level shift ranking. See RESULTS_BF16.md's dated
+    # amendment re-scoping the T4 gate for program-phase-only arms.
+    null_result = None
+    if args.a_null and args.b_null:
+        null_a = pd.read_csv(args.a_null)
+        null_b = pd.read_csv(args.b_null)
+        nkey = ["program", "source_state", "target_state"]
+        nm = null_a.merge(null_b, on=nkey, suffixes=("_a", "_b"), how="inner")
+        nm["sig_a"] = nm["empirical_p_directional_a"] < args.alpha
+        nm["sig_b"] = nm["empirical_p_directional_b"] < args.alpha
+        flips = nm[nm["sig_a"] != nm["sig_b"]]
+        null_result = {
+            "n_rows": int(len(nm)),
+            "alpha": args.alpha,
+            "n_flips": int(len(flips)),
+            "flipped": flips[nkey + ["sig_a", "sig_b", "empirical_p_directional_a", "empirical_p_directional_b"]]
+                       .to_dict(orient="records"),
+        }
 
     out = {
         "a_shift": str(args.a_shift), "b_shift": str(args.b_shift),
-        "a_null": str(args.a_null), "b_null": str(args.b_null),
+        "a_null": str(args.a_null) if args.a_null else None,
+        "b_null": str(args.b_null) if args.b_null else None,
         "shift_correlation": shift_result,
         "matched_null_qualitative_agreement": null_result,
-        "pass": null_result["n_flips"] == 0 and "error" not in shift_result,
+        "correlation_only": null_result is None,
     }
+    shift_ok = "error" not in shift_result and shift_result.get("spearman", 0) >= RHO_MIN
+    if null_result is not None:
+        out["pass"] = shift_ok and null_result["n_flips"] == 0
+    else:
+        out["pass"] = shift_ok
     return out
 
 
@@ -224,12 +239,17 @@ def main() -> None:
     p_t4 = sub.add_parser("t4", help="set-level T4 program-phase gate")
     p_t4.add_argument("--a-shift", type=Path, required=True)
     p_t4.add_argument("--b-shift", type=Path, required=True)
-    p_t4.add_argument("--a-null", type=Path, required=True)
-    p_t4.add_argument("--b-null", type=Path, required=True)
+    p_t4.add_argument("--a-null", type=Path, default=None,
+                       help="Matched-null CSV (needs the 240-unit null phase). Omit both "
+                            "--a-null/--b-null for a program-phase-only arm -- the gate then "
+                            "falls back to shift-vector-correlation-only (rho >= RHO_MIN).")
+    p_t4.add_argument("--b-null", type=Path, default=None)
     p_t4.add_argument("--alpha", type=float, default=0.05)
     p_t4.add_argument("--out", type=Path, required=True)
 
     args = ap.parse_args()
+    if args.mode == "t4" and bool(args.a_null) != bool(args.b_null):
+        ap.error("--a-null and --b-null must be given together, or both omitted")
     result = panel_command(args) if args.mode == "panel" else t4_command(args)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)

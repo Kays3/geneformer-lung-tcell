@@ -84,7 +84,30 @@ amendment above.)
 
 ## Gate results (T4 program phase, `compare_runs.py t4`, optional arm)
 
-_Pending._
+**Dated amendment 2026-09-17 (god's PR review, item 1): gate re-scoped to
+shift-vector correlation only.** The optional T4 arm is program phase only
+(12 of 273 units); the matched-null significance-flip check needs the
+separate 240-unit null phase, out of scope for this arm. `compare_runs.py
+t4` now accepts `--a-null`/`--b-null` as optional (both omitted together)
+and falls back to a correlation-only gate: Spearman rho on the scope=="all"
+shift vector must be >= 0.95 (the same `RHO_MIN` as the panel gate), no
+separate matched-null check for this arm. This still tests something real
+-- whether bf16 preserves the set-level shift ranking on a program-level
+(multi-gene) perturbation, a different workload shape than the per-gene
+panel -- just not the full G5 gate.
+
+_Pending the arm itself. Command once run:_
+
+```
+python3 compare_runs.py t4 \
+  --a-shift runs/t4_fp32/.../t4_shift_summary.csv \
+  --b-shift runs/t4_bf16/.../t4_shift_summary.csv \
+  --out runs/t4_verdict.json
+```
+
+| Spearman rho (shift vector) | verdict |
+|---|---|
+| -- | -- |
 
 ## Speed / energy / heat
 
