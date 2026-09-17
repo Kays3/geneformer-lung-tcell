@@ -1,14 +1,16 @@
 # BF16 vs FP32 in-silico perturbation: replication on our T-cell pipeline
 
-**Status: ALL THREE 104M ARMS COMPLETE. Frozen-gate verdict: FAIL** (sign
-criterion, overexpress; see Gate results below). Ruling on whether this
-FAIL reflects a gate degeneracy (zero floor from a bitwise-identical
-fp32-vs-fp32 rerun) rather than a real bf16 defect is pending Pam as
-domain reviewer -- **the implementer (Kevin) is not ruling on the gate his
-own result needs**, per god's explicit instruction. No bf16-yes/no
-recommendation until that ruling lands. Every number below comes from a
-generated `compare_runs.py` JSON (`runs/panel_verdict.json`) or a
-`power_sample.sh` summary -- none are hand-typed.
+**Status: ALL THREE 104M ARMS COMPLETE. Frozen-gate verdict: FAIL, final
+(sign criterion, overexpress -- see Gate results below), per Pam's ruling
+as domain reviewer.** A bitwise-identical fp32-vs-fp32 rerun proves zero
+repeat variability, not zero bf16 numerical uncertainty, so the resulting
+zero floor is not a usable sign threshold -- the frozen gate is therefore
+NOT amended and the FAIL stands as registered. A dated, explicitly
+post-hoc sensitivity analysis is reported separately below (not as a gate
+pass) to characterize the two sign flips. See Recommendation for Pam's
+final call. Every number below comes from a generated `compare_runs.py`
+JSON (`runs/panel_verdict.json`) or a `power_sample.sh` summary -- none
+are hand-typed.
 
 ## Provenance notes
 
@@ -104,9 +106,46 @@ bf16, both far below the panel's mean |shift| of 0.00917:
 Both rows independently re-verified against the raw stats CSVs (not just
 the JSON summary). Per gate rules and god's explicit instruction, this
 FAIL is recorded as-is -- **the gate constants and signal-gene definition
-were NOT changed to make this pass.** Whether a zero-floor degeneracy like
-this should exempt near-zero-shift genes from the sign criterion is a gate
-methodology question routed to Pam as domain reviewer, not decided here.
+were NOT changed to make this pass.**
+
+**Pam's ruling (domain reviewer, final): the frozen gate is NOT amended.**
+A bitwise-identical fp32-vs-fp32 rerun demonstrates zero *repeat*
+variability on this hardware/workload, but that is not the same claim as
+zero *bf16 numerical* uncertainty -- the two are different sources of
+variation, and a zero floor derived from the former is not a valid sign
+threshold for judging the latter. The registered gate's sign-agreement
+criterion is therefore evaluated exactly as pre-registered, and the
+overexpress panel **FAILS**, final.
+
+### Dated post-hoc sensitivity (2026-09-18, per Pam's ruling -- explicitly
+NOT part of the pre-registered gate, reported for characterization only)
+
+Pam specified a secondary, after-the-fact resolvability threshold: a
+sign is **"numerically resolvable"** only when `|fp32 shift| >
+max|bf16 - fp32| = 0.000603` (the panel's own observed `max_abs_diff`
+between bf16 and fp32, i.e. the largest per-gene disagreement bf16
+actually produced anywhere in the panel). Genes below this threshold have
+a shift too small for bf16 to resolve its sign reliably at all, regardless
+of direction.
+
+| Gene | comparison | \|fp32 shift\| | resolvability threshold | resolvable? |
+|---|---|---:|---:|---|
+| TPSB2 | normal_to_sclc | 0.0000760 | 0.000603 | No |
+| MMP12 | sclc_to_normal | 0.0001084 | 0.000603 | No |
+
+Both flipped genes fall below the threshold. Per Pam's ruling, these are
+reported as **UNRESOLVED UNDER BF16 AT THIS PRECISION** -- not as
+contradictory biological effects -- and this sensitivity result is
+reported plainly as a post-hoc characterization, **not as a gate pass**.
+It does not overturn the frozen verdict above.
+
+**Standing rule for future pre-registrations (Pam's ruling, item 4):** a
+frozen gate's sign-agreement criterion must specify a nonzero epsilon or
+cross-precision error bound *before* execution, not derive its threshold
+empirically from a same-precision repeat run -- a same-precision floor
+answers "how repeatable is this run," not "how much cross-precision
+disagreement is tolerable," and conflating the two produced this gate's
+degenerate zero-floor FAIL.
 
 ## Gate results (T4 program phase, `compare_runs.py t4`, optional arm)
 
@@ -170,13 +209,16 @@ completion markers under `runs/<tag>/targeted_panel/raw/`, not hand-typed.)
 halved (40.42 -> 20.25 GiB), consistent with the earlier n=1 smoke-test
 bonus data point (~2.07x speedup, ~half memory on one unit).
 
-Colleague-comparable headline: **rho 0.9998, top-20 20/20, 1.457x
-speedup, 3.079x less energy** vs the colleague's reported 0.98 / 20/20 /
-2.28x / ~74% less energy -- same direction and same order of magnitude,
-smaller speedup/energy factor on this workload and this GB10 (unified
-memory, different bottleneck profile than the colleague's hardware).
-Frozen-gate accuracy verdict is FAIL on the sign-agreement criterion (see
-above), pending Pam's ruling on the zero-floor degeneracy.
+Colleague-comparable headline: **rho 0.9998 (PASS, >= 0.95), top-20 20/20
+(PASS, >= 19/20), 1.457x speedup, 3.079x less energy** vs the colleague's
+reported 0.98 / 20/20 / 2.28x / ~74% less energy -- same direction and
+same order of magnitude, smaller speedup/energy factor on this workload
+and this GB10 (unified memory, different bottleneck profile than the
+colleague's hardware). Frozen-gate OVERALL verdict is still FAIL (the
+sign-agreement criterion, see above and the post-hoc sensitivity section)
+-- rho and top-20 are reported as independent PASSes since neither was
+ever gated by the sign criterion, but the panel gate is a conjunction of
+all three checks and FAILs as a whole.
 
 ## Noise floor (fp32 vs fp32 repeat)
 
@@ -194,20 +236,27 @@ and been excluded from the sign check entirely.
 
 ## Recommendation
 
-**Frozen-gate verdict: FAIL** (overexpress panel, sign-agreement
-criterion: 298/300 = 0.9933, below the implicit 1.0 requirement once the
-noise floor collapsed to zero -- see Gate results and Noise floor above).
-This FAIL is recorded as-is; the gate constants and signal-gene
-definition were not touched to change the outcome, per instruction, since
-the implementer (Kevin) must not rule on the gate his own result needs.
+**Frozen-gate verdict, final: FAIL** (overexpress panel, sign-agreement
+criterion: 298/300 = 0.9933 -- see Gate results and Noise floor above).
+Per Pam's ruling as domain reviewer, this is not amended: the gate
+constants and signal-gene definition are unchanged from freeze, and a
+bitwise-identical same-precision repeat does not license a zero
+cross-precision sign threshold.
 
-**No bf16-yes/no recommendation is made here.** A ruling is pending from
-Pam (domain reviewer) on whether the two sign flips -- both magnitude
-~1e-5/1e-4, ~10-120x smaller than the panel's mean |shift| of 0.00917,
-surfaced only because the fp32-vs-fp32 floor came out exactly zero --
-represent a real bf16 defect or a gate methodology gap (no allowance for
-near-zero-effect genes when the empirical floor is degenerate). Every
-other measured criterion passed cleanly (rho 0.9998 >> 0.95, top-20
-20/20) and the speed/energy profile replicates the colleague's direction
-of effect (1.457x faster, 3.079x less energy, ~half peak GPU memory).
-This section will be updated once Pam's ruling lands.
+**Pam's final call: bf16 is suitable for ISP on this stack**, citing (a)
+the post-hoc sensitivity analysis above, which reclassifies both sign
+flips as UNRESOLVED UNDER BF16 (shift magnitude below bf16's own observed
+resolution limit of 0.000603) rather than as contradictory biological
+effects, and (b) rho 0.9998 and top-20 20/20 both passing cleanly and
+independently of the sign criterion -- while **stating plainly that the
+frozen gate, as originally registered, was not met.** The speed/energy
+profile (1.457x faster, 3.079x less energy, ~half peak GPU memory vs the
+warm-cache fp32 reference) replicates the colleague's direction of
+effect, at a smaller factor on this GB10.
+
+**Standing rule going forward** (Pam's ruling, item 4): any future
+frozen-gate pre-registration with a sign-agreement or similar threshold
+criterion must specify its epsilon / cross-precision error bound
+explicitly, before execution -- not derive it empirically from a
+same-precision repeat run, which measures repeatability, not
+cross-precision tolerance.
