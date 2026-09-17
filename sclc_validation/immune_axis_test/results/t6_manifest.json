@@ -1,0 +1,30 @@
+{
+  "analysis": "T6 donor-balanced robustness",
+  "replication_unit": "donor",
+  "permutation_floors": {
+    "test_only": {
+      "n_a": 3,
+      "n_b": 4,
+      "n_assignments": 35,
+      "min_two_sided_p": 0.05714285714285714,
+      "min_one_sided_p": 0.02857142857142857,
+      "two_sided_alpha_05_attainable": false
+    },
+    "complete": {
+      "n_a": 19,
+      "n_b": 22,
+      "n_assignments": 244662670200,
+      "min_two_sided_p": 8.174520446315312e-12,
+      "min_one_sided_p": 4.087260223157656e-12,
+      "two_sided_alpha_05_attainable": true
+    }
+  },
+  "seed": 20260917,
+  "monte_carlo_permutations": 100000,
+  "inputs": [
+    "results/baseline_expression_per_donor.csv",
+    "results/t5a_donor_composition_check.csv"
+  ],
+  "scale_warning": "baseline_expression_per_donor.csv (T2 pipeline) and t5a_donor_composition_check.csv (T5 pipeline) are not on a common scale; no comparison here crosses the two tables.",
+  "claim_status": "reconciliation and robustness only; the axis conclusion remains qualified by T4's matched null and the failed strict titration"
+}
