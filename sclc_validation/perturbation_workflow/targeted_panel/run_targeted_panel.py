@@ -63,7 +63,16 @@ HOME = Path.home()
 # is the only remaining use and this fix is isolated to it.
 ANALYSIS_ROOT = Path(__file__).resolve().parents[0]
 ALLGENE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation"
-FINETUNE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_finetune"
+# Pre-existing bug fixed here (2026-09-18, discovered via a 316M-stage
+# calibration run silently loading the 104M classifier): this was a bare
+# hardcoded path, so `HTAN_FINETUNE_ROOT` had no effect here even though
+# run_t4_overexpression.py already honors it for exactly this purpose
+# (pointing ISP at a throwaway/alternate classifier checkpoint without
+# touching the default /srv/lab/KD-backed path). Same env-var name, same
+# default, now consistent between both runners.
+FINETUNE_ROOT = Path(
+    os.environ.get("HTAN_FINETUNE_ROOT", str(HOME / "workspace/KD/sclc_luad_normal_htan_finetune"))
+)
 BF16_BENCH_ROOT = Path(__file__).resolve().parents[2] / "bf16_bench"
 
 sys.path.insert(0, str(BF16_BENCH_ROOT))
