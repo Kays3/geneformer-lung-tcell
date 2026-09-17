@@ -34,7 +34,7 @@ fails, and the contradiction stands — in a sharper form."*
 | | SCLC | LUAD | SCLC − LUAD |
 |---|---:|---:|---:|
 | Exhaustion program, mean detection rate | 0.092 | 0.123 | **−0.032** |
-| Exhaustion program, mean log1p(CP10k) | 0.186 | 0.242 | **−0.055** |
+| Exhaustion program, mean log1p(CP10k) | 0.148 | 0.191 | **−0.043** |
 
 **This criterion is not triggered.** SCLC sits measurably below LUAD on the exhaustion
 program by both metrics. The model's LUAD-ward direction is, on this measure, moving
@@ -48,7 +48,7 @@ toward the state with genuinely more exhaustion-program transcript, not away fro
 | | Normal | SCLC | LUAD |
 |---|---:|---:|---:|
 | Exhaustion program, mean detection rate | 0.081 | 0.092 | 0.123 |
-| Exhaustion program, mean log1p(CP10k) | 0.180 | 0.186 | 0.242 |
+| Exhaustion program, mean log1p(CP10k) | 0.145 | 0.148 | 0.191 |
 
 SCLC sits **slightly above** Normal on both metrics, not at or below it. The measured
 ordering is the simple monotonic **Normal < SCLC < LUAD** — the ordering the poster
