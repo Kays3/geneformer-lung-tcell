@@ -163,7 +163,11 @@ genome-wide and complicates it: see [RESULTS_T5.md](RESULTS_T5.md) — the curat
 exhaustion program's SCLC-vs-LUAD ordering is **not the same** on the complete
 population as on T2's test-only population, and the difference traces to donor
 composition (a single donor carrying 75% of SCLC's held-out test cells), not a
-computation error. Test 3's centroid geometry is complete and rejects the
+computation error. **Test 6 settles that disagreement and closes it off**: with the
+donor as the replication unit, both populations give SCLC > LUAD, so T2 and T5a differ
+by cell-weighting alone — but the reconciled direction is itself not significant
+(complete population, 19 v 22 donors, two-sided permutation p = 0.216), so neither
+ordering should be reported as a finding. See [RESULTS_T6.md](RESULTS_T6.md). Test 3's centroid geometry is complete and rejects the
 collinear-centroid premise; see [RESULTS_T3.md](RESULTS_T3.md). Test 4's GPU
 phases are complete, but the matched-null and strict nested-titration criteria
 do not support an unconditional program-specific axis claim; see
@@ -173,6 +177,10 @@ PLAN.md                            the plan; read this first
 RESULTS_T2.md                      T2 results
 RESULTS_T3.md                      T3 centroid geometry and identifiability results
 RESULTS_T4.md                      T4 program, nested, null, donor, and subtype results
+RESULTS_T6.md                      T6 donor-balanced robustness: weighting reconciliation,
+                                   LODO, permutation floors, CD4/CD8 controls
+donor_robustness.py                T6 analysis (CPU-only, committed tables)
+test_donor_robustness.py           T6 regression tests (unittest)
 RESULTS_T5.md                      T5 (T5a/T5b) results
 UPDATED_POSTER_DRAFT.html          explicitly labeled review-only poster draft
 UPDATED_TALK_DRAFT.html            explicitly labeled review-only talk draft
