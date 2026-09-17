@@ -106,7 +106,7 @@ def panel_command(args: argparse.Namespace) -> dict:
            "floor_stats_root": str(args.floor_stats), "gate": {"rho_min": RHO_MIN,
            "topn": TOPN, "topn_min_overlap": TOPN_MIN_OVERLAP}, "by_perturb_type": {}}
     overall_pass = True
-    for ptype in ("delete", "overexpress"):
+    for ptype in args.perturb_types:
         df_a = load_panel_stats(args.a_stats, ptype)
         df_b = load_panel_stats(args.b_stats, ptype)
         df_floor = load_panel_stats(args.floor_stats, ptype)
@@ -215,6 +215,10 @@ def main() -> None:
     p_panel.add_argument("--a-stats", type=Path, required=True, help="fp32 baseline stats root")
     p_panel.add_argument("--b-stats", type=Path, required=True, help="bf16 (candidate) stats root")
     p_panel.add_argument("--floor-stats", type=Path, required=True, help="fp32 repeat (noise floor) stats root")
+    p_panel.add_argument("--perturb-types", nargs="+", choices=("delete", "overexpress"),
+                          default=["delete", "overexpress"],
+                          help="Which perturb types were run for this arm set (default: both). "
+                               "Pass '--perturb-types overexpress' for an overexpress-only sizing amendment.")
     p_panel.add_argument("--out", type=Path, required=True)
 
     p_t4 = sub.add_parser("t4", help="set-level T4 program-phase gate")

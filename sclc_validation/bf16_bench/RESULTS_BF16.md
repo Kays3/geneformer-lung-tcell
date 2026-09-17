@@ -7,6 +7,24 @@ time (checkpoint 2 in `hive/handoffs/bf16-isp-replication-plan-20260917.md`).
 Every number below must eventually come from a generated `compare_runs.py`
 JSON or a `power_sample.sh` summary -- none are hand-typed.
 
+## Provenance notes
+
+- **Geneformer checkout pin**: runs use `GENEFORMER_ROOT=/home/kaisar/workspace/geneformer-uv-starter/Geneformer` (private copy, pinned exactly at `f45a6c7de57ff07f946f146c254da02a90e2cdf5`, per god's step-0 decision -- the shared `/srv/lab/geneformer` path (what both runners import by default when `GENEFORMER_ROOT` is unset) is deliberately NOT patched or pointed at, since it is a shared host resource. **Discrepancy on record**: `/srv/lab/geneformer`'s live symlink target is currently `04c2b2e`, 4 commits ahead of the documented `f45a6c7` pin. Diffed: only `README.md` and `geneformer/mtl/{model,train}.py` differ between the two commits -- `perturber_utils.py`/`emb_extractor.py`/`in_silico_perturber.py` (everything this task's patch and ISP runs touch) are byte-identical, so past and present ISP results are unaffected either way. The documentation pin and the live default import path still disagree and someone should eventually reconcile them; out of scope for this task.
+- **Peak GPU memory**: `nvidia-smi` reports `Memory-Usage: Not Supported` on this GB10 (unified-memory architecture, confirmed live via `nvidia-smi` on thinkstation1) -- `power_sample.sh` therefore does not attempt a memory column. Peak memory instead comes from `torch.cuda.max_memory_allocated()`, called inside `run_gene()`/`run_one()` right after each unit and reset for the next, recorded as `peak_gpu_mem_gib` in every completion marker.
+
+## Sizing amendment 2026-09-17 (dated, before the bf16 arm ran)
+
+Calibration (single-gene PDCD1, fp32, private `f45a6c7` checkout, `nproc=1` -- see the plan's own dated amendment in `hive/handoffs/bf16-isp-replication-plan-20260917.md` for the full derivation):
+
+| perturb_type | source | source cell pool | elapsed_seconds | peak_gpu_mem_gib |
+|---|---|---:|---:|---:|
+| delete | normal | 566 | 22.35 | 11.05 |
+| overexpress | normal | 566 | 67.30 | 39.93 |
+| overexpress | sclc | 2,424 | 169.19 | 39.93 |
+| overexpress | luad | 6,387 | 375.51 | 39.93 |
+
+The naive uncapped arm (both types, all 3 sources, 50 genes) projects to well over 2.5h just from overexpress on luad's 6,387 cells. Applying god's lever priority: (a) the 50-gene panel is kept in full; (b) a `max_ncells` cap alone (keeping both perturb types) cannot reach the target -- fixed per-unit overhead alone, summed over 300 units, already exceeds the 2.5h budget; so (c) is also needed. **Decision: overexpress only, `--max-ncells 300` applied identically to every source and every arm.** Projected: ≈150 units × ~59.4s ≈ **2.47h/arm**, ≈7.4h for the three 104M arms sequential. Also found and fixed two pre-existing bugs (unrelated to bf16) that blocked the calibration unit from running at all: a bad `ANALYSIS_ROOT` path and `NPROC=4` forking after CUDA init -- see PR commit `b011667`.
+
 ## Objective
 
 Replicate the colleague's finding (petadimensionlab/Geneformer fork:
@@ -33,13 +51,17 @@ run is a dated amendment below, not a silent edit):
 
 ## Arms run
 
-| Arm | dtype | run-tag | Status |
-|---|---|---|---|
-| fp32 baseline | fp32 | `fp32_baseline` | not run |
-| fp32 repeat (noise floor) | fp32 | `fp32_repeat` | not run |
-| bf16 | bf16 | `bf16` | not run |
-| T4 program phase (12/273 units), fp32 | fp32 | `t4_fp32` | not run (optional) |
-| T4 program phase (12/273 units), bf16 | bf16 | `t4_bf16` | not run (optional) |
+Per the sizing amendment above: **overexpress only** (delete dropped for all
+three precision arms), **`--max-ncells 300`** applied identically to every
+arm.
+
+| Arm | dtype | run-tag | perturb type | max-ncells | Status |
+|---|---|---|---|---|---|
+| fp32 baseline | fp32 | `fp32_baseline` | overexpress | 300 | not run |
+| fp32 repeat (noise floor) | fp32 | `fp32_repeat` | overexpress | 300 | not run |
+| bf16 | bf16 | `bf16` | overexpress | 300 | not run |
+| T4 program phase (12/273 units), fp32 | fp32 | `t4_fp32` | overexpress | n/a | not run (optional) |
+| T4 program phase (12/273 units), bf16 | bf16 | `t4_bf16` | overexpress | n/a | not run (optional) |
 
 ## Gate results (targeted panel, `compare_runs.py panel`)
 
@@ -55,8 +77,10 @@ python3 compare_runs.py panel \
 
 | Perturb type | rho | top-20 overlap | sign agreement (signal genes) | verdict |
 |---|---|---|---|---|
-| delete | -- | -- | -- | -- |
 | overexpress | -- | -- | -- | -- |
+
+(No `delete` row: dropped for all three precision arms per the sizing
+amendment above.)
 
 ## Gate results (T4 program phase, `compare_runs.py t4`, optional arm)
 
