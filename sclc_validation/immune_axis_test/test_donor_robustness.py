@@ -224,13 +224,15 @@ class ScaleConsistencyTests(unittest.TestCase):
 
 
 class Cd4Cd8Tests(unittest.TestCase):
-    def test_all_four_strata_present_and_direction_recorded(self) -> None:
+    def test_all_four_strata_present_with_treg_reversal_recorded(self) -> None:
         _, stratified = m.cd4cd8_tables()
         summary = m.stratified_summary(stratified, "sclc", "luad")
         self.assertEqual(len(summary), 4)
         self.assertEqual(set(summary.cd4cd8), {"CD4", "CD4 (Treg)", "CD8", "other"})
-        self.assertTrue(summary.direction_matches_unstratified.all(),
-                        "report states SCLC >= LUAD in every stratum")
+        matches = set(summary.loc[summary.direction_matches_unstratified, "cd4cd8"])
+        self.assertEqual(matches, {"CD4", "CD8", "other"})
+        treg = summary.loc[summary.cd4cd8 == "CD4 (Treg)", "direction_matches_unstratified"]
+        self.assertFalse(treg.iloc[0], "canonical Treg score is LUAD > SCLC")
 
     def test_composition_shares_sum_to_one_per_donor(self) -> None:
         composition, _ = m.cd4cd8_tables()
