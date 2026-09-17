@@ -12,10 +12,25 @@ those that actually detect the target gene before perturbing (cheap). For
 "overexpress" that filter does not apply (a gene can be induced from
 undetected), so every held-out cell in the source is processed for every
 gene -- this is the more expensive of the two per gene, by design.
+
+OUTPUT LOCATION (changed 2026-09-17, bf16 precision-replication task): by
+default this script now writes under
+sclc_validation/bf16_bench/runs/<run-tag>/targeted_panel/ instead of any
+directory under this script's own location -- <run-tag> defaults to
+--dtype ("fp32" or "bf16") and can be set explicitly with --run-tag so
+parallel arms (e.g. an fp32 baseline vs its fp32 noise-floor repeat) don't
+clobber each other. A canonical full-panel run with no bf16-specific flags
+will land at .../bf16_bench/runs/fp32/targeted_panel/, NOT wherever it used
+to write -- check there first if a run seems to have vanished. (Separately,
+and pre-existing: check_status.sh and this README still reference
+TARGETED_PANEL_RUN_DIR / ~/workspace/KD/..., which this script has never
+actually written to in its current form -- that mismatch predates this
+task and is unrelated to the bf16_bench redirect; flagged, not fixed here.)
 """
 
 from __future__ import annotations
 
+import argparse
 import multiprocessing
 
 # Must happen before torch/CUDA is touched anywhere below: the isp_perturb_set*
@@ -28,21 +43,86 @@ multiprocessing.set_start_method("spawn", force=True)
 
 import json
 import logging
+import os
 import pickle
 import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+import torch
 from datasets import load_from_disk
 
 HOME = Path.home()
-ANALYSIS_ROOT = Path(__file__).resolve().parents[1]
+# Pre-existing bug fixed here (2026-09-17, discovered via the bf16-bench
+# calibration run): this was `.parents[1]`, which resolves to
+# perturbation_workflow/ -- but target_gene_panel.json lives next to this
+# script, in targeted_panel/, i.e. `.parents[0]`. Every other ANALYSIS_ROOT
+# consumer (RAW_ROOT/STATS_ROOT/TABLE_ROOT/LOG_ROOT/SOURCE_DATA_DIR) was
+# already redirected under bf16_bench/ by this task, so TARGET_GENES_FILE
+# is the only remaining use and this fix is isolated to it.
+ANALYSIS_ROOT = Path(__file__).resolve().parents[0]
 ALLGENE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation"
 FINETUNE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_finetune"
+BF16_BENCH_ROOT = Path(__file__).resolve().parents[2] / "bf16_bench"
 
-sys.path.insert(0, str(HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer"))
-from geneformer import InSilicoPerturber, InSilicoPerturberStats
+sys.path.insert(0, str(BF16_BENCH_ROOT))
+from dtype_cast import DTYPES, install_dtype_cast  # noqa: E402
+
+# Overridable so the bf16-bench arms can point at a specific pinned checkout
+# (e.g. the private f45a6c7 copy) instead of the shared geneformer-workspace
+# symlink target -- same GENEFORMER_ROOT override run_t4_overexpression.py
+# already supports.
+GENEFORMER_ROOT = Path(
+    os.environ.get(
+        "GENEFORMER_ROOT",
+        HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer",
+    )
+)
+sys.path.insert(0, str(GENEFORMER_ROOT))
+from geneformer import InSilicoPerturber, InSilicoPerturberStats  # noqa: E402
+
+
+def parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--dtype", choices=DTYPES, default="fp32",
+                   help="Model dtype for the ISP forward pass (default: fp32).")
+    p.add_argument("--run-tag", default=None,
+                   help="Output subdirectory under sclc_validation/bf16_bench/runs/ "
+                        "(default: same as --dtype). Distinguishes arms that share a "
+                        "dtype, e.g. the fp32 baseline vs the fp32 noise-floor repeat, "
+                        "from clobbering each other's outputs.")
+    p.add_argument("--force", action="store_true")
+    p.add_argument("--max-ncells", type=int, default=None,
+                   help="Cap on cells perturbed per source (InSilicoPerturber's "
+                        "max_ncells). Sizing lever: apply the SAME value across every "
+                        "arm (fp32 baseline, fp32 repeat, bf16) so the comparison stays "
+                        "valid -- the fp32-vs-fp32 noise floor then quantifies exactly "
+                        "the extra noise the cap adds. Default: no cap (all cells).")
+    p.add_argument("--perturb-types", nargs="+", choices=("delete", "overexpress"),
+                   default=["delete", "overexpress"],
+                   help="Which perturb types to run (default: both). Second sizing "
+                        "lever: pass '--perturb-types overexpress' to drop delete "
+                        "entirely (see the plan's dated 2026-09-17 sizing amendment).")
+    return p.parse_args()
+
+
+def geneformer_provenance() -> dict:
+    import subprocess
+    try:
+        commit = subprocess.run(
+            ["git", "-C", str(GENEFORMER_ROOT), "rev-parse", "HEAD"],
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+    except Exception as exc:  # pragma: no cover - diagnostic only
+        commit = f"<unresolved: {exc}>"
+    return {"geneformer_root": str(GENEFORMER_ROOT), "geneformer_commit": commit}
+
+
+ARGS = parse_args()
+install_dtype_cast(ARGS.dtype)
+RUN_TAG = ARGS.run_tag or ARGS.dtype
+OUT_ROOT = BF16_BENCH_ROOT / "runs" / RUN_TAG / "targeted_panel"
 
 MODEL_PATH_FILE = FINETUNE_ROOT / "runs" / "MODEL_SCLC_LUAD_NORMAL_HTAN_PATH.txt"
 TRAIN_DATASET = ALLGENE_ROOT / "data/train_reference.dataset"
@@ -50,10 +130,10 @@ TEST_DATASET = ALLGENE_ROOT / "data/heldout_test.dataset"
 STATE_EMB_FILE = ALLGENE_ROOT / "state_embeddings/training_donor_disease_centroids.pkl"
 
 TARGET_GENES_FILE = ANALYSIS_ROOT / "target_gene_panel.json"
-RAW_ROOT = ANALYSIS_ROOT / "raw"
-STATS_ROOT = ANALYSIS_ROOT / "stats"
-TABLE_ROOT = ANALYSIS_ROOT / "tables"
-LOG_ROOT = ANALYSIS_ROOT / "logs"
+RAW_ROOT = OUT_ROOT / "raw"
+STATS_ROOT = OUT_ROOT / "stats"
+TABLE_ROOT = OUT_ROOT / "tables"
+LOG_ROOT = OUT_ROOT / "logs"
 
 SCLC = "small cell lung carcinoma"
 LUAD = "lung adenocarcinoma"
@@ -62,9 +142,25 @@ STATES = (SCLC, LUAD, NORMAL)
 SLUGS = {SCLC: "sclc", LUAD: "luad", NORMAL: "normal"}
 STATE_BY_SLUG = {v: k for k, v in SLUGS.items()}
 DEFAULT_SOURCE_ORDER = ("normal", "sclc", "luad")
+# Full valid set. ACTIVE_PERTURB_TYPES (below, from --perturb-types) is what
+# ensure_dirs()/main() actually iterate -- kept separate so a run scoped to
+# just "overexpress" doesn't create/expect "delete" dirs at all.
 PERTURB_TYPES = ("delete", "overexpress")
+ACTIVE_PERTURB_TYPES = tuple(ARGS.perturb_types)
 FORWARD_BATCH_SIZE = 128
-NPROC = 4
+# Pre-existing bug fixed here (2026-09-17, discovered via the bf16-bench
+# calibration run): this was 4. InSilicoPerturber.perturb_data() loads the
+# model onto CUDA before Dataset.map(num_proc=...) runs, and Geneformer's
+# map() uses the separate `multiprocess` package, which forks workers
+# regardless of this file's own multiprocessing.set_start_method("spawn")
+# call (that only affects stdlib multiprocessing, a different global than
+# `multiprocess`). Forking after CUDA init crashes with "Cannot
+# re-initialize CUDA in forked subprocess" -- confirmed by reproducing it
+# live with nproc=4. run_t4_overexpression.py already documents this exact
+# failure mode and sets nproc=1 for GPU runs for exactly this reason; this
+# script never got the same fix, so every gene here was silently unable to
+# run against a live GPU.
+NPROC = 1
 
 
 def utc_now() -> str:
@@ -77,7 +173,7 @@ def model_dir() -> Path:
 
 def ensure_dirs() -> None:
     dirs = [TABLE_ROOT, LOG_ROOT]
-    for ptype in PERTURB_TYPES:
+    for ptype in ACTIVE_PERTURB_TYPES:
         for slug in SLUGS.values():
             dirs.append(RAW_ROOT / ptype / slug)
         dirs.append(STATS_ROOT / ptype)
@@ -95,7 +191,10 @@ def canonical_states(start_state: str) -> dict:
     return {"state_key": "disease", "start_state": start_state, "goal_state": others[0], "alt_states": [others[1]]}
 
 
-SOURCE_DATA_DIR = ANALYSIS_ROOT / "data" / "sources"
+# Dtype-independent input cache (same held-out cells for every arm), shared
+# across arms rather than duplicated per --run-tag; lives under bf16_bench
+# per the task boundary that new outputs stay out of the pre-existing tree.
+SOURCE_DATA_DIR = BF16_BENCH_ROOT / "runs" / "_shared" / "targeted_panel_sources"
 
 
 def source_dataset_path(source_slug: str) -> Path:
@@ -146,7 +245,7 @@ def run_gene(perturb_type: str, source_slug: str, gene: dict, state_embs: dict, 
         filter_data=None,
         cell_states_to_model=canonical_states(disease),
         state_embs_dict=state_embs,
-        max_ncells=None,
+        max_ncells=ARGS.max_ncells,
         emb_layer=0,
         forward_batch_size=FORWARD_BATCH_SIZE,
         nproc=NPROC,
@@ -179,6 +278,7 @@ def run_gene(perturb_type: str, source_slug: str, gene: dict, state_embs: dict, 
                 "source": source_slug,
                 "gene": symbol,
                 "ensembl_id": ensembl_id,
+                "dtype": ARGS.dtype,
                 "elapsed_seconds": time.time() - started,
                 "n_raw_files": 0,
                 "skipped_zero_cells_detected": True,
@@ -188,14 +288,20 @@ def run_gene(perturb_type: str, source_slug: str, gene: dict, state_embs: dict, 
         raise
 
     output_files = sorted(raw_dir.glob(f"in_silico_{perturb_type}_{prefix}_*_raw.pickle"))
+    peak_mem_gib = None
+    if torch.cuda.is_available():
+        peak_mem_gib = torch.cuda.max_memory_allocated() / 2**30
+        torch.cuda.reset_peak_memory_stats()
     payload = {
         "completed_utc": utc_now(),
         "perturb_type": perturb_type,
         "source": source_slug,
         "gene": symbol,
         "ensembl_id": ensembl_id,
+        "dtype": ARGS.dtype,
         "elapsed_seconds": time.time() - started,
         "n_raw_files": len(output_files),
+        "peak_gpu_mem_gib": peak_mem_gib,
     }
     done_file.write_text(json.dumps(payload, indent=2) + "\n")
     logging.info(
@@ -247,11 +353,15 @@ def main() -> None:
         "created_utc": utc_now(),
         "model_directory": str(model_dir()),
         "n_target_genes": len(target_genes),
-        "perturbation_types": list(PERTURB_TYPES),
+        "perturbation_types": list(ACTIVE_PERTURB_TYPES),
         "forward_batch_size": FORWARD_BATCH_SIZE,
         "nproc": NPROC,
         "source_order": list(DEFAULT_SOURCE_ORDER),
         "target_genes_file": str(TARGET_GENES_FILE),
+        "dtype": ARGS.dtype,
+        "run_tag": RUN_TAG,
+        "max_ncells": ARGS.max_ncells,
+        **geneformer_provenance(),
     }, indent=2) + "\n")
 
     state_embs = state_embeddings()
@@ -263,15 +373,15 @@ def main() -> None:
         path = source_dataset_path(source)
         logging.info("Source dataset ready: %s -> %s", source, path)
 
-    for ptype in PERTURB_TYPES:
+    for ptype in ACTIVE_PERTURB_TYPES:
         for source in DEFAULT_SOURCE_ORDER:
             logging.info("=== %s / %s: %d genes ===", ptype, source, len(target_genes))
             for gene in target_genes:
-                run_gene(ptype, source, gene, state_embs)
+                run_gene(ptype, source, gene, state_embs, force=ARGS.force)
 
-    for ptype in PERTURB_TYPES:
+    for ptype in ACTIVE_PERTURB_TYPES:
         for source in DEFAULT_SOURCE_ORDER:
-            run_stats(ptype, source, target_genes)
+            run_stats(ptype, source, target_genes, force=ARGS.force)
 
     logging.info("Targeted panel perturbation complete.")
 

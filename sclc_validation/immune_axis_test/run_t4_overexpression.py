@@ -47,6 +47,9 @@ GENEFORMER_ROOT = Path(
         HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer",
     )
 )
+BF16_BENCH_ROOT = HERE.parent / "bf16_bench"
+sys.path.insert(0, str(BF16_BENCH_ROOT))
+from dtype_cast import DTYPES, install_dtype_cast  # noqa: E402
 TOKEN_DICT = Path(
     os.environ.get(
         "GENEFORMER_TOKEN_DICT",
@@ -222,6 +225,7 @@ def run_one(
     forward_batch_size: int,
     nproc: int,
     force: bool,
+    dtype: str = "fp32",
 ) -> dict:
     marker = completion_marker(run_dir, run, source)
     if marker.exists() and not force:
@@ -260,6 +264,12 @@ def run_one(
     outputs = sorted(raw_dir.glob(f"in_silico_overexpress_{prefix}_*_raw.pickle"))
     if len(outputs) != 1:
         raise RuntimeError(f"Expected one raw pickle for {run['id']}/{source}, found {len(outputs)}")
+    import torch
+
+    peak_mem_gib = None
+    if torch.cuda.is_available():
+        peak_mem_gib = torch.cuda.max_memory_allocated() / 2**30
+        torch.cuda.reset_peak_memory_stats()
     payload = {
         "completed_utc": utc_now(),
         "item_id": run["id"],
@@ -267,9 +277,11 @@ def run_one(
         "program": run["program"],
         "source": source,
         "genes": run["genes"],
+        "dtype": dtype,
         "elapsed_seconds": time.time() - started,
         "raw_file": str(outputs[0].relative_to(run_dir)),
         "raw_sha256": sha256(outputs[0]),
+        "peak_gpu_mem_gib": peak_mem_gib,
     }
     marker.parent.mkdir(parents=True, exist_ok=True)
     marker.write_text(json.dumps(payload, indent=2) + "\n")
@@ -293,6 +305,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--dtype", choices=DTYPES, default="fp32",
+                         help="Model dtype for the ISP forward pass (default: fp32).")
     return parser.parse_args()
 
 
@@ -320,11 +334,21 @@ def main() -> None:
     from datasets import load_from_disk
     from geneformer import InSilicoPerturber
 
+    install_dtype_cast(args.dtype)
+
     if not torch.cuda.is_available():
         raise RuntimeError("T4 requires CUDA; use --dry-run to inspect the plan")
     with STATE_EMBEDDINGS.open("rb") as handle:
         state_embeddings = pickle.load(handle)
     args.run_dir.mkdir(parents=True, exist_ok=True)
+    import subprocess
+    try:
+        geneformer_commit = subprocess.run(
+            ["git", "-C", str(GENEFORMER_ROOT), "rev-parse", "HEAD"],
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+    except Exception as exc:  # pragma: no cover - diagnostic only
+        geneformer_commit = f"<unresolved: {exc}>"
     (args.run_dir / "run_config.json").write_text(
         json.dumps(
             {
@@ -334,6 +358,9 @@ def main() -> None:
                 "model_directory": str(model_dir),
                 "forward_batch_size": args.forward_batch_size,
                 "nproc": args.nproc,
+                "dtype": args.dtype,
+                "geneformer_root": str(GENEFORMER_ROOT),
+                "geneformer_commit": geneformer_commit,
                 "selection": summarize_work(work),
             },
             indent=2,
@@ -353,6 +380,7 @@ def main() -> None:
             args.forward_batch_size,
             args.nproc,
             args.force,
+            dtype=args.dtype,
         )
         print(f"  complete in {result['elapsed_seconds']:.1f}s", flush=True)
 
