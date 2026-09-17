@@ -138,7 +138,15 @@ TRAIN_DATASET = ALLGENE_ROOT / "data/train_reference.dataset"
 TEST_DATASET = ALLGENE_ROOT / "data/heldout_test.dataset"
 STATE_EMB_FILE = ALLGENE_ROOT / "state_embeddings/training_donor_disease_centroids.pkl"
 
-TARGET_GENES_FILE = ANALYSIS_ROOT / "target_gene_panel.json"
+# Overridable (2026-09-18) so calibration/subset runs never need to edit
+# the shared tracked target_gene_panel.json in place -- that file lives in
+# the live ts1 checkout other agents share, and a temporary in-place edit
+# (even one immediately restored via `git checkout --`) is unnecessary risk
+# once an override exists. Point this at a throwaway single-gene copy under
+# bf16_bench/ instead.
+TARGET_GENES_FILE = Path(
+    os.environ.get("TARGET_GENES_FILE_OVERRIDE", str(ANALYSIS_ROOT / "target_gene_panel.json"))
+)
 RAW_ROOT = OUT_ROOT / "raw"
 STATS_ROOT = OUT_ROOT / "stats"
 TABLE_ROOT = OUT_ROOT / "tables"
