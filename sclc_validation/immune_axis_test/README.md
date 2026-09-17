@@ -62,8 +62,8 @@ error. See RESULTS_T5.md for the full picture.
 
 **Normalization audit — see [RESULTS_T2T5_SCALE_AUDIT.md](RESULTS_T2T5_SCALE_AUDIT.md).**
 T2 originally used stale `obs['n_counts']` metadata while T5 used current-matrix row
-sums; the confirmed scale mismatch is being corrected by regenerating T2 and dependent
-T6 summaries. Existing T2/T6 log1p(CP10k) outputs are legacy-scale until then.
+sums. T2 and dependent T6 summaries were regenerated on the canonical current-matrix
+scale; the audit preserves the former legacy-scale values and the root-cause evidence.
 
 ### T3 — embedding geometry (run; see [RESULTS_T3.md](RESULTS_T3.md))
 

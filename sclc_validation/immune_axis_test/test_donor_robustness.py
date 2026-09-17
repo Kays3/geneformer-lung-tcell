@@ -8,8 +8,8 @@ Two of these encode mistakes that were actually made and caught while writing T6
   * `LodoSignMetricTests` - the LODO sign-stability metric was first written comparing
     each drop against the FIRST drop rather than against the full-data value. That is
     silently wrong whenever the first drop is itself the sign-flipping one.
-  * `ScaleSeparationTests` - two committed tables covering the same cells differ by
-    ~0.79x, so anything that pools or differences across them is invalid.
+  * `ScaleConsistencyTests` - T2 originally used stale count metadata; matched T2/T5
+    cells and genes must now agree on the canonical current-matrix CP10k scale.
 """
 from __future__ import annotations
 

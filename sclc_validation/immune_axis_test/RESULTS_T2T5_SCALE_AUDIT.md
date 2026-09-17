@@ -1,6 +1,6 @@
 # Results — T2/T5 pseudobulk scale audit
 
-**Status: root cause confirmed; T2 correction queued for regeneration.** This audit
+**Status: root cause confirmed; T2 correction regenerated.** This audit
 does not change a biological ordering, a gene list, a rank, or a model result. It
 identifies an implementation-level normalization mismatch between two summaries of
 the same held-out cells and genes.
@@ -27,20 +27,20 @@ object's provenance.
 being summarized and matches T5's established Scanpy normalization. T2 now computes
 its CP10k denominator from that row sum rather than `obs['n_counts']`.
 
-## Required regeneration and historical caveat
+## Regeneration and historical record
 
 - `baseline_expression_{pooled,per_donor}.csv`, `t2_program_summary.csv`, T2 figures,
-  and all T2 log1p(CP10k) values must be regenerated from the corrected source.
-  Detection rates and raw-count columns are unaffected.
+  and all T2 log1p(CP10k) values were regenerated from the corrected source. Detection
+  rates and raw-count columns are unaffected.
 - T6 consumes T2's per-donor log1p table. Its test-only values, weighting table,
-  leave-one-donor-out results, figures, and manifest must be regenerated after T2.
-  Its historical assertion that T2 and T5 are on different scales must be removed and
-  replaced with an equality regression on the same test cells and genes.
+  leave-one-donor-out results, figures, and manifest were regenerated after T2. Its
+  historical scale-separation assertion was replaced with an equality regression on
+  the same test cells and genes.
 - T5's existing outputs use the canonical row-sum denominator and need no numerical
   change. Its complete-versus-test donor-composition conclusion remains a separate
   question from this scale fix.
 
-Until regeneration is committed, the existing T2 and T6 log1p(CP10k) tables are
-reproducible **legacy-`n_counts`** outputs and must not be compared numerically with
-T5. The audit data are in
+The pre-correction T2/T6 values recorded above are reproducible **legacy-`n_counts`**
+outputs; the committed T2/T6 tables use the canonical scale and agree numerically with
+matched T5 test cells and genes. The audit data are in
 [`results/t2t5_pseudobulk_scale_audit.json`](results/t2t5_pseudobulk_scale_audit.json).
