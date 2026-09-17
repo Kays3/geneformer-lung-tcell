@@ -40,7 +40,14 @@ import torch
 from datasets import load_from_disk
 
 HOME = Path.home()
-ANALYSIS_ROOT = Path(__file__).resolve().parents[1]
+# Pre-existing bug fixed here (2026-09-17, discovered via the bf16-bench
+# calibration run): this was `.parents[1]`, which resolves to
+# perturbation_workflow/ -- but target_gene_panel.json lives next to this
+# script, in targeted_panel/, i.e. `.parents[0]`. Every other ANALYSIS_ROOT
+# consumer (RAW_ROOT/STATS_ROOT/TABLE_ROOT/LOG_ROOT/SOURCE_DATA_DIR) was
+# already redirected under bf16_bench/ by this task, so TARGET_GENES_FILE
+# is the only remaining use and this fix is isolated to it.
+ANALYSIS_ROOT = Path(__file__).resolve().parents[0]
 ALLGENE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation"
 FINETUNE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_finetune"
 BF16_BENCH_ROOT = Path(__file__).resolve().parents[2] / "bf16_bench"
@@ -118,7 +125,19 @@ STATE_BY_SLUG = {v: k for k, v in SLUGS.items()}
 DEFAULT_SOURCE_ORDER = ("normal", "sclc", "luad")
 PERTURB_TYPES = ("delete", "overexpress")
 FORWARD_BATCH_SIZE = 128
-NPROC = 4
+# Pre-existing bug fixed here (2026-09-17, discovered via the bf16-bench
+# calibration run): this was 4. InSilicoPerturber.perturb_data() loads the
+# model onto CUDA before Dataset.map(num_proc=...) runs, and Geneformer's
+# map() uses the separate `multiprocess` package, which forks workers
+# regardless of this file's own multiprocessing.set_start_method("spawn")
+# call (that only affects stdlib multiprocessing, a different global than
+# `multiprocess`). Forking after CUDA init crashes with "Cannot
+# re-initialize CUDA in forked subprocess" -- confirmed by reproducing it
+# live with nproc=4. run_t4_overexpression.py already documents this exact
+# failure mode and sets nproc=1 for GPU runs for exactly this reason; this
+# script never got the same fix, so every gene here was silently unable to
+# run against a live GPU.
+NPROC = 1
 
 
 def utc_now() -> str:
