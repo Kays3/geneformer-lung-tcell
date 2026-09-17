@@ -47,7 +47,7 @@ GENEFORMER_ROOT = Path(
         HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer",
     )
 )
-BF16_BENCH_ROOT = HERE.parents[1] / "bf16_bench"
+BF16_BENCH_ROOT = HERE.parent / "bf16_bench"
 sys.path.insert(0, str(BF16_BENCH_ROOT))
 from dtype_cast import DTYPES, install_dtype_cast  # noqa: E402
 TOKEN_DICT = Path(
