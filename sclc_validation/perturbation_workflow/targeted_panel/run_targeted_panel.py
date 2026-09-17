@@ -136,7 +136,20 @@ OUT_ROOT = BF16_BENCH_ROOT / "runs" / RUN_TAG / "targeted_panel"
 MODEL_PATH_FILE = FINETUNE_ROOT / "runs" / "MODEL_SCLC_LUAD_NORMAL_HTAN_PATH.txt"
 TRAIN_DATASET = ALLGENE_ROOT / "data/train_reference.dataset"
 TEST_DATASET = ALLGENE_ROOT / "data/heldout_test.dataset"
-STATE_EMB_FILE = ALLGENE_ROOT / "state_embeddings/training_donor_disease_centroids.pkl"
+# Overridable (2026-09-18): this pickle is a fixed per-disease-state
+# centroid embedding computed once from a SPECIFIC model's embedding
+# space (originally the 104M classifier, 768-dim). It is not portable
+# across model architectures -- loading it against a 316M model's live
+# embeddings (1152-dim) crashes with a cosine_similarity shape mismatch
+# (confirmed live: "size of tensor a (1152) must match ... b (768)").
+# Each model size needs its own centroids file; point this at a
+# 316M-specific one instead of touching ALLGENE_ROOT (shared).
+STATE_EMB_FILE = Path(
+    os.environ.get(
+        "STATE_EMB_FILE_OVERRIDE",
+        str(ALLGENE_ROOT / "state_embeddings/training_donor_disease_centroids.pkl"),
+    )
+)
 
 # Overridable (2026-09-18) so calibration/subset runs never need to edit
 # the shared tracked target_gene_panel.json in place -- that file lives in
