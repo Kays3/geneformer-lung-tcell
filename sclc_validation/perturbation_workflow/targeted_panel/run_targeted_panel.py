@@ -16,6 +16,7 @@ gene -- this is the more expensive of the two per gene, by design.
 
 from __future__ import annotations
 
+import argparse
 import multiprocessing
 
 # Must happen before torch/CUDA is touched anywhere below: the isp_perturb_set*
@@ -34,15 +35,39 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+import torch
 from datasets import load_from_disk
 
 HOME = Path.home()
 ANALYSIS_ROOT = Path(__file__).resolve().parents[1]
 ALLGENE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation"
 FINETUNE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_finetune"
+BF16_BENCH_ROOT = Path(__file__).resolve().parents[2] / "bf16_bench"
+
+sys.path.insert(0, str(BF16_BENCH_ROOT))
+from dtype_cast import DTYPES, install_dtype_cast  # noqa: E402
 
 sys.path.insert(0, str(HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer"))
-from geneformer import InSilicoPerturber, InSilicoPerturberStats
+from geneformer import InSilicoPerturber, InSilicoPerturberStats  # noqa: E402
+
+
+def parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--dtype", choices=DTYPES, default="fp32",
+                   help="Model dtype for the ISP forward pass (default: fp32).")
+    p.add_argument("--run-tag", default=None,
+                   help="Output subdirectory under sclc_validation/bf16_bench/runs/ "
+                        "(default: same as --dtype). Distinguishes arms that share a "
+                        "dtype, e.g. the fp32 baseline vs the fp32 noise-floor repeat, "
+                        "from clobbering each other's outputs.")
+    p.add_argument("--force", action="store_true")
+    return p.parse_args()
+
+
+ARGS = parse_args()
+install_dtype_cast(ARGS.dtype)
+RUN_TAG = ARGS.run_tag or ARGS.dtype
+OUT_ROOT = BF16_BENCH_ROOT / "runs" / RUN_TAG / "targeted_panel"
 
 MODEL_PATH_FILE = FINETUNE_ROOT / "runs" / "MODEL_SCLC_LUAD_NORMAL_HTAN_PATH.txt"
 TRAIN_DATASET = ALLGENE_ROOT / "data/train_reference.dataset"
@@ -50,10 +75,10 @@ TEST_DATASET = ALLGENE_ROOT / "data/heldout_test.dataset"
 STATE_EMB_FILE = ALLGENE_ROOT / "state_embeddings/training_donor_disease_centroids.pkl"
 
 TARGET_GENES_FILE = ANALYSIS_ROOT / "target_gene_panel.json"
-RAW_ROOT = ANALYSIS_ROOT / "raw"
-STATS_ROOT = ANALYSIS_ROOT / "stats"
-TABLE_ROOT = ANALYSIS_ROOT / "tables"
-LOG_ROOT = ANALYSIS_ROOT / "logs"
+RAW_ROOT = OUT_ROOT / "raw"
+STATS_ROOT = OUT_ROOT / "stats"
+TABLE_ROOT = OUT_ROOT / "tables"
+LOG_ROOT = OUT_ROOT / "logs"
 
 SCLC = "small cell lung carcinoma"
 LUAD = "lung adenocarcinoma"
@@ -95,7 +120,10 @@ def canonical_states(start_state: str) -> dict:
     return {"state_key": "disease", "start_state": start_state, "goal_state": others[0], "alt_states": [others[1]]}
 
 
-SOURCE_DATA_DIR = ANALYSIS_ROOT / "data" / "sources"
+# Dtype-independent input cache (same held-out cells for every arm), shared
+# across arms rather than duplicated per --run-tag; lives under bf16_bench
+# per the task boundary that new outputs stay out of the pre-existing tree.
+SOURCE_DATA_DIR = BF16_BENCH_ROOT / "runs" / "_shared" / "targeted_panel_sources"
 
 
 def source_dataset_path(source_slug: str) -> Path:
@@ -179,6 +207,7 @@ def run_gene(perturb_type: str, source_slug: str, gene: dict, state_embs: dict, 
                 "source": source_slug,
                 "gene": symbol,
                 "ensembl_id": ensembl_id,
+                "dtype": ARGS.dtype,
                 "elapsed_seconds": time.time() - started,
                 "n_raw_files": 0,
                 "skipped_zero_cells_detected": True,
@@ -188,14 +217,20 @@ def run_gene(perturb_type: str, source_slug: str, gene: dict, state_embs: dict, 
         raise
 
     output_files = sorted(raw_dir.glob(f"in_silico_{perturb_type}_{prefix}_*_raw.pickle"))
+    peak_mem_gib = None
+    if torch.cuda.is_available():
+        peak_mem_gib = torch.cuda.max_memory_allocated() / 2**30
+        torch.cuda.reset_peak_memory_stats()
     payload = {
         "completed_utc": utc_now(),
         "perturb_type": perturb_type,
         "source": source_slug,
         "gene": symbol,
         "ensembl_id": ensembl_id,
+        "dtype": ARGS.dtype,
         "elapsed_seconds": time.time() - started,
         "n_raw_files": len(output_files),
+        "peak_gpu_mem_gib": peak_mem_gib,
     }
     done_file.write_text(json.dumps(payload, indent=2) + "\n")
     logging.info(
@@ -252,6 +287,8 @@ def main() -> None:
         "nproc": NPROC,
         "source_order": list(DEFAULT_SOURCE_ORDER),
         "target_genes_file": str(TARGET_GENES_FILE),
+        "dtype": ARGS.dtype,
+        "run_tag": RUN_TAG,
     }, indent=2) + "\n")
 
     state_embs = state_embeddings()
@@ -267,11 +304,11 @@ def main() -> None:
         for source in DEFAULT_SOURCE_ORDER:
             logging.info("=== %s / %s: %d genes ===", ptype, source, len(target_genes))
             for gene in target_genes:
-                run_gene(ptype, source, gene, state_embs)
+                run_gene(ptype, source, gene, state_embs, force=ARGS.force)
 
     for ptype in PERTURB_TYPES:
         for source in DEFAULT_SOURCE_ORDER:
-            run_stats(ptype, source, target_genes)
+            run_stats(ptype, source, target_genes, force=ARGS.force)
 
     logging.info("Targeted panel perturbation complete.")
 

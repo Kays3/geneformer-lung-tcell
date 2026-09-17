@@ -1,0 +1,41 @@
+--- a/geneformer/emb_extractor.py
++++ b/geneformer/emb_extractor.py
+@@ -252,7 +252,8 @@
+ 
+ 
+ def label_cell_embs(embs, downsampled_data, emb_labels):
+-    embs_df = pd.DataFrame(embs.cpu().numpy())
++    # bf16 upcast: numpy has no bfloat16 dtype; .float() is a no-op for fp32.
++    embs_df = pd.DataFrame(embs.float().cpu().numpy())
+     if emb_labels is not None:
+         for label in emb_labels:
+             emb_label = downsampled_data[label]
+@@ -279,6 +280,7 @@
+         for k in gene_emb_dict.keys():
+             gene_emb_dict[k] = (
+                 torch.squeeze(torch.mean(torch.stack(gene_emb_dict[k]), dim=0), dim=0)
++                .float()
+                 .cpu()
+                 .numpy()
+             )
+@@ -698,7 +700,7 @@
+             if self.summary_stat is None:
+                 embs_df = label_cell_embs(embs, downsampled_data, self.emb_label)
+             elif self.summary_stat is not None:
+-                embs_df = pd.DataFrame(embs.cpu().numpy()).T
++                embs_df = pd.DataFrame(embs.float().cpu().numpy()).T
+         elif self.emb_mode == "gene":
+             if self.summary_stat is None:
+                 embs_df = label_gene_embs(embs, downsampled_data, self.token_gene_dict, self.gene_emb_style)
+--- a/geneformer/perturber_utils.py
++++ b/geneformer/perturber_utils.py
+@@ -829,7 +829,8 @@
+ 
+ 
+ def tensor_list_to_pd(tensor_list):
+-    tensor = torch.cat(tensor_list).cpu().numpy()
++    # bf16 upcast: numpy has no bfloat16 dtype; .float() is a no-op for fp32.
++    tensor = torch.cat(tensor_list).float().cpu().numpy()
+     df = pd.DataFrame(tensor)
+     return df
+ 
