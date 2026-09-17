@@ -15,7 +15,7 @@ T2 and T5a disagree on the SCLC-vs-LUAD ordering of the curated 7-gene exhaustio
 
 | Measurement | Normal | SCLC | LUAD | Ordering |
 |---|---:|---:|---:|---|
-| T2, test-only population, pooled | 0.180 | 0.186 | 0.242 | LUAD > SCLC |
+| T2, test-only population, pooled | 0.145 | 0.148 | 0.191 | LUAD > SCLC |
 | T5a, complete population, pooled | 0.123 | **0.286** | 0.260 | SCLC > LUAD |
 
 [RESULTS_T5.md](RESULTS_T5.md) attributed this to donor composition. T6 tests that
@@ -57,8 +57,8 @@ Identical rows; only the weight differs.
 |---|---|---:|---:|---:|---:|
 | complete | SCLC | 19 | 0.286 | **0.301** | 18.7 % |
 | complete | LUAD | 22 | 0.260 | **0.244** | 11.6 % |
-| test-only | SCLC | 3 | 0.186 | **0.321** | **74.9 %** |
-| test-only | LUAD | 4 | 0.242 | **0.267** | 41.1 % |
+| test-only | SCLC | 3 | 0.148 | **0.262** | **74.9 %** |
+| test-only | LUAD | 4 | 0.191 | **0.212** | 41.1 % |
 
 **Donor-level, both populations give SCLC > LUAD.** The reversal exists only in the
 test-only *cell-weighted* number, and the mechanism is the 74.9 % cell share of a single
@@ -77,7 +77,7 @@ SCLC or LUAD. Two-sided alternative; no direction assumed.
 
 | Comparison | donor-level difference | p (two-sided) | method | floor |
 |---|---:|---:|---|---:|
-| test-only SCLC vs LUAD | +0.0541 | 0.714 | exact enumeration, all 35 assignments | 0.0571 |
+| test-only SCLC vs LUAD | +0.0500 | 0.771 | exact enumeration, all 35 assignments | 0.0571 |
 | complete SCLC vs LUAD | +0.0576 | **0.216** | Monte Carlo, B = 100,000 (resolution 10⁻⁵) | 8.18 × 10⁻¹² |
 
 **Even where a real test is possible — 19 vs 22 donors, floor twelve orders of magnitude
@@ -127,33 +127,32 @@ CD8 and 40.2 % "other", against 41.4 %/43.4 % CD8 and 1.8 %/4.7 % "other" for th
 SCLC donors. Since exhaustion markers score far higher in CD8 and Treg cells than in CD4,
 its aberrant mix is a mechanism for its low score, not a coincidence beside it.
 
-**The direction survives stratification.** Donor-level score within each stratum:
+**Stratification is not uniformly directional.** Donor-level score within each stratum:
 
 | Stratum | SCLC | LUAD | SCLC − LUAD |
 |---|---:|---:|---:|
-| CD4 | 0.240 | 0.219 | +0.021 |
-| CD4 (Treg) | 0.844 | 0.837 | +0.007 |
-| CD8 | 0.315 | 0.278 | +0.036 |
-| other | 0.701 | 0.377 | +0.324 |
+| CD4 | 0.192 | 0.171 | +0.021 |
+| CD4 (Treg) | 0.690 | 0.723 | −0.034 |
+| CD8 | 0.257 | 0.220 | +0.037 |
+| other | 0.579 | 0.307 | +0.271 |
 
-SCLC ≥ LUAD in all four strata, so the donor-level difference is **not** manufactured by
-the states' differing CD4/CD8 mix. Two cautions: these are 3 vs 4 donors, below the
-permutation floor, so no stratum is tested; and the "other" stratum's large gap rests
-heavily on `PleuralEffusion`, which supplies most SCLC "other" cells.
+SCLC exceeds LUAD in CD4, CD8, and "other", but **LUAD exceeds SCLC in CD4 (Treg)**.
+The former all-four-strata claim was a legacy-normalization artifact. These 3-vs-4-donor
+descriptive strata therefore do **not** rule out composition as an explanation of the
+unstratified difference. No stratum is tested, the Treg stratum contains single-digit
+cell counts for several donors, and the "other" gap rests heavily on `PleuralEffusion`.
 
-## A scale discrepancy between two committed pipelines, found on the way
+## A resolved normalization mismatch
 
-`baseline_expression_per_donor.csv` (T2's pipeline) reproduces `t2_program_summary.csv`
-exactly — exhaustion 0.1802 Normal / 0.1863 SCLC / 0.2415 LUAD, same seven genes. The T5
-pipeline's `pseudobulk_per_donor_test_only.csv` covers **the same test cells and the same
-genes** but yields 0.145 / 0.148 / 0.191 — about 0.79× T2's values, and not by an exactly
-constant factor (0.805 / 0.794 / 0.791).
+The [T2/T5 scale audit](RESULTS_T2T5_SCALE_AUDIT.md) found that T2 had divided by stale
+`obs['n_counts']`, while T5 correctly used current full-`X` row sums. T2 now uses the
+same full-`X` denominator and was regenerated. On the same test cells and seven genes,
+the two pipelines now agree on the CP10k scale to the regression-test precision.
 
-This does not affect any ordering *within* either table, and it does not affect the
-conclusions above. It does mean **the two tables are not on a common scale and must never
-be pooled or differenced across**; no comparison in T6 crosses them. Root cause is not
-established here — it would need the two normalisation paths compared directly, which is
-outside this card. Flagging it rather than fixing it.
+This correction changes T2 and test-only T6 numerical values, including the sparse Treg
+stratum above; it does not alter raw counts or detection rates. It does not make distinct
+patient populations interchangeable: T6 still compares weighting schemes within each
+population, and its donor-level disease ordering remains non-significant.
 
 `pseudobulk_per_donor_complete.csv` is read by `check_donor_composition.py` but is **not
 committed**; only its derived 45-donor summary is. The complete-population analysis here

@@ -1,0 +1,40 @@
+{
+  "h5ad": "/home/kaisar/workspace/KD/sclc_luad_normal_htan_finetune/data/htan_sclc_luad_normal_tcells_prepared.h5ad",
+  "population": "test_only",
+  "n_cells": 9377,
+  "genes": [
+    "PDCD1",
+    "CTLA4",
+    "HAVCR2",
+    "LAG3",
+    "TIGIT",
+    "TOX",
+    "LAYN"
+  ],
+  "t2_denominator": "obs['n_counts']",
+  "t5_denominator": "row sum of X (Scanpy normalize_total default)",
+  "current_matrix_over_stored_n_counts": {
+    "min": 1.017163504968383,
+    "median": 1.7659305993690853,
+    "mean": 1.8058037819085777,
+    "max": 3.2243346007604563,
+    "fraction_exactly_one": 0.0
+  },
+  "t2_formula_state_means": {
+    "normal": 0.18015429614853398,
+    "sclc": 0.18634320426673667,
+    "luad": 0.24152162123815996
+  },
+  "t5_formula_state_means": {
+    "normal": 0.1452353829898224,
+    "sclc": 0.14818113605208783,
+    "luad": 0.1911670034347145
+  },
+  "t5_over_t2_state_mean_ratio": {
+    "normal": 0.8061721873680904,
+    "sclc": 0.7952054738737742,
+    "luad": 0.7915109316288014
+  },
+  "root_cause_supported": true,
+  "interpretation": "A non-unit current_matrix_over_stored_n_counts ratio proves the two pipelines use different library-size denominators on otherwise identical cells and genes. No result tables are changed by this audit."
+}

@@ -25,6 +25,6 @@
     "results/baseline_expression_per_donor.csv",
     "results/t5a_donor_composition_check.csv"
   ],
-  "scale_warning": "baseline_expression_per_donor.csv (T2 pipeline) and t5a_donor_composition_check.csv (T5 pipeline) are not on a common scale; no comparison here crosses the two tables.",
+  "normalization_note": "T2 and T5 use the current full-X row sum for CP10k normalization. Matched test cells and genes must agree; population comparisons remain limited by donor composition.",
   "claim_status": "reconciliation and robustness only; the axis conclusion remains qualified by T4's matched null and the failed strict titration"
 }

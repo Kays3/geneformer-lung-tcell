@@ -8,8 +8,8 @@ Two of these encode mistakes that were actually made and caught while writing T6
   * `LodoSignMetricTests` - the LODO sign-stability metric was first written comparing
     each drop against the FIRST drop rather than against the full-data value. That is
     silently wrong whenever the first drop is itself the sign-flipping one.
-  * `ScaleSeparationTests` - two committed tables covering the same cells differ by
-    ~0.79x, so anything that pools or differences across them is invalid.
+  * `ScaleConsistencyTests` - T2 originally used stale count metadata; matched T2/T5
+    cells and genes must now agree on the canonical current-matrix CP10k scale.
 """
 from __future__ import annotations
 
@@ -193,10 +193,10 @@ class RealDataTests(unittest.TestCase):
         self.assertEqual(int(table.loc["normal", "n_donors"]), 1)
 
 
-class ScaleSeparationTests(unittest.TestCase):
-    """The two committed tables are not on a common scale; nothing may cross them."""
+class ScaleConsistencyTests(unittest.TestCase):
+    """Matched T2/T5 inputs must use the same canonical CP10k scale."""
 
-    def test_t2_and_t5_pipelines_disagree_on_the_same_test_cells(self) -> None:
+    def test_t2_and_t5_pipelines_agree_on_the_same_test_cells(self) -> None:
         other = RESULTS / "pseudobulk_per_donor_test_only.csv"
         if not other.exists():
             self.skipTest("pseudobulk_per_donor_test_only.csv absent")
@@ -205,30 +205,34 @@ class ScaleSeparationTests(unittest.TestCase):
         frame = frame[frame.gene_symbol.isin(m.EXHAUSTION)]
         donor = frame.groupby(["state", "donor"]).agg(
             score=("mean_log1p_cp10k", "mean"), n_cells=("n_cells", "first")).reset_index()
-        for state in ("sclc", "luad"):
+        for state in ("normal", "sclc", "luad"):
             sub = donor[donor.state == state]
             t5_value = np.average(sub.score, weights=sub.n_cells)
-            # Same cells, same genes, materially different value: they are not interchangeable.
-            self.assertLess(t5_value, t2.loc[state, "cell_weighted_mean"] * 0.95)
+            self.assertAlmostEqual(
+                t5_value, t2.loc[state, "cell_weighted_mean"], places=6,
+                msg=f"{state}: matched T2/T5 cells and genes must share the CP10k scale",
+            )
 
-    def test_manifest_records_the_scale_warning(self) -> None:
+    def test_manifest_records_the_normalization_invariant(self) -> None:
         path = RESULTS / "t6_manifest.json"
         if not path.exists():
             self.skipTest("t6_manifest.json absent; run donor_robustness.py")
         import json
         manifest = json.loads(path.read_text())
-        self.assertIn("not on a common scale", manifest["scale_warning"])
+        self.assertIn("must agree", manifest["normalization_note"])
         self.assertEqual(manifest["replication_unit"], "donor")
 
 
 class Cd4Cd8Tests(unittest.TestCase):
-    def test_all_four_strata_present_and_direction_recorded(self) -> None:
+    def test_all_four_strata_present_with_treg_reversal_recorded(self) -> None:
         _, stratified = m.cd4cd8_tables()
         summary = m.stratified_summary(stratified, "sclc", "luad")
         self.assertEqual(len(summary), 4)
         self.assertEqual(set(summary.cd4cd8), {"CD4", "CD4 (Treg)", "CD8", "other"})
-        self.assertTrue(summary.direction_matches_unstratified.all(),
-                        "report states SCLC >= LUAD in every stratum")
+        matches = set(summary.loc[summary.direction_matches_unstratified, "cd4cd8"])
+        self.assertEqual(matches, {"CD4", "CD8", "other"})
+        treg = summary.loc[summary.cd4cd8 == "CD4 (Treg)", "direction_matches_unstratified"]
+        self.assertFalse(treg.iloc[0], "canonical Treg score is LUAD > SCLC")
 
     def test_composition_shares_sum_to_one_per_donor(self) -> None:
         composition, _ = m.cd4cd8_tables()

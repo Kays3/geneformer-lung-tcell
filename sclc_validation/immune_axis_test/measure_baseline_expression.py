@@ -91,6 +91,35 @@ def gene_list() -> tuple[list[str], dict[str, str]]:
     return all_genes, gene_to_program
 
 
+def current_library_sizes(matrix) -> np.ndarray:
+    """Return the current count-matrix library size for each cell.
+
+    ``obs['n_counts']`` is provenance metadata and may describe an earlier
+    filtering pass.  CP10k normalization must instead use the matrix being
+    summarized, matching Scanpy ``normalize_total`` in the T5 pipeline.
+    """
+    matrix = matrix.tocsr() if sp.issparse(matrix) else sp.csr_matrix(matrix)
+    totals = np.asarray(matrix.sum(axis=1)).ravel().astype(float)
+    if np.any(totals <= 0):
+        raise ValueError("Cannot normalize cells with non-positive current X row sums")
+    return totals
+
+
+def selected_counts_with_library_sizes(full_matrix, selected_matrix) -> tuple[sp.csc_matrix, np.ndarray]:
+    """Pair selected-gene counts with library sizes from the full matrix.
+
+    The numerator may be a program or housekeeping panel, but CP10k's
+    denominator must remain the full current `X` row sum.  Keeping the two
+    matrices explicit prevents a selected panel from accidentally defining its
+    own library size.
+    """
+    selected = selected_matrix.tocsc() if sp.issparse(selected_matrix) else sp.csc_matrix(selected_matrix)
+    sizes = current_library_sizes(full_matrix)
+    if selected.shape[0] != len(sizes):
+        raise ValueError("Full and selected matrices must contain the same cells")
+    return selected, sizes
+
+
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     genes, gene_to_program = gene_list()
@@ -110,19 +139,18 @@ def main() -> None:
     genes, ensembl_ids = zip(*keep)
 
     test_mask = adata.obs["split"] == "test"
-    sub = adata[test_mask, list(ensembl_ids)].to_memory()
+    # Materialize all genes once: CP10k is defined by the current full-X row
+    # sum, not by the requested program/HK panel.  This matches T5's
+    # scanpy.normalize_total denominator.
+    full = adata[test_mask].to_memory()
+    sub = full[:, list(ensembl_ids)].copy()
     print(f"Subset: {sub.n_obs} held-out test cells x {sub.n_vars} genes")
 
     obs = sub.obs.copy()
     obs["state"] = obs["disease"].map(DISEASE_LABEL)
     obs["cd4cd8"] = obs["celltype"].map(CD4CD8_GROUP).fillna("other")
-    n_counts = obs["n_counts"].to_numpy()
-
-    X = sub.X
-    if not sp.issparse(X):
-        X = sp.csr_matrix(X)
-    X = X.tocsc()
-    cp10k = X.multiply(1.0 / n_counts[:, None] * 1e4).tocsc()
+    X, library_sizes = selected_counts_with_library_sizes(full.X, sub.X)
+    cp10k = X.multiply(1.0 / library_sizes[:, None] * 1e4).tocsc()
     log1p_cp10k = cp10k.copy()
     log1p_cp10k.data = np.log1p(log1p_cp10k.data)
 
