@@ -29,6 +29,7 @@ multiprocessing.set_start_method("spawn", force=True)
 
 import json
 import logging
+import os
 import pickle
 import sys
 import time
@@ -47,7 +48,17 @@ BF16_BENCH_ROOT = Path(__file__).resolve().parents[2] / "bf16_bench"
 sys.path.insert(0, str(BF16_BENCH_ROOT))
 from dtype_cast import DTYPES, install_dtype_cast  # noqa: E402
 
-sys.path.insert(0, str(HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer"))
+# Overridable so the bf16-bench arms can point at a specific pinned checkout
+# (e.g. the private f45a6c7 copy) instead of the shared geneformer-workspace
+# symlink target -- same GENEFORMER_ROOT override run_t4_overexpression.py
+# already supports.
+GENEFORMER_ROOT = Path(
+    os.environ.get(
+        "GENEFORMER_ROOT",
+        HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer",
+    )
+)
+sys.path.insert(0, str(GENEFORMER_ROOT))
 from geneformer import InSilicoPerturber, InSilicoPerturberStats  # noqa: E402
 
 
@@ -61,7 +72,25 @@ def parse_args() -> argparse.Namespace:
                         "dtype, e.g. the fp32 baseline vs the fp32 noise-floor repeat, "
                         "from clobbering each other's outputs.")
     p.add_argument("--force", action="store_true")
+    p.add_argument("--max-ncells", type=int, default=None,
+                   help="Cap on cells perturbed per source (InSilicoPerturber's "
+                        "max_ncells). Sizing lever: apply the SAME value across every "
+                        "arm (fp32 baseline, fp32 repeat, bf16) so the comparison stays "
+                        "valid -- the fp32-vs-fp32 noise floor then quantifies exactly "
+                        "the extra noise the cap adds. Default: no cap (all cells).")
     return p.parse_args()
+
+
+def geneformer_provenance() -> dict:
+    import subprocess
+    try:
+        commit = subprocess.run(
+            ["git", "-C", str(GENEFORMER_ROOT), "rev-parse", "HEAD"],
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+    except Exception as exc:  # pragma: no cover - diagnostic only
+        commit = f"<unresolved: {exc}>"
+    return {"geneformer_root": str(GENEFORMER_ROOT), "geneformer_commit": commit}
 
 
 ARGS = parse_args()
@@ -174,7 +203,7 @@ def run_gene(perturb_type: str, source_slug: str, gene: dict, state_embs: dict, 
         filter_data=None,
         cell_states_to_model=canonical_states(disease),
         state_embs_dict=state_embs,
-        max_ncells=None,
+        max_ncells=ARGS.max_ncells,
         emb_layer=0,
         forward_batch_size=FORWARD_BATCH_SIZE,
         nproc=NPROC,
@@ -289,6 +318,8 @@ def main() -> None:
         "target_genes_file": str(TARGET_GENES_FILE),
         "dtype": ARGS.dtype,
         "run_tag": RUN_TAG,
+        "max_ncells": ARGS.max_ncells,
+        **geneformer_provenance(),
     }, indent=2) + "\n")
 
     state_embs = state_embeddings()

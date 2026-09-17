@@ -341,6 +341,14 @@ def main() -> None:
     with STATE_EMBEDDINGS.open("rb") as handle:
         state_embeddings = pickle.load(handle)
     args.run_dir.mkdir(parents=True, exist_ok=True)
+    import subprocess
+    try:
+        geneformer_commit = subprocess.run(
+            ["git", "-C", str(GENEFORMER_ROOT), "rev-parse", "HEAD"],
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+    except Exception as exc:  # pragma: no cover - diagnostic only
+        geneformer_commit = f"<unresolved: {exc}>"
     (args.run_dir / "run_config.json").write_text(
         json.dumps(
             {
@@ -351,6 +359,8 @@ def main() -> None:
                 "forward_batch_size": args.forward_batch_size,
                 "nproc": args.nproc,
                 "dtype": args.dtype,
+                "geneformer_root": str(GENEFORMER_ROOT),
+                "geneformer_commit": geneformer_commit,
                 "selection": summarize_work(work),
             },
             indent=2,
