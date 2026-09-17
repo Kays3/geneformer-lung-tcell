@@ -99,6 +99,11 @@ def parse_args() -> argparse.Namespace:
                         "arm (fp32 baseline, fp32 repeat, bf16) so the comparison stays "
                         "valid -- the fp32-vs-fp32 noise floor then quantifies exactly "
                         "the extra noise the cap adds. Default: no cap (all cells).")
+    p.add_argument("--perturb-types", nargs="+", choices=("delete", "overexpress"),
+                   default=["delete", "overexpress"],
+                   help="Which perturb types to run (default: both). Second sizing "
+                        "lever: pass '--perturb-types overexpress' to drop delete "
+                        "entirely (see the plan's dated 2026-09-17 sizing amendment).")
     return p.parse_args()
 
 
@@ -137,7 +142,11 @@ STATES = (SCLC, LUAD, NORMAL)
 SLUGS = {SCLC: "sclc", LUAD: "luad", NORMAL: "normal"}
 STATE_BY_SLUG = {v: k for k, v in SLUGS.items()}
 DEFAULT_SOURCE_ORDER = ("normal", "sclc", "luad")
+# Full valid set. ACTIVE_PERTURB_TYPES (below, from --perturb-types) is what
+# ensure_dirs()/main() actually iterate -- kept separate so a run scoped to
+# just "overexpress" doesn't create/expect "delete" dirs at all.
 PERTURB_TYPES = ("delete", "overexpress")
+ACTIVE_PERTURB_TYPES = tuple(ARGS.perturb_types)
 FORWARD_BATCH_SIZE = 128
 # Pre-existing bug fixed here (2026-09-17, discovered via the bf16-bench
 # calibration run): this was 4. InSilicoPerturber.perturb_data() loads the
@@ -164,7 +173,7 @@ def model_dir() -> Path:
 
 def ensure_dirs() -> None:
     dirs = [TABLE_ROOT, LOG_ROOT]
-    for ptype in PERTURB_TYPES:
+    for ptype in ACTIVE_PERTURB_TYPES:
         for slug in SLUGS.values():
             dirs.append(RAW_ROOT / ptype / slug)
         dirs.append(STATS_ROOT / ptype)
@@ -344,7 +353,7 @@ def main() -> None:
         "created_utc": utc_now(),
         "model_directory": str(model_dir()),
         "n_target_genes": len(target_genes),
-        "perturbation_types": list(PERTURB_TYPES),
+        "perturbation_types": list(ACTIVE_PERTURB_TYPES),
         "forward_batch_size": FORWARD_BATCH_SIZE,
         "nproc": NPROC,
         "source_order": list(DEFAULT_SOURCE_ORDER),
@@ -364,13 +373,13 @@ def main() -> None:
         path = source_dataset_path(source)
         logging.info("Source dataset ready: %s -> %s", source, path)
 
-    for ptype in PERTURB_TYPES:
+    for ptype in ACTIVE_PERTURB_TYPES:
         for source in DEFAULT_SOURCE_ORDER:
             logging.info("=== %s / %s: %d genes ===", ptype, source, len(target_genes))
             for gene in target_genes:
                 run_gene(ptype, source, gene, state_embs, force=ARGS.force)
 
-    for ptype in PERTURB_TYPES:
+    for ptype in ACTIVE_PERTURB_TYPES:
         for source in DEFAULT_SOURCE_ORDER:
             run_stats(ptype, source, target_genes, force=ARGS.force)
 
