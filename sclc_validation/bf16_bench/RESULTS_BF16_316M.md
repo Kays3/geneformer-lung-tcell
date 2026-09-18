@@ -126,20 +126,34 @@ the CLI always evaluates the same fixed thresholds; that label is
 reported below for transparency but must not be read as a failed
 replication.
 
-**Result**: Spearman rho = **0.489**, top-20 overlap = **9/20** (n=300
-rows, 50 genes; floor/signal-gene/sign-agreement fields excluded from
-this report as not meaningful for a cross-architecture comparison).
+**Result**: Spearman rho = **0.489**, top-20 overlap = **9/20 of the 300
+(comparison, Gene_name) ROWS**, ranked by |shift| -- this is
+`compare_runs.py`'s own ranking unit (the same row-level rule used for
+the 104M gate's 20/20 in PR #17, so nothing there is affected). Ranking
+by GENE instead (max |shift| per gene across its 6 comparison rows) gives
+a different, larger overlap: **13/20**, independently verified against
+the raw stats CSVs. (floor/signal-gene/sign-agreement fields excluded
+from this report as not meaningful for a cross-architecture comparison.)
 
 This replicates the colleague's qualitative finding that **changing the
 model moves the ISP result far more than changing precision does**: our
 own same-model fp32-vs-bf16 precision comparison (104M, PR #17) scored
-rho 0.9998 / top-20 20/20; this cross-architecture (104M-vs-316M, both
-bf16) comparison scores rho 0.489 / top-20 9/20 -- an order of magnitude
-larger divergence from a model-size change than from a precision change.
-The colleague's own number for the analogous comparison on their task was
-13/20; ours (9/20) is not directly comparable (different task, different
-data, different gene panel) but shows the same shape of finding and is
-reported as observed, not targeted.
+rho 0.9998 / top-20 20/20 (row-level); this cross-architecture
+(104M-vs-316M, both bf16) comparison scores rho 0.489 / top-20 9/20
+(row-level) -- an order of magnitude larger divergence from a model-size
+change than from a precision change.
+
+**On the colleague's 13/20**: the colleague's own number for the
+analogous comparison on their task was 13/20 -- the SAME number as our
+gene-level (not row-level) overlap above, which invites a false read
+either way. The strongest reason these two 13/20s are not the same
+finding is the **ranking unit**, not the more familiar caveat about
+different task/data/panel: our row-level result (9/20) and gene-level
+result (13/20) are two different statistics computed on the identical
+underlying data, and the colleague's reported basis is not independently
+confirmed from this side. Both of our numbers (9/20 row-level, 13/20
+gene-level) are reported as observed, not targeted, and neither is
+claimed to match or refute the colleague's figure.
 
 ## Precision canary (316M fp32-vs-bf16, 10 genes)
 
@@ -188,9 +202,15 @@ versus simple unresolvability at that magnitude. At 316M, both genes rank
 in the panel's own top-10 by |shift| -- a much larger effect size -- and
 in this canary their fp32-vs-bf16 agreement is clean: MMP12's paired
 values move together throughout (e.g. fp32 -0.00490 vs bf16 -0.00493;
-fp32 -0.00602 vs bf16 -0.00603), and TPSB2's do too (e.g. fp32 -0.00570
-vs bf16 -0.00582; fp32 -0.00674 vs bf16 -0.00675) -- same sign, close
-magnitude, every pair. This closes the loop on PR #17's one open caveat:
+fp32 -0.00601 vs bf16 -0.00603), and TPSB2's do too (e.g. fp32 -0.006925
+vs bf16 -0.007053 (luad->sclc); fp32 +0.042521 vs bf16 +0.042267
+(sclc->luad)) -- same sign, close magnitude, every pair. (All four
+example pairs above were re-verified directly against the raw canary
+stats CSVs on 2026-09-18 after a review caught two hand-transcription
+errors in an earlier draft of this paragraph -- a swapped fp32/bf16
+label pair and one digit off in a third value; corrected and
+double-checked, not just re-typed.) This closes the loop on PR #17's one
+open caveat:
 the 104M non-resolution was a magnitude/precision-floor artifact, not
 evidence of a real fp32/bf16 disagreement on these genes -- once the
 effect size is large enough (as it is at 316M), bf16 tracks fp32 cleanly
@@ -205,10 +225,13 @@ a weak fine-tune that could silently explain a low panel overlap.
 
 (b) **Model-size vs precision (observation, not a production decision)**:
 changing model size (104M -> 316M) moves the ISP result far more than
-changing precision (fp32 -> bf16) does -- rho 0.489/top-20 9/20 for the
-model-size change vs rho 0.9998/top-20 20/20 for the precision change on
-the same 104M model. This replicates the colleague's qualitative finding
-on our own task and data.
+changing precision (fp32 -> bf16) does -- rho 0.489/top-20 9/20
+(row-level) or 13/20 (gene-level) for the model-size change vs rho
+0.9998/top-20 20/20 (row-level) for the precision change on the same
+104M model. This replicates the colleague's qualitative finding on our
+own task and data; see the panel-comparison section above for why the
+ranking-unit distinction matters more than task/data/panel differences
+when comparing to the colleague's own 13/20.
 
 (c) **316M fp32-vs-bf16 canary (risk-bounding, not a gate)**: rho 0.99867,
 perfect sign agreement, small max |delta| (0.00072) across 60 real
