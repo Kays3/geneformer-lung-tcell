@@ -63,7 +63,16 @@ HOME = Path.home()
 # is the only remaining use and this fix is isolated to it.
 ANALYSIS_ROOT = Path(__file__).resolve().parents[0]
 ALLGENE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation"
-FINETUNE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_finetune"
+# Pre-existing bug fixed here (2026-09-18, discovered via a 316M-stage
+# calibration run silently loading the 104M classifier): this was a bare
+# hardcoded path, so `HTAN_FINETUNE_ROOT` had no effect here even though
+# run_t4_overexpression.py already honors it for exactly this purpose
+# (pointing ISP at a throwaway/alternate classifier checkpoint without
+# touching the default /srv/lab/KD-backed path). Same env-var name, same
+# default, now consistent between both runners.
+FINETUNE_ROOT = Path(
+    os.environ.get("HTAN_FINETUNE_ROOT", str(HOME / "workspace/KD/sclc_luad_normal_htan_finetune"))
+)
 BF16_BENCH_ROOT = Path(__file__).resolve().parents[2] / "bf16_bench"
 
 sys.path.insert(0, str(BF16_BENCH_ROOT))
@@ -127,9 +136,30 @@ OUT_ROOT = BF16_BENCH_ROOT / "runs" / RUN_TAG / "targeted_panel"
 MODEL_PATH_FILE = FINETUNE_ROOT / "runs" / "MODEL_SCLC_LUAD_NORMAL_HTAN_PATH.txt"
 TRAIN_DATASET = ALLGENE_ROOT / "data/train_reference.dataset"
 TEST_DATASET = ALLGENE_ROOT / "data/heldout_test.dataset"
-STATE_EMB_FILE = ALLGENE_ROOT / "state_embeddings/training_donor_disease_centroids.pkl"
+# Overridable (2026-09-18): this pickle is a fixed per-disease-state
+# centroid embedding computed once from a SPECIFIC model's embedding
+# space (originally the 104M classifier, 768-dim). It is not portable
+# across model architectures -- loading it against a 316M model's live
+# embeddings (1152-dim) crashes with a cosine_similarity shape mismatch
+# (confirmed live: "size of tensor a (1152) must match ... b (768)").
+# Each model size needs its own centroids file; point this at a
+# 316M-specific one instead of touching ALLGENE_ROOT (shared).
+STATE_EMB_FILE = Path(
+    os.environ.get(
+        "STATE_EMB_FILE_OVERRIDE",
+        str(ALLGENE_ROOT / "state_embeddings/training_donor_disease_centroids.pkl"),
+    )
+)
 
-TARGET_GENES_FILE = ANALYSIS_ROOT / "target_gene_panel.json"
+# Overridable (2026-09-18) so calibration/subset runs never need to edit
+# the shared tracked target_gene_panel.json in place -- that file lives in
+# the live ts1 checkout other agents share, and a temporary in-place edit
+# (even one immediately restored via `git checkout --`) is unnecessary risk
+# once an override exists. Point this at a throwaway single-gene copy under
+# bf16_bench/ instead.
+TARGET_GENES_FILE = Path(
+    os.environ.get("TARGET_GENES_FILE_OVERRIDE", str(ANALYSIS_ROOT / "target_gene_panel.json"))
+)
 RAW_ROOT = OUT_ROOT / "raw"
 STATS_ROOT = OUT_ROOT / "stats"
 TABLE_ROOT = OUT_ROOT / "tables"

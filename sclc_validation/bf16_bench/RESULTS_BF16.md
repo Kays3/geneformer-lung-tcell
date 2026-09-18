@@ -65,8 +65,15 @@ arm.
 | fp32 baseline | fp32 | `fp32_baseline` | overexpress | 300 | **done** (exit 0, wall 6671.61s) |
 | fp32 repeat (noise floor) | fp32 | `fp32_repeat` | overexpress | 300 | **done** (exit 0, wall 4944.71s) |
 | bf16 | bf16 | `bf16` | overexpress | 300 | **done** (exit 0, wall 3393.09s) |
-| T4 program phase (12/273 units), fp32 | fp32 | `t4_fp32` | overexpress | n/a | not run (optional) |
-| T4 program phase (12/273 units), bf16 | bf16 | `t4_bf16` | overexpress | n/a | not run (optional) |
+| T4 program phase (12/273 units), fp32 | fp32 | `t4_fp32` | overexpress | n/a | **skipped, reason: superseded by per-gene result** |
+| T4 program phase (12/273 units), bf16 | bf16 | `t4_bf16` | overexpress | n/a | **skipped, reason: superseded by per-gene result** |
+
+**Dated amendment 2026-09-18 (god's ruling): T4 secondary arm skipped.** After
+the earlier null-args amendment (2026-09-17, PR review item 1) this arm had
+already reduced to a rho-only comparison on 36 set-level rows. The per-gene
+panel gate above already passed at rho 0.9998 on the same runner/perturber
+class, so the ~1.3h of GPU time this arm would cost buys almost no new
+information beyond what the panel gate already established. Not run.
 
 ## Gate results (targeted panel, `compare_runs.py panel`)
 
