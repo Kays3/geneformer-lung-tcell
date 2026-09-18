@@ -8,6 +8,14 @@ the larger pool stays visible.
 
 Runs on the laptop; needs pseudobulk_per_donor_{complete,test_only}.csv, already
 pulled back from the compute host.
+
+Reproducibility note (2026-09-19): only pseudobulk_per_donor_test_only.csv
+(~10 MB) is committed. pseudobulk_per_donor_complete.csv is ~55 MB -- 6x the
+largest file already tracked in this repo, and this repo has no git-lfs -- so
+it is regenerated on demand instead of committed, same as every other
+compute-host artifact this script's sibling scripts depend on (the H5AD
+itself is never committed either). See the missing-file error below for the
+exact regeneration command.
 """
 from __future__ import annotations
 
@@ -21,7 +29,19 @@ EXHAUSTION = ["PDCD1", "CTLA4", "HAVCR2", "LAG3", "TIGIT", "TOX", "LAYN"]
 
 
 def donor_scores(population: str) -> pd.DataFrame:
-    pb = pd.read_csv(RESULTS / f"pseudobulk_per_donor_{population}.csv")
+    pb_path = RESULTS / f"pseudobulk_per_donor_{population}.csv"
+    if not pb_path.exists():
+        raise SystemExit(
+            f"Missing {pb_path}.\n\n"
+            f"pseudobulk_per_donor_{population}.csv is a compute-host artifact "
+            "and (for the 'complete' population) too large to commit. Regenerate it:\n\n"
+            f"  # on the compute host, needs the prepared H5AD:\n"
+            f"  POPULATION={population} python3 differential_expression.py\n\n"
+            f"then copy sclc_validation/immune_axis_test/results/pseudobulk_per_donor_{population}.csv "
+            "back into this results/ directory before re-running this script. "
+            "See README.md's 'What runs today' T5 section for the full command pair."
+        )
+    pb = pd.read_csv(pb_path)
     ex = pb[pb["gene_symbol"].isin(EXHAUSTION)]
     scored = ex.groupby(["state", "donor"]).agg(
         mean_log1p_cp10k=("mean_log1p_cp10k", "mean"), n_cells=("n_cells", "first")
