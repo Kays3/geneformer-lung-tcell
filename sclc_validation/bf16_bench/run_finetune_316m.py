@@ -15,6 +15,14 @@ for the stage chain (god's ruling: abort the chain if macro_f1 < 0.60,
 log the metrics either way, and report them in RESULTS_BF16_316M.md next
 to the ISP comparison per the plan's hard boundary on 316M classifier
 quality).
+
+Applies eval_tie_fix.py (2026-09-18, added after a live crash on the first
+full run of this script): geneformer.evaluation_utils.vote() returns the
+string "tie" on an exact logit tie, which crashes sklearn's
+confusion_matrix once any tie occurs -- and bf16 TRAINING (unlike the
+104M classifier, trained fp32) makes exact ties plausible on real data.
+See eval_tie_fix.py's docstring for the full root cause. Tie counts are
+recorded in test_metrics.json's eval_tie_stats.
 """
 from __future__ import annotations
 
@@ -27,6 +35,9 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from eval_tie_fix import install_eval_tie_fix, reset_tie_counter, tie_stats  # noqa: E402
 
 SEED = 43
 
@@ -64,6 +75,8 @@ def main() -> None:
     np.random.seed(SEED)
     os.environ["WANDB_DISABLED"] = "true"
     os.environ.setdefault("MPLBACKEND", "Agg")
+    install_eval_tie_fix()
+    reset_tie_counter()
 
     for d in [RUN_DIR, TABLE_DIR]:
         d.mkdir(parents=True, exist_ok=True)
@@ -143,6 +156,8 @@ def main() -> None:
         },
         n_hyperopt_trials=0,
     )
+    eval_split_tie_stats = tie_stats()
+    reset_tie_counter()
 
     saved_models = sorted(RUN_DIR.glob(f"*geneformer_cellClassifier_{OUTPUT_PREFIX}/ksplit1"))
     assert saved_models, "No saved classifier model found"
@@ -180,6 +195,8 @@ def main() -> None:
         "disease_states": DISEASE_STATES,
         "source_tokenized_dataset": str(SOURCE_TOKENIZED),
         "bf16": True,
+        "eval_split_tie_stats": eval_split_tie_stats,
+        "test_split_tie_stats": tie_stats(),
         "eval_metrics": eval_metrics_clean,
         "test_metrics": test_metrics_clean,
     }
@@ -188,6 +205,8 @@ def main() -> None:
 
     print("\nDone.")
     print(json.dumps(payload, indent=2))
+    print(f"\nEVAL_SPLIT_TIE_STATS {eval_split_tie_stats}")
+    print(f"TEST_SPLIT_TIE_STATS {tie_stats()}")
 
 
 if __name__ == "__main__":
