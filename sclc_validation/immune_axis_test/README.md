@@ -50,6 +50,12 @@ python3 sclc_validation/immune_axis_test/analyze_differential_expression.py
 python3 sclc_validation/immune_axis_test/check_donor_composition.py
 ```
 
+Only `pseudobulk_per_donor_test_only.csv` (~10 MB) is committed under `results/`.
+`pseudobulk_per_donor_complete.csv` (~55 MB, T5a) is regenerated from the command
+above instead -- large enough that committing it would 6x the biggest file already
+in this repo, and this repo has no git-lfs. `check_donor_composition.py` fails
+with the regeneration command if it is missing.
+
 **Run — see [RESULTS_T5.md](RESULTS_T5.md).** The first real run surfaced a gene-identity
 bug the synthetic-fixture smoke tests couldn't catch (DE output was keyed on Ensembl IDs,
 downstream analysis matched on gene symbols); fixed in `differential_expression.py` and
