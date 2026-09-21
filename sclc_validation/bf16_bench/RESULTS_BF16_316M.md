@@ -216,6 +216,25 @@ evidence of a real fp32/bf16 disagreement on these genes -- once the
 effect size is large enough (as it is at 316M), bf16 tracks fp32 cleanly
 on the very same genes.
 
+## Provenance: committed raw stats (dated addendum 2026-09-22)
+
+An outside cross-reference (Andy) found that the per-gene stats CSVs behind
+the ISP panel comparison and precision canary above lived only on
+thinkstation1 under gitignored `runs/` -- checkable in prose but not
+independently recomputable from a clean clone. The raw
+`targeted_panel/stats/overexpress/*.csv` for the 316M panel arm
+(`316m_bf16`) and both canary arms (`316m_canary_fp32`, `316m_canary_bf16`)
+are now committed under [`../committed_run_stats/`](../committed_run_stats/)
+alongside the 104M arms (see RESULTS_BF16.md's matching addendum), ~300 KB
+total across all six arms. Verified byte-identical to the live
+thinkstation1 copies at commit time (checksums in
+[`../committed_run_stats/CHECKSUMS.sha256`](../committed_run_stats/CHECKSUMS.sha256))
+and independently re-run through the already-committed `compare_runs.py
+panel` against only the committed copies, reproducing both this section's
+numbers exactly: 316M-vs-104M rho 0.489 / top-20 overlap 9/20, and the
+10-gene canary rho 0.99867 / sign agreement 1.0 (60/60) / max|delta|
+0.00072.
+
 ## Recommendation
 
 (a) **Classifier quality**: the 316M fine-tune clears the sanity
