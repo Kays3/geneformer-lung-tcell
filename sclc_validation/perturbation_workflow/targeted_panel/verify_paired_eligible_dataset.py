@@ -6,6 +6,20 @@ panel on the compute host, since the thing being checked (token-positive
 counts, donor coverage, the seeded per-donor cap) only means something
 against real data. No GPU, no model load, no torch forward pass.
 
+DO NOT run this as-is for any panel other than the default 50-gene
+target_gene_panel.json it was written against (2026-09-22, flagged by
+Stanley during s100-isp-execution-20260922's gate review, before he ran
+it): it hardcodes that file below rather than honoring
+TARGET_GENES_FILE_OVERRIDE, so running it unmodified for e.g. the S100
+override panel silently verifies the WRONG genes. It also actively
+mutates shared state -- recompute_matches() deletes and rebuilds cache
+entries under PAIRED_ELIGIBLE_DIR/MANIFEST_DIR as part of verifying
+determinism -- which is fine when you are its author verifying your own
+just-written code, but is a real hazard for anyone else running it
+against a shared checkout expecting a read-only check. Point it at a
+scratch/override panel and expect it to touch the cache before running
+it against anything other than the default panel.
+
 Checks, for every (gene, source) in target_gene_panel.json:
   - the saved dataset is sorted by "length" descending (the property that
     makes InSilicoPerturber's own internal re-sort a no-op -- see

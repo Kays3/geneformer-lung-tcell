@@ -678,6 +678,27 @@ def run_stats(perturb_type: str, source_slug: str, target_genes: list[dict], for
     completed = len(list(raw_dir.glob("targeted_*.complete.json")))
     if completed != n_genes:
         raise RuntimeError(f"Cannot run stats for {perturb_type}/{source_slug}: {completed}/{n_genes} genes complete")
+    # Every gene can legitimately be not_estimable for a source (e.g. "normal"
+    # has a single donor -- MIN_DONORS_ELIGIBLE=3 can never be met there,
+    # regardless of gene), in which case *_raw.pickle never gets written for
+    # any gene even though every gene's .complete.json exists (not_estimable
+    # is itself a completion state -- see _not_estimable_marker). Without this
+    # check, InSilicoPerturberStats.get_stats() -> read_dictionaries() finds
+    # zero matching pickles and crashes with an opaque bare `raise`
+    # ("RuntimeError: No active exception to reraise") -- a real library
+    # behavior, not a bug in this script, but one this script must guard
+    # against rather than let surface as a stats-phase crash after all GPU
+    # work for the run is already done. Confirmed live (2026-09-22, S100 ISP
+    # execution gate 2): source=normal is not_estimable for every gene by
+    # construction, so this path is guaranteed to trigger on every real run
+    # that includes it.
+    if not any(raw_dir.glob(f"in_silico_{perturb_type}_targeted_{source_slug}_*_raw.pickle")):
+        logging.warning(
+            "[%s/%s] no raw output for any of %d gene(s) (all not_estimable) -- "
+            "skipping stats for this source entirely, not a crash",
+            perturb_type, source_slug, n_genes,
+        )
+        return
     targets = [s for s in STATES if s != source_state]
     stats_dir = STATS_ROOT / perturb_type
     for target in targets:
