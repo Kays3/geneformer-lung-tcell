@@ -224,6 +224,21 @@ def runner_provenance() -> dict:
     }
 
 
+def input_file_sha256(path: Path) -> str:
+    """SHA-256 of an input file the runner reads, computed from its bytes ON
+    DISK AT RUN TIME -- same principle as runner_provenance()'s self-hash,
+    extended to inputs (2026-09-23, Michael's follow-up: the panel file and
+    the forthcoming control-strata tables are inputs the runner reads and
+    did not hash, the same manually-tracked-by-hand arrangement just removed
+    for the runner itself). Never raises: a hash failure is recorded as an
+    unresolved marker in the manifest rather than killing a run over a field
+    that only describes it, matching runner_provenance()'s own failure mode."""
+    try:
+        return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    except Exception as exc:  # pragma: no cover - diagnostic only
+        return f"<unresolved: {exc}>"
+
+
 ARGS = parse_args()
 install_dtype_cast(ARGS.dtype)
 RUN_TAG = ARGS.run_tag or ARGS.dtype
@@ -761,6 +776,9 @@ def main() -> None:
         "nproc": NPROC,
         "source_order": list(DEFAULT_SOURCE_ORDER),
         "target_genes_file": str(TARGET_GENES_FILE),
+        "target_genes_file_sha256": input_file_sha256(TARGET_GENES_FILE),
+        "state_emb_file": str(STATE_EMB_FILE),
+        "state_emb_file_sha256": input_file_sha256(STATE_EMB_FILE),
         "dtype": ARGS.dtype,
         "run_tag": RUN_TAG,
         "max_ncells": ARGS.max_ncells,
