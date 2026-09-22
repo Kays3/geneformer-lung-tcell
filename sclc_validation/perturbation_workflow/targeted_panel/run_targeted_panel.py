@@ -184,11 +184,23 @@ def geneformer_provenance() -> dict:
 
 
 def runner_provenance() -> dict:
-    """This script's own commit hash, for the run manifest -- required by
-    Pam's design (isp-runner-paired-arms-20260922) so a run can be traced
-    back to the exact runner code that produced it, same spirit as
-    geneformer_provenance() above but for this repo, not the Geneformer
-    checkout."""
+    """This script's own commit hash AND its own SHA-256, for the run
+    manifest -- required by Pam's design (isp-runner-paired-arms-20260922)
+    so a run can be traced back to the exact runner code that produced it,
+    same spirit as geneformer_provenance() above but for this repo, not the
+    Geneformer checkout.
+
+    The SHA-256 is computed here, of this file's own bytes ON DISK AT RUN
+    TIME (2026-09-23, added after three separate stale-hash incidents in one
+    evening during s100-isp-execution-20260922 gate reviews -- every one of
+    them was a hash written into a document *before* a later merge changed
+    this file, then trusted without recomputing). A hash recorded ahead of
+    a run is a prediction about a file under active development; a hash the
+    runner computes of itself as it runs cannot be stale by construction --
+    whatever this run actually executed is exactly what got hashed. Preflight
+    documents should still record their best-known hash for planning, but
+    the run manifest's copy is the one that matters, because nothing has to
+    trust it after the fact."""
     try:
         commit = subprocess.run(
             ["git", "-C", str(ANALYSIS_ROOT), "rev-parse", "HEAD"],
@@ -200,7 +212,16 @@ def runner_provenance() -> dict:
         ).stdout.strip() != ""
     except Exception as exc:  # pragma: no cover - diagnostic only
         commit, dirty = f"<unresolved: {exc}>", None
-    return {"runner_file": str(Path(__file__).resolve()), "runner_commit": commit, "runner_file_dirty": dirty}
+    try:
+        runner_sha256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    except Exception as exc:  # pragma: no cover - diagnostic only
+        runner_sha256 = f"<unresolved: {exc}>"
+    return {
+        "runner_file": str(Path(__file__).resolve()),
+        "runner_commit": commit,
+        "runner_file_dirty": dirty,
+        "runner_sha256": runner_sha256,
+    }
 
 
 ARGS = parse_args()
