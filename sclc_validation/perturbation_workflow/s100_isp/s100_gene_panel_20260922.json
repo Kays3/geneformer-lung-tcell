@@ -1,0 +1,22 @@
+{
+  "panel_id": "s100-isp-20260922",
+  "purpose": "Pre-registered 12-gene S100 ISP core panel; invoke through TARGET_GENES_FILE_OVERRIDE. Do not replace targeted_panel/target_gene_panel.json.",
+  "genes": [
+    {"gene": "S100A4", "ensembl_id": "ENSG00000196154", "stratum": "clean_high", "role": "clean_control"},
+    {"gene": "S100A6", "ensembl_id": "ENSG00000197956", "stratum": "clean_high", "role": "clean_control"},
+    {"gene": "S100A10", "ensembl_id": "ENSG00000197747", "stratum": "clean_high", "role": "clean_control"},
+    {"gene": "S100A11", "ensembl_id": "ENSG00000163191", "stratum": "clean_high", "role": "clean_control"},
+    {"gene": "S100P", "ensembl_id": "ENSG00000163993", "stratum": "low_p_a16", "role": "flagged"},
+    {"gene": "S100A16", "ensembl_id": "ENSG00000188643", "stratum": "low_p_a16", "role": "flagged"},
+    {"gene": "S100A2", "ensembl_id": "ENSG00000196754", "stratum": "low_a2_b", "role": "flagged_non_anchor"},
+    {"gene": "S100B", "ensembl_id": "ENSG00000160307", "stratum": "low_a2_b", "role": "intermediate"},
+    {"gene": "S100A13", "ensembl_id": "ENSG00000189171", "stratum": "singleton_a13", "role": "intermediate"},
+    {"gene": "S100A8", "ensembl_id": "ENSG00000143546", "stratum": "singleton_a8", "role": "ambient_anchor"},
+    {"gene": "S100A9", "ensembl_id": "ENSG00000163220", "stratum": "low_a9_pbp", "role": "ambient_anchor"},
+    {"gene": "S100PBP", "ensembl_id": "ENSG00000116497", "stratum": "low_a9_pbp", "role": "intermediate"}
+  ],
+  "excluded": [
+    {"gene": "S100A7", "reason": "below ambient-risk detection floor; not a clean negative"},
+    {"gene": "S100A12", "reason": "below ambient-risk detection floor; not a clean negative"}
+  ]
+}
