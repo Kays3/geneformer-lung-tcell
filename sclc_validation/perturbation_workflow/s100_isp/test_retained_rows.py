@@ -56,16 +56,25 @@ def build_fixture() -> dict:
     # --- GENEA / sclc: fully eligible + completed for both delete and overexpress ---
     manifest_a_sclc = manifest_dir / "sclc_ENSGA.csv"
     _write_manifest(manifest_a_sclc, [f"c{i}" for i in range(6)],
-                     ["D1", "D1", "D2", "D2", "D3", "D3"], [500, 480, 460, 440, 420, 400])
+                     ["D1", "D1", "D1", "D1", "D2", "D3"], [500, 480, 460, 440, 420, 400])
     _write_json(paired_eligible_dir / "sclc_ENSGA.eligibility.json", {
         "eligible": True, "n_cells": 6, "n_donors": 3,
-        "donor_cell_counts": {"D1": 2, "D2": 2, "D3": 2},
+        "donor_cell_counts": {"D1": 4, "D2": 1, "D3": 1},
         "seed": 20260922, "donor_cell_cap": 100, "manifest": str(manifest_a_sclc),
     })
-    # per-cell shift toward each of the two non-source states, deliberately
-    # donor-imbalanced (D1's two cells dominate a plain mean) to prove
-    # donor_balanced_shift is NOT a cell-weighted mean.
-    shifts_luad = [0.9, 0.9, 0.1, 0.1, -0.1, -0.1]  # donor means: D1=.9 D2=.1 D3=-.1 -> balanced mean = .3
+    # Donor cell counts (4/1/1) deliberately UNEQUAL and mirror the real
+    # LUAD S100A2 imbalance (40/4/4/25) this is actually protecting -- with
+    # equal per-donor counts, a cell-weighted mean and a donor-balanced
+    # mean are ARITHMETICALLY IDENTICAL and the assertion below would pass
+    # just as happily against the cell-weighted bug this test exists to
+    # catch (caught live by Michael, 2026-09-23: the previous 2/2/2 fixture
+    # gave both computations 0.3, so it asserted a fact without ever being
+    # able to observe its negation -- "a test whose pass carries no
+    # information is not protection, it is a claim of protection"). With
+    # this fixture: donor-weighted = (0.9+0.1-0.1)/3 = 0.3 (unchanged
+    # expected value); cell-weighted = (0.9*4+0.1-0.1)/6 = 0.6 (would now
+    # FAIL the assertion below if the code ever regressed to it).
+    shifts_luad = [0.9, 0.9, 0.9, 0.9, 0.1, -0.1]  # donor means: D1=.9 D2=.1 D3=-.1 -> balanced mean = .3
     shifts_normal = [0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
     for ptype in ("delete", "overexpress"):
         raw_dir = raw_root / ptype / "sclc"
