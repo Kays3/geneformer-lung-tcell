@@ -38,23 +38,31 @@ Do not implement it against a guessed answer. Everything in
 built -- that is the entire reason it was built against
 `synthetic_control_table()` now rather than after.
 
-## Known gap surfaced while building this (not resolved unilaterally)
+## Gaps surfaced while building this -- RULED 2026-09-23
 
-`retained_rows_spec_20260922.md`'s `status` enum has no value for "eligible,
-but the run has not happened yet" -- every one of its six values describes
-a *completed* outcome. `retained_rows.py` adds `STATUS_NOT_RUN = "not_run"`,
-outside that enum, to describe the state this table is necessarily built in
-right now (before Module A has run). If the spec's intent is that this
-table is only ever built strictly after a complete run, `STATUS_NOT_RUN`
-rows simply never occur in that case and this is inert, not wrong -- but it
-was not in the spec, so it's flagged rather than assumed. See
-`retained_rows.py`'s module docstring for the full reasoning.
+Three gaps were surfaced rather than resolved unilaterally; Michael ruled
+on all three. Full text in `retained_rows_spec_20260922.md`'s dated
+amendment; summary here:
 
-Also flagged, not resolved: `midrank_percentile()`'s exact percentile
-formula (the design specifies the tie-handling rule but not the formula
-itself), and whether a completed row's `status` should be overwritten to
-`not_estimable_control_stratum` when its stratum's control set fails the
-20-control gate, versus leaving `status` describing only the gene's own run
-outcome and letting `matched_control_percentile_q` stay null. This module
-implements the latter (`status` is about the gene's own run; the stub's
-absence does not retroactively unmark rows that already completed).
+1. **`status` gets `not_run`, outside the spec's six-value enum** (every
+   listed value describes a completed outcome; none describes "eligible,
+   not yet run"). **Ruled: stands** -- it labels a pre-run state and
+   changes no threshold, statistic, or interpretation.
+2. **`donor_balanced_shift` must come from the raw pickle + manifest, never
+   from `InSilicoPerturberStats`' `Shift_to_goal_end`** (a cell-weighted
+   mean, not the donor-weighted one the design requires). **Ruled: this
+   was the most important catch in the whole layer** -- quantified on LUAD
+   S100A2 (four donors at 40/4/4/25 cells), cell-weighting would give the
+   40-cell donor 2.19x its intended weight, on the only ambient-flagged
+   gene surviving that arm at all. The design doc names this exact failure
+   mode as one that already happened once in the existing lung analysis.
+3. **`midrank_percentile()`'s exact formula, and whether `status` gets
+   overwritten when a stratum's control set fails the 20-count gate.**
+   **Ruled: both stand as implemented, and they are one decision, not
+   two** -- Q is only ever used in rank-based/relative comparisons in the
+   design (never an absolute threshold), so any monotone percentile
+   formula is numerically inert to the registered rho *as long as* every
+   gene is always scored against the same fixed N=20 controls. Refusing to
+   compute Q on a short control set (rather than "rescuing" a gene by
+   computing it on fewer) is exactly what keeps N fixed and the formula
+   choice inert -- do not change that without revisiting the amendment.

@@ -67,9 +67,18 @@ def midrank_percentile(value: float, controls: list[float]) -> float:
     combine `value` with the `controls` (N+1 points), rank with averaged
     ties, map the value's own rank r to (r - 0.5) / (N + 1) * 100.
 
-    FLAGGED, not silently assumed: confirm this formula with Pam/Michael.
-    It is isolated to this one function -- changing the convention later
-    touches nothing else in this module.
+    RULED 2026-09-23 (see retained_rows_spec_20260922.md's dated amendment):
+    this formula stands as-is, but not because it's the uniquely correct
+    one -- because Q is used only in rank-based/relative contexts
+    everywhere it appears in the design (Spearman rho, its permutation
+    test, LOO/bootstrap, and the median-Q-by-stratum comparison), never
+    against an absolute threshold, and every gene is scored against the
+    SAME fixed N=20 controls. Any monotone rank-to-percentile formula
+    applied identically across genes preserves both the cross-gene
+    ordering and the median comparison, so the registered rho is
+    numerically unchanged by which one is used -- a free choice only stops
+    being free if N ever varies gene-to-gene (see compute_Q_for_contrast's
+    docstring and the amendment for why that must never happen).
     """
     if value is None or (isinstance(value, float) and np.isnan(value)):
         return np.nan
@@ -90,8 +99,17 @@ def compute_Q_for_contrast(
 ) -> dict[str, float]:
     """Q for every gene in E_by_gene, for one fixed contrast. A stratum
     with fewer than `min_common_controls` valid control E-values yields
-    NaN for every gene in it -- not_estimable_control_stratum, per the
-    design's "not widened, split, or given private controls" rule."""
+    NaN for every gene in it (never a Q computed on a short control set) --
+    per the design's "not widened, split, or given private controls" rule.
+
+    RULED 2026-09-23 (retained_rows_spec_20260922.md's dated amendment):
+    this all-or-nothing behavior is load-bearing beyond the rule it was
+    written for. midrank_percentile()'s exact formula is provably inert to
+    the registered rho ONLY because every gene is always scored against
+    the same N=20 -- do not change this function to "rescue" a gene by
+    computing Q on however many controls survived a short stratum; that
+    would make N vary gene-to-gene and the percentile-formula choice would
+    stop being inert."""
     Q: dict[str, float] = {}
     for gene, E in E_by_gene.items():
         stratum = stratum_by_gene[gene]

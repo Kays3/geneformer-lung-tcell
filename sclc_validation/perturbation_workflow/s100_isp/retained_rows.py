@@ -13,20 +13,17 @@ Deliberately has NO dependency on geneformer/torch: the caller passes in
 stays testable with plain Python + pandas + numpy against synthetic
 fixtures, without needing a GPU host or the vendored Geneformer checkout.
 
-KNOWN GAP, surfaced rather than resolved quietly (2026-09-23,
-s100-isp-execution-20260922): retained_rows_spec_20260922.md's `status`
+RULED 2026-09-23 (s100-isp-execution-20260922, see retained_rows_spec_
+20260922.md's dated amendment): retained_rows_spec_20260922.md's `status`
 enum (eligible_completed / not_estimable_cell_count / not_estimable_
 donor_count / not_estimable_control_stratum / run_failed / no_op_failed)
-has no value for "eligible, but the run has not happened yet". The spec's
-own framing ("Build ... before any result filtering") reads as though it
-is meant to run only after a real run completes, when every planned row is
-guaranteed to land in one of those six buckets. This module adds a
-STATUS_NOT_RUN = "not_run" value outside that enum to describe the
-pre-run and partially-run states this table is built in *before* Module A
-executes (i.e., right now). Flagged to Michael/Pam rather than assumed;
-if the intent really is "this table only exists post-run", STATUS_NOT_RUN
-rows simply won't occur in that case and this is dead code, not a wrong
-answer.
+had no value for "eligible, but the run has not happened yet" -- every
+listed value describes a completed outcome. This module's
+STATUS_NOT_RUN = "not_run", outside that enum, was surfaced as an open
+question and Michael ruled it stands: it labels a state that necessarily
+exists before Module A executes and while it is partially complete, and
+changes no threshold, statistic, or interpretation -- exactly what
+pre-registration doctrine exists to allow, not what it exists to prevent.
 """
 from __future__ import annotations
 
@@ -142,15 +139,22 @@ def donor_balanced_shift(
 ) -> dict:
     """The design's actual required statistic (hive/reports/
     s100-isp-design-20260922.md: "compute a mean shift within each donor
-    first, then give each donor equal weight") -- deliberately NOT
-    InSilicoPerturberStats' own Shift_to_goal_end column, which is a plain
-    mean over all cells (cell-weighted, not donor-weighted). Reads the raw
-    per-cell pickle directly and aligns it against the paired-eligible
-    manifest's donor column, which is written in the exact same cell order
-    by construction (run_targeted_panel.py's paired_eligible_dataset(),
-    PR #23) -- so this alignment is sound by construction, not
-    reconstruction, the same property that replaced the old
-    donor_consistency.py script.
+    first, then give each donor equal weight" -- guarding against "a
+    documented failure mode in the existing lung analysis", not a
+    hypothetical) -- deliberately NOT InSilicoPerturberStats' own
+    Shift_to_goal_end column, which is a plain mean over all cells
+    (cell-weighted, not donor-weighted). RULED 2026-09-23 (see
+    retained_rows_spec_20260922.md's dated amendment): quantified on the
+    arm this actually decides -- LUAD S100A2's four eligible donors (40, 4,
+    4, 25 cells) would get 54.8%/5.5%/5.5%/34.2% of a cell-weighted mean
+    versus the intended 25% each, a 2.19x overweight on the 40-cell donor,
+    on the only ambient-flagged gene surviving the LUAD arm at all. Reads
+    the raw per-cell pickle directly and aligns it against the
+    paired-eligible manifest's donor column, which is written in the exact
+    same cell order by construction (run_targeted_panel.py's
+    paired_eligible_dataset(), PR #23) -- so this alignment is sound by
+    construction, not reconstruction, the same property that replaced the
+    old donor_consistency.py script.
     """
     import pickle
 
