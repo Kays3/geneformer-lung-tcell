@@ -112,3 +112,22 @@ which can land inside a gap and silently pick the wrong side of a
 boundary. Two independent numeric errors in one day (Amendment 2's own
 n=8 table, then the leave-one-gene-out floor) both came from that same
 shortcut.
+
+## GPU HELD -- Amendment 4 (2026-09-23)
+
+The CPU precheck (Amendment 2) found something bigger than first
+described: the 8 LUAD-eligible non-anchor genes split 4-vs-4 into an
+ambient-high and ambient-low cluster, and a pure between-cluster Q
+difference (zero within-cluster rank information) clears the corrected
+primary gate **63.4%** of the time (365/576, verified independently) --
+worse than the 47% that got SCLC dropped. GPU is held pending human
+review. Two new diagnostics registered and implemented, always reported:
+`ambient_stats.exact_group_separation_test()` (exact 4-vs-4 Mann-Whitney,
+min p=2/70=0.02857 at complete separation) and `within_cluster_spearman()`
+(rho within each cluster separately -- if both are near zero when the real
+numbers exist, the result must be reported as a two-group contrast, not a
+monotone association; no numeric "near zero" cutoff is fixed yet). One
+data-correction: `S100PBP`'s ambient_risk (0.744492, by ensembl_id
+ENSG00000116497) is confirmed correct against a proposed replacement that
+was actually a different gene, `PEBP1`, matched by a similar-looking
+symbol. Full text in the amendment.

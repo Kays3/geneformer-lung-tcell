@@ -251,6 +251,60 @@ def test_primary_test_reports_n():
     print("primary_test: reports n=8 alongside rho/p_exact -- never quote an n=10 p-value for an n=8 test -- OK")
 
 
+def test_exact_group_separation_test():
+    """RULED 2026-09-23 (human ruling, fourth dated amendment): the 8
+    LUAD-eligible non-anchor genes split 4-vs-4 by ambient risk; complete
+    Q separation between the two groups must give exact two-sided
+    p = 2/70 = 0.02857, cross-checked against the by-hand C(8,4) figure."""
+    high = ["h1", "h2", "h3", "h4"]
+    low = ["l1", "l2", "l3", "l4"]
+    Q_separated = {"h1": 5.0, "h2": 6.0, "h3": 7.0, "h4": 8.0, "l1": 1.0, "l2": 2.0, "l3": 3.0, "l4": 4.0}
+    result = astats.exact_group_separation_test(Q_separated, high, low)
+    assert abs(result["p_exact"] - 2 / 70) < 1e-9, result
+    print(f"exact_group_separation_test: complete separation -> p_exact={result['p_exact']:.5f} == 2/70 exactly -- OK")
+
+    Q_overlap = {"h1": 1.0, "h2": 3.0, "h3": 5.0, "h4": 7.0, "l1": 2.0, "l2": 4.0, "l3": 6.0, "l4": 8.0}
+    result2 = astats.exact_group_separation_test(Q_overlap, high, low)
+    assert result2["p_exact"] > result["p_exact"], "interleaved groups must be less significant than complete separation"
+    print(f"exact_group_separation_test: interleaved -> p_exact={result2['p_exact']:.5f} > complete-separation p -- OK")
+
+    Q_missing = dict(Q_separated)
+    del Q_missing["h1"]
+    result3 = astats.exact_group_separation_test(Q_missing, high, low)
+    assert np.isnan(result3["p_exact"]) and result3["reason"] is not None
+    print("exact_group_separation_test: missing Q -> NaN + reason, not silently dropped -- OK")
+
+
+def test_within_cluster_spearman():
+    gene_group = {"h1": "high", "h2": "high", "h3": "high", "h4": "high",
+                  "l1": "low", "l2": "low", "l3": "low", "l4": "low"}
+    risk = {"h1": 5.0, "h2": 6.0, "h3": 7.0, "h4": 8.0, "l1": 1.0, "l2": 2.0, "l3": 3.0, "l4": 4.0}
+
+    # Q tracks risk perfectly within each cluster -> both rhos == 1.0.
+    Q_monotone = dict(risk)
+    rhos = astats.within_cluster_spearman(Q_monotone, risk, gene_group)
+    assert set(rhos.keys()) == {"high", "low"}
+    assert abs(rhos["high"] - 1.0) < 1e-9 and abs(rhos["low"] - 1.0) < 1e-9
+    print("within_cluster_spearman: Q monotone within both clusters -> both rho=1.0 -- OK")
+
+    # Q carries only group membership, random within-cluster -> rho near/at
+    # zero within each cluster even though the primary test's rho is high.
+    Q_group_only = {"h1": 8.0, "h2": 5.0, "h3": 7.0, "h4": 6.0, "l1": 3.0, "l2": 1.0, "l3": 4.0, "l4": 2.0}
+    rhos2 = astats.within_cluster_spearman(Q_group_only, risk, gene_group)
+    assert abs(rhos2["high"]) < 1.0 and abs(rhos2["low"]) < 1.0
+    print(f"within_cluster_spearman: group-only signal -> within-cluster rhos "
+          f"high={rhos2['high']:.3f} low={rhos2['low']:.3f} (not forced to 1.0 by group separation alone) -- OK")
+
+    # missing Q for one member of a cluster -> that cluster's rho is NaN,
+    # the other cluster is unaffected.
+    Q_missing = dict(Q_monotone)
+    del Q_missing["h2"]
+    rhos3 = astats.within_cluster_spearman(Q_missing, risk, gene_group)
+    assert np.isnan(rhos3["high"])
+    assert abs(rhos3["low"] - 1.0) < 1e-9
+    print("within_cluster_spearman: missing Q in one cluster -> that cluster NaN, other cluster unaffected -- OK")
+
+
 def test_synthetic_control_table_is_structurally_valid_and_labeled_fake():
     table = mc.synthetic_control_table()
     assert set(table.keys()) == set(mc.STRATA.keys())
@@ -322,6 +376,8 @@ def main() -> None:
     test_loo_and_bootstrap_gates()
     test_numerical_floor()
     test_leave_one_gene_out_check_three_way()
+    test_exact_group_separation_test()
+    test_within_cluster_spearman()
     test_primary_test_reports_n()
     test_synthetic_control_table_is_structurally_valid_and_labeled_fake()
     test_end_to_end_with_synthetic_controls()

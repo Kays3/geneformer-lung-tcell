@@ -14,7 +14,7 @@ import itertools
 
 import numpy as np
 import pandas as pd
-from scipy.stats import rankdata
+from scipy.stats import mannwhitneyu, rankdata
 
 # bf16 canary's max absolute delta vs fp32 (design doc, "Model and
 # precision plan"): an arm's donor-balanced mean absolute shift at or
@@ -328,6 +328,74 @@ def primary_test_with_single_gene_check(
     full = primary_test(Q_by_gene, risk_by_gene, non_anchor_genes, rho_gate=rho_gate, p_gate=p_gate)
     loo = leave_one_gene_out_check(Q_by_gene, risk_by_gene, non_anchor_genes, watch_gene, p_gate=p_gate)
     return {**full, **loo}
+
+
+# ---------------------------------------------------------------------------
+# 4-vs-4 group-separation diagnostics (registered 2026-09-23, human ruling,
+# fourth dated amendment): the 8 LUAD-eligible non-anchor genes' ambient
+# risk splits cleanly into a 4-gene high cluster and a 4-gene low cluster.
+# A pure between-cluster Q difference, with within-cluster order carrying
+# NO rank information at all, clears the corrected primary gate
+# (rho >= 0.7381 AND p <= 0.05) 63.4% of the time under random
+# within-cluster ordering (365/576 arrangements -- verified independently
+# by direct enumeration, matching the human's by-hand figure exactly) --
+# worse than the 47% that got the SCLC source arm dropped. The primary
+# test's 8-point rank correlation has, in the worst case, roughly one
+# degree of freedom (which cluster a gene is in), not eight. These two
+# diagnostics measure directly whether the real data has more than that.
+# ---------------------------------------------------------------------------
+
+
+def exact_group_separation_test(
+    Q_by_gene: dict[str, float],
+    high_ambient_genes: list[str],
+    low_ambient_genes: list[str],
+) -> dict:
+    """Exact two-sided Mann-Whitney U test of Q between the ambient-high
+    and ambient-low gene groups -- the test the data's actual 4-vs-4
+    structure supports ("is Q higher in the high-ambient group than the
+    low-ambient group"), as opposed to the primary test's implicit claim
+    of a monotone association across all 8 points. With 4-vs-4 groups and
+    no ties, the minimum attainable two-sided p (complete separation) is
+    2 / C(8,4) = 2/70 = 0.02857 -- so perfect separation is honestly
+    significant by this test, which is exactly the point: this measures
+    what the primary rho conflates. Uses scipy's own exact enumeration
+    (method="exact"), cross-checked directly against 2/70 for the
+    complete-separation case. Reported always."""
+    Q_high = np.array([Q_by_gene.get(g, np.nan) for g in high_ambient_genes], dtype=float)
+    Q_low = np.array([Q_by_gene.get(g, np.nan) for g in low_ambient_genes], dtype=float)
+    if np.isnan(Q_high).any() or np.isnan(Q_low).any():
+        return {"statistic": np.nan, "p_exact": np.nan,
+                "reason": "one or more genes in the two groups has no estimable Q"}
+    result = mannwhitneyu(Q_high, Q_low, alternative="two-sided", method="exact")
+    return {"statistic": float(result.statistic), "p_exact": float(result.pvalue), "reason": None}
+
+
+def within_cluster_spearman(
+    Q_by_gene: dict[str, float],
+    risk_by_gene: dict[str, float],
+    gene_group: dict[str, str],
+) -> dict[str, float]:
+    """Spearman rho computed SEPARATELY within each group in `gene_group`
+    (e.g. {"high": [...], "low": [...]} membership, inverted here to
+    gene -> group) -- measures directly whether Q carries any rank
+    information beyond which cluster a gene is in. Cheap spearman_rho(),
+    not an exact permutation p (not requested by the ruling; the group
+    sizes here are 4, where an exact p would only ever attain 4!/2 = 12
+    distinct two-sided values anyway). Reported always, one rho per group
+    present in `gene_group`. NaN for a group with a missing Q/risk value,
+    or with fewer than 2 estimable members (a single point has no rank
+    correlation to report)."""
+    rhos: dict[str, float] = {}
+    for group in sorted(set(gene_group.values())):
+        genes = [g for g, grp in gene_group.items() if grp == group]
+        Q_vals = np.array([Q_by_gene.get(g, np.nan) for g in genes], dtype=float)
+        risk_vals = np.array([risk_by_gene.get(g, np.nan) for g in genes], dtype=float)
+        if len(genes) < 2 or np.isnan(Q_vals).any() or np.isnan(risk_vals).any():
+            rhos[group] = np.nan
+        else:
+            rhos[group] = spearman_rho(Q_vals, risk_vals)
+    return rhos
 
 
 # ---------------------------------------------------------------------------

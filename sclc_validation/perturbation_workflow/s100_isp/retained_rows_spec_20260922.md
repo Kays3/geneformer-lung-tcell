@@ -319,3 +319,115 @@ callers that only need the one flag) and
 `ambient_stats.primary_test_with_single_gene_check()` (merges
 `primary_test()` and `leave_one_gene_out_check()`). Reported always, not
 only on request, same as Amendment 2 registered.
+
+## Amendment 4 -- 2026-09-23 (human ruling, GPU held, s100-isp-execution-20260922)
+
+Registered before GPU work starts and before any real result exists.
+Amendments 1-3 stand unedited.
+
+**GPU IS HELD** pending the human's review of the finding below. Nothing
+in this amendment authorizes or resumes GPU work; the CPU precheck in
+Amendment 2 did its job and surfaced a structural problem worse than the
+one that dropped the SCLC arm.
+
+**1. The bimodal ambient-risk spread reported in Amendment 2's CPU
+precheck is NOT itself the problem -- the group split is.** Spearman's
+rho depends only on ranks; it cannot see that the gap between the two
+clusters (0.744) is larger than either cluster's own range, so Amendment
+2's framing of that gap as the concerning feature was imprecise. **What
+matters is that the 8 genes split into a 4-gene ambient-high cluster and a
+4-gene ambient-low cluster at all.** Verified independently by direct
+enumeration of all 4! x 4! = 576 within-cluster orderings (a pure
+between-cluster Q difference, contributing zero within-cluster rank
+information):
+
+```
+mean rho over the 576 arrangements:                 0.7619
+P(rho >= 0.7381, the corrected n=8 two-sided floor): 365/576 = 0.6337
+P(rho >= 0.70):                                       415/576 = 0.7205
+```
+
+**A pure 4-vs-4 group difference with no within-cluster rank information
+clears the corrected primary gate 63.4% of the time -- worse than the 47%
+that got the SCLC source arm dropped.** The 8-point primary rho has, in
+the worst case, roughly one degree of freedom (which cluster a gene falls
+in), not eight.
+
+**Where this differs from the SCLC case, and why it does not simply repeat
+the same ruling:** in SCLC, no ambient-flagged gene survived eligibility
+at all, so any clustering there was incidental to eligibility, not to
+ambient risk. Here, the high cluster **is** the four ambient-flagged/
+ambient-related genes and the low cluster **is** the four clean controls --
+the split itself is evidence of *something* tracking ambient risk. What it
+is NOT is evidence of a *monotone* association across all eight genes,
+which is what the registered primary test's rho actually claims. This
+distinction does not resolve the problem; it changes what the honest
+conclusion can say.
+
+**2. Data-correction to Amendment 2's CPU precheck table: the four values
+are confirmed correct by exact ensembl_id lookup; a proposed correction to
+one of them was itself a gene-symbol mismatch.** Amendment 2 listed
+`S100PBP` at ambient_risk 0.744492. A cross-check flagged this value as
+absent from `ambient_risk_all_genes.csv` and proposed 0.002612 (from a row
+matched on the symbol `PEBP1`) as the true value, which would move the
+split to 5-vs-3. **Resolved by ensembl_id, not symbol, per the standing
+"do not substitute a similar-looking quantity" discipline this whole
+amendment chain has enforced elsewhere:**
+
+```
+ENSG00000116497 -> gene=S100PBP  ambient_risk=0.744492   (the panel's registered ensembl_id for S100PBP)
+ENSG00000089220 -> gene=PEBP1    ambient_risk=0.002612   (an unrelated gene, "Phosphatidylethanolamine-binding protein 1")
+```
+
+`ambient_risk_all_genes.csv` has zero duplicate ensembl_ids and zero
+duplicate gene symbols -- there is no ambiguity once looked up by the
+panel's own registered ensembl_id (`s100_gene_panel_20260922.json`).
+**Amendment 2's original value (0.744492) and 4-vs-4 split both stand.**
+`PEBP1` is a different gene that happens to share the substring "PBP"
+with `S100PBP`'s symbol -- a symbol-based lookup risk, not an ensembl-id
+one. No code in this analysis layer looks up ambient risk by symbol
+substring; this was caught during manual cross-checking, not in code, and
+is recorded here so the same substring confusion is not repeated.
+
+**3. One pre-existing worry is tested and refuted, recorded rather than
+silently dropped:** whether the four low-ambient-risk genes (as low as
+1.1e-6) might sit below `ambient_risk_all_genes.csv`'s detection floor,
+making their mutual ranking arbitrary the same way `S100A7`/`S100A12`
+were excluded from the panel. They do not -- `S100A7` and `S100A12` are
+**absent from the table entirely** ("below the detection floor" meant "not
+measured," not "measured as small"), while all four low-cluster genes
+here have real, present, distinct measurements. This concern is tested and
+closed, not merely unraised.
+
+**4. Three diagnostics registered now, before any result exists, all
+reported always (not only on request):**
+
+- **The exact 4-vs-4 group-separation test** (`ambient_stats.
+  exact_group_separation_test()`): exact two-sided Mann-Whitney U on `Q`
+  between the ambient-high and ambient-low groups -- the test the data's
+  actual structure supports. With 4-vs-4 and no ties, the minimum
+  attainable two-sided p (complete separation) is 2 / C(8,4) = 2/70 =
+  0.02857 (verified against `scipy.stats.mannwhitneyu(method="exact")`
+  directly). A significant result here says "Q is higher in the
+  ambient-high group," which is a real and reportable finding -- it is
+  a different claim from "Q rises monotonically with ambient risk."
+- **Within-cluster Spearman, computed separately for each cluster**
+  (`ambient_stats.within_cluster_spearman()`): measures directly whether
+  `Q` carries rank information beyond group membership. Reported for both
+  clusters unconditionally.
+- **Pre-declared interpretation rule, to be applied when the real result
+  exists:** if both within-cluster rhos are near zero, the result must be
+  reported as **a two-group contrast between ambient-high and
+  ambient-low genes after detection/rank matching** -- NOT as a monotone
+  ambient-risk association -- regardless of what the primary 8-point rho
+  says. **No numeric "near zero" cutoff is fixed by this amendment**; that
+  judgment is applied when the real within-cluster rhos exist, by whoever
+  writes the final interpretation, using the raw numbers this diagnostic
+  reports -- inventing a threshold now, before either cluster's real rho
+  is known, would repeat exactly the mistake this amendment chain has
+  spent the day correcting (assigning a number before it can be checked
+  against anything real).
+
+**Order of work, unchanged: nothing above authorizes GPU.** This CPU-only
+diagnostic layer is complete and tested; the decision on whether/how to
+proceed with Module A rests with the human.
