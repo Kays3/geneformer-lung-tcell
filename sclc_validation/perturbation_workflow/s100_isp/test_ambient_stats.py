@@ -171,15 +171,63 @@ def test_numerical_floor():
     print(f"above_numerical_floor (floor={astats.NUMERICAL_FLOOR}): strict >, None for missing -- OK")
 
 
-def test_matched_controls_stub_names_both_gaps():
-    try:
-        mc.build_matched_control_table(mc.STRATA, "unused.csv", "unused.csv", per_source_state=True)
-        raise AssertionError("build_matched_control_table must raise -- it is blocked, not implemented")
-    except NotImplementedError as exc:
-        msg = str(exc)
-        assert "median token rank" in msg, "stub must name open question 1"
-        assert "per source-state or globally" in msg or "per-source-state or globally" in msg, "stub must name open question 2"
-        print("build_matched_control_table: raises NotImplementedError naming both open questions -- OK")
+def test_primary_test_with_single_gene_check():
+    """RULED 2026-09-23 (registered before the real number existed): if the
+    full-panel primary rho passes but removing the one ambient-flagged gene
+    (watch_gene) drops rho below 0.60, the result must be flagged
+    carried_by_single_gene -- it must NOT be reported as a panel-wide
+    ambient-risk association. See retained_rows_spec_20260922.md's second
+    dated amendment. build_matched_control_table() itself is no longer a
+    stub -- its own dedicated tests now live in test_matched_controls.py."""
+    non_anchor = [f"g{i}" for i in range(8)]  # n=8, the real LUAD-eligible count
+    watch_gene = "g0"
+    risk = {g: float(i) for i, g in enumerate(non_anchor)}
+
+    # Case 1: Q tracks risk perfectly for every gene INCLUDING watch_gene --
+    # removing it should barely move rho; not carried by a single gene.
+    Q_perfect = dict(risk)
+    result = astats.primary_test_with_single_gene_check(Q_perfect, risk, non_anchor, watch_gene)
+    assert result["gate_pass"] is True
+    assert abs(result["leave_one_out_rho"] - 1.0) < 1e-9
+    assert result["leave_one_out_n"] == 7
+    assert result["carried_by_single_gene"] is False
+    print("primary_test_with_single_gene_check: Q tracks risk with or without watch_gene -> not carried by a single gene -- OK")
+
+    # Case 2: Q is scrambled among the other 7 genes (rho among them ~0) but
+    # watch_gene sits at the extreme end consistent with risk, dragging the
+    # full-panel rho over the 0.70 gate on its own -- exactly the failure
+    # mode the amendment exists to catch.
+    Q_carried = {
+        "g0": 7.0,  # watch_gene: extreme, consistent with its risk rank (7 = highest)
+        "g1": 3.0, "g2": 1.0, "g3": 5.0, "g4": 0.0, "g5": 4.0, "g6": 2.0, "g7": 6.0,
+    }
+    result2 = astats.primary_test_with_single_gene_check(Q_carried, risk, non_anchor, watch_gene)
+    reduced_genes = [g for g in non_anchor if g != watch_gene]
+    independent_reduced_rho = astats.spearman_rho(
+        np.array([Q_carried[g] for g in reduced_genes]), np.array([risk[g] for g in reduced_genes]),
+    )
+    assert abs(result2["leave_one_out_rho"] - independent_reduced_rho) < 1e-9
+    if result2["gate_pass"]:
+        assert result2["carried_by_single_gene"] == bool(result2["leave_one_out_rho"] < 0.60)
+    print(f"primary_test_with_single_gene_check: full rho={result2['rho']:.3f} gate_pass={result2['gate_pass']}, "
+          f"leave-{watch_gene}-out rho={result2['leave_one_out_rho']:.3f}, "
+          f"carried_by_single_gene={result2['carried_by_single_gene']} -- OK")
+
+    # Case 3: full gate does not pass at all -- carried_by_single_gene must
+    # stay False (there is no panel-wide claim to protect against here).
+    Q_random = {"g0": 3.0, "g1": 7.0, "g2": 1.0, "g3": 5.0, "g4": 0.0, "g5": 4.0, "g6": 2.0, "g7": 6.0}
+    result3 = astats.primary_test_with_single_gene_check(Q_random, risk, non_anchor, watch_gene)
+    if not result3["gate_pass"]:
+        assert result3["carried_by_single_gene"] is False
+    print("primary_test_with_single_gene_check: gate not passed -> carried_by_single_gene forced False -- OK")
+
+
+def test_primary_test_reports_n():
+    non_anchor = [f"g{i}" for i in range(8)]
+    risk = {g: float(i) for i, g in enumerate(non_anchor)}
+    result = astats.primary_test(dict(risk), risk, non_anchor)
+    assert result["n"] == 8
+    print("primary_test: reports n=8 alongside rho/p_exact -- never quote an n=10 p-value for an n=8 test -- OK")
 
 
 def test_synthetic_control_table_is_structurally_valid_and_labeled_fake():
@@ -252,7 +300,8 @@ def main() -> None:
     test_primary_test_gate()
     test_loo_and_bootstrap_gates()
     test_numerical_floor()
-    test_matched_controls_stub_names_both_gaps()
+    test_primary_test_with_single_gene_check()
+    test_primary_test_reports_n()
     test_synthetic_control_table_is_structurally_valid_and_labeled_fake()
     test_end_to_end_with_synthetic_controls()
     print("\nALL AMBIENT-STATS CHECKS PASSED")

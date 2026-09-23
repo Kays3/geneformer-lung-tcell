@@ -202,16 +202,83 @@ def primary_test(
     p_gate: float = 0.05,
 ) -> dict:
     """The primary ambient-association test: Spearman(Q, risk) across the
-    ten non-anchor genes, exact permutation p. Gate: rho >= 0.70 and
-    p <= 0.05. Returns gate_pass=False (not an error) if any non-anchor
-    gene's Q is not estimable -- the ten-gene test needs all ten."""
+    non-anchor genes (ten as originally registered; RULED 2026-09-23 --
+    eight for the real LUAD-only run, see retained_rows_spec_20260922.md's
+    second dated amendment), exact TWO-SIDED permutation p (design doc,
+    "Controls and analysis": "exact two-sided permutation p-value... the
+    gate is rho >= 0.70 and p <= 0.05"). Gate: rho >= 0.70 AND p <= 0.05 --
+    BOTH conditions, independently checked, not "p follows automatically
+    once rho clears 0.70". At n=10 the minimum rho for exact two-sided
+    p <= 0.05 is ~0.6485, comfortably below 0.70, so rho>=0.70 alone was
+    the binding constraint there. At n=8 that is NOT true: the minimum rho
+    for exact two-sided p <= 0.05 is ~0.7381 -- HIGHER than the 0.70
+    rho-gate. An observed rho in [0.70, 0.7381) at n=8 passes the rho-gate
+    and still fails the combined gate on p alone. (Verified 2026-09-23 by
+    direct enumeration of the n=8 and n=10 null distributions -- this
+    corrects an earlier one-sided-looking estimate of the n=8/n=10 critical
+    rho that was circulated before this function existed; see
+    retained_rows_spec_20260922.md's second dated amendment for the full
+    correction and the exact table.) Report the exact p for whatever n was
+    actually used -- never quote an n=10 p-value for an n=8 test. Returns
+    gate_pass=False (not an error) if any non-anchor gene's Q is not
+    estimable -- the test needs every gene in `non_anchor_genes` estimable,
+    whatever its length."""
     Q_vals = np.array([Q_by_gene.get(g, np.nan) for g in non_anchor_genes], dtype=float)
     risk_vals = np.array([risk_by_gene.get(g, np.nan) for g in non_anchor_genes], dtype=float)
     if np.isnan(Q_vals).any() or np.isnan(risk_vals).any():
-        return {"rho": np.nan, "p_exact": np.nan, "gate_pass": False,
+        return {"rho": np.nan, "p_exact": np.nan, "gate_pass": False, "n": len(non_anchor_genes),
                 "reason": "one or more non-anchor genes has no estimable Q or risk score"}
     rho, p_exact, _ = spearman_exact_permutation(Q_vals, risk_vals)
-    return {"rho": rho, "p_exact": p_exact, "gate_pass": bool(rho >= rho_gate and p_exact <= p_gate), "reason": None}
+    return {"rho": rho, "p_exact": p_exact, "n": len(non_anchor_genes),
+            "gate_pass": bool(rho >= rho_gate and p_exact <= p_gate), "reason": None}
+
+
+def primary_test_with_single_gene_check(
+    Q_by_gene: dict[str, float],
+    risk_by_gene: dict[str, float],
+    non_anchor_genes: list[str],
+    watch_gene: str,
+    rho_gate: float = 0.70,
+    p_gate: float = 0.05,
+    single_gene_floor: float = 0.60,
+) -> dict:
+    """The primary test PLUS the leave-one-gene-out amendment registered
+    2026-09-23 (before the real number existed, human ruling,
+    s100-isp-execution-20260922): of the eight LUAD-eligible non-anchor
+    genes, exactly one -- S100A2 -- is ambient-flagged; if the other seven
+    cluster together in ambient risk, the rho is decided by where that one
+    gene lands, "a single comparison wearing the clothes of a rank
+    correlation." This recomputes the primary Spearman rho with
+    `watch_gene` removed (rho only, via the cheap spearman_rho() -- same
+    convention as the LOO-control-out / bootstrap loops, not the exact
+    permutation p, since only rho is the registered check here) and is
+    reported ALWAYS, not only on request.
+
+    If the full-panel primary test passes (gate_pass=True) but the
+    leave-`watch_gene`-out rho falls below `single_gene_floor` (0.60 --
+    the same floor as leave-one-control-out, not a new number chosen for
+    this situation), the result is `carried_by_single_gene=True` and MUST
+    NOT be stated as an ambient-risk association across the panel -- it may
+    only be reported as a `watch_gene`-specific finding.
+    """
+    full = primary_test(Q_by_gene, risk_by_gene, non_anchor_genes, rho_gate=rho_gate, p_gate=p_gate)
+
+    reduced_genes = [g for g in non_anchor_genes if g != watch_gene]
+    Q_vals = np.array([Q_by_gene.get(g, np.nan) for g in reduced_genes], dtype=float)
+    risk_vals = np.array([risk_by_gene.get(g, np.nan) for g in reduced_genes], dtype=float)
+    leave_out_rho = np.nan if (np.isnan(Q_vals).any() or np.isnan(risk_vals).any()) else spearman_rho(Q_vals, risk_vals)
+
+    carried_by_single_gene = bool(
+        full["gate_pass"] and (np.isnan(leave_out_rho) or leave_out_rho < single_gene_floor)
+    )
+    return {
+        **full,
+        "watch_gene": watch_gene,
+        "leave_one_out_n": len(reduced_genes),
+        "leave_one_out_rho": leave_out_rho,
+        "single_gene_floor": single_gene_floor,
+        "carried_by_single_gene": carried_by_single_gene,
+    }
 
 
 # ---------------------------------------------------------------------------

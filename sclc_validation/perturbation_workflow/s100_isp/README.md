@@ -10,9 +10,9 @@ without a GPU host, a real dataset, or the vendored Geneformer checkout.
 
 | Module | What it does |
 |---|---|
-| `retained_rows.py` | Builds the planned 96-row Cartesian table (12 genes x 2 sources x 2 goals x 2 operations), left-joined against eligibility manifests, run-completion markers, no-op results, and ISP stats CSVs. A missing/not-yet-run/not-estimable row is always kept, never dropped, with a machine-readable `status`/`status_reason`. Computes `donor_balanced_shift` directly from the raw per-cell pickle + the paired-eligible manifest's donor column -- **not** from `InSilicoPerturberStats`' own `Shift_to_goal_end` column, which is a plain cell-weighted mean, not the donor-weighted mean the design requires. |
-| `ambient_stats.py` | `E[g,c]`, `Q[g,c]` (midrank percentile within matched controls), per-stratum rollup, the primary Spearman test with an **exact** (not asymptotic) label-permutation p-value enumerating all `n!` permutations, the zero-GPU stability gates (120 leave-one-control-out recomputations, 10,000 within-stratum bootstrap redraws at seed `20260922`), and the `0.00072` numerical effect floor. |
-| `matched_controls.py` | `synthetic_control_table()` -- a structurally-valid **fake** 20-control-per-stratum table (fabricated `ENSG9SYNTH...` ids) used only to prove `ambient_stats.py` is correct before the real controls exist. |
+| `retained_rows.py` | Builds the planned Cartesian table, left-joined against eligibility manifests, run-completion markers, no-op results, and ISP stats CSVs. As registered, 12 genes x 2 sources x 2 goals x 2 operations = 96 core rows; the real Module A run is now 12 genes x 1 source (LUAD only, SCLC source arm dropped 2026-09-23) x 2 goals x 2 operations = **48** (`MODULE_A_SOURCES = ("luad",)`) -- see `retained_rows_spec_20260922.md`'s second dated amendment. The builder itself stays fully generic over `sources`; its own tests still exercise both source branches. A missing/not-yet-run/not-estimable row is always kept, never dropped, with a machine-readable `status`/`status_reason`. Computes `donor_balanced_shift` directly from the raw per-cell pickle + the paired-eligible manifest's donor column -- **not** from `InSilicoPerturberStats`' own `Shift_to_goal_end` column, which is a plain cell-weighted mean, not the donor-weighted mean the design requires. |
+| `ambient_stats.py` | `E[g,c]`, `Q[g,c]` (midrank percentile within matched controls), per-stratum rollup, the primary Spearman test with an **exact two-sided** (not asymptotic) label-permutation p-value enumerating all `n!` permutations, the leave-one-gene-out single-gene-carry check (`primary_test_with_single_gene_check`), the zero-GPU stability gates (120 leave-one-control-out recomputations, 10,000 within-stratum bootstrap redraws at seed `20260922`), and the `0.00072` numerical effect floor. |
+| `matched_controls.py` | **Unblocked 2026-09-23.** `build_matched_control_table()` builds the six fixed 20-control matched strata from a LUAD-only per-gene detection-fraction/median-token-rank table (`median_token_rank_and_detection()` / `load_and_freeze_luad_gene_stats()`), matched on both axes against every stratum member, deterministic seeded sampling, `not_estimable_control_stratum` reported rather than rescued below 20 candidates. `synthetic_control_table()` remains for `ambient_stats.py`'s own tests. |
 | `provenance_utils.py` | `sha256_file()` -- every file this layer reads gets hashed from its own bytes at the moment it's read, same principle as `run_targeted_panel.py`'s self-hash/input-hash (2026-09-23). |
 
 Run the tests (no GPU, ~5s total, the slow part is the honest n=10
@@ -21,22 +21,21 @@ factorial-permutation check):
 ```
 python3 test_retained_rows.py
 python3 test_ambient_stats.py
+python3 test_matched_controls.py
 ```
 
-## What's blocked (a stub, not a guess)
+## Mandatory CPU precheck before any GPU work (2026-09-23)
 
-`matched_controls.build_matched_control_table()` raises `NotImplementedError`
-unconditionally. Two definitional questions are open with the human/Pam
-(gate 3(b), not an implementation gap):
-
-1. Which file/column defines "median token rank" for a gene -- the
-   existing ambient-risk table has a detection fraction but no rank column.
-2. Whether the matching tolerance is computed per source-state or globally.
-
-Do not implement it against a guessed answer. Everything in
-`ambient_stats.py` works identically against the real control table once
-built -- that is the entire reason it was built against
-`synthetic_control_table()` now rather than after.
+Of the eight LUAD-eligible non-anchor genes, exactly one (`S100A2`) is
+ambient-flagged. Their `ambient_risk` values are strongly bimodal (four
+near zero, four between 0.74 and 0.96, a gap larger than either cluster's
+own range) -- see `retained_rows_spec_20260922.md`'s second dated
+amendment for the full table and the reasoning. The primary test's real
+`n` is 8, not 10; the exact two-sided permutation math for both n was
+independently re-verified there too, correcting an n=8 threshold that had
+first been circulated using a one-sided convention -- the registered gate
+itself is unchanged, but the supporting arithmetic was wrong and is
+corrected in the amendment.
 
 ## Gaps surfaced while building this -- RULED 2026-09-23
 
@@ -66,3 +65,34 @@ amendment; summary here:
    compute Q on a short control set (rather than "rescuing" a gene by
    computing it on fewer) is exactly what keeps N fixed and the formula
    choice inert -- do not change that without revisiting the amendment.
+
+## Second round of rulings -- 2026-09-23 (human ruling)
+
+Full text in `retained_rows_spec_20260922.md`'s second dated amendment;
+summary here:
+
+1. **SCLC source arm dropped.** No ambient-flagged gene survives
+   eligibility in SCLC; a pure two-group difference there would pass the
+   primary gate 47% of the time regardless of information content. `SCLC`
+   remains a valid goal (`LUAD -> SCLC`). Real run: 48 core rows, not 96.
+2. **Median token rank ruled: computed from the tokenized held-out
+   dataset**, 0-based convention, frozen and hashed before use.
+3. **Matching scope ruled: per-source-state (LUAD-only), not global** --
+   both matching axes are source-dependent. `matched_controls.py` is
+   unblocked.
+4. **n=8, not n=10, for the real primary test** (`S100P`/`S100A16` fail
+   LUAD eligibility). **The exact two-sided critical rho at n=8 was
+   recomputed and corrected**: ~0.7381, not the one-sided ~0.6190 first
+   circulated -- at n=8 (unlike n=10) the p<=0.05 condition is tighter
+   than the rho>=0.70 gate over part of its range. The registered gate
+   itself does not change; the arithmetic offered in support of it did.
+5. **Leave-one-gene-out registered before the number exists**: if the
+   full 8-gene primary rho passes but dropping `S100A2` alone drops rho
+   below 0.60, the result is "carried by a single gene," not a panel-wide
+   association. `ambient_stats.primary_test_with_single_gene_check()`.
+
+CPU precheck (mandatory before GPU, done here, no ts1 needed -- the
+ambient-risk table already exists locally): the eight LUAD-eligible
+non-anchor genes' `ambient_risk` values are strongly bimodal (four near
+zero, four at 0.74-0.96). See the amendment for the full table and why
+this is a different situation from the one that dropped SCLC.

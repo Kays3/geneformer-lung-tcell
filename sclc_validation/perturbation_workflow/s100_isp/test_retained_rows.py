@@ -142,11 +142,18 @@ def build_fixture() -> dict:
 
 def main() -> None:
     fx = build_fixture()
+    # Explicit sources=("sclc", "luad") -- deliberately not relying on
+    # MODULE_A_SOURCES' default. This test exercises build_retained_rows()'s
+    # generic per-source Cartesian/status logic, which is unchanged by the
+    # 2026-09-23 ruling that dropped SCLC as a *production* source; the
+    # fixture below still needs both source branches to cover every status
+    # path (see the module docstring's "genuinely tested" standard).
     result = rr.build_retained_rows(
         panel_id="test-panel", panel_genes=fx["panel_genes"],
         raw_root=fx["raw_root"], paired_eligible_dir=fx["paired_eligible_dir"],
         stats_root=fx["stats_root"], gene_token_dict=fx["gene_token_dict"],
         run_id="test-run", runner_sha256="deadbeef", panel_sha256="cafef00d",
+        sources=("sclc", "luad"),
     )
 
     expected_n = 2 * 2 * 2 * 2  # 2 genes x 2 sources x 2 goals x 2 ops

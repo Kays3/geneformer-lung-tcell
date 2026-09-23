@@ -2,11 +2,20 @@
 
 The whole point of this contract is that a missing stats row must remain a
 row: build_retained_rows() always returns exactly the planned Cartesian row
-count (12 genes x 2 sources x 2 goals x 2 operations = 96 for the core
-panel), asserted at the end, regardless of how much of the real run has
-completed. A row that can't be computed yet gets a status and a
-status_reason explaining why -- it is never dropped, and a not-estimable
-or not-yet-run row's numeric columns are null, never zero.
+count, asserted at the end, regardless of how much of the real run has
+completed -- as originally registered (both SCLC and LUAD as sources) that
+is 12 genes x 2 sources x 2 goals x 2 operations = 96 for the core panel.
+RULED 2026-09-23: the SCLC source arm is dropped (see MODULE_A_SOURCES
+below and retained_rows_spec_20260922.md's second dated amendment) --
+Module A's real invocation is now 12 genes x 1 source x 2 goals x
+2 operations = 48 core rows. This function remains fully generic over
+`sources`; the row count it asserts is always `len(panel_genes) *
+len(sources) * 2 * len(perturbation_types)` for whatever `sources` the
+caller actually passes, so this change lives entirely in MODULE_A_SOURCES's
+default, not in this function's logic. A row that can't be computed yet
+gets a status and a status_reason explaining why -- it is never dropped,
+and a not-estimable or not-yet-run row's numeric columns are null, never
+zero.
 
 Deliberately has NO dependency on geneformer/torch: the caller passes in
 `gene_token_dict` (loaded however the real runner loads it) so this module
@@ -42,13 +51,27 @@ STATES = (SCLC, LUAD, NORMAL)
 SLUGS = {SCLC: "sclc", LUAD: "luad", NORMAL: "normal"}
 STATE_BY_SLUG = {v: k for k, v in SLUGS.items()}
 
-# Module A only ever uses SCLC/LUAD as sources -- Normal has a single donor
-# in the held-out split, so the >=3-donor eligibility gate can never pass
-# for any gene, by construction (confirmed live, s100-isp-execution-20260922
-# gate 3(a)). Including it here would only ever produce not_estimable_donor_
-# count rows, which is correct but adds nothing -- the design doc's own
-# Module A section already excludes it.
-MODULE_A_SOURCES = ("sclc", "luad")
+# Normal has a single donor in the held-out split, so the >=3-donor
+# eligibility gate can never pass for any gene, by construction (confirmed
+# live, s100-isp-execution-20260922 gate 3(a)). Including it as a SOURCE
+# here would only ever produce not_estimable_donor_count rows, which is
+# correct but adds nothing -- the design doc's own Module A section already
+# excludes it. (Normal remains a valid GOAL state -- see planned_cartesian_rows.)
+#
+# RULED 2026-09-23 (human ruling, s100-isp-execution-20260922, see
+# retained_rows_spec_20260922.md's second dated amendment): the SCLC SOURCE
+# arm is dropped -- in SCLC, none of the ambient-flagged genes survive
+# eligibility, leaving a two-cluster ambient-risk variable where a pure
+# two-group difference passes the primary rho >= 0.70 gate 47% of the time.
+# Dropping a source is not dropping a goal state: SCLC remains a valid GOAL
+# (LUAD -> SCLC is still registered). Module A's real invocation is now
+# source=LUAD only, both of its non-source goals (SCLC, Normal). This
+# module's Cartesian builder stays fully generic over `sources` -- nothing
+# about planned_cartesian_rows()/build_retained_rows() special-cases SCLC as
+# a source, so the code that builds it is still directly tested (see
+# test_retained_rows.py, which continues to exercise both source branches
+# explicitly); only the production default below changed.
+MODULE_A_SOURCES = ("luad",)
 PERTURBATION_TYPES = ("delete", "overexpress")
 
 STATUS_ELIGIBLE_COMPLETED = "eligible_completed"
