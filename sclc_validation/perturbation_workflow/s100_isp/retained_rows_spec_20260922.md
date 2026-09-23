@@ -431,3 +431,62 @@ reported always (not only on request):**
 **Order of work, unchanged: nothing above authorizes GPU.** This CPU-only
 diagnostic layer is complete and tested; the decision on whether/how to
 proceed with Module A rests with the human.
+
+## Amendment 5 -- 2026-09-23 (human ruling, s100-isp-execution-20260922)
+
+Closes two open items from Amendment 4: confirms the `S100PBP` correction
+was the human's own error (not mine), and replaces Amendment 4's
+open "no numeric near-zero cutoff is fixed" note with a structural
+finding that makes fixing one unnecessary. Amendments 1-4 stand unedited.
+
+**1. `S100PBP` vs `PEBP1`, resolved: the human's proposed correction was
+the error, confirmed by the human.** The gene-symbol set used to look up
+the "high cluster" values included `PBP` and `PEBP1` but never
+`S100PBP` itself -- eighteen rows in `ambient_risk_all_genes.csv` contain
+"PBP" as a substring (`GTPBP2`, `TOPBP1`, `HSPBP1`, `TAPBP`, among
+others), so a substring search over symbols was never safe on this table.
+A second, independent signal was available and unused: `PEBP1`'s
+`detect_frac` (0.436) is wildly out of line with the other three
+high-cluster genes' (0.012-0.067), which alone should have flagged the
+wrong row. **Amendment 4's original values and the 4-vs-4 split stand,
+unchanged, confirmed by both parties independently.** Standing rule,
+now confirmed twice on this exact panel file: **resolve gene identity by
+`ensembl_id`, registered in `s100_gene_panel_20260922.json`, never by
+symbol or symbol substring.**
+
+**2. Amendment 4 declined to fix a numeric "near zero" cutoff for
+within-cluster Spearman rho, pending the real numbers. That caution was
+under-stated: no cutoff is possible in principle, not just premature.**
+At the real within-cluster group size (n=4), the exact null distribution
+has only `4! = 24` permutations; its minimum attainable two-sided p,
+reached ONLY by a perfect correlation (`rho = +-1.0`), is `2/24 = 0.08333`
+(verified directly by enumeration -- the eleven attainable rho values at
+n=4 are `0, +-0.2, +-0.4, +-0.6, +-0.8, +-1.0`, and every one of them
+except `+-1.0` has an even larger p). **No within-cluster rho, however
+extreme, can ever be distinguished from chance at p <= 0.05 at this n.** A
+numeric interpretation threshold on this quantity would therefore be
+theatre, not rigor -- it cannot rescue the group-separation result (nothing
+here can ever reach significance) and it cannot condemn it either (a rho
+of 0 is not more "real" than a rho of 0.8 at this n; both merely fail to
+clear a floor nothing can clear).
+
+**Ruling, replacing Amendment 4's open item: `within_cluster_spearman()`
+is DESCRIPTIVE ONLY, permanently, not pending a threshold.** It reports
+rho, its own exact two-sided p, and a fixed disclaimer string, for a
+reader to see the shape of the data -- it must never gate an
+interpretation. **The claim that can pass or fail rests entirely on
+`exact_group_separation_test()`** (the 4-vs-8-vs-C(8,4)=70 Mann-Whitney U,
+genuinely reachable at p <= 0.05 -- minimum attainable p 2/70 = 0.02857 at
+complete separation). The headline n=8 primary rho is reported with its
+own two-sided p AND the pre-declared note (Amendment 4, item 1) that it is
+dominated by the group split: a pure 4-vs-4 separation with zero
+within-cluster rank information clears the corrected primary gate 63.4%
+of the time. Implemented: `ambient_stats.WITHIN_CLUSTER_N4_MIN_ATTAINABLE_P
+= 2/24`; `within_cluster_spearman()` now returns, per group,
+`{rho, p_exact, n, min_attainable_p_note}` rather than a bare rho.
+
+**Every number in this analysis-layer chain (Amendments 1-5) is now
+derived from an exact enumeration, a registered design-doc line, or a
+panel-file lookup by ensembl_id -- none is negotiable after the fact, and
+none was invented ahead of a real result.** GPU remains held; nothing in
+this amendment authorizes it.

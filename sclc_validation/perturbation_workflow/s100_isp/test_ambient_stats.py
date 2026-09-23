@@ -276,32 +276,48 @@ def test_exact_group_separation_test():
 
 
 def test_within_cluster_spearman():
+    """RULED 2026-09-23 (human ruling, fifth dated amendment): at n=4 the
+    minimum attainable two-sided p is 2/24=0.0833 -- reached only by a
+    PERFECT correlation -- so no within-cluster rho can ever be
+    significant. within_cluster_spearman() is descriptive only: it must
+    report rho, its own exact p, and the fixed disclaimer, never gate."""
     gene_group = {"h1": "high", "h2": "high", "h3": "high", "h4": "high",
                   "l1": "low", "l2": "low", "l3": "low", "l4": "low"}
     risk = {"h1": 5.0, "h2": 6.0, "h3": 7.0, "h4": 8.0, "l1": 1.0, "l2": 2.0, "l3": 3.0, "l4": 4.0}
 
-    # Q tracks risk perfectly within each cluster -> both rhos == 1.0.
+    # Q tracks risk perfectly within each cluster -> both rho == 1.0, and
+    # even THIS best-possible case only reaches p == 0.0833, not <= 0.05.
     Q_monotone = dict(risk)
-    rhos = astats.within_cluster_spearman(Q_monotone, risk, gene_group)
-    assert set(rhos.keys()) == {"high", "low"}
-    assert abs(rhos["high"] - 1.0) < 1e-9 and abs(rhos["low"] - 1.0) < 1e-9
-    print("within_cluster_spearman: Q monotone within both clusters -> both rho=1.0 -- OK")
+    result = astats.within_cluster_spearman(Q_monotone, risk, gene_group)
+    assert set(result.keys()) == {"high", "low"}
+    for group in ("high", "low"):
+        assert abs(result[group]["rho"] - 1.0) < 1e-9
+        assert abs(result[group]["p_exact"] - astats.WITHIN_CLUSTER_N4_MIN_ATTAINABLE_P) < 1e-9
+        assert result[group]["n"] == 4
+        assert "descriptive only" in result[group]["min_attainable_p_note"]
+    assert abs(astats.WITHIN_CLUSTER_N4_MIN_ATTAINABLE_P - 2 / 24) < 1e-12
+    print(f"within_cluster_spearman: PERFECT correlation (rho=1.0) still only reaches "
+          f"p={result['high']['p_exact']:.4f} (min attainable at n=4) -- confirms "
+          f"no value can ever clear p<=0.05 at this n -- OK")
 
-    # Q carries only group membership, random within-cluster -> rho near/at
-    # zero within each cluster even though the primary test's rho is high.
+    # Q carries only group membership, random within-cluster -> rho well
+    # short of 1.0 within each cluster even though the primary/group-test
+    # rho is high; still just descriptive, no pass/fail is asserted here.
     Q_group_only = {"h1": 8.0, "h2": 5.0, "h3": 7.0, "h4": 6.0, "l1": 3.0, "l2": 1.0, "l3": 4.0, "l4": 2.0}
-    rhos2 = astats.within_cluster_spearman(Q_group_only, risk, gene_group)
-    assert abs(rhos2["high"]) < 1.0 and abs(rhos2["low"]) < 1.0
+    result2 = astats.within_cluster_spearman(Q_group_only, risk, gene_group)
+    assert abs(result2["high"]["rho"]) < 1.0 and abs(result2["low"]["rho"]) < 1.0
     print(f"within_cluster_spearman: group-only signal -> within-cluster rhos "
-          f"high={rhos2['high']:.3f} low={rhos2['low']:.3f} (not forced to 1.0 by group separation alone) -- OK")
+          f"high={result2['high']['rho']:.3f} low={result2['low']['rho']:.3f} "
+          f"(not forced to 1.0 by group separation alone) -- OK")
 
-    # missing Q for one member of a cluster -> that cluster's rho is NaN,
-    # the other cluster is unaffected.
+    # missing Q for one member of a cluster -> that cluster's rho/p are
+    # NaN, the other cluster is unaffected.
     Q_missing = dict(Q_monotone)
     del Q_missing["h2"]
-    rhos3 = astats.within_cluster_spearman(Q_missing, risk, gene_group)
-    assert np.isnan(rhos3["high"])
-    assert abs(rhos3["low"] - 1.0) < 1e-9
+    result3 = astats.within_cluster_spearman(Q_missing, risk, gene_group)
+    assert np.isnan(result3["high"]["rho"]) and np.isnan(result3["high"]["p_exact"])
+    assert result3["high"]["min_attainable_p_note"] is None
+    assert abs(result3["low"]["rho"] - 1.0) < 1e-9
     print("within_cluster_spearman: missing Q in one cluster -> that cluster NaN, other cluster unaffected -- OK")
 
 

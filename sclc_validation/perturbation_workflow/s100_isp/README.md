@@ -130,4 +130,16 @@ monotone association; no numeric "near zero" cutoff is fixed yet). One
 data-correction: `S100PBP`'s ambient_risk (0.744492, by ensembl_id
 ENSG00000116497) is confirmed correct against a proposed replacement that
 was actually a different gene, `PEBP1`, matched by a similar-looking
-symbol. Full text in the amendment.
+symbol -- confirmed as the human's own error in Amendment 5. Full text in
+the amendment.
+
+## Amendment 5 (2026-09-23): within-cluster Spearman is descriptive only, permanently
+
+At n=4 (the real within-cluster group size), the minimum attainable
+two-sided p is 2/24 = 0.0833, reached only by a PERFECT correlation -- no
+within-cluster rho can ever be significant at this n. This isn't a
+"threshold not yet chosen" situation, it's "no threshold is possible."
+`within_cluster_spearman()` now returns `{rho, p_exact, n,
+min_attainable_p_note}` per group and is documented as descriptive only;
+the claim rests entirely on `exact_group_separation_test()` (genuinely
+reachable at p<=0.05, min p=2/70=0.0286).

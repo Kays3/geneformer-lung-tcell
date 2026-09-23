@@ -11,6 +11,7 @@ No dependency on geneformer/torch/GPU. Pure pandas/numpy/scipy.
 from __future__ import annotations
 
 import itertools
+import math
 
 import numpy as np
 import pandas as pd
@@ -371,31 +372,73 @@ def exact_group_separation_test(
     return {"statistic": float(result.statistic), "p_exact": float(result.pvalue), "reason": None}
 
 
+
+# RULED 2026-09-23 (human ruling, fifth dated amendment,
+# s100-isp-execution-20260922): at n=4, the exact null distribution has
+# only 4! = 24 permutations and its minimum attainable two-sided p (at
+# rho=+/-1.0, PERFECT correlation) is 2/24 = 0.08333 -- verified directly
+# by enumeration below. No within-cluster rho, however extreme, can ever
+# clear p <= 0.05 at this n. A numeric "near zero" interpretation
+# threshold on this quantity would therefore be theatre, not rigour: it
+# cannot rescue a result (nothing here can ever be significant) and it
+# cannot condemn one either (a rho of exactly 0 is not more "real" than a
+# rho of 0.8 at this n -- both merely fail to reach a floor nothing can
+# reach). within_cluster_spearman() is DESCRIPTIVE ONLY for this reason --
+# it must never gate an interpretation, only illustrate the shape of the
+# data alongside this fixed disclaimer.
+WITHIN_CLUSTER_N4_MIN_ATTAINABLE_P = 2 / 24  # == 0.08333...
+
+
 def within_cluster_spearman(
     Q_by_gene: dict[str, float],
     risk_by_gene: dict[str, float],
     gene_group: dict[str, str],
-) -> dict[str, float]:
-    """Spearman rho computed SEPARATELY within each group in `gene_group`
-    (e.g. {"high": [...], "low": [...]} membership, inverted here to
-    gene -> group) -- measures directly whether Q carries any rank
-    information beyond which cluster a gene is in. Cheap spearman_rho(),
-    not an exact permutation p (not requested by the ruling; the group
-    sizes here are 4, where an exact p would only ever attain 4!/2 = 12
-    distinct two-sided values anyway). Reported always, one rho per group
-    present in `gene_group`. NaN for a group with a missing Q/risk value,
-    or with fewer than 2 estimable members (a single point has no rank
-    correlation to report)."""
-    rhos: dict[str, float] = {}
+) -> dict[str, dict]:
+    """Spearman rho (AND its own exact two-sided p, cheap at n=4 -- 24
+    permutations) computed SEPARATELY within each group in `gene_group`
+    (e.g. gene -> "high"/"low" cluster membership) -- measures whether Q
+    carries any rank information beyond which cluster a gene is in.
+
+    DESCRIPTIVE ONLY -- never a gate. At the real group size (n=4), the
+    minimum attainable two-sided p is `WITHIN_CLUSTER_N4_MIN_ATTAINABLE_P`
+    (0.0833), reached only by a PERFECT correlation; no observed value can
+    ever be distinguished from chance in either direction at this n. The
+    claim that survives or fails is decided by exact_group_separation_test()
+    (n=8-vs-C(8,4)=70, genuinely reachable at p<=0.05), never by this
+    function -- these rhos exist so a reader can see the shape of the data,
+    not to rescue or condemn the group-separation result.
+
+    Reported always, one entry per group present in `gene_group`, each a
+    dict with `rho`, `p_exact`, `n`, and the fixed `min_attainable_p_note`
+    string (present even when n != 4, computed for whatever n the group
+    actually has, so this stays correct if group sizes ever change).
+    NaN rho/p for a group with a missing Q/risk value or fewer than 2
+    estimable members (a single point has no rank correlation to report).
+    """
+    result: dict[str, dict] = {}
     for group in sorted(set(gene_group.values())):
         genes = [g for g, grp in gene_group.items() if grp == group]
+        n = len(genes)
         Q_vals = np.array([Q_by_gene.get(g, np.nan) for g in genes], dtype=float)
         risk_vals = np.array([risk_by_gene.get(g, np.nan) for g in genes], dtype=float)
-        if len(genes) < 2 or np.isnan(Q_vals).any() or np.isnan(risk_vals).any():
-            rhos[group] = np.nan
-        else:
-            rhos[group] = spearman_rho(Q_vals, risk_vals)
-    return rhos
+        if n < 2 or np.isnan(Q_vals).any() or np.isnan(risk_vals).any():
+            result[group] = {"rho": np.nan, "p_exact": np.nan, "n": n,
+                              "min_attainable_p_note": None}
+            continue
+        rho, p_exact, _ = spearman_exact_permutation(Q_vals, risk_vals)
+        min_attainable_p = 2.0 / math.factorial(n)
+        result[group] = {
+            "rho": rho, "p_exact": p_exact, "n": n,
+            "min_attainable_p_note": (
+                f"descriptive only -- at n={n}, the minimum attainable two-sided "
+                f"p is {min_attainable_p:.5g} (reached only by a perfect "
+                f"correlation); this rho cannot be distinguished from chance "
+                f"unless {min_attainable_p:.5g} <= 0.05, and cannot gate the "
+                f"result either way -- see exact_group_separation_test() for "
+                f"the test that actually can reach significance."
+            ),
+        }
+    return result
 
 
 # ---------------------------------------------------------------------------
