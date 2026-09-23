@@ -171,55 +171,76 @@ def test_numerical_floor():
     print(f"above_numerical_floor (floor={astats.NUMERICAL_FLOOR}): strict >, None for missing -- OK")
 
 
-def test_primary_test_with_single_gene_check():
-    """RULED 2026-09-23 (registered before the real number existed): if the
-    full-panel primary rho passes but removing the one ambient-flagged gene
-    (watch_gene) drops rho below 0.60, the result must be flagged
-    carried_by_single_gene -- it must NOT be reported as a panel-wide
-    ambient-risk association. See retained_rows_spec_20260922.md's second
-    dated amendment. build_matched_control_table() itself is no longer a
-    stub -- its own dedicated tests now live in test_matched_controls.py."""
-    non_anchor = [f"g{i}" for i in range(8)]  # n=8, the real LUAD-eligible count
+def test_leave_one_gene_out_check_three_way():
+    """RULED 2026-09-23, corrected same day (human ruling,
+    s100-isp-execution-20260922): the leave-one-gene-out floor is NOT the
+    leave-one-control-out floor (0.60) borrowed in the first pass -- n
+    shrinks to 7 (a different null) and the correct exact two-sided
+    critical rho at n=7 is 0.7857, not the 0.75 first proposed as a
+    replacement (0.75 falls in a gap between attainable rho values and its
+    own exact p is 0.0663, which fails). leave_one_gene_out_check() must
+    not hardcode either number -- it recomputes the exact test at whatever
+    n the reduced set has. See retained_rows_spec_20260922.md's third dated
+    amendment. build_matched_control_table() itself is no longer a stub --
+    its own dedicated tests now live in test_matched_controls.py."""
+    non_anchor = [f"g{i}" for i in range(8)]
     watch_gene = "g0"
     risk = {g: float(i) for i, g in enumerate(non_anchor)}
+    reduced_genes = [g for g in non_anchor if g != watch_gene]  # g1..g7, n=7
 
-    # Case 1: Q tracks risk perfectly for every gene INCLUDING watch_gene --
-    # removing it should barely move rho; not carried by a single gene.
-    Q_perfect = dict(risk)
-    result = astats.primary_test_with_single_gene_check(Q_perfect, risk, non_anchor, watch_gene)
-    assert result["gate_pass"] is True
-    assert abs(result["leave_one_out_rho"] - 1.0) < 1e-9
-    assert result["leave_one_out_n"] == 7
-    assert result["carried_by_single_gene"] is False
-    print("primary_test_with_single_gene_check: Q tracks risk with or without watch_gene -> not carried by a single gene -- OK")
+    # "survives": reduced Q tracks risk perfectly (rho=1.0, p tiny).
+    Q_survives = dict(risk)
+    r1 = astats.leave_one_gene_out_check(Q_survives, risk, non_anchor, watch_gene)
+    assert r1["leave_one_out_n"] == 7
+    assert abs(r1["leave_one_out_rho"] - 1.0) < 1e-9
+    assert r1["outcome"] == "survives"
+    assert r1["carried_by_single_gene"] is False
+    print("leave_one_gene_out_check: rho=1.0 -> survives -- OK")
 
-    # Case 2: Q is scrambled among the other 7 genes (rho among them ~0) but
-    # watch_gene sits at the extreme end consistent with risk, dragging the
-    # full-panel rho over the 0.70 gate on its own -- exactly the failure
-    # mode the amendment exists to catch.
-    Q_carried = {
-        "g0": 7.0,  # watch_gene: extreme, consistent with its risk rank (7 = highest)
-        "g1": 3.0, "g2": 1.0, "g3": 5.0, "g4": 0.0, "g5": 4.0, "g6": 2.0, "g7": 6.0,
-    }
-    result2 = astats.primary_test_with_single_gene_check(Q_carried, risk, non_anchor, watch_gene)
-    reduced_genes = [g for g in non_anchor if g != watch_gene]
-    independent_reduced_rho = astats.spearman_rho(
-        np.array([Q_carried[g] for g in reduced_genes]), np.array([risk[g] for g in reduced_genes]),
-    )
-    assert abs(result2["leave_one_out_rho"] - independent_reduced_rho) < 1e-9
-    if result2["gate_pass"]:
-        assert result2["carried_by_single_gene"] == bool(result2["leave_one_out_rho"] < 0.60)
-    print(f"primary_test_with_single_gene_check: full rho={result2['rho']:.3f} gate_pass={result2['gate_pass']}, "
-          f"leave-{watch_gene}-out rho={result2['leave_one_out_rho']:.3f}, "
-          f"carried_by_single_gene={result2['carried_by_single_gene']} -- OK")
+    # "gene_sensitive_open": reduced rho attains exactly 0.75 (the value
+    # Stanley's own first replacement proposed) -- attainable, but its
+    # exact two-sided p is 0.0663, which FAILS p<=0.05: open, not survives.
+    perm_075 = (0, 1, 2, 4, 6, 5, 3)  # ranks for g1..g7, gives rho=0.75 vs risk ranks 0..6
+    Q_open = {watch_gene: 99.0, **{g: float(v) for g, v in zip(reduced_genes, perm_075)}}
+    r2 = astats.leave_one_gene_out_check(Q_open, risk, non_anchor, watch_gene)
+    assert abs(r2["leave_one_out_rho"] - 0.75) < 1e-9
+    assert r2["leave_one_out_p_exact"] > 0.05, r2["leave_one_out_p_exact"]
+    assert r2["outcome"] == "gene_sensitive_open", r2
+    assert r2["carried_by_single_gene"] is False
+    print(f"leave_one_gene_out_check: rho=0.75 exactly (attainable, not a gap value), "
+          f"p={r2['leave_one_out_p_exact']:.4f} > 0.05 -> gene_sensitive_open, NOT survives -- OK")
 
-    # Case 3: full gate does not pass at all -- carried_by_single_gene must
-    # stay False (there is no panel-wide claim to protect against here).
-    Q_random = {"g0": 3.0, "g1": 7.0, "g2": 1.0, "g3": 5.0, "g4": 0.0, "g5": 4.0, "g6": 2.0, "g7": 6.0}
-    result3 = astats.primary_test_with_single_gene_check(Q_random, risk, non_anchor, watch_gene)
-    if not result3["gate_pass"]:
-        assert result3["carried_by_single_gene"] is False
-    print("primary_test_with_single_gene_check: gate not passed -> carried_by_single_gene forced False -- OK")
+    # The actual critical value, 0.7857, DOES clear p<=0.05 -- confirms the
+    # boundary is where the human's correction says it is, not at 0.75.
+    perm_07857 = (0, 1, 2, 4, 5, 6, 3)
+    Q_boundary = {watch_gene: 99.0, **{g: float(v) for g, v in zip(reduced_genes, perm_07857)}}
+    r_boundary = astats.leave_one_gene_out_check(Q_boundary, risk, non_anchor, watch_gene)
+    assert abs(r_boundary["leave_one_out_rho"] - astats.LOO_GENE_N7_REFERENCE_RHO) < 1e-9
+    assert r_boundary["leave_one_out_p_exact"] <= 0.05, r_boundary["leave_one_out_p_exact"]
+    assert r_boundary["outcome"] == "survives"
+    print(f"leave_one_gene_out_check: rho=0.7857 -> p={r_boundary['leave_one_out_p_exact']:.4f} <= 0.05 "
+          f"-> survives -- confirms 0.7857 (not 0.75, not 0.60) is the real boundary -- OK")
+
+    # "carried_by_single_gene": reduced Q exactly reverses risk (rho=-1.0).
+    Q_carried = {watch_gene: 0.0, **{g: float(6 - i) for i, g in enumerate(reduced_genes)}}
+    r3 = astats.leave_one_gene_out_check(Q_carried, risk, non_anchor, watch_gene)
+    assert r3["leave_one_out_rho"] <= 0
+    assert r3["outcome"] == "carried_by_single_gene"
+    assert r3["carried_by_single_gene"] is True
+    print("leave_one_gene_out_check: rho<=0 -> carried_by_single_gene -- OK")
+
+    # "not_estimable": a reduced-set gene has no Q at all.
+    Q_missing = dict(Q_survives)
+    del Q_missing["g1"]
+    r4 = astats.leave_one_gene_out_check(Q_missing, risk, non_anchor, watch_gene)
+    assert r4["outcome"] == "not_estimable"
+    assert r4["carried_by_single_gene"] is False
+    print("leave_one_gene_out_check: missing reduced-set Q -> not_estimable, not silently excluded -- OK")
+
+    # primary_test_with_single_gene_check merges both dicts with no key collisions.
+    merged = astats.primary_test_with_single_gene_check(Q_survives, risk, non_anchor, watch_gene)
+    assert merged["outcome"] == "survives" and "gate_pass" in merged and "rho" in merged
+    print("primary_test_with_single_gene_check: merges primary_test() + leave_one_gene_out_check() -- OK")
 
 
 def test_primary_test_reports_n():
@@ -300,7 +321,7 @@ def main() -> None:
     test_primary_test_gate()
     test_loo_and_bootstrap_gates()
     test_numerical_floor()
-    test_primary_test_with_single_gene_check()
+    test_leave_one_gene_out_check_three_way()
     test_primary_test_reports_n()
     test_synthetic_control_table_is_structurally_valid_and_labeled_fake()
     test_end_to_end_with_synthetic_controls()

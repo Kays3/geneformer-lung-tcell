@@ -240,3 +240,82 @@ artifact). But it does mean the eight-point rank correlation is closer to
 "two clusters plus within-cluster ordering" than to a smooth rank spread,
 which is exactly why item 5's leave-`S100A2`-out check matters here and
 was registered before this number was computed, not after.
+
+## Amendment 3 -- 2026-09-23 (human self-correction, s100-isp-execution-20260922)
+
+Corrects two numbers in Amendment 2 above, same day, before any GPU work
+started. Amendment 2's text is left exactly as written -- both errors are
+corrected here, visibly, not edited into the original.
+
+**1. Amendment 2, item 4's "min rho for exact two-sided p <= 0.05" table
+was itself computed one-sided and is WRONG. It is superseded by this
+corrected, independently-verified table (enumerated exactly, no floating
+point, cross-checked by two independent parties by direct permutation
+enumeration):**
+
+| n | attainable rho just below the boundary | its exact two-sided p | smallest attainable rho that clears p <= 0.05 | its exact two-sided p |
+|---|---|---|---|---|
+| 10 | 0.636364 | 0.05443 (fail) | **0.648485** | 0.04898 |
+| 8 | 0.714286 | 0.05759 (fail) | **0.738095** | 0.04583 |
+
+The values 0.6485 (n=10) and 0.7381 (n=8) in Amendment 2 were correct as
+written -- this amendment does not change them, it confirms them by an
+independent method (exact integer `d^2`/`Fraction` enumeration, no
+floating-point comparisons) and corrects the *reasoning* Amendment 2 used
+to justify them, which was still using a one-sided framing in prose even
+though its own numbers were two-sided. **The registered gate
+(`rho >= 0.70 AND p <= 0.05`) does not change.** At n=8, `rho >= 0.70`
+alone does NOT guarantee `p <= 0.05` -- the effective floor for the
+combined gate is 0.7381, not 0.70. Both conditions must be evaluated
+independently and explicitly; do not assume the p-condition from the
+rho-condition at n=8.
+
+**2. Amendment 2, item 5's leave-one-gene-out floor (0.60, borrowed from
+leave-one-control-out) is WRONG and is replaced.** Leave-one-control-out
+keeps n fixed (it drops a control, not a gene) -- its 0.60 floor has no
+bearing on leave-one-*gene*-out, which shrinks the primary test's n from 8
+to 7. This was a substitution error of the same kind Amendment 2 itself
+warned against for token rank (using the wrong quantity because it was
+convenient, not because it was correct).
+
+A first replacement of 0.60 with 0.75 was also wrong, by one attainable
+step: **Spearman's rho at small n is discrete -- for n=7, `d^2` is always
+an even integer, so attainable rho values near the boundary are exactly
+0.678571, 0.714286, 0.750000, 0.785714, and nothing between.** 0.750000's
+own exact two-sided p is 0.06627, which FAILS `p <= 0.05` -- it is not the
+critical value, it is one attainable step short of it. **The correct
+value is 0.785714 (11/14, `d^2 = 12`), whose exact two-sided p is 0.04801
+and clears the gate.** General lesson, worth keeping for the stability
+code broadly: **find a critical value by scanning attainable statistic
+values for the first whose own exact p clears the threshold -- never by
+indexing into a sorted null at an approximate quantile position**, which
+can land inside a gap between attainable values and silently pick the
+wrong side of the boundary.
+
+**Corrected rule, replacing Amendment 2 item 5, evaluated two-sided like
+the primary test (not the cheap rho-only recomputation the leave-one-
+control-out/bootstrap loops use -- this runs once, at n=7, so the full
+exact permutation test costs nothing to compute properly):**
+
+- **leave-`S100A2`-out rho >= 0.785714 AND its own exact two-sided
+  p <= 0.05: "survives"** -- the ambient-risk association is not solely
+  attributable to `S100A2`; a panel-wide statement is permitted (still
+  subject to the full eight-gene test's own gate).
+- **0 < leave-`S100A2`-out rho, but its exact p > 0.05: "gene_sensitive_open"**
+  -- no panel-wide claim, and no denial either. Matches the design's
+  existing "control-draw-sensitive / open" vocabulary rather than
+  inventing a new one.
+- **leave-`S100A2`-out rho <= 0: "carried_by_single_gene"** -- the
+  association does not survive `S100A2`'s removal at all; may NOT be
+  stated as a panel-wide ambient-risk finding, only as an `S100A2`-specific
+  one.
+
+Nothing here is borrowed from an unrelated gate; both the 0.7381 (item 4)
+and 0.785714 (item 5) values are derived from the design's own registered
+two-sided convention at the n the real analysis actually has (8 and 7
+respectively). Implemented as `ambient_stats.leave_one_gene_out_check()`
+(three-way `outcome` field plus a `carried_by_single_gene` boolean for
+callers that only need the one flag) and
+`ambient_stats.primary_test_with_single_gene_check()` (merges
+`primary_test()` and `leave_one_gene_out_check()`). Reported always, not
+only on request, same as Amendment 2 registered.

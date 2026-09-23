@@ -233,6 +233,86 @@ def primary_test(
             "gate_pass": bool(rho >= rho_gate and p_exact <= p_gate), "reason": None}
 
 
+# n=7's exact attainable rho values are quantized (d^2 is always an even
+# integer): near the boundary they are ..., 0.6786, 0.7143, 0.7500, 0.7857,
+# ... and nothing between. 0.7500 is NOT the critical value -- its exact
+# two-sided p is 0.0663 (fails p<=0.05); the correct smallest attainable
+# rho that clears the gate is 0.7857 (p=0.0480). RULED 2026-09-23 (human
+# ruling, second correction of the day, s100-isp-execution-20260922):
+# Stanley's own first replacement (0.75) landed in the same gap for the
+# same reason the original 0.60 borrow was wrong -- a critical value must
+# come from scanning ATTAINABLE statistic values for the first whose exact
+# p clears the threshold, never from indexing a sorted null at a quantile
+# position. Kept here only as a documented, independently-verified
+# reference point (by direct enumeration of all 7! = 5040 permutations,
+# cross-checked against the human's Fraction-exact derivation) --
+# leave_one_gene_out_check() below does not hardcode it; it calls
+# spearman_exact_permutation() at whatever n the leave-one-out set actually
+# has, so the classification is correct even if a future change alters
+# which/how many genes are non-anchor.
+LOO_GENE_N7_REFERENCE_RHO = 11 / 14  # == 0.785714285714... (d^2 = 12, n=7: rho = 1 - 6*12/336)
+
+
+def leave_one_gene_out_check(
+    Q_by_gene: dict[str, float],
+    risk_by_gene: dict[str, float],
+    non_anchor_genes: list[str],
+    watch_gene: str,
+    p_gate: float = 0.05,
+) -> dict:
+    """The leave-one-gene-out amendment, registered 2026-09-23 (human
+    ruling, s100-isp-execution-20260922) before the real number existed,
+    THEN CORRECTED THE SAME DAY (see retained_rows_spec_20260922.md's third
+    dated amendment): of the eight LUAD-eligible non-anchor genes, exactly
+    one -- S100A2 -- is ambient-flagged; if the other seven cluster
+    together in ambient risk, the primary rho is decided by where that one
+    gene lands, "a single comparison wearing the clothes of a rank
+    correlation." Recomputes the FULL exact two-sided permutation test
+    (rho AND p, "evaluated two-sided like the primary" -- not the cheap
+    rho-only spearman_rho() the LOO-control-out/bootstrap loops use, since
+    those loops run thousands of times and this runs once) with
+    `watch_gene` removed. Reported ALWAYS, not only on request.
+
+    Three-way outcome (matching the design's existing control-draw
+    "sensitive / open" vocabulary rather than inventing a new one):
+      - "survives":     leave-one-out rho > 0 AND exact two-sided p <= p_gate
+                         -> the ambient-risk association is NOT solely
+                         attributable to watch_gene; a panel-wide statement
+                         is permitted (still subject to the full test's own
+                         gate_pass).
+      - "gene_sensitive_open": leave-one-out rho > 0 but p > p_gate ->
+                         no panel-wide claim AND no denial.
+      - "carried_by_single_gene": leave-one-out rho <= 0 -> the association
+                         does not survive watch_gene's removal at all; MUST
+                         NOT be stated as a panel-wide ambient-risk finding,
+                         only as a watch_gene-specific one.
+      - "not_estimable": a reduced-set gene has no estimable Q or risk.
+    `carried_by_single_gene` (bool) mirrors the "carried_by_single_gene"
+    outcome for callers that only need the one flag.
+    """
+    reduced_genes = [g for g in non_anchor_genes if g != watch_gene]
+    Q_vals = np.array([Q_by_gene.get(g, np.nan) for g in reduced_genes], dtype=float)
+    risk_vals = np.array([risk_by_gene.get(g, np.nan) for g in reduced_genes], dtype=float)
+
+    if np.isnan(Q_vals).any() or np.isnan(risk_vals).any():
+        return {"watch_gene": watch_gene, "leave_one_out_n": len(reduced_genes),
+                "leave_one_out_rho": np.nan, "leave_one_out_p_exact": np.nan,
+                "outcome": "not_estimable", "carried_by_single_gene": False}
+
+    rho, p_exact, _ = spearman_exact_permutation(Q_vals, risk_vals)
+    if rho <= 0:
+        outcome = "carried_by_single_gene"
+    elif p_exact <= p_gate:
+        outcome = "survives"
+    else:
+        outcome = "gene_sensitive_open"
+    return {
+        "watch_gene": watch_gene, "leave_one_out_n": len(reduced_genes),
+        "leave_one_out_rho": rho, "leave_one_out_p_exact": p_exact,
+        "outcome": outcome, "carried_by_single_gene": outcome == "carried_by_single_gene",
+    }
+
+
 def primary_test_with_single_gene_check(
     Q_by_gene: dict[str, float],
     risk_by_gene: dict[str, float],
@@ -240,45 +320,14 @@ def primary_test_with_single_gene_check(
     watch_gene: str,
     rho_gate: float = 0.70,
     p_gate: float = 0.05,
-    single_gene_floor: float = 0.60,
 ) -> dict:
-    """The primary test PLUS the leave-one-gene-out amendment registered
-    2026-09-23 (before the real number existed, human ruling,
-    s100-isp-execution-20260922): of the eight LUAD-eligible non-anchor
-    genes, exactly one -- S100A2 -- is ambient-flagged; if the other seven
-    cluster together in ambient risk, the rho is decided by where that one
-    gene lands, "a single comparison wearing the clothes of a rank
-    correlation." This recomputes the primary Spearman rho with
-    `watch_gene` removed (rho only, via the cheap spearman_rho() -- same
-    convention as the LOO-control-out / bootstrap loops, not the exact
-    permutation p, since only rho is the registered check here) and is
-    reported ALWAYS, not only on request.
-
-    If the full-panel primary test passes (gate_pass=True) but the
-    leave-`watch_gene`-out rho falls below `single_gene_floor` (0.60 --
-    the same floor as leave-one-control-out, not a new number chosen for
-    this situation), the result is `carried_by_single_gene=True` and MUST
-    NOT be stated as an ambient-risk association across the panel -- it may
-    only be reported as a `watch_gene`-specific finding.
+    """primary_test() plus leave_one_gene_out_check(), merged into one
+    result -- convenience wrapper for callers that want both in one call.
+    See leave_one_gene_out_check()'s docstring for the three-way outcome.
     """
     full = primary_test(Q_by_gene, risk_by_gene, non_anchor_genes, rho_gate=rho_gate, p_gate=p_gate)
-
-    reduced_genes = [g for g in non_anchor_genes if g != watch_gene]
-    Q_vals = np.array([Q_by_gene.get(g, np.nan) for g in reduced_genes], dtype=float)
-    risk_vals = np.array([risk_by_gene.get(g, np.nan) for g in reduced_genes], dtype=float)
-    leave_out_rho = np.nan if (np.isnan(Q_vals).any() or np.isnan(risk_vals).any()) else spearman_rho(Q_vals, risk_vals)
-
-    carried_by_single_gene = bool(
-        full["gate_pass"] and (np.isnan(leave_out_rho) or leave_out_rho < single_gene_floor)
-    )
-    return {
-        **full,
-        "watch_gene": watch_gene,
-        "leave_one_out_n": len(reduced_genes),
-        "leave_one_out_rho": leave_out_rho,
-        "single_gene_floor": single_gene_floor,
-        "carried_by_single_gene": carried_by_single_gene,
-    }
+    loo = leave_one_gene_out_check(Q_by_gene, risk_by_gene, non_anchor_genes, watch_gene, p_gate=p_gate)
+    return {**full, **loo}
 
 
 # ---------------------------------------------------------------------------

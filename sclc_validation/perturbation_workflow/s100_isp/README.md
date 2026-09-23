@@ -86,13 +86,29 @@ summary here:
    circulated -- at n=8 (unlike n=10) the p<=0.05 condition is tighter
    than the rho>=0.70 gate over part of its range. The registered gate
    itself does not change; the arithmetic offered in support of it did.
-5. **Leave-one-gene-out registered before the number exists**: if the
-   full 8-gene primary rho passes but dropping `S100A2` alone drops rho
-   below 0.60, the result is "carried by a single gene," not a panel-wide
-   association. `ambient_stats.primary_test_with_single_gene_check()`.
+5. **Leave-one-gene-out registered before the number exists.**
+   **Corrected same day (Amendment 3):** the first floor (0.60, borrowed
+   from leave-one-control-out) was wrong -- n=7 is a different null, not
+   the same n as leave-one-control-out. A first replacement (0.75) was
+   also wrong: Spearman's rho at n=7 is discrete and 0.75 falls in a gap
+   between attainable values (its own exact p is 0.066, which fails). The
+   correct three-way rule, evaluated two-sided at the real n=7:
+   `rho >= 0.785714 AND p<=0.05` -> "survives"; `0 < rho` but `p>0.05` ->
+   "gene_sensitive_open" (no claim either way); `rho <= 0` -> "carried by
+   a single gene." `ambient_stats.leave_one_gene_out_check()` /
+   `primary_test_with_single_gene_check()`.
 
 CPU precheck (mandatory before GPU, done here, no ts1 needed -- the
 ambient-risk table already exists locally): the eight LUAD-eligible
 non-anchor genes' `ambient_risk` values are strongly bimodal (four near
 zero, four at 0.74-0.96). See the amendment for the full table and why
 this is a different situation from the one that dropped SCLC.
+
+**Lesson worth keeping (Amendment 3):** a critical value for a discrete
+statistic (small-n Spearman rho) must come from scanning attainable
+statistic values for the first whose own exact p clears the threshold --
+never from indexing a sorted null at an approximate quantile position,
+which can land inside a gap and silently pick the wrong side of a
+boundary. Two independent numeric errors in one day (Amendment 2's own
+n=8 table, then the leave-one-gene-out floor) both came from that same
+shortcut.
