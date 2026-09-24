@@ -61,3 +61,20 @@ def test_direction_guard_alone_blocks_wrong_direction(monkeypatch):
     r = cg.evaluate(cells({f"d{i}": 0.2 for i in range(12)}))
     assert r["sign_test_p_float"] <= 0.05 and r["donors_below_0.5"] == 12
     assert not r["PASS"]
+
+
+def test_3e_margins_flag_thin_pooled_margin_but_not_decision():
+    r = cg.evaluate(cells({f"d{i}": 0.62 for i in range(12)}))
+    assert r["PASS"] and r["pooled_within_nondet_of_threshold"] and not r["clean_result"]
+
+
+def test_3e_clean_when_far_from_both_thresholds():
+    r = cg.evaluate(cells({f"d{i}": 0.8 for i in range(12)}))
+    assert r["PASS"] and r["n_flippable_donors"] == 0 and r["clean_result"]
+
+
+def test_3e_flippable_donors_can_flip_sign_test():
+    # 7 firm above, 5 flippable just above 0.5: best case 12-0 passes, worst 7-5 does not.
+    donors = {**{f"a{i}": 0.8 for i in range(7)}, **{f"f{i}": 0.53 for i in range(5)}}
+    r = cg.evaluate(cells(donors))
+    assert r["n_flippable_donors"] == 5 and r["sign_test_within_nondet"] and not r["clean_result"]

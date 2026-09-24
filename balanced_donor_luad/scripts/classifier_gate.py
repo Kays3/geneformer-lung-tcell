@@ -51,6 +51,28 @@ def load_fold(work, k):
     return df, rec
 
 
+
+NONDET_BAND = 0.045   # Amendment 3e.2: largest per-donor BA change in the same-seed fold-0 repeat
+
+
+def nondeterminism_margins(pooled, per_donor):
+    """Amendment 3e.2 reporting fields. They never change PASS; they say whether it sat inside the noise."""
+    pooled_within = abs(pooled - GATE_BA) <= NONDET_BAND
+    flippable = per_donor[(per_donor - 0.5).abs() <= NONDET_BAND]
+    firm_pos = int(((per_donor > 0.5) & ~per_donor.index.isin(flippable.index)).sum())
+    firm_neg = int(((per_donor < 0.5) & ~per_donor.index.isin(flippable.index)).sum())
+    nf = len(flippable)
+    worst = (firm_pos, firm_neg + nf)
+    best = (firm_pos + nf, firm_neg)
+    ok = lambda pos, neg: sign_test_two_sided(pos, neg) <= ALPHA and pos > neg
+    sign_within = ok(*worst) != ok(*best)
+    return {"nondet_band": NONDET_BAND, "pooled_within_nondet_of_threshold": bool(pooled_within),
+            "n_flippable_donors": nf,
+            "sign_test_p_worst_case": float(sign_test_two_sided(*worst)),
+            "sign_test_p_best_case": float(sign_test_two_sided(*best)),
+            "sign_test_within_nondet": bool(sign_within),
+            "clean_result": bool(not pooled_within and not sign_within)}
+
 def evaluate(df):
     classes = ["tumor_primary", "normal_adjacent"]
     pooled = balanced_accuracy(df.y_true.to_numpy(), df.y_pred.to_numpy(), classes)
@@ -68,7 +90,7 @@ def evaluate(df):
             "per_fold_balanced_accuracy": {int(k): float(v) for k, v in per_fold.items()},
             "folds_below_chance": [int(k) for k, v in per_fold.items() if v < 0.5],
             "per_donor_balanced_accuracy": {d: float(v) for d, v in per_donor.items()},
-            "PASS": bool(passed)}
+            "PASS": bool(passed), **nondeterminism_margins(pooled, per_donor)}
 
 
 def main():
