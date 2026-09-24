@@ -692,3 +692,11 @@ The probe runs INFERENCE with the SAME fine-tuned fold model files on both hosts
 - **Reading a PASS:** it is reported together with the same-host floor. If both same-host repeats are bitwise identical, the pass is against zero; if not, against that floor.
 
 **Erratum (appended 2026-09-24T18:11:53Z):** the Amendment 3e header says "~18:15Z". The authoritative time is commit b9aafc6 at 2026-09-24T18:08:42Z. The header estimate ran ahead of the clock. No other content is affected.
+
+## Amendment 3f — no donor exclusion on classifier accuracy (appended 2026-09-24T20:50:31Z)
+
+**Registered:** after the classifier gate (PASS, clean; phase4_results/classifier_gate.json at 0fffc96) and BEFORE any ISP output exists. No goal embedding had finished and no ISP call had run. Requested by god.
+
+1. **No accuracy-based exclusion.** No donor is excluded from any Phase 6/7 primary or secondary analysis because of its per-donor held-out classifier balanced accuracy. The donors that enter each gene's test are exactly those set by the eligibility rule already registered (s.3: the gene is present in ≥ 10 of the donor's 100 tumour analysis cells), whatever their per-donor BA.
+2. **The accuracy/effect relation is descriptive only.** For every Panel A and Panel B gene with at least one significant arm, and for the pooled panel-level donor values, the report gives the Spearman correlation across donors between per-donor BA (classifier_gate.json) and the donor's control-adjusted shift, per operation. It also flags the six donors with BA < 0.65 in the per-donor plots. This is a sensitivity observation. It never changes a status, a test, or a donor set.
+3. **Any later exclusion** needs a dated amendment, accepted by god BEFORE the ISP results are unblinded. Any exclusion proposed after results exist is reported as post hoc and is never applied to the primary.
