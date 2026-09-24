@@ -638,3 +638,24 @@ it a rule and not a choice.
 - **Wording, fixed:** `NOT_RUN: eligibility (estimable donors = k < 10)`,
   never "no effect". The claim is "untestable in this cohort", which is a
   statement about presence, not biology.
+
+## AMENDMENT 3d — 2026-09-24T11:11:23Z — a classifier-gate FAILURE is a reportable finding (registered before the gate has a number)
+
+- **Timing:** registered while Phase 4 was still fine-tuning. The gate
+  (`scripts/classifier_gate.py`) had **not** been computed.
+- **If s.2's gate fails** (pooled held-out balanced accuracy < 0.60, or the
+  per-donor sign test not significant in the right direction):
+  - ISP still does not run. The stop stands.
+  - The failure is **reported as a result**, with all gate numbers: pooled
+    and per-fold balanced accuracy, per-donor values, the sign-test counts
+    and p, and tie counts.
+- **Registered interpretation of a failure:** a balanced, within-donor-paired,
+  single-site, study-clean tumour-vs-adjacent-normal T-cell classifier
+  **cannot separate the two states**. Because the design removes the confounds
+  the July classifier had, this is the cleanest statement this programme can
+  make about whether the model reads this contrast.
+- **Bound, stated with it:** the statement is about *this model, cohort and
+  recipe* (Geneformer-V2-316M bf16, 43 donors, one atlas, the fixed recipe).
+  It is **not** a statement about tumour-vs-normal T-cell biology in general.
+- **The same applies to a pass:** it is reported with the same numbers,
+  whichever way the gate goes.
