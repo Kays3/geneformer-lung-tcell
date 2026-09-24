@@ -35,6 +35,11 @@ This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
 21,000 naturally balanced CD4/CD8 T cells, a three-state LUAD/LUSC/normal
 classifier, and an all-gene in silico deletion screen.
 
+**2026-09-24:** three established defects in how the LUAD/LUSC/normal classes
+above were constructed — see
+[`current_workflow/METHODS.md`, "Class-construction defects"](current_workflow/METHODS.md#class-construction-defects-established-2026-09-24)
+for the record.
+
 **Recent highlight:** the [SCLC validation program](#recent-highlight-sclc-validation-program)
 extends the workflow to small cell lung cancer — feasibility audit, an
 SCLC/LUAD/normal classifier with a targeted perturbation panel, and orthogonal
@@ -45,6 +50,10 @@ spatial validation.
 | Dataset | Donor control | Test performance | Perturbation |
 |---|---|---|---|
 | 7,000 LUAD + 7,000 LUSC + 7,000 normal; no oversampling | No donor crosses train/eval/test | Accuracy **0.7834**; macro F1 **0.7577** | **2,937,776** held-out cell-gene deletions complete; 6/6 comparisons generated |
+
+See [`current_workflow/METHODS.md`, "Class-construction defects"](current_workflow/METHODS.md#class-construction-defects-established-2026-09-24)
+for three established defects in how the LUAD/LUSC/normal classes above were
+constructed, established 2026-09-24.
 
 **Workflow:** atlas selection → donor-disjoint split → Geneformer V2 tokenization
 → fine-tuning → held-out evaluation → all-gene deletion.
