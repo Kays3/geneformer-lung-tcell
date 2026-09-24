@@ -567,3 +567,74 @@ the 10x LUSC shortfall (9 donors) used structural fields only.
   - fine-tunes about 3.05 h;
   - ISP about 27.8 h;
   - embeddings about 0.5 h.
+
+## AMENDMENT 3c — 2026-09-24T11:07:38Z — control strata rule and three registered limitations (accepted by god; message mtime-ordered before this commit)
+
+### 3c.1 Strata rule
+
+The rule is fixed **before any per-gene statistic of the held-out cells
+existed**. It was proposed to god in that state. That timing is what makes
+it a rule and not a choice.
+
+- **Gene stats:** `detect_frac` and median 0-based token rank over every
+  donor's 100 held-out **tumour** analysis cells (43 × 100 = 4,300 cells),
+  via `s100_isp.matched_controls.median_token_rank_and_detection`
+  (per-source-state).
+- **Grouping, per family, over ELIGIBLE panel genes only:**
+  - sort by (log2 detect, rank percentile);
+  - add the next gene to the open stratum only if it is within 0.5 log2
+    and 5 rank-percentile points of ALL current members;
+  - otherwise open a new stratum;
+  - K is set by the data.
+- **Controls:** 20 per stratum via `build_matched_control_table` (seed
+  20260924), excluding every panel gene and every anchor.
+  - Fewer than 20 candidates means `NOT_ESTIMABLE_CONTROLS`, never widened.
+  - A control drawn by two strata is run once.
+- **Replaces** s.3's "six strata / ~120 controls", which was an estimate,
+  not a rule.
+- **Per-gene matching (20 controls per gene) is rejected.** Stratum controls
+  already lie within tolerance of every member, so per-gene matching would
+  buy independence, not exactness, at roughly 170 extra GPU-h.
+- **Applied result** (committed `controls/pre_gpu_*`):
+  - 19 strata: Panel A 2, Panel B 17. All are built over eligible genes
+    only; ineligible genes are excluded before grouping.
+  - 1 short: A01, BTG1, so `NOT_ESTIMABLE_CONTROLS`.
+  - 318 unique controls, and 353 genes to run.
+
+### 3c.2 Limitation: shared-control dependence affects the panel-level secondary only
+
+- Genes in one stratum share their 20 controls, so their control-adjusted
+  values are **not independent**. The panel-level sign test (s.6) assumes
+  independent signs, so its p-value is reported with this caveat.
+- **The per-gene primary (s.5a) is unaffected,** because it is within-gene
+  across donors.
+- This is registered, not repaired. Repairing it (per-gene controls) is not
+  proportionate for a secondary.
+
+### 3c.3 Limitation: the ambient axis cannot separate contamination from ubiquity
+
+- The diagnostic scores genes on detection-based features. **Ambient
+  contamination and ubiquitous expression both produce broad detection.**
+- The visible case is EEF1G (ambient_risk 0.999), a translation elongation
+  factor expressed in every cell type.
+- **Its flag stands:** the diagnostic is registered and is not adjudicated
+  gene by gene.
+- **Meaning of the label:** `AMBIENT_FLAGGED` means *"resembles known
+  contaminants on a detection axis"*, **not** *"is contamination"*. Every
+  report of the label carries that meaning.
+
+### 3c.4 Limitation: why 13 of 15 Panel A genes are NOT_RUN has two readings, and the data cannot choose
+
+- **The finding:** 13 Panel A genes are present (>= 10 of 100 cells) in the
+  tumour T cells of only 1–8 of 43 donors.
+- **Two explanations, not separable here:**
+  - (a) **ambient RNA**, which is sporadic across cells and donors;
+  - (b) **cohort composition**: July's LUAD class drew heavily on
+    non-primary tissue, so a gene present in T cells of metastatic or
+    adjacent-normal tissue can be genuinely absent from primary-tumour T
+    cells. This cohort is pure primary tumour.
+- **What both readings imply:** those genes were not measuring primary-tumour
+  T-cell biology. The report names both readings and picks neither.
+- **Wording, fixed:** `NOT_RUN: eligibility (estimable donors = k < 10)`,
+  never "no effect". The claim is "untestable in this cohort", which is a
+  statement about presence, not biology.
