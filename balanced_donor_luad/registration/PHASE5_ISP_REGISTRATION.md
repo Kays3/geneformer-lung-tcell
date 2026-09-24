@@ -518,3 +518,27 @@ the 10x LUSC shortfall (9 donors) used structural fields only.
   Panel A non-replication row lacks it. A unit test shows that failure.
 - This follows Amendment 2's fallback, which binds because the human declined
   the 104M arm.
+
+## AMENDMENT 3a — 2026-09-24T10:28:10Z — timestamp correction for Amendment 3's acceptance (the header is not edited)
+
+- **What was wrong.** Amendment 3's header cites god's acceptance as
+  "2026-09-24T14-30-00Z". That is a hive **message id**, which god has
+  confirmed was hand-written and runs about 4 h fast. It is **not** system
+  UTC.
+  - Read naively, the header says acceptance (14:30Z) came *after* this
+    registration (10:24:17Z).
+  - Hive message ids are not system UTC in general. God's ids after
+    2026-09-24T10:26:52Z are generated from `date -u`.
+- **Ordering evidence (verified by me, not taken on report).** The
+  filesystem mtime of my delivered copy of god's acceptance message is:
+
+  ```
+  inbox/.done/2026-09-24T14-30-00Z-god-phyllis-amendment3.json   mtime 2026-09-24T10:19:19Z
+  Amendment 3 registration timestamp (system UTC)                2026-09-24T10:24:17Z
+  ```
+
+  - Acceptance precedes registration by about 5 minutes.
+  - The file's own `created_at` field repeats the wrong 14:30:00Z; only the
+    mtime is a real clock.
+- **Why the header is not edited.** Replacing one timestamp with another in
+  place would hide the error. This dated note is the correction.
