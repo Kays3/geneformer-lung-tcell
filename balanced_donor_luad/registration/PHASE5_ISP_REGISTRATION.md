@@ -702,3 +702,5 @@ The probe runs INFERENCE with the SAME fine-tuned fold model files on both hosts
 3. **Any later exclusion** needs a dated amendment, accepted by god BEFORE the ISP results are unblinded. Any exclusion proposed after results exist is reported as post hoc and is never applied to the primary.
 
 **Erratum to 3f (appended 2026-09-24T20:50:47Z):** "No goal embedding had finished" is wrong. At commit time (2026-09-24T20:50:32Z), fold 0's global and per-donor goal embeddings already existed on thinkstation1. The claim that matters is unaffected: no ISP call had run and no ISP output existed. Goal embeddings contain no gene-perturbation result.
+
+**Precision to 3f.2 (appended 2026-09-24T20:52:10Z):** the gene-level correlation is conditioned on significance and describes those genes only. The panel-level donor correlation is the unconditioned quantity. No ISP output existed at this append.
