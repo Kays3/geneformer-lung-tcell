@@ -542,3 +542,28 @@ the 10x LUSC shortfall (9 donors) used structural fields only.
     mtime is a real clock.
 - **Why the header is not edited.** Replacing one timestamp with another in
   place would hide the error. This dated note is the correction.
+
+## AMENDMENT 3b — 2026-09-24T10:51:53Z — design settled as 2-class by the human (no numbers exist)
+
+- **The LUSC survey** (provenance/PHASE1B_LUSC_SURVEY.md) found the 3-class
+  outcome depends on how F3-LUSC's phrase "same chemistry" is read:
+  - by chemistry family: 12 LUSC donors, passing exactly at the floor;
+  - by exact version: 10, failing.
+  - Neither reading was chosen by me.
+- **The human chose "Go 2-class (registered)"** on 2026-09-24, in session.
+  Therefore:
+  - The design is the **registered 2-class LUAD tumour vs same-donor
+    adjacent normal**: 43 paired donors, 10x, as built in Phase 3.
+  - s.2's classifier gate applies. Amendment 3.2–3.4 (3-class target, LUSC
+    rule, 3-class gate) are **not used**.
+  - No row, figure or claim involves LUSC. The `design_warrant` field is
+    therefore always "within-donor paired". The field and its validator stay
+    in place.
+  - Unchanged from Amendment 3: 316M only (no 104M arm; Amendment 2's
+    fallback binds, with the `claim_qualifier` field), k = 5 cross-fitting,
+    host split by gene, the equivalence gate before and after, and cost
+    metered with an estimate and an account.
+- **Estimate** (upper bound, measured 316M bf16 rates): about 31 GPU-h.
+  - fine-tunes about 3.05 h;
+  - ISP about 27.8 h;
+  - embeddings about 0.5 h.
