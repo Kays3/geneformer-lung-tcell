@@ -86,3 +86,5 @@ prevent. It goes to god and the human.
     label mapping is approximate.
 - **Version reading:** the stop rule applies. The human is asked before any
   relaxation, and the default is the registered 2-class run, unchanged.
+
+- **Chemistry ruling (god, 2026-09-24), resolved but NOT operative.** 'Same chemistry' in F3-LUSC means the EXACT VERSION, not the 3'/5' family. The decisive case is Lambrechts: its LUSC donors are on 3' v1 while its LUAD donors are all on 3' v2, so histology is confounded with chemistry version inside one study. The ruling was made with the counts already visible (disclosed). It was NOT the reason the human chose 2-class. Timing, checked by file mtimes: the ruling reached my inbox at 2026-09-24T10:48:14Z, before the human's choice was recorded (Amendment 3b, 10:51:53Z). But it was unread, and it was never shown to the human, who chose among 2-class / 3-class-family / wait-for-god without knowing the ruling.

@@ -25,3 +25,20 @@ that cannot be listed, such as driver and numerical effects.
   not start.
 - **Not used:** `/srv/lab/geneformer`, where the 316M file is an LFS pointer,
   and `tools/lab_env.sh` / `paths.env`.
+
+## Addendum — 2026-09-24: thinkstation2 Geneformer package data files
+
+- **What was wrong:** the fresh clone was made with `GIT_LFS_SKIP_SMUDGE=1`,
+  and only the 316M weights were pulled. So `geneformer/*.pkl` (the token,
+  gene-median, Ensembl-mapping and gene-name dictionaries) were git-LFS
+  **pointers**.
+- **How it was found:** loading one raised `UnpicklingError: invalid load
+  key 'v'` during pre-GPU eligibility. **No GPU run had used thinkstation2.**
+- **Fix:** `git lfs pull --include "geneformer/**"`.
+- **Verified byte-identical to thinkstation1** (sha256 prefixes):
+  - `token_dictionary_gc104M` 67c445f4
+  - `gene_median_dictionary_gc104M` a51c53f6
+  - `ensembl_mapping_dict_gc104M` 0819bcbd
+  - `gene_name_id_dict_gc104M` fabfa0c2
+- **What the earlier "identical" check missed:** it covered the weights,
+  packages and patch, but not the package's own LFS data files.
