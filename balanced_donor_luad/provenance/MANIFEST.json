@@ -1,0 +1,28 @@
+{
+ "file": "./33165751-ae33-4a65-94ee-52d9bc38f97e.h5ad",
+ "dataset_version_id": "33165751-ae33-4a65-94ee-52d9bc38f97e",
+ "source_url": "https://datasets.cellxgene.cziscience.com/33165751-ae33-4a65-94ee-52d9bc38f97e.h5ad",
+ "source_headers": {
+  "content-length": "17616543376",
+  "etag": "d73d4db388702461dec43af6542e23fa-2101",
+  "last-modified": "Wed, 10 Jun 2026 05:59:34 GMT",
+  "x-amz-version-id": "LUNQgKS27q2XFawhTx6LnQVKOoL5gmzw"
+ },
+ "size_bytes": 17616543376,
+ "sha256": "f0f7f43413bfe088281ac68487ad4bd73647d9057280da202a82fabce9937cb9",
+ "multipart_etag_recomputed": "d73d4db388702461dec43af6542e23fa-2101",
+ "uns_title": "The single-cell lung cancer atlas (LuCA) -- extended atlas",
+ "n_cells": 1283972,
+ "n_genes": 17764,
+ "n_paired_donors": 43,
+ "checks": {
+  "size_matches_content_length": true,
+  "multipart_etag_matches_source": true,
+  "part_count_consistent": true,
+  "title_is_extended_atlas": true,
+  "raw_counts_present": true,
+  "raw_counts_integer_valued_first_1M": true,
+  "paired_table_equals_phase1": true
+ },
+ "all_passed": true
+}
