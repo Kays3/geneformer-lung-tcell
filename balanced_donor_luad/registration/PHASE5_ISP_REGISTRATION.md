@@ -659,3 +659,34 @@ it a rule and not a choice.
   It is **not** a statement about tumour-vs-normal T-cell biology in general.
 - **The same applies to a pass:** it is reported with the same numbers,
   whichever way the gate goes.
+
+## Amendment 3e — reading rules against measured nondeterminism (2026-09-24, ~18:15Z)
+
+**Registered before:** the classifier gate has been computed (only fold 0 of 5 exists), and before any ISP or equivalence-probe run. It changes no threshold and no decision. It fixes how a result near a threshold, or a probe failure, is read. The trigger is the same-seed fold-0 comparison in `provenance/PHASE4_RUN_NOTES.md`.
+
+### 3e.1 Measured reference (fine-tuning, same host, code, seed and data)
+Attempt 1 vs attempt 2 fold 0, on 1,800 held-out cells:
+- label agreement 95.9%;
+- |Δ logit| median 0.47, p99 1.76, max 2.89;
+- per-donor balanced-accuracy Δ from −0.045 to +0.015;
+- fold-pooled balanced-accuracy Δ +0.0017.
+
+This is ONE repeat of ONE fold (9 donors). It is an observed magnitude, not a bound.
+
+### 3e.2 Classifier gate near its threshold
+The registered gate and its decision are unchanged: attempt 2 only, pooled BA ≥ 0.60, AND an exact two-sided sign test p ≤ 0.05 with more donors above 0.5 than below. The PASS/FAIL outcome is exactly what that rule gives. The report must ALSO state:
+- (a) **Pooled BA margin.** If the pooled BA lies within ±0.045 of 0.60 (0.555 to 0.645), the result is reported as "PASS/FAIL, within run-to-run nondeterminism of the threshold". 0.045 is the largest per-donor change observed. It is deliberately more conservative than the pooled change (0.0017).
+- (b) **Sign-test margin.** Donors whose balanced accuracy is within 0.045 of 0.5 are "flippable". The report gives the sign-test p in two cases: all flippable donors moved against the gate, and all moved in its favour. If the gate decision differs between the two, the sign-test component is reported as "within run-to-run nondeterminism".
+- (c) If neither (a) nor (b) applies, the result is reported as a clean PASS or FAIL.
+
+In every case the decision (proceed or stop, Amendment 3d) follows the registered rule, not the band.
+
+### 3e.3 Cross-host equivalence probe: which floor applies
+The probe runs INFERENCE with the SAME fine-tuned fold model files on both hosts (copied, sha256-verified). Training nondeterminism (3e.1) therefore does not enter it, and 3e.1 is NOT its reference band. Its floor is same-host INFERENCE repeatability. That is measured alongside, not assumed:
+- **Runs:** B2M (ENSG00000166710), fold 1's first donor, both operations. ts1 twice, ts2 twice, same inputs, into separate output folders.
+- **Registered criterion, unchanged (Amendment 3):** ts1-vs-ts2 per-cell shifts, per operation, max|Δ| ≤ 1e-3 AND Spearman rho ≥ 0.999. PASS or FAIL is decided by this alone. A FAIL stops Phase 6 and goes to god (and the human).
+- **Reported alongside, per operation:** the same-host repeat max|Δ| and rho on each host.
+- **Reading a FAIL:**
+  - It is attributed to the HOST only if the cross-host max|Δ| exceeds the larger same-host repeat max|Δ|.
+  - Otherwise it is reported as "inference nondeterminism exceeds the registered tolerance on a single host". That is a different finding, with a different remedy. Neither reading permits proceeding without a decision.
+- **Reading a PASS:** it is reported together with the same-host floor. If both same-host repeats are bitwise identical, the pass is against zero; if not, against that floor.
