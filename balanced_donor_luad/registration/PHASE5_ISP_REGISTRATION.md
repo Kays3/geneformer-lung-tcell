@@ -381,3 +381,140 @@ arm.
 - **Directive note:** this arm uses 104M, not 316M. Whether "all future work
   use bf16 model geneformer 316M" allows a same-model control is the human's
   call. God is raising it with them.
+
+## AMENDMENT 3 — 2026-09-24T10:24:17Z — human directives, 3-class target, LUSC screening rule, cross-host gate (accepted by god 2026-09-24T14-30-00Z with four additions, incorporated; host split chosen by the human)
+
+This amendment is registered before any Phase 6 number exists, and before
+any LUSC candidate has been screened. The read-only LuCA check that showed
+the 10x LUSC shortfall (9 donors) used structural fields only.
+
+### 3.1 Human directives (2026-09-24, verbatim, given in my session)
+
+- **"do only 316M model avoid 104M".**
+  - The conditional 104M Panel A control arm of Amendment 2 **will not be
+    run**.
+  - Amendment 2's pre-registered fallback applies. Any Panel A
+    non-replication is reported **only** as "non-replication on 316M;
+    model-vs-design attribution not established".
+- **Host use.** The directive was "use thinkstation1 for deletion and
+  thinkstation2 for overexpression". God pointed out that an operation-based
+  split confounds host with the delete/overexpress axis, which is exactly what
+  the registered dose-concordance test compares. Asked to choose, the human
+  chose **split by gene** (2026-09-24).
+  - **Each host runs BOTH operations** for its own genes.
+  - The concordance comparison is therefore always within one host, so a host
+    difference cannot enter it.
+  - **Assignment (deterministic, fixed now):**
+    - within each family (Panel A, Panel B, each control stratum), genes are
+      sorted by Ensembl ID;
+    - they alternate thinkstation1, thinkstation2, thinkstation1, …, starting
+      with thinkstation1;
+    - so each host gets half of each family, within one gene.
+  - **Stack:** both hosts are identical: Geneformer f45a6c7 + bf16 export
+    patch, 316M weights sha `965ceccea81953d3…`, the same `uv.lock`, and
+    identical sorted freeze hashes (provenance/ENVIRONMENTS.md). The drivers
+    differ (595.84 vs 580.173.02).
+- **"no hard limit for GPU, use at will".**
+  - The design is **k = 5 donor cross-fitting** (the option registered
+    earlier). s.7 S3 is active.
+  - GPU hours are metered and reported. They are not a stop. Nothing is
+    dropped for cost.
+- **"Three classes like July"** (chosen by the human), with a search beyond
+  LuCA for LUSC. See 3.2–3.4.
+
+### 3.2 Target design: 3 classes
+
+- **Classes:**
+  1. LUAD primary tumour;
+  2. LUSC primary tumour;
+  3. adjacent-normal tissue.
+- **Unchanged:** ISP start state = LUAD tumour; goal = the same donor's own
+  adjacent-normal centroid (s.3).
+- **LUSC centroid:** computed from training-fold LUSC donors and recorded as
+  the alternative state, as in July.
+- **Panels, tests, eligibility, outcome rows and the ambient rules:** all
+  unchanged.
+
+### 3.3 LUSC screening rule (fixed before screening)
+
+- **Criteria:** Phase 0 A1–F6 unchanged, applied to LUSC tumour donors
+  (>= 100 T cells, sites per F2, public raw counts per F5–F6). Plus:
+- **F3-LUSC.** LUAD vs LUSC cannot be paired within a donor, so:
+  - every study contributing LUSC donors must also contribute qualifying
+    LUAD tumour donors on the same chemistry;
+  - otherwise the LUSC class is a study label, and that study is excluded;
+  - adjacent-normal donors for the normal class must come from studies that
+    also contribute tumour donors (the existing F3).
+- **F4** is applied across all three classes. Every chemistry present must
+  appear in every class.
+- **A1-LUSC:** >= 12 qualifying LUSC tumour donors (16 preferred) across the
+  studies that pass F3-LUSC and F4.
+- **Stop rule:** if fewer than 12 pass, the result is "3-class not feasible
+  under the registered rule".
+  - The human is asked before any relaxation.
+  - The default is the registered 2-class design, run unchanged.
+- **Recorded per candidate:** donors per histology per tissue with >= 100 T
+  cells, chemistry, LUAD overlap by study, download size, and the first
+  criterion failed. Nothing is looked at beyond structural fields.
+
+### 3.4 3-class classifier gate (replaces s.2's numbers only if 3-class goes ahead)
+
+- **Balanced accuracy:** held-out, pooled across folds, >= 0.60 (chance
+  0.333).
+- **Per-donor test:** an exact two-sided sign test over held-out donors,
+  where each donor's balanced accuracy over its own true class(es) exceeds
+  1/3, with p <= 0.05.
+- **If it fails:** STOP.
+
+### 3.5 Cross-host equivalence gate (before AND after Phase 6)
+
+- **Probe:** one fixed (gene, donor), with both operations run on both hosts,
+  using identical sha256-verified fold models and centroids. The probe gene
+  is B2M (ENSG00000166710, in neither panel), on the first donor by sorted ID
+  in fold 1.
+- **Pass:** for each operation, per-cell shift max |Δ| <= 1e-3 **and**
+  Spearman rho across cells >= 0.999. Two measures are used because rho
+  survives a constant offset and the absolute bound does not.
+- **When:** run **before Phase 6** (a failure means STOP: no Phase 6) and
+  **again at the end** on the same probe, reporting both. The pair bounds
+  drift across a long run.
+- **If the end gate fails:**
+  - pooled results are still reported, but every outcome row carries
+    `host_drift: true`;
+  - per-host outcome rows are reported alongside;
+  - no pooled claim is made without them.
+- Because the split is by gene, the gate protects **pooling across genes**.
+  It does not protect concordance, which cannot be host-confounded.
+
+### 3.6 The LUSC asymmetry (registered before any number)
+
+> **LUAD↔normal remains within-donor paired. Any contrast involving LUSC is
+> between-donor, guarded by study overlap on matched chemistry. Claims
+> involving LUSC carry weaker warrant than claims about LUAD↔normal, and are
+> to be reported as such.**
+
+- Every outcome row and figure involving LUSC carries the field
+  `design_warrant: "between-donor (study-overlap guarded)"`.
+- LUAD↔normal rows carry `design_warrant: "within-donor paired"`.
+- A table or figure mixing the two must show the field.
+
+### 3.7 Cost: no cap, but an estimate and an account
+
+- **Before Phase 6:** a **3-class k = 5 GPU-hour estimate**, from the measured
+  316M bf16 rates and the actual LUSC cell counts, is produced and sent to
+  god and the human.
+- **During the run:** GPU-hours are metered, with `nvidia-smi` sampled every
+  60 s on both hosts.
+- **At close:** actual vs estimate is reported per stage and per host.
+- The absence of a cap never licenses dropping anything, and it never
+  licenses skipping the account.
+
+### 3.8 Panel A qualifier is a field, not prose
+
+- Every Panel A outcome row whose status is `OPEN`, `DELETION_ONLY`,
+  `DOSE_INCOHERENT` or `REVERSED` carries the mandatory field:
+  - `claim_qualifier: "non-replication on 316M; model-vs-design attribution not established"`.
+- The row renderer (outcome table, figures, slides, RESULTS.md) **fails** if a
+  Panel A non-replication row lacks it. A unit test shows that failure.
+- This follows Amendment 2's fallback, which binds because the human declined
+  the 104M arm.
