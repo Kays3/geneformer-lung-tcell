@@ -19,9 +19,31 @@
 _LAB_ROOT="${LAB_ROOT:-/srv/lab}"
 _USER_ENV="${LAB_ENV_FILE:-$HOME/.config/geneformer-lung-tcell/paths.env}"
 
+# The variables this file is responsible for resolving.
+_LAB_VARS=(SCLC_PERTURBATION_ROOT TARGETED_PANEL_RUN_DIR HTAN_H5AD
+           GSE263196_RAW_DIR GENEFORMER_TOKEN_DICT GENEFORMER_MODEL_DIR PYTHON_BIN)
+
+# Remember which of them the caller set, BEFORE sourcing the per-machine file.
+# The resolution order above promises that an explicit environment variable
+# wins, but a paths.env written with a plain assignment (PYTHON_BIN=...) simply
+# overwrites one -- silently, so an override appears to be ignored for no
+# reason. Enforcing the order here makes the promise true no matter how any
+# machine's paths.env is written, including the ones that already exist and the
+# ones nobody is going to edit.
+declare -A _LAB_PRESET=()
+for _lab_v in "${_LAB_VARS[@]}"; do
+    [[ -n "${!_lab_v+set}" ]] && _LAB_PRESET["$_lab_v"]="${!_lab_v}"
+done
+
 # Per-machine overrides, if present.
 # shellcheck disable=SC1090
 [[ -r "$_USER_ENV" ]] && source "$_USER_ENV"
+
+# Restore anything the caller set that the per-machine file overwrote.
+for _lab_v in "${!_LAB_PRESET[@]}"; do
+    printf -v "$_lab_v" '%s' "${_LAB_PRESET[$_lab_v]}"
+done
+unset _lab_v _LAB_PRESET _LAB_VARS
 
 # Defaults only fill variables the caller has not already set.
 : "${SCLC_PERTURBATION_ROOT:=$_LAB_ROOT/KD/sclc_luad_normal_htan_heldout_allgene_perturbation}"
