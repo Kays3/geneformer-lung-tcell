@@ -217,3 +217,121 @@ Final reporting should require:
 5. sensitivity analysis excluding ribosomal and other rank-dominant genes;
 6. pathway-level interpretation of robust genes;
 7. targeted reruns of top candidates if further validation is needed.
+
+## Class-construction defects (established 2026-09-24)
+
+Three defects in how the LUAD/LUSC/normal classes in §1 were built, found
+while auditing a different classifier for a study confound and then checked
+back against this one. Each is established by direct verification against
+the actual data this experiment used, not by inference from the selection
+rule alone. This is a record of what was found and how; it is not a claim
+about what it does to the numbers in §5–§8 (see "What this does not cover"
+below).
+
+### 1. Study confound (normal vs. tumor)
+
+No study in the source atlas contributes both a normal-labelled and a
+tumor-labelled (LUAD or LUSC) T cell. Verified directly on the whole source
+atlas (`disease` in `normal`/`lung adenocarcinoma`/`squamous cell lung
+carcinoma`, no cell-type filter): 265 donors across 18 studies, disease label
+is constant within every donor (0/265 donors carry more than one disease
+label) and study is constant within every donor (0/265 donors span more than
+one study), and of the 18 studies, 0 contribute cells to both a normal label
+and a tumor label. The `normal` class and the tumor classes are therefore
+drawn from entirely disjoint sets of studies. The `LUAD`-vs-`LUSC` boundary
+is **not** subject to this defect: every one of LUSC's contributing studies
+is also a LUAD study.
+
+### 2. Class definition mixes tissue origin, not just disease label
+
+§1's selection criteria filter on `disease`, `cell_type_major`, donor/count
+validity, and singlet status — there is no `origin` term. Confirmed against
+the actual 21,000 cells that trained the classifier, not the selection rule
+in the abstract: the pre-tokenization subset (`KD/tcell_luad_lusc_normal_10k_from_atlas/outputs/balanced_lusc_max_7000_per_disease_tcells.h5ad`)
+and the tokenized training dataset (§3) were joined on `cell_id`; for both
+the LUAD and LUSC classes, all 7,000 training `cell_id` values matched
+exactly, 7000/7000, zero mismatches — an exact-identity join, not a
+resemblance check.
+
+**LUAD (7,000 cells), by `origin`:**
+
+| origin | cells | % |
+|---|---:|---:|
+| tumor_primary | 2,950 | 42.1% |
+| tumor_metastasis | 1,920 | 27.4% |
+| normal_adjacent | 1,190 | 17.0% |
+| normal | 940 | 13.4% |
+
+58% of the LUAD class is not primary tumor tissue.
+
+**LUSC (7,000 cells), by `origin`:**
+
+| origin | cells | % |
+|---|---:|---:|
+| tumor_primary | 4,990 | 71.3% |
+| normal_adjacent | 2,010 | 28.7% |
+
+28.7% of the LUSC class is not primary tumor tissue — a narrower mix than
+LUAD (two origins, not four), but not clean.
+
+**Normal (7,000 cells), by `origin`:**
+
+| origin | cells | % |
+|---|---:|---:|
+| normal | 6,638 | 94.8% |
+| normal_adjacent | 362 | 5.2% |
+
+The normal class is not 100% `origin == normal` either.
+
+**Bounded range, not a point estimate.** The atlas carries a second origin
+field, `origin_fine`, which mostly agrees with `origin` but not always: for
+LUAD, `origin_fine` reclassifies 243 of the `normal_adjacent`-per-`origin`
+cells as plain `normal`, and for the normal class it reclassifies 345 cells
+the same way. LUSC shows no such disagreement. The two fields are not
+reconciled here — which one is correct is not established, only that they
+disagree. Reported as a range: the LUAD class's `normal`-origin content is
+**13.4% under `origin`, 16.9% under `origin_fine`**; the normal class's
+`origin == normal` purity is **94.8% under `origin`, 99.8% under
+`origin_fine`**.
+
+### 3. Asymmetric pollution between the tumor classes
+
+`tumor_metastasis` and `normal` origin appear in the LUAD class (27.4% and
+13.4% respectively, §2 above) and are entirely absent from the LUSC class
+(0.0% both). Within the LUAD-vs-LUSC contrast specifically, this means
+metastatic tissue origin is a perfect predictor of the LUAD label, covering
+27.4% of that class, independent of any adenocarcinoma-versus-squamous
+biology.
+
+### How defects 1 and 2 interlock
+
+Disease label is donor-constant (§1), so the 940 `origin == normal` cells
+inside the LUAD class (§2) are LUAD **patients'** normal-origin tissue, not
+healthy donors' tissue. The normal class is 94.8–99.8% `origin == normal`
+(§2). So for that ~13–17% slice of the LUAD class, the contrast the
+classifier is actually drawing on is: normal-origin lung tissue from a
+lung-cancer patient, versus normal-origin lung tissue from a person without
+one — and because disease status and study identity are perfectly
+confounded (§1), the only thing observable in the data that predicts which
+side of that contrast a cell falls on is which study it came from.
+
+### What this does not cover
+
+- **The SCLC/LUAD/normal classifier** (`sclc_validation/perturbation_workflow/`)
+  is built from a different atlas (a single-site HTAN/CELLxGENE object, HTA8)
+  and is not covered by any finding above. It carries its own separately
+  documented tissue-of-origin skew.
+- **Downstream impact is not quantified.** Nothing above measures how much,
+  if at all, these defects changed the fine-tuning result in §4–§5 or the
+  perturbation results in §6–§8. This section records defects in class
+  construction; it does not establish that the published numbers are wrong.
+- **The LUAD-vs-LUSC boundary is not study-confounded** (§1) — every LUSC
+  study is also a LUAD study. That is true and separate from defect 3: a
+  boundary can be clean on study identity and still carry a perfect
+  tissue-origin shortcut.
+
+Verification for all of the above: obs-level metadata only, read via
+`h5py`/`anndata` in backed mode against the source atlas and the two
+artifacts named in §2 and §3; expression data (`X`) was never loaded for
+this audit. All figures independently reproducible from files already
+referenced in this document.
