@@ -173,3 +173,61 @@ git branch -f backup/pre-sync-$(git rev-parse --short HEAD) HEAD
 
 `thinkstation2` currently holds `backup/pre-sync-9804944` from the fork described above.
 It can be deleted once the rebased history is confirmed good.
+
+## Known environment breakages
+
+### Geneformer's h5ad tokenizer path fails under pandas 3
+
+**Symptom.** Tokenising from `.h5ad` raises `KeyError` naming
+`ensembl_id_collapsed`. The environments on both nodes carry pandas 3.0.5.
+
+**Where it actually is: `tokenizer.py` lines 544 and 547, inside
+`tokenize_anndata`** — *not* in `sum_ensembl_ids`, which is where the column
+named in the error is built and where you will look first.
+
+```python
+adata.var["ensembl_id_collapsed"][coding_miRNA_loc]
+```
+
+`adata.var["ensembl_id_collapsed"]` is a pandas Series indexed by `var_names`,
+which are **strings**. `coding_miRNA_loc` comes from `np.where(...)[0]` and is an
+array of **integer positions**. Pandas 2 silently fell back to positional lookup
+here (with a `FutureWarning`); **pandas 3 removed that fallback**, so the
+integers are treated as labels, none are found, and the lookup raises. The
+correct form is `.iloc[...]`.
+
+Confirm it in ten seconds rather than trusting this note:
+
+```python
+import numpy as np, pandas as pd
+s = pd.Series(['A','B','C'], index=['g1','g2','g3'])   # string index, like var_names
+loc = np.array([0, 2])                                 # integer positions
+s[loc]       # pandas 3 -> KeyError: "None of [Index([0, 2], dtype='int64')] are in the [index]"
+s.iloc[loc]  # -> ['A', 'C']
+```
+
+**`sum_ensembl_ids` is NOT the fault, and this is the part worth knowing.** It
+was tested directly under pandas 3.0.5 across four variants — plain duplicate
+collapse, unmapped genes mapping to `NaN`, `use_h5ad_index=True`, and the
+no-duplicates early-return branch. **All four passed.** The error names
+`ensembl_id_collapsed`, which points straight at the function that builds that
+column; that function is fine. Skip it.
+
+**Use the loom path, which is structurally immune — not merely untested.**
+Lines 648 and 651 are the *same expression*:
+
+```python
+data.ra["ensembl_id_collapsed"][coding_miRNA_loc]
+```
+
+but `data.ra[...]` is a loompy row attribute, i.e. **a NumPy array**, not a
+pandas Series — the code stores it as one explicitly at line 185
+(`processed_chunk.index.to_numpy()`). **NumPy has always indexed positionally
+with an integer array.** Same syntax, different underlying type, opposite
+outcome. The loom path does not depend on the pandas behaviour that changed, so
+it will keep working. If you take it, check the conversion exactly rather than
+assuming the two paths agree.
+
+**Do not patch `/srv/lab/geneformer`.** It is shared and the standing ruling is
+that it stays untouched; a local edit would silently change results for every
+other user of that install.
