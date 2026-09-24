@@ -690,3 +690,5 @@ The probe runs INFERENCE with the SAME fine-tuned fold model files on both hosts
   - It is attributed to the HOST only if the cross-host max|Δ| exceeds the larger same-host repeat max|Δ|.
   - Otherwise it is reported as "inference nondeterminism exceeds the registered tolerance on a single host". That is a different finding, with a different remedy. Neither reading permits proceeding without a decision.
 - **Reading a PASS:** it is reported together with the same-host floor. If both same-host repeats are bitwise identical, the pass is against zero; if not, against that floor.
+
+**Erratum (appended 2026-09-24T18:11:53Z):** the Amendment 3e header says "~18:15Z". The authoritative time is commit b9aafc6 at 2026-09-24T18:08:42Z. The header estimate ran ahead of the clock. No other content is affected.
