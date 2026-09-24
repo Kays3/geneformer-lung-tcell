@@ -42,3 +42,19 @@ that cannot be listed, such as driver and numerical effects.
   - `gene_name_id_dict_gc104M` fabfa0c2
 - **What the earlier "identical" check missed:** it covered the weights,
   packages and patch, but not the package's own LFS data files.
+
+## Addendum — 2026-09-24 (during Phase 4, before Phase 6): cross-host code identity re-checked
+
+Prompted by a survey that looked for f45a6c7 clones outside this run's paths and found none on thinkstation2.
+This run's thinkstation2 clone is at `~/workspace/balanced_donor_luad/env/Geneformer` (the table above lists it).
+Re-checked on both hosts at 11:3x UTC:
+
+| Check | thinkstation1 | thinkstation2 |
+|---|---|---|
+| HEAD | f45a6c7de57f | f45a6c7de57f |
+| sha256 of `git diff` (the bf16 export patch as applied) | d8e43471…0215281f | d8e43471…0215281f |
+| sha256 over the sha256 of every tracked file under `geneformer/` | 9e0808bb…c8d6954 | 9e0808bb…c8d6954 |
+| Geneformer-V2-316M/model.safetensors | 965ceccea819… | 965ceccea819… |
+| `import geneformer` resolves to | that host's clone | that host's clone (checked with the run's venv, with and without PYTHONPATH) |
+
+Every Geneformer package file the run can import is byte-identical across the two hosts. The run uses `/srv/lab/geneformer` (04c2b2e) on neither host.
