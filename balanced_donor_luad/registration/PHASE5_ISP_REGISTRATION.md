@@ -285,3 +285,34 @@ contrast. It is not a failed experiment.
   control, gene, donor or direction.
 
 A partial arm is never analysed.
+
+## AMENDMENT 1 — 2026-09-24T09:47:20Z — model and precision changed by the human's directive
+
+- **Human directive, 2026-09-24, verbatim:** "all future work use bf16 model
+  geneformer 316M". It was given directly in my session, and god was
+  informed.
+- **Replaces in s.2** "Geneformer-V2-104M, with the recipe fixed in
+  PHASE4_COSTING.md" with the following. Nothing else changes: not the
+  thresholds, the panels, the outcome rows, the tests or the gates.
+  - **Model:** Geneformer-V2-316M. Weights come from
+    `~/workspace/geneformer-uv-starter/Geneformer/Geneformer-V2-316M/model.safetensors`,
+    sha256 `965ceccea81953d362081ef3843560a0e4fef88d396c28017881f1e94b1246f3`.
+    That hash equals the git-LFS pointer's oid. The `/srv/lab/geneformer`
+    copy is a 135-byte LFS pointer and is **not** used.
+  - **Code:** the vendored Geneformer checkout `f45a6c7` plus
+    `sclc_validation/bf16_bench/geneformer-bf16-export.patch`. The checkout
+    was verified to carry exactly that patch (reverse dry-run clean, 9
+    changed lines).
+  - **Precision:** bf16.
+    - Training uses the Trainer's `bf16: true`.
+    - ISP uses `dtype_cast.install_dtype_cast("bf16")`.
+    - Held-out evaluation for the s.2 classifier gate uses
+      `eval_tie_fix.install_eval_tie_fix`, as in `run_finetune_316m.py`, and
+      reports the tie counts.
+  - **Unchanged recipe:** 1 epoch, lr 5e-5, batch 8, freeze_layers 6, seed
+    43, label `origin`, no search, eval not used for selection, and both
+    tissues of a donor always in the same partition.
+- **Tokenisation stays valid.** The existing tokenised cohort was made with
+  `/srv/lab/geneformer` `04c2b2e`. Its token, gene-median and
+  Ensembl-mapping dictionaries are byte-identical to `f45a6c7`'s (sha256
+  prefixes 67c445f4, a51c53f6, 0819bcbd), so it is not re-tokenised.

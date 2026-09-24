@@ -157,3 +157,46 @@ calibration run is for.
 
 The budget is a hard stop: on a projected overrun, stop and report. Nothing
 is dropped to fit.
+
+---
+
+## v3 — 2026-09-24: MEASURED rates (calibration run, human-approved), Geneformer-V2-316M bf16
+
+The human directed that all work use Geneformer-V2-316M in bf16 (registration
+Amendment 1). The approved calibration was run on the thinkstation1 GB10 with
+that exact stack. Record: `provenance/calibration_rates_316m_bf16.json`.
+
+### Calibration run
+
+| What | Measured |
+|---|---|
+| Fine-tune, 1 epoch, 900 cells, median 745 tokens | 109.95 s, so **8.19 training cells/s**. The v1 upper bound assumed 3.76 from the 316M benchmark. |
+| ISP deletion, 1 gene × 300 cells | **20.4 s** (the 316M benchmark gave 40.7 s per unit) |
+| ISP overexpression, 1 gene × 300 cells | **18.8 s** |
+| GPU time used by the calibration | 153.8 s successful run, plus about 16 s across three failed starts, so about **0.05 GPU-h of the 0.15 approved** |
+
+The three failed starts were:
+1. a prepare_data file name;
+2. the base-model path, where the `/srv/lab` 316M file is an LFS pointer;
+3. the corrected run's first attempt.
+
+Each failed start stopped before any training step.
+
+### Costing from measured rates
+
+- The ISP figures use 20.4 s per gene-direction per 300 cells, which is
+  conservative because each timed call also included a model load.
+- They are still upper bounds: every analysis cell is assumed to be perturbed
+  for every gene. Deletion only touches cells that express the gene, so real
+  cost is lower.
+- Embeddings (per-donor goal centroids and the held-out evaluation) are about
+  0.5 h.
+
+| Configuration | Fine-tune | ISP | **Total GPU-h (upper bound)** |
+|---|---|---|---|
+| **Recommended: single study-stratified split, Panels A+B, del+ovx** | 0.45 | 9.7 | **~10.6** |
+| k = 5 cross-fit, Panels A+B, del+ovx | 3.05 | 27.8 | **~31** |
+| Single split, Panel A only, del+ovx | 0.45 | 7.7 | **~8.6** |
+
+**Never cut:** controls, overexpression, the donor floor. The budget is a hard
+stop. On a projected overrun, stop and report. Nothing is dropped to fit.
