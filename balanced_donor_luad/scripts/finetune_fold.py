@@ -26,6 +26,19 @@ SEED = 43
 STATES = ["tumor_primary", "normal_adjacent"]
 
 
+
+def single_split_value(metrics, key):
+    """Classifier.validate returns one value PER k-split as a list; this run has
+    exactly one split (num_crossval_splits=1), so the list must have length 1."""
+    if key not in metrics:
+        return None
+    v = metrics[key]
+    if isinstance(v, (list, tuple)):
+        if len(v) != 1:
+            raise ValueError(f"expected one k-split value for {key}, got {len(v)}")
+        v = v[0]
+    return float(v)
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--dataset", required=True)
@@ -84,8 +97,8 @@ def main():
     test_seconds = time.time() - t_test
     rec = {"fold": a.fold, "model_dir": model_dir, "n_train_donors": len(train), "n_eval_donors": len(ev),
            "n_test_donors": len(test), "n_fold_cells": len(fold_ds),
-           "eval_macro_f1": float(eval_metrics["macro_f1"]) if "macro_f1" in eval_metrics else None,
-           "eval_acc": float(eval_metrics["acc"]) if "acc" in eval_metrics else None,
+           "eval_macro_f1": single_split_value(eval_metrics, "macro_f1"),
+           "eval_acc": single_split_value(eval_metrics, "acc"),
            "eval_tie_stats": eval_ties, "test_tie_stats": tie_stats(),
            "train_plus_eval_seconds": train_seconds, "test_seconds": test_seconds,
            "total_seconds": time.time() - t0,
