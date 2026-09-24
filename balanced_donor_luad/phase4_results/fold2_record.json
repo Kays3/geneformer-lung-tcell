@@ -1,0 +1,23 @@
+{
+ "fold": 2,
+ "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+ "n_train_donors": 30,
+ "n_eval_donors": 4,
+ "n_test_donors": 9,
+ "n_fold_cells": 22137,
+ "eval_macro_f1": 0.834979290639559,
+ "eval_acc": 0.8370833333333333,
+ "eval_tie_stats": {
+  "tie_count": 0,
+  "total_count": 2400
+ },
+ "test_tie_stats": {
+  "tie_count": 0,
+  "total_count": 1800
+ },
+ "train_plus_eval_seconds": 1933.125764131546,
+ "test_seconds": 365.0390434265137,
+ "total_seconds": 2300.6233716011047,
+ "pred_dict": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/bdl_fold2_test_pred_dict.pkl",
+ "id_class_dict": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/bdl_fold2_id_class_dict.pkl"
+}

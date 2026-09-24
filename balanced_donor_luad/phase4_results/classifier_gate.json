@@ -1,0 +1,137 @@
+{
+ "pooled_balanced_accuracy": 0.8248837209302325,
+ "gate_ba": 0.6,
+ "n_donors": 43,
+ "donors_above_0.5": 43,
+ "donors_below_0.5": 0,
+ "donors_at_0.5": 0,
+ "sign_test_p_two_sided": "1/4398046511104",
+ "sign_test_p_float": 2.2737367544323206e-13,
+ "per_fold_balanced_accuracy": {
+  "0": 0.7838888888888889,
+  "1": 0.8127777777777778,
+  "2": 0.835,
+  "3": 0.869375,
+  "4": 0.82875
+ },
+ "folds_below_chance": [],
+ "per_donor_balanced_accuracy": {
+  "He_Fan_2021_P1": 0.915,
+  "He_Fan_2021_P2": 0.925,
+  "He_Fan_2021_P3": 0.95,
+  "He_Fan_2021_P4": 0.905,
+  "He_Fan_2021_P5": 0.98,
+  "Kim_Lee_2020_P0006": 0.84,
+  "Kim_Lee_2020_P0008": 0.985,
+  "Kim_Lee_2020_P0009": 0.81,
+  "Kim_Lee_2020_P0018": 0.94,
+  "Kim_Lee_2020_P0019": 0.77,
+  "Kim_Lee_2020_P0020": 0.9199999999999999,
+  "Kim_Lee_2020_P0028": 0.96,
+  "Kim_Lee_2020_P0030": 0.565,
+  "Kim_Lee_2020_P0031": 0.8500000000000001,
+  "Kim_Lee_2020_P0034": 0.975,
+  "Lambrechts_Thienpont_2018_6149v2_3": 0.9299999999999999,
+  "Lambrechts_Thienpont_2018_6149v2_4": 0.915,
+  "Lambrechts_Thienpont_2018_6653_6": 0.8400000000000001,
+  "Laughney_Massague_2020_LX675": 0.96,
+  "Laughney_Massague_2020_LX682": 0.975,
+  "Leader_Merad_2021_370": 0.7849999999999999,
+  "Leader_Merad_2021_371": 0.755,
+  "Leader_Merad_2021_378": 0.64,
+  "Leader_Merad_2021_403": 0.89,
+  "Leader_Merad_2021_406": 0.86,
+  "Leader_Merad_2021_408": 0.985,
+  "Leader_Merad_2021_410": 0.7,
+  "Leader_Merad_2021_458": 0.685,
+  "Leader_Merad_2021_460": 0.83,
+  "Leader_Merad_2021_514": 0.775,
+  "Leader_Merad_2021_532": 0.74,
+  "Leader_Merad_2021_564": 0.85,
+  "Leader_Merad_2021_569": 0.6499999999999999,
+  "Leader_Merad_2021_570": 0.8899999999999999,
+  "Leader_Merad_2021_572": 0.9199999999999999,
+  "Leader_Merad_2021_578": 0.77,
+  "Leader_Merad_2021_581": 0.76,
+  "Leader_Merad_2021_593": 0.55,
+  "Leader_Merad_2021_596": 0.6000000000000001,
+  "Leader_Merad_2021_626": 0.605,
+  "Leader_Merad_2021_630": 0.64,
+  "Leader_Merad_2021_695": 0.8,
+  "Leader_Merad_2021_729": 0.88
+ },
+ "PASS": true,
+ "nondet_band": 0.045,
+ "nondet_band_provenance": {
+  "per_donor_max_abs_delta_observed": 0.045,
+  "pooled_delta_observed": 0.0017,
+  "band_choice": "per-donor max, the conservative choice; pooled observed is ~26x smaller",
+  "basis": "one same-seed repeat of fold 0 (9 donors); observed magnitudes, not bounds"
+ },
+ "pooled_within_nondet_of_threshold": false,
+ "n_flippable_donors": 0,
+ "sign_test_p_worst_case": 2.2737367544323206e-13,
+ "sign_test_p_best_case": 2.2737367544323206e-13,
+ "sign_test_within_nondet": false,
+ "clean_result": true,
+ "n_cells": 8600,
+ "tie_stats": {
+  "0": {
+   "eval": {
+    "tie_count": 0,
+    "total_count": 2400
+   },
+   "test": {
+    "tie_count": 0,
+    "total_count": 1800
+   }
+  },
+  "1": {
+   "eval": {
+    "tie_count": 0,
+    "total_count": 2400
+   },
+   "test": {
+    "tie_count": 0,
+    "total_count": 1800
+   }
+  },
+  "2": {
+   "eval": {
+    "tie_count": 0,
+    "total_count": 2400
+   },
+   "test": {
+    "tie_count": 0,
+    "total_count": 1800
+   }
+  },
+  "3": {
+   "eval": {
+    "tie_count": 0,
+    "total_count": 2363
+   },
+   "test": {
+    "tie_count": 0,
+    "total_count": 1600
+   }
+  },
+  "4": {
+   "eval": {
+    "tie_count": 0,
+    "total_count": 2400
+   },
+   "test": {
+    "tie_count": 0,
+    "total_count": 1600
+   }
+  }
+ },
+ "fold_seconds": {
+  "0": 2245.126890897751,
+  "1": 2335.6311419010162,
+  "2": 2300.6233716011047,
+  "3": 2393.287687063217,
+  "4": 2289.442670583725
+ }
+}
