@@ -39,6 +39,15 @@ _USER_ENV="${LAB_ENV_FILE:-$HOME/.config/geneformer-lung-tcell/paths.env}"
 export SCLC_PERTURBATION_ROOT TARGETED_PANEL_RUN_DIR HTAN_H5AD \
        GSE263196_RAW_DIR GENEFORMER_TOKEN_DICT GENEFORMER_MODEL_DIR PYTHON_BIN
 
+lab_env__python_usable() {
+    # A virtualenv directory can exist and still be useless: a rebuilt but
+    # unpopulated .venv passes -e while containing no packages at all. Existence
+    # is not usability, so run the interpreter instead of stat-ing its path.
+    local py="$1"
+    [[ -x "$py" ]] || return 1
+    "$py" -c 'import numpy' >/dev/null 2>&1
+}
+
 lab_env_check() {
     # Report which resolved paths actually exist. Missing entries are printed
     # rather than exiting, because a machine legitimately holds only the assets
@@ -48,11 +57,18 @@ lab_env_check() {
     for name in SCLC_PERTURBATION_ROOT TARGETED_PANEL_RUN_DIR HTAN_H5AD \
                 GSE263196_RAW_DIR GENEFORMER_TOKEN_DICT GENEFORMER_MODEL_DIR PYTHON_BIN; do
         value="${!name}"
-        if [[ -e "$value" ]]; then
-            printf '  \033[32mok     \033[0m %-24s %s\n' "$name" "$value"
-        else
+        if [[ ! -e "$value" ]]; then
             printf '  \033[31mMISSING\033[0m %-24s %s\n' "$name" "$value"
             missing=$((missing + 1))
+        elif [[ "$name" == "PYTHON_BIN" ]] && ! lab_env__python_usable "$value"; then
+            # Reported separately from MISSING: the path is there, so the fault
+            # is a broken or unpopulated environment, not a wrong pointer.
+            printf '  \033[31mBROKEN \033[0m %-24s %s\n' "$name" "$value"
+            printf '           %s\n' "exists but cannot run 'import numpy'; rebuild it with"
+            printf '           %s\n' "geneformer_uv_setup/scripts/bootstrap_workspace.sh"
+            missing=$((missing + 1))
+        else
+            printf '  \033[32mok     \033[0m %-24s %s\n' "$name" "$value"
         fi
     done
     if [[ $missing -gt 0 ]]; then
