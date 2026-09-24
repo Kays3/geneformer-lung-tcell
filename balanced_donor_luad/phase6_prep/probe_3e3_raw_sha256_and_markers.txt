@@ -1,0 +1,16 @@
+415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c  ts1_run1/delete/ENSG00000166710/in_silico_delete_He_Fan_2021_P1_cell_embs_dict_[11717]_raw.pickle
+d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef  ts1_run1/overexpress/ENSG00000166710/in_silico_overexpress_He_Fan_2021_P1_cell_embs_dict_[11717]_raw.pickle
+415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c  ts1_run2/delete/ENSG00000166710/in_silico_delete_He_Fan_2021_P1_cell_embs_dict_[11717]_raw.pickle
+d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef  ts1_run2/overexpress/ENSG00000166710/in_silico_overexpress_He_Fan_2021_P1_cell_embs_dict_[11717]_raw.pickle
+415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c  ts2_run1/delete/ENSG00000166710/in_silico_delete_He_Fan_2021_P1_cell_embs_dict_[11717]_raw.pickle
+d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef  ts2_run1/overexpress/ENSG00000166710/in_silico_overexpress_He_Fan_2021_P1_cell_embs_dict_[11717]_raw.pickle
+415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c  ts2_run2/delete/ENSG00000166710/in_silico_delete_He_Fan_2021_P1_cell_embs_dict_[11717]_raw.pickle
+d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef  ts2_run2/overexpress/ENSG00000166710/in_silico_overexpress_He_Fan_2021_P1_cell_embs_dict_[11717]_raw.pickle
+{"gene": "ENSG00000166710", "op": "delete", "donor": "He_Fan_2021_P1", "status": "done", "n_token_cells": 100, "seconds": 38.80423402786255, "host": "ts1", "fold": 1}
+{"gene": "ENSG00000166710", "op": "overexpress", "donor": "He_Fan_2021_P1", "status": "done", "n_token_cells": 100, "seconds": 23.426056623458862, "host": "ts1", "fold": 1}
+{"gene": "ENSG00000166710", "op": "delete", "donor": "He_Fan_2021_P1", "status": "done", "n_token_cells": 100, "seconds": 26.170543432235718, "host": "ts1", "fold": 1}
+{"gene": "ENSG00000166710", "op": "overexpress", "donor": "He_Fan_2021_P1", "status": "done", "n_token_cells": 100, "seconds": 5.074540376663208, "host": "ts1", "fold": 1}
+{"gene": "ENSG00000166710", "op": "delete", "donor": "He_Fan_2021_P1", "status": "done", "n_token_cells": 100, "seconds": 39.6019446849823, "host": "ts2", "fold": 1}
+{"gene": "ENSG00000166710", "op": "overexpress", "donor": "He_Fan_2021_P1", "status": "done", "n_token_cells": 100, "seconds": 22.745129823684692, "host": "ts2", "fold": 1}
+{"gene": "ENSG00000166710", "op": "delete", "donor": "He_Fan_2021_P1", "status": "done", "n_token_cells": 100, "seconds": 25.917739629745483, "host": "ts2", "fold": 1}
+{"gene": "ENSG00000166710", "op": "overexpress", "donor": "He_Fan_2021_P1", "status": "done", "n_token_cells": 100, "seconds": 5.462764263153076, "host": "ts2", "fold": 1}
