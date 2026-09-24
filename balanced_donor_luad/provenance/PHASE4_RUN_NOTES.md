@@ -31,3 +31,5 @@ Result, on the same 1,800 held-out test cells (9 donors × 100 tumour + 100 norm
 - Eval-donor metrics: attempt 1 macro-F1 0.894, accuracy 0.894; attempt 2 macro-F1 0.899, accuracy 0.899.
 
 Reading: GPU training on this stack is not bit-reproducible run to run at a fixed seed. The size of that run-to-run variation is recorded here. It is not a code difference (see the diff). Only attempt 2 enters the gate.
+
+**Note on times (appended 2026-09-24T18:13:20Z):** in these notes and in hive messages, a reported time is an OBSERVATION time unless it is marked as taken from the filesystem or a commit. Example: attempt 2 fold 0 was reported as landing at "18:05Z", which is when it was observed. Filesystem: `fold_record.json` mtime 2026-09-24T18:03:46.827Z. For any time difference, use filesystem or commit times.
