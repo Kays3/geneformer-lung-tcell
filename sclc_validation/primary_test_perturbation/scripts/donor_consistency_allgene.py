@@ -36,11 +36,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-HOME = Path.home()
-ROOT = Path(os.environ.get("SCLC_PERTURBATION_ROOT", HOME / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation"))
+LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
+ROOT = Path(os.environ.get("SCLC_PERTURBATION_ROOT", LAB_ROOT / "KD/sclc_luad_normal_htan_heldout_allgene_perturbation"))
 TOKEN_DICT = Path(os.environ.get(
     "GENEFORMER_TOKEN_DICT",
-    HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer/geneformer/token_dictionary_gc104M.pkl",
+    LAB_ROOT / "geneformer/geneformer/token_dictionary_gc104M.pkl",
 ))
 OUT_DIR = Path(os.environ.get("DONOR_OUT_DIR", Path(__file__).resolve().parents[1] / "tables"))
 HITS_CSV = Path(os.environ.get("PRIMARY_HITS", Path(__file__).resolve().parents[1] / "tables" / "primary_concordant_hits.csv"))

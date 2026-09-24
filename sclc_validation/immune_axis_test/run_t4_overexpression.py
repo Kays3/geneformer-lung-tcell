@@ -21,20 +21,25 @@ from pathlib import Path
 multiprocessing.set_start_method("spawn", force=True)
 
 HERE = Path(__file__).resolve().parent
+LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
 HOME = Path.home()
 MANIFEST = HERE / "t4_program_manifest.json"
 ALLGENE_ROOT = Path(
     os.environ.get(
         "SCLC_PERTURBATION_ROOT",
-        HOME / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
+        LAB_ROOT / "KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
     )
 )
 FINETUNE_ROOT = Path(
     os.environ.get(
         "HTAN_FINETUNE_ROOT",
-        HOME / "workspace/KD/sclc_luad_normal_htan_finetune",
+        LAB_ROOT / "KD/sclc_luad_normal_htan_finetune",
     )
 )
+# T4_RUN_DIR is this runner's OUTPUT directory, not shared input, and the
+# shared install does not hold it on either node. A default pointing at a
+# path with nothing behind it is worse than a home path that works, so this
+# one deliberately stays home-relative; set T4_RUN_DIR to relocate it.
 RUN_DIR = Path(
     os.environ.get(
         "T4_RUN_DIR",
@@ -44,7 +49,7 @@ RUN_DIR = Path(
 GENEFORMER_ROOT = Path(
     os.environ.get(
         "GENEFORMER_ROOT",
-        HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer",
+        LAB_ROOT / "geneformer",
     )
 )
 BF16_BENCH_ROOT = HERE.parent / "bf16_bench"

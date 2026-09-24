@@ -15,18 +15,19 @@ from __future__ import annotations
 import json
 import pickle
 import sys
+import os
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from datasets import load_from_disk
 
-HOME = Path.home()
-RUN_DIR = HOME / "workspace/KD/sclc_luad_normal_htan_targeted_panel_perturbation"
+LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
+RUN_DIR = Path(os.environ.get("TARGETED_PANEL_RUN_DIR", LAB_ROOT / "KD/sclc_luad_normal_htan_targeted_panel_perturbation"))
 RAW_ROOT = RUN_DIR / "raw"
 SOURCE_DATA_DIR = RUN_DIR / "data" / "sources"
 CONCORDANT_CSV = RUN_DIR / "results_import" / "targeted_panel_concordant_hits.csv"
-TOKEN_DICT_FILE = HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer/geneformer/token_dictionary_gc104M.pkl"
+TOKEN_DICT_FILE = Path(os.environ.get("GENEFORMER_TOKEN_DICT", LAB_ROOT / "geneformer/geneformer/token_dictionary_gc104M.pkl"))
 OUT_CSV = RUN_DIR / "results_import" / "targeted_panel_donor_consistency.csv"
 
 STATE_NAMES = {

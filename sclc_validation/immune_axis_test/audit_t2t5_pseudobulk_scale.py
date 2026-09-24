@@ -21,13 +21,14 @@ import numpy as np
 import pandas as pd
 import scipy.sparse as sp
 
+LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
 H5AD = Path(os.environ.get(
     "HTAN_H5AD",
-    Path.home() / "workspace/KD/sclc_luad_normal_htan_finetune/data/htan_sclc_luad_normal_tcells_prepared.h5ad",
+    LAB_ROOT / "KD/sclc_luad_normal_htan_finetune/data/htan_sclc_luad_normal_tcells_prepared.h5ad",
 ))
 STATS_ROOT = Path(os.environ.get(
     "SCLC_PERTURBATION_ROOT",
-    Path.home() / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
+    LAB_ROOT / "KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
 )) / "stats"
 OUT = Path(os.environ.get(
     "T2T5_SCALE_AUDIT_OUT",

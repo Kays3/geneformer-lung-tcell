@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-run_dir="${TARGETED_PANEL_RUN_DIR:-$HOME/workspace/KD/sclc_luad_normal_htan_targeted_panel_perturbation}"
+run_dir="${TARGETED_PANEL_RUN_DIR:-${LAB_ROOT:-/srv/lab}/KD/sclc_luad_normal_htan_targeted_panel_perturbation}"
 log_file="$run_dir/logs/targeted_panel.log"
 config_file="$run_dir/tables/run_config.json"
 runner="$run_dir/scripts/run_targeted_panel.py"
