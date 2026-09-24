@@ -112,6 +112,9 @@ from datasets import load_from_disk
 # already redirected under bf16_bench/ by this task, so TARGET_GENES_FILE
 # is the only remaining use and this fix is isolated to it.
 ANALYSIS_ROOT = Path(__file__).resolve().parents[0]
+# Same variable and idiom as tools/lab_env.sh, which resolves
+# ${LAB_ROOT:-/srv/lab} and states these same defaults. The two are
+# separate copies: change one and they diverge silently.
 LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
 ALLGENE_ROOT = Path(os.environ.get("SCLC_PERTURBATION_ROOT", LAB_ROOT / "KD/sclc_luad_normal_htan_heldout_allgene_perturbation"))
 # Pre-existing bug fixed here (2026-09-18, discovered via a 316M-stage

@@ -42,6 +42,9 @@ import numpy as np
 import pandas as pd
 import scanpy as sc
 
+# Same variable and idiom as tools/lab_env.sh, which resolves
+# ${LAB_ROOT:-/srv/lab} and states these same defaults. The two are
+# separate copies: change one and they diverge silently.
 LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
 H5AD = Path(os.environ.get(
     "HTAN_H5AD",

@@ -22,6 +22,9 @@ import numpy as np
 import pandas as pd
 from datasets import load_from_disk
 
+# Same variable and idiom as tools/lab_env.sh, which resolves
+# ${LAB_ROOT:-/srv/lab} and states these same defaults. The two are
+# separate copies: change one and they diverge silently.
 LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
 RUN_DIR = Path(os.environ.get("TARGETED_PANEL_RUN_DIR", LAB_ROOT / "KD/sclc_luad_normal_htan_targeted_panel_perturbation"))
 RAW_ROOT = RUN_DIR / "raw"

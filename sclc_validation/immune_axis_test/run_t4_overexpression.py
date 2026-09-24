@@ -21,6 +21,9 @@ from pathlib import Path
 multiprocessing.set_start_method("spawn", force=True)
 
 HERE = Path(__file__).resolve().parent
+# Same variable and idiom as tools/lab_env.sh, which resolves
+# ${LAB_ROOT:-/srv/lab} and states these same defaults. The two are
+# separate copies: change one and they diverge silently.
 LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
 HOME = Path.home()
 MANIFEST = HERE / "t4_program_manifest.json"
