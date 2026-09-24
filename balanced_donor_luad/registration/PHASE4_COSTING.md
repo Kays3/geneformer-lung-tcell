@@ -200,3 +200,15 @@ Each failed start stopped before any training step.
 
 **Never cut:** controls, overexpression, the donor floor. The budget is a hard
 stop. On a projected overrun, stop and report. Nothing is dropped to fit.
+
+---
+
+## v4 — 2026-09-24: conditional contingency (registration Amendment 2)
+
+| Contingency | When | GPU-h (upper bound, measured 316M rates) |
+|---|---|---|
+| 104M Panel A control arm | Only if Panel A on 316M has at least one eligible non-replication (OPEN / DELETION_ONLY / DOSE_INCOHERENT / REVERSED). Needs its own approval when triggered. | ~8.6 (fine-tune 0.45 + ISP 7.7 + embeddings ~0.5). 104M is smaller, so this is expected to be lower. |
+
+This is not part of the ~10.6 GPU-h recommended run. It is decided by the
+Panel A outcome, under the rule registered in advance, not by whoever is
+looking at the result.

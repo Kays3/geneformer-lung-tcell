@@ -316,3 +316,68 @@ A partial arm is never analysed.
   `/srv/lab/geneformer` `04c2b2e`. Its token, gene-median and
   Ensembl-mapping dictionaries are byte-identical to `f45a6c7`'s (sha256
   prefixes 67c445f4, a51c53f6, 0819bcbd), so it is not re-tokenised.
+
+## AMENDMENT 2 — 2026-09-24T09:51:03Z — Panel A model confound: limitation + CONDITIONAL 104M control arm (requested by god, 2026-09-24T13-20-00Z)
+
+This amendment is registered before any Phase 6 number exists. Nothing in
+s.1–s.8 or Amendment 1 changes. This adds one limitation and one conditional
+arm.
+
+### Limitation (registered, applies to Panel A)
+
+- **Model of record for the July table:** the Panel A source table comes from
+  the July screen, whose base model is **Geneformer-V2-104M**
+  (`current_workflow/METHODS.md`, s.4 table, "Base model").
+- **Model for this run:** under Amendment 1, Panel A runs on
+  **Geneformer-V2-316M**, bf16. That is a different model, not only a
+  different design.
+- **Quantified bound on the nuisance term,** from this programme's own
+  measurement (`sclc_validation/bf16_bench/RESULTS_BF16_316M.md`, "Result",
+  origin/main):
+  - 104M-vs-316M, both bf16, on an overlapping ISP task: **Spearman
+    rho = 0.489**, top-20 row overlap 9/20.
+  - Same-model precision change: rho = 0.9998
+    (`sclc_validation/bf16_bench/RESULTS_BF16.md`).
+  - That was a different task (a 50-gene overexpression panel on the
+    SCLC/LUAD/normal classifier). So it bounds the size of a model effect;
+    it does not measure it here.
+- **Consequence:** a Panel A non-replication on 316M alone could be caused by
+  the design change or by the model change, and cannot be attributed.
+
+### Conditional 104M control arm (pre-registered; triggered by outcome, not by choice)
+
+- **Trigger:** after the 316M Phase 6 statuses exist, **if at least one
+  eligible Panel A gene has a status other than `REPLICATED` or
+  `REPLICATED_AMBIENT`**, meaning `OPEN`, `DELETION_ONLY`,
+  `DOSE_INCOHERENT` or `REVERSED`, then a **104M Panel A control arm is
+  required before any Panel A non-replication is reported.**
+  - Genes that are `NOT_RUN` or `NOT_ESTIMABLE_CONTROLS` do not trigger it.
+  - If every eligible Panel A gene is `REPLICATED` or `REPLICATED_AMBIENT`,
+    the arm is **not run**, and the reason is recorded.
+- **Specification:**
+  - **Model:** Geneformer-V2-104M, weights sha256 prefix `fff5cba29ddd8792`.
+    The `/srv/lab` copy and the vendored copy are byte-identical, real
+    weights.
+  - **Precision:** bf16, per the human's directive. Precision moves results
+    by rho 0.9998, so bf16 does not reintroduce a nuisance.
+  - **Same everything else:** the same held-out donors, cells, split, goal
+    construction, matched controls, tests, thresholds, eligibility, Holm
+    family and outcome rows as the 316M Panel A run. No re-selection of
+    anything.
+- **Attribution table:** applied per gene, for genes that are non-replicated
+  on 316M.
+
+| 104M arm status for that gene | Reported as |
+|---|---|
+| `REPLICATED` / `REPLICATED_AMBIENT` | non-replication **attributable to the model change** (104M reproduces the July finding under the paired design; 316M does not) |
+| any other eligible status | non-replication **under the paired design, robust to model** (neither model replicates) |
+| `NOT_RUN` / `NOT_ESTIMABLE_CONTROLS` on 104M | **unattributable**, reported as such |
+
+- **If the arm is triggered but not approved or not run:** Panel A
+  non-replications are reported **only** as "non-replication on 316M;
+  model-vs-design attribution not established".
+- **Cost** (upper bound, from the measured 316M rates; 104M is smaller):
+  about **8.6 GPU-h**. It needs its own human approval when triggered.
+- **Directive note:** this arm uses 104M, not 316M. Whether "all future work
+  use bf16 model geneformer 316M" allows a same-model control is the human's
+  call. God is raising it with them.
