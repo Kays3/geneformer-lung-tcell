@@ -12,7 +12,11 @@ from pathlib import Path
 import pandas as pd
 
 HERE = Path(__file__).resolve().parents[1]
-ROOT = Path(os.environ.get("SCLC_PERTURBATION_ROOT", Path.home() / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation"))
+# Same variable and idiom as tools/lab_env.sh, which resolves
+# ${LAB_ROOT:-/srv/lab} and states these same defaults. The two are
+# separate copies: change one and they diverge silently.
+LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
+ROOT = Path(os.environ.get("SCLC_PERTURBATION_ROOT", LAB_ROOT / "KD/sclc_luad_normal_htan_heldout_allgene_perturbation"))
 STATS = ROOT / "stats"
 TABLES = HERE / "tables"
 REPORTS = HERE / "reports"

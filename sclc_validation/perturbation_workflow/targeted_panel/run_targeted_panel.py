@@ -104,7 +104,6 @@ import pandas as pd
 import torch
 from datasets import load_from_disk
 
-HOME = Path.home()
 # Pre-existing bug fixed here (2026-09-17, discovered via the bf16-bench
 # calibration run): this was `.parents[1]`, which resolves to
 # perturbation_workflow/ -- but target_gene_panel.json lives next to this
@@ -113,7 +112,11 @@ HOME = Path.home()
 # already redirected under bf16_bench/ by this task, so TARGET_GENES_FILE
 # is the only remaining use and this fix is isolated to it.
 ANALYSIS_ROOT = Path(__file__).resolve().parents[0]
-ALLGENE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation"
+# Same variable and idiom as tools/lab_env.sh, which resolves
+# ${LAB_ROOT:-/srv/lab} and states these same defaults. The two are
+# separate copies: change one and they diverge silently.
+LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
+ALLGENE_ROOT = Path(os.environ.get("SCLC_PERTURBATION_ROOT", LAB_ROOT / "KD/sclc_luad_normal_htan_heldout_allgene_perturbation"))
 # Pre-existing bug fixed here (2026-09-18, discovered via a 316M-stage
 # calibration run silently loading the 104M classifier): this was a bare
 # hardcoded path, so `HTAN_FINETUNE_ROOT` had no effect here even though
@@ -122,7 +125,7 @@ ALLGENE_ROOT = HOME / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_pertur
 # touching the default /srv/lab/KD-backed path). Same env-var name, same
 # default, now consistent between both runners.
 FINETUNE_ROOT = Path(
-    os.environ.get("HTAN_FINETUNE_ROOT", str(HOME / "workspace/KD/sclc_luad_normal_htan_finetune"))
+    os.environ.get("HTAN_FINETUNE_ROOT", str(LAB_ROOT / "KD/sclc_luad_normal_htan_finetune"))
 )
 BF16_BENCH_ROOT = Path(__file__).resolve().parents[2] / "bf16_bench"
 
@@ -136,7 +139,7 @@ from dtype_cast import DTYPES, install_dtype_cast  # noqa: E402
 GENEFORMER_ROOT = Path(
     os.environ.get(
         "GENEFORMER_ROOT",
-        HOME / "workspace/geneformer-uv-starter/geneformer-workspace/Geneformer",
+        LAB_ROOT / "geneformer",
     )
 )
 sys.path.insert(0, str(GENEFORMER_ROOT))
