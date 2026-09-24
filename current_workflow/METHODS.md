@@ -231,16 +231,27 @@ below).
 ### 1. Study confound (normal vs. tumor)
 
 No study in the source atlas contributes both a normal-labelled and a
-tumor-labelled (LUAD or LUSC) T cell. Verified directly on the whole source
-atlas (`disease` in `normal`/`lung adenocarcinoma`/`squamous cell lung
-carcinoma`, no cell-type filter): 265 donors across 18 studies, disease label
-is constant within every donor (0/265 donors carry more than one disease
-label) and study is constant within every donor (0/265 donors span more than
-one study), and of the 18 studies, 0 contribute cells to both a normal label
-and a tumor label. The `normal` class and the tumor classes are therefore
-drawn from entirely disjoint sets of studies. The `LUAD`-vs-`LUSC` boundary
-is **not** subject to this defect: every one of LUSC's contributing studies
-is also a LUAD study.
+tumor-labelled (LUAD or LUSC) T cell. This rests on three checks, each over a
+different population — reported separately because a denominator without its
+population is exactly how a prior version of this finding was miscommunicated:
+
+| Population | Donors | Studies | Donors with >1 disease label | Donors with >1 study | Studies with both a normal and a tumor label |
+|---|---:|---:|---:|---:|---:|
+| Whole atlas, all 5 disease categories (normal, LUAD, LUSC, non-small cell lung carcinoma, COPD) | 298 | 19 | 0/298 | 0/298 | — (comparison not restricted to normal/tumor here) |
+| Whole atlas, restricted to `disease` in `{normal, LUAD, LUSC}` | 265 | 18 | 0/265 | 0/265 | 0/18 |
+| The above, restricted further to `cell_type_major` in `{T cell CD4, T cell CD8}` — the classifier's own filter | 222 | 18 | 0/222 | 0/222 | 0/18 |
+
+**298** is the structural fact underneath the other two: disease and study
+are donor-constant across the *entire* atlas, every disease category
+included, which is why no donor or study can bridge any pair of classes.
+**265** shows the disjointness used by this classifier's three classes is not
+an artifact of narrowing to them. **222** is the population the classifier
+actually drew its training cells from, so it carries the claim that matters
+here: no study contributes both a normal-labelled and a tumor-labelled T cell
+among the cells this classifier could have used. All three donor counts are
+independently verified; none is a correction of another. The `LUAD`-vs-`LUSC`
+boundary is **not** subject to this defect: every one of LUSC's contributing
+studies is also a LUAD study.
 
 ### 2. Class definition mixes tissue origin, not just disease label
 
