@@ -53,6 +53,9 @@ def load_fold(work, k):
 
 
 NONDET_BAND = 0.045   # Amendment 3e.2: largest per-donor BA change in the same-seed fold-0 repeat
+NONDET_PROVENANCE = {"per_donor_max_abs_delta_observed": 0.045, "pooled_delta_observed": 0.0017,
+                     "band_choice": "per-donor max, the conservative choice; pooled observed is ~26x smaller",
+                     "basis": "one same-seed repeat of fold 0 (9 donors); observed magnitudes, not bounds"}
 
 
 def nondeterminism_margins(pooled, per_donor):
@@ -66,7 +69,7 @@ def nondeterminism_margins(pooled, per_donor):
     best = (firm_pos + nf, firm_neg)
     ok = lambda pos, neg: sign_test_two_sided(pos, neg) <= ALPHA and pos > neg
     sign_within = ok(*worst) != ok(*best)
-    return {"nondet_band": NONDET_BAND, "pooled_within_nondet_of_threshold": bool(pooled_within),
+    return {"nondet_band": NONDET_BAND, "nondet_band_provenance": NONDET_PROVENANCE, "pooled_within_nondet_of_threshold": bool(pooled_within),
             "n_flippable_donors": nf,
             "sign_test_p_worst_case": float(sign_test_two_sided(*worst)),
             "sign_test_p_best_case": float(sign_test_two_sided(*best)),
