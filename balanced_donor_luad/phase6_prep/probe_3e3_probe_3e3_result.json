@@ -1,0 +1,192 @@
+{
+ "delete": {
+  "same_host_ts1": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   }
+  },
+  "same_host_ts2": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   }
+  },
+  "cross_host_run1": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   }
+  },
+  "cross_host_run2": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   }
+  },
+  "registered_PASS": true
+ },
+ "overexpress": {
+  "same_host_ts1": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   }
+  },
+  "same_host_ts2": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   }
+  },
+  "cross_host_run1": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   }
+  },
+  "cross_host_run2": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   }
+  },
+  "registered_PASS": true
+ }
+}
