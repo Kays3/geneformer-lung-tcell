@@ -16,7 +16,20 @@ from __future__ import annotations
 
 import hashlib
 
-_CACHE: dict = {}
+
+
+class _OpaqueStore(dict):
+    """A dict that pickles as EMPTY. Hugging Face `datasets` fingerprints every .map() by
+    dill-pickling the mapped function and what it reaches; that walk reached this cache and
+    serialised every cached 316M model on every map (~40-60 s per ISP call, CPU-bound).
+    Pickling the store as empty removes that cost. It affects only the fingerprint, never a
+    value computed from a model. Each donor's ISP input only ever meets that donor's one fold
+    model, so no datasets cache entry can be shared across models."""
+    def __reduce__(self):
+        return (_OpaqueStore, ())
+
+
+_CACHE: dict = _OpaqueStore()
 _CHECKSUM: dict = {}
 
 
