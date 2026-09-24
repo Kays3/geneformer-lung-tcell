@@ -30,9 +30,14 @@ _LAB_VARS=(SCLC_PERTURBATION_ROOT TARGETED_PANEL_RUN_DIR HTAN_H5AD
 # reason. Enforcing the order here makes the promise true no matter how any
 # machine's paths.env is written, including the ones that already exist and the
 # ones nobody is going to edit.
-declare -A _LAB_PRESET=()
+# One plain variable per saved value rather than an associative array:
+# `declare -A` is bash 4+, and this file is SOURCED, so the sourcing shell's
+# version governs and the shebang does not. macOS ships bash 3.2, where the
+# associative form aborts the source part-way through -- the defaults below
+# would never run and lab_env_check would never be defined. Indexed arrays and
+# `printf -v` are bash 3.1+, so this works everywhere the file already worked.
 for _lab_v in "${_LAB_VARS[@]}"; do
-    [[ -n "${!_lab_v+set}" ]] && _LAB_PRESET["$_lab_v"]="${!_lab_v}"
+    [[ -n "${!_lab_v+set}" ]] && printf -v "_LAB_PRESET_$_lab_v" '%s' "${!_lab_v}"
 done
 
 # Per-machine overrides, if present.
@@ -40,10 +45,12 @@ done
 [[ -r "$_USER_ENV" ]] && source "$_USER_ENV"
 
 # Restore anything the caller set that the per-machine file overwrote.
-for _lab_v in "${!_LAB_PRESET[@]}"; do
-    printf -v "$_lab_v" '%s' "${_LAB_PRESET[$_lab_v]}"
+for _lab_v in "${_LAB_VARS[@]}"; do
+    _lab_p="_LAB_PRESET_$_lab_v"
+    [[ -n "${!_lab_p+set}" ]] && printf -v "$_lab_v" '%s' "${!_lab_p}"
+    unset "$_lab_p"
 done
-unset _lab_v _LAB_PRESET _LAB_VARS
+unset _lab_v _lab_p _LAB_VARS
 
 # Defaults only fill variables the caller has not already set.
 : "${SCLC_PERTURBATION_ROOT:=$_LAB_ROOT/KD/sclc_luad_normal_htan_heldout_allgene_perturbation}"
@@ -74,7 +81,7 @@ lab_env_check() {
     # Report which resolved paths actually exist. Missing entries are printed
     # rather than exiting, because a machine legitimately holds only the assets
     # for the arm it ran.
-    local name value missing=0
+    local name value missing=0 broken=0
     printf '\n\033[1mResolved lab paths\033[0m\n'
     for name in SCLC_PERTURBATION_ROOT TARGETED_PANEL_RUN_DIR HTAN_H5AD \
                 GSE263196_RAW_DIR GENEFORMER_TOKEN_DICT GENEFORMER_MODEL_DIR PYTHON_BIN; do
@@ -88,15 +95,23 @@ lab_env_check() {
             printf '  \033[31mBROKEN \033[0m %-24s %s\n' "$name" "$value"
             printf '           %s\n' "exists but cannot run 'import numpy'; rebuild it with"
             printf '           %s\n' "geneformer_uv_setup/scripts/bootstrap_workspace.sh"
-            missing=$((missing + 1))
+            broken=$((broken + 1))
         else
             printf '  \033[32mok     \033[0m %-24s %s\n' "$name" "$value"
         fi
     done
+    # Counted separately: a missing path and a broken interpreter have
+    # different causes and different fixes, so a single tally labelled
+    # "missing" would misreport one of them.
     if [[ $missing -gt 0 ]]; then
         printf '\n  %d path(s) missing.\n' "$missing"
         printf '  If the migration has not run yet: sudo bash tools/migrate_to_srv_lab.sh --inventory\n'
         printf '  If this machine legitimately lacks them, set them in %s\n' "$_USER_ENV"
+    fi
+    if [[ $broken -gt 0 ]]; then
+        printf '\n  %d interpreter(s) present but not usable.\n' "$broken"
+        printf '  The path exists, so this is an unpopulated or broken environment,\n'
+        printf '  not a wrong pointer. Rebuild it rather than repointing it.\n'
     fi
     return 0
 }
