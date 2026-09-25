@@ -41,12 +41,19 @@ POSITIVE = {"REPLICATED", "REPLICATED_AMBIENT", "T_CELL_SIGNAL_TOWARD", "T_CELL_
 
 # Open rules (to be fixed by amendment before unblinding). Defaults are the PROPOSAL.
 RULES = {
+    # Minimum token-positive cells for a CONTROL to count in donor d (Amendment 3g: same as the gene).
+    "control_min_cells": 10,
     # A control contributes to donor d's median only if it is estimable in d (same MIN_CELLS rule
     # as the gene). a(g,d) is undefined if fewer than this many of the 20 controls qualify.
     "min_controls_per_donor": 10,
     # "panel": Holm over the full registered family (15 / 36), untested members entered as p = 1,
     # which is the m the registered d_min table was derived from. "tested": only genes tested.
     "holm_m": "panel",
+}
+# Amendment 3g: the alternatives are reported as a SENSITIVITY LINE only; no status ever changes on them.
+ALT_RULES = {
+    "rule1_any_control": {"control_min_cells": 1, "min_controls_per_donor": 1, "holm_m": "panel"},
+    "rule2_holm_tested": {"control_min_cells": 10, "min_controls_per_donor": 10, "holm_m": "tested"},
 }
 
 
@@ -104,11 +111,11 @@ class Design:
 
 
 # ----------------------------------------------------------------------------- core
-def donor_means(calls, gene, op, state):
-    """{donor: (s, n_cells)} for donors where the gene is estimable (>= MIN_CELLS)."""
+def donor_means(calls, gene, op, state, min_cells=MIN_CELLS):
+    """{donor: (s, n_cells)} for donors where the gene has >= min_cells token-positive cells."""
     out = {}
     for d, c in calls[(op, gene)].items():
-        if c["status"] == "done" and c["n_token_cells"] >= MIN_CELLS:
+        if c["status"] == "done" and c["n_token_cells"] >= min_cells:
             out[d] = (float(np.mean(c["shifts"][state])), c["n_token_cells"])
     return out
 
@@ -117,7 +124,7 @@ def adjusted_values(calls, design, gene, op, state, rules):
     """a_op(g,d) for estimable donors with enough estimable controls. Returns {d: a}, info."""
     st = design.strata[design.gene_stratum[gene]]
     g_vals = donor_means(calls, gene, op, state)
-    ctrl_vals = {c: donor_means(calls, c, op, state) for c in st["controls"]}
+    ctrl_vals = {c: donor_means(calls, c, op, state, rules["control_min_cells"]) for c in st["controls"]}
     a, n_ctrl_used, dropped = {}, {}, []
     for d, (s, _) in g_vals.items():
         cs = [ctrl_vals[c][d][0] for c in st["controls"] if d in ctrl_vals[c]]
@@ -126,7 +133,9 @@ def adjusted_values(calls, design, gene, op, state, rules):
             continue
         a[d] = s - float(np.median(cs))
         n_ctrl_used[d] = len(cs)
-    return a, {"n_estimable": len(g_vals), "n_controls_used": n_ctrl_used, "dropped_few_controls": dropped}
+    n_ctrl_all = {d: sum(d in ctrl_vals[c] for c in st["controls"]) for d in g_vals}
+    return a, {"n_estimable": len(g_vals), "n_controls_used": n_ctrl_used, "n_controls_qualifying": n_ctrl_all,
+               "dropped_few_controls": dropped}
 
 
 def test_arm(a):
@@ -203,8 +212,10 @@ def analyse(calls, design, rules=RULES, state=GOAL):
         for op in OPS:
             tested = {g: test_arm(arms[(g, op)]) for g in genes if eligible[g]}
             adj = holm_family({g: r["p"] for g, r in tested.items()}, genes, rules)
+            m = len(genes) if rules["holm_m"] == "panel" else len(tested)
             for g, r in tested.items():
                 r["p_holm"] = adj[g]
+                r["holm_m"] = m
                 r["sig"] = adj[g] <= sc.Fraction(ALPHA).limit_denominator(1000)
                 results[(g, op)] = r
     rows = []
@@ -243,6 +254,7 @@ def analyse(calls, design, rules=RULES, state=GOAL):
                 **{f"{tag}_{k}": (float(v) if isinstance(v, sc.Fraction) else v)
                    for tag, r in (("del", dr), ("ovx", orr)) for k, v in r.items()},
                 "dropped_few_controls": {op: info[(g, op)]["dropped_few_controls"] for op in OPS},
+                "controls_qualifying_per_donor": {op: info[(g, op)]["n_controls_qualifying"] for op in OPS},
             })
             rows.append(sc.make_row(P, g, status, **fields))
     for nr in design.panel_b_not_run:
@@ -307,8 +319,17 @@ def sensitivities(calls, design, primary, rules=RULES):
                 ds = sorted(per_d)
                 f3[f"panel_{P}|{op}"] = {"spearman_ba_vs_panel_median_a":
                                          spearman([design.donor_ba[d] for d in ds], [float(np.median(per_d[d])) for d in ds]),
-                                         "n_donors": len(ds), "conditioned_on_significance": False}
-    out.update({"S2_leader_merad_vs_rest": s2, "S4_cell_weighted": s4, "A3f_accuracy_vs_effect": f3,
+                                         "n_donors": len(ds), "conditioned_on_significance": False,
+                                         "n_genes_per_donor": {d: len(per_d[d]) for d in ds},
+                                         "note": "per-donor value = median of a over a VARYING number of genes"}
+    alt = {}
+    base = {r["gene"]: r["status"] for r in primary["rows"]}
+    for name, ar in ALT_RULES.items():
+        other = {r["gene"]: r["status"] for r in analyse(calls, design, ar)["rows"]}
+        alt[name] = {"rules": ar, "status_changes": {g: {"registered": base[g], "alternative": other[g]}
+                                                    for g in base if other.get(g) != base[g]},
+                     "note": "sensitivity line only (Amendment 3g); no registered status changes on it"}
+    out.update({"A3g_alternative_rules": alt, "S2_leader_merad_vs_rest": s2, "S4_cell_weighted": s4, "A3f_accuracy_vs_effect": f3,
                 "A3f_low_ba_donors": sorted(d for d, b in design.donor_ba.items() if b < 0.65)})
     return out
 
@@ -345,6 +366,8 @@ def main():
     p.add_argument("--design", required=True, help="design.json built by build_design.py")
     p.add_argument("--rules", required=True, help="rules JSON fixed by amendment (min_controls_per_donor, holm_m)")
     p.add_argument("--out", required=True)
+    p.add_argument("--host-drift", choices=("true", "false"), required=True,
+                   help="from the end-of-run equivalence gate (s.3.5): true stamps every row")
     a = p.parse_args()
     rules = json.load(open(a.rules))
     assert set(rules) == set(RULES), f"rules must set exactly {sorted(RULES)}"
@@ -354,6 +377,8 @@ def main():
                    | {c for s in design.strata.values() for c in (s.get("controls") or [])})
     calls = load_all(a.phase6_root, genes, design.donors)
     primary = analyse(calls, design, rules)
+    for r in primary["rows"]:
+        r["host_drift"] = a.host_drift == "true"
     sens = sensitivities(calls, design, primary, rules)
     os.makedirs(a.out, exist_ok=True)
     json.dump(primary["rows"], open(os.path.join(a.out, "outcome_rows.json"), "w"), indent=1, default=jsonable)

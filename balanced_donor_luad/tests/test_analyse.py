@@ -13,7 +13,7 @@ import analyse as an  # noqa: E402
 import stats_core as sc  # noqa: E402
 import synth  # noqa: E402
 
-RULES = {"min_controls_per_donor": 10, "holm_m": "panel"}
+RULES = {"control_min_cells": 10, "min_controls_per_donor": 10, "holm_m": "panel"}
 
 
 def genes_all():
@@ -155,3 +155,41 @@ def test_sensitivities_never_change_primary_status(result):
     assert before == after
     assert "GA_REP|delete" in sens["S2_leader_merad_vs_rest"] and "panel_B|delete" in sens["A3f_accuracy_vs_effect"]
     assert sens["A3f_accuracy_vs_effect"]["GA_REP|delete"]["conditioned_on_significance"] is True
+
+
+# ---------------------------------------------------------------- Amendment 3g reporting requirements
+def test_rows_report_raw_p_holm_p_and_m(result):
+    rows = {r["gene"]: r for r in result[2]["rows"]}
+    r = rows["GA_REP"]
+    assert r["del_holm_m"] == 6 and r["ovx_holm_m"] == 6          # full Panel A family in the synthetic design
+    assert r["del_p_holm"] >= r["del_p"] and "ovx_p" in r
+    assert rows["GB_TOW"]["del_holm_m"] == 5
+
+
+def test_rows_report_qualifying_controls_per_donor(tmp_path):
+    root = str(tmp_path)
+    synth.build(root, ctrl_missing={synth.DONORS[0]: 11})
+    d = an.Design(**synth.design())
+    calls = an.load_all(root, genes_all(), d.donors)
+    row = next(r for r in an.analyse(calls, d, RULES)["rows"] if r["gene"] == "GA_REP")
+    q = row["controls_qualifying_per_donor"]["delete"]
+    assert q[synth.DONORS[0]] == 9 and q[synth.DONORS[1]] == 20
+    assert synth.DONORS[0] in row["dropped_few_controls"]["delete"]
+
+
+def test_alternative_rule1_counts_low_cell_controls(tmp_path):
+    root = str(tmp_path)
+    synth.build(root, ctrl_missing={synth.DONORS[0]: 11})
+    d = an.Design(**synth.design())
+    calls = an.load_all(root, genes_all(), d.donors)
+    alt = an.analyse(calls, d, an.ALT_RULES["rule1_any_control"])["arms"][("GA_REP", "delete")]
+    assert synth.DONORS[0] in alt                                   # 3-cell controls count under the alternative
+
+
+def test_3f_reports_genes_per_donor_and_alt_rules_line(result):
+    d, calls, primary = result
+    sens = an.sensitivities(calls, d, primary, RULES)
+    f = sens["A3f_accuracy_vs_effect"]["panel_B|delete"]
+    assert set(f["n_genes_per_donor"].values()) == {5}
+    assert set(sens["A3g_alternative_rules"]) == {"rule1_any_control", "rule2_holm_tested"}
+    assert all("status_changes" in v for v in sens["A3g_alternative_rules"].values())

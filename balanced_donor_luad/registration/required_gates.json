@@ -1,0 +1,26 @@
+{
+ "about": "Every check that must have a result on disk before Phase 7 reads any Phase 6 output. Transcribed from PHASE5_ISP_REGISTRATION.md (line numbers at commit 0f572cb) and the approved plan. Paths are relative to balanced_donor_luad/. The launcher (scripts/run_phase7.py) refuses to start unless every entry is satisfied.",
+ "gates": [
+  {"id": "classifier_gate", "source": "registration s.2, lines 137-141; Amendment 3d",
+   "type": "json_field", "file": "phase4_results/classifier_gate.json", "path": ["PASS"], "equals": true},
+  {"id": "ambient_produced", "source": "registration s.8, line 282 (must be produced; invalid is the UNDETERMINED branch, not a block)",
+   "type": "json_field_exists", "file": "ambient/ambient_summary.json", "path": ["valid"]},
+  {"id": "noop_gate", "source": "registration s.3, line 170; s.8 (run LATE, after Phase 6 started: see PHASE6_RUN_NOTES)",
+   "type": "json_field", "file": "phase6_prep/pre_isp_gates_late.json", "path": ["noop_gate", "PASS"], "equals": true},
+  {"id": "equivalence_before_delete", "source": "Amendment 3 s.3.5, lines 469-478; 3e.3 line 687",
+   "type": "json_field", "file": "phase6_prep/probe_3e3_probe_3e3_result.json", "path": ["delete", "registered_PASS"], "equals": true},
+  {"id": "equivalence_before_overexpress", "source": "Amendment 3 s.3.5, lines 469-478; 3e.3 line 687",
+   "type": "json_field", "file": "phase6_prep/probe_3e3_probe_3e3_result.json", "path": ["overexpress", "registered_PASS"], "equals": true},
+  {"id": "equivalence_end_exists", "source": "Amendment 3 s.3.5, lines 478-485 (must EXIST; a FAIL sets host_drift on every row, it does not block)",
+   "type": "json_field_exists", "file": "phase7_prep/probe_end_result.json", "path": ["overexpress", "registered_PASS"]},
+  {"id": "wrapper_equivalence", "source": "approved plan, Verification (run LATE)",
+   "type": "json_field", "file": "phase6_prep/pre_isp_gates_late.json", "path": ["PASS"], "equals": true},
+  {"id": "token_edit_verification", "source": "unregistered additional verification requested by god (run LATE)",
+   "type": "json_field", "file": "phase6_prep/token_edit_verification.json", "path": ["PASS"], "equals": true},
+  {"id": "amendment_3g_registered", "source": "Amendment 3g.5",
+   "type": "text_contains", "file": "registration/PHASE5_ISP_REGISTRATION.md", "text": "## Amendment 3g"},
+  {"id": "rules_frozen", "source": "Amendment 3g.5",
+   "type": "json_equals", "file": "registration/phase7_rules.json",
+   "value": {"control_min_cells": 10, "min_controls_per_donor": 10, "holm_m": "panel"}}
+ ]
+}
