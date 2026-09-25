@@ -1,0 +1,475 @@
+{
+ "rule": "Amendment 3h.6",
+ "tolerance": {
+  "max_abs_delta": 0.001,
+  "spearman_rho": 0.999
+ },
+ "hosts": {
+  "thinkstation1": {
+   "host": "thinkstation1",
+   "tolerance": {
+    "max_abs_delta": 0.001,
+    "spearman_rho": 0.999
+   },
+   "pairs": [
+    {
+     "category": "tie_rich",
+     "gene": "ENSG00000142227",
+     "donor": "He_Fan_2021_P3",
+     "host": "thinkstation1",
+     "k": 42,
+     "mixed_tie_positives": 15,
+     "overexpress": {
+      "global_normal_adjacent": {
+       "n": 42,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 42,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 42,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 0.9999999999999999,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "delete_reported": {
+      "global_normal_adjacent": {
+       "n": 42,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 42,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 42,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "pass": true
+    },
+    {
+     "category": "tie_free",
+     "gene": "ENSG00000008517",
+     "donor": "Kim_Lee_2020_P0009",
+     "host": "thinkstation1",
+     "k": 99,
+     "mixed_tie_positives": 0,
+     "overexpress": {
+      "global_normal_adjacent": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 0.9999999999999999,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "delete_reported": {
+      "global_normal_adjacent": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "pass": true
+    },
+    {
+     "category": "low_k",
+     "gene": "ENSG00000042753",
+     "donor": "He_Fan_2021_P3",
+     "host": "thinkstation1",
+     "k": 11,
+     "mixed_tie_positives": 7,
+     "overexpress": {
+      "global_normal_adjacent": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "delete_reported": {
+      "global_normal_adjacent": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "pass": true
+    },
+    {
+     "category": "high_k",
+     "gene": "ENSG00000137154",
+     "donor": "He_Fan_2021_P4",
+     "host": "thinkstation1",
+     "k": 95,
+     "mixed_tie_positives": 6,
+     "overexpress": {
+      "global_normal_adjacent": {
+       "n": 95,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 0.9999999999999999,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 95,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 95,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "delete_reported": {
+      "global_normal_adjacent": {
+       "n": 95,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 95,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 95,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "pass": true
+    }
+   ],
+   "PASS": true
+  },
+  "thinkstation2": {
+   "host": "thinkstation2",
+   "tolerance": {
+    "max_abs_delta": 0.001,
+    "spearman_rho": 0.999
+   },
+   "pairs": [
+    {
+     "category": "tie_rich",
+     "gene": "ENSG00000140319",
+     "donor": "He_Fan_2021_P4",
+     "host": "thinkstation2",
+     "k": 56,
+     "mixed_tie_positives": 15,
+     "overexpress": {
+      "global_normal_adjacent": {
+       "n": 56,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 56,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 0.9999999999999998,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 56,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "delete_reported": {
+      "global_normal_adjacent": {
+       "n": 56,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 56,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 56,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "pass": true
+    },
+    {
+     "category": "tie_free",
+     "gene": "ENSG00000075624",
+     "donor": "He_Fan_2021_P5",
+     "host": "thinkstation2",
+     "k": 99,
+     "mixed_tie_positives": 0,
+     "overexpress": {
+      "global_normal_adjacent": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "delete_reported": {
+      "global_normal_adjacent": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 99,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "pass": true
+    },
+    {
+     "category": "low_k",
+     "gene": "ENSG00000106829",
+     "donor": "Kim_Lee_2020_P0034",
+     "host": "thinkstation2",
+     "k": 11,
+     "mixed_tie_positives": 7,
+     "overexpress": {
+      "global_normal_adjacent": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "delete_reported": {
+      "global_normal_adjacent": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 11,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 0.9999999999999999,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "pass": true
+    },
+    {
+     "category": "high_k",
+     "gene": "ENSG00000170889",
+     "donor": "He_Fan_2021_P4",
+     "host": "thinkstation2",
+     "k": 90,
+     "mixed_tie_positives": 8,
+     "overexpress": {
+      "global_normal_adjacent": {
+       "n": 90,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 90,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 90,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "delete_reported": {
+      "global_normal_adjacent": {
+       "n": 90,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "normal_adjacent": {
+       "n": 90,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 0.9999999999999999,
+       "bitwise_identical": true,
+       "pass": true
+      },
+      "tumor_primary": {
+       "n": 90,
+       "max_abs_delta": 0.0,
+       "spearman_rho": 1.0,
+       "bitwise_identical": true,
+       "pass": true
+      }
+     },
+     "pass": true
+    }
+   ],
+   "PASS": true
+  }
+ },
+ "n_pairs": 8,
+ "n_pass": 8,
+ "all_overexpress_bitwise_identical": true,
+ "all_delete_bitwise_identical": true,
+ "note": "bit identity was registered as NOT expected (padding k vs 100); it was observed, as a measured result",
+ "PASS": true
+}
