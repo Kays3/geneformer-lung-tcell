@@ -93,7 +93,7 @@ Branch `analysis/balanced-donor-luad`. Registration: `registration/PHASE5_ISP_RE
   - **CTLA4**: 0.50 / 0.59.
   - **PDCD1**: 0.94 / 1.0.
   - Each of these three is "OPEN, cannot attain significance at this n: no evidence either way".
-  - LEF1, although below d_min, could have been significant in this family, because many genes are highly significant and its Holm step is loose.
+  - **The two criteria flag four genes and three genes, and LEF1 is the only disagreement.** Neither count is wrong: they measure different things. LEF1 is below the registered design floor, but it could still have reached significance given how the rest of the family landed (many genes are highly significant, so its Holm step is loose). That single disagreement is why both criteria are reported.
 - **Four OPEN genes are overexpress-significant only:** CD2, RUNX3, SELL and CD8B (Holm p 1.5×10⁻⁹, 2.4×10⁻⁷, 0.010 and 0.032). One significant arm is not a call; the registration requires both.
 - **TRAC, TRBC1 and TRBC2** are NOT_RUN because their Ensembl IDs (ENSG00000277734, ENSG00000211751, ENSG00000211772) are **not among the 20,275 keys of the Geneformer V2 token dictionary**. The model cannot see or perturb them. That is a property of the model, not of these cells. Why the dictionary omits the TCR constant genes is not established here. These three rows were registered in s.1b before any GPU run (39 listed, 36 perturbable).
 - **Panel-level secondary.** 21 of 34 tested genes point toward normal on deletion and 13 away (sign test p = 0.23). **Genes in one stratum share their 20 controls (Amendment 3c.2), so these signs are not independent, and the sign test assumes they are.**
