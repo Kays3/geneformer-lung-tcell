@@ -18,14 +18,22 @@ the number"), these six items must agree across all five surfaces: **abstract, s
 note, figure captions, generator constants.** Checked for all six at build time; re-check this table
 first if any of these six numbers is ever revised.
 
-| # | Number / claim | Abstract | Slides | Sources note | Figure caption | Generator constant |
-|---|---|---|---|---|---|---|
-| 1 | 91.9% / macro F1 0.903 + 1-test-donor caveat | ✓ (with caveat) | ✓ slide 5 (with caveat) | ✓ below | n/a (confusion.png is JSDP-original, uncaptioned beyond title) | n/a (cited, not computed) |
-| 2 | S100A8/S100A9 FDR + concordance failure | ✓ (with caveat) | ✓ slide 12 (with caveat) | ✓ below | `fig_concordance.png` title states 9/12, 0/12 | `N_SAME_SIGN`, `N_CONCORDANT`, `FDR_EXAMPLE` |
-| 3 | T6 donor-level ordering + p=0.216 + PleuralEffusion/HTA8_2001 | ✓ (p stated, no "significant") | ✓ slide 11 | ✓ below | `fig_t6_reversal.png` (2026-09-24, unchanged) | `P_COMPLETE`, `PE_SHARE` |
-| 4 | bf16 + frozen-FAIL 104M gate | ✓ (gate stated) | ✓ slide 15 (gate in same sentence) | ✓ below | `fig_bf16_canary.png` (2026-09-24, unchanged) | cited from `RESULTS_BF16.md`, not recomputed here |
-| 5 | 42-vs-45 donor reconciliation | n/a (abstract states 42 only, no need for 45) | ✓ slide 5 | ✓ below | n/a | cited from `METHODS.md` |
-| 6 | Any normal-class claim, per-contrast | ✓ (no blanket claim made) | ✓ slides 12, 18 | ✓ below | n/a | n/a |
+**A presence check is not a strength check.** The abstract's bf16 sentence (row 4) originally passed
+this table's own "✓ (gate stated)" column while stating a materially weaker, wrong-implication version
+of the caveat ("an unrelated ... technicality" — "unrelated" is not in the source and understates that
+the gate reads FAIL, final, unamended). A tickbox for presence cannot see that. **Added a "Strongest
+wording" column**: it names which surface states the caveat most completely and precisely, so the
+others can be checked against that wording, not against a checkmark, the next time any of these six
+is touched.
+
+| # | Number / claim | Abstract | Slides | Sources note | Figure caption | Generator constant | Strongest wording |
+|---|---|---|---|---|---|---|---|
+| 1 | 91.9% / macro F1 0.903 + 1-test-donor caveat | ✓ (with caveat) | ✓ slide 5 (with caveat) | ✓ below | n/a (confusion.png is JSDP-original, uncaptioned beyond title) | n/a (cited, not computed) | **Slide 5** — full line citation (METHODS.md 57–67, 112) and the raw cell/donor counts; abstract necessarily compresses this |
+| 2 | S100A8/S100A9 FDR + concordance failure | ✓ (with caveat) | ✓ slide 12 (with caveat) | ✓ below | `fig_concordance.png` title states 9/12, 0/12 | `N_SAME_SIGN`, `N_CONCORDANT`, `FDR_EXAMPLE` | **Slide 12** — carries the FDR-is-certainty-not-magnitude point explicitly, which the abstract's shorter form only implies |
+| 3 | T6 donor-level ordering + p=0.216 + PleuralEffusion/HTA8_2001 | ✓ (p stated, no "significant") | ✓ slide 11 | ✓ below | `fig_t6_reversal.png` (2026-09-24, unchanged) | `P_COMPLETE`, `PE_SHARE` | **Slide 11** — keeps the exact-enumeration 2/35 floor as a visibly separate test; the abstract states the Monte Carlo side only |
+| 4 | bf16 + frozen-FAIL 104M gate | ✓ (gate stated, matched to slide 15's construction — fixed 2026-09-25, see below) | ✓ slide 15 (gate in same sentence) | ✓ below | `fig_bf16_canary.png` (2026-09-24, unchanged) | cited from `RESULTS_BF16.md` lines 99, 118–125, not recomputed here | **Slide 15** — "both are true at once" names the non-contradiction explicitly; keep the abstract's wording matched to this, not to a shorter paraphrase |
+| 5 | 42-vs-45 donor reconciliation | n/a (abstract states 42 only, no need for 45) | ✓ slide 5 | ✓ below | n/a | cited from `METHODS.md` | **Slide 5** — names all three dual-ID donors; the abstract has no equivalent detail and doesn't need one at this length |
+| 6 | Any normal-class claim, per-contrast | ✓ (no blanket claim made) | ✓ slides 12, 18 | ✓ below | n/a | n/a | **Slides 12, 18** — the only surfaces that state the per-contrast split (LUAD-pairing benefit vs. SCLC's tissue skew) at all; the abstract correctly makes no claim rather than a compressed, wrong one |
 
 ## Base material
 
