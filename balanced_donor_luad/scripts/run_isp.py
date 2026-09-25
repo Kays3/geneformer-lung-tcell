@@ -46,6 +46,8 @@ def main():
     from dtype_cast import install_dtype_cast
     from model_cache import install_model_cache, verify
     install_dtype_cast("bf16"); install_model_cache()
+    from inproc_map import install_inproc_map
+    install_inproc_map()
     from datasets import load_from_disk
     from geneformer import InSilicoPerturber
 
