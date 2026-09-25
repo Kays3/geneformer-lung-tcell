@@ -7,8 +7,8 @@ Branch `analysis/balanced-donor-luad`. Registration: `registration/PHASE5_ISP_RE
 - **What we asked.** Tumour and adjacent-normal T cells were taken from the **same 43 lung-adenocarcinoma patients**, with exactly 100 cells per patient per tissue. For each tumour T cell we asked a foundation model whether removing a gene, or pushing it to the top of the cell's gene list, makes the cell look more like that **same patient's** normal-tissue T cells. Each answer is compared with 20 matched "control" genes and tested across patients.
 - **The July LUAD hits (Panel A) are mostly not testable in T cells.** 13 of the 15 are keratins, mucin, a secretoglobin, a haemoglobin chain and other epithelial or blood markers. In this design they are expressed in the T cells of at most 8 of 43 patients, so they were not run. **This is not a failed replication.** It shows the July list was mostly not T-cell biology. The one testable gene, POLR2J3, shows no effect.
 - **The curated T-cell genes (Panel B) give a consistent signal for 13 of 34 tested genes.** 11 of them, including CD3D/CD3G/CD247, LCK, LAT, CD8A, CCR7, GZMA, CD27 and ICOS, move tumour T cells toward normal when deleted and away when overexpressed; ITK and CTSW do the reverse. **None of these 13 statuses changes under any registered sensitivity.**
-- **Read the effect sizes with caution.** Arbitrary matched control genes show the same delete-versus-overexpress shape (Spearman ρ = −0.62 across 360 control entries), and most called genes sit inside the controls' spread. Only CCR7, CD3D, GZMA and CD7 stand clearly outside it. This comparison is descriptive and post hoc; see §5.
-- **Checkpoint genes cannot be judged here.** CTLA4 (6 patients), PDCD1 (5) and CD28 (9) **cannot reach significance at any effect size**. For them this is no evidence either way, not evidence of no effect.
+- **Read the effect sizes with caution.** Arbitrary matched control genes show the same delete-versus-overexpress shape (Spearman ρ = −0.62 across 360 control entries), and most called genes sit inside the controls' spread. Only CCR7, CD3D, GZMA and CD7 stand clearly outside it. This comparison is descriptive and post hoc; see §4.
+- **Checkpoint genes cannot be judged here.** CTLA4 (6 patients), PDCD1 (5) and CD28 (9) were tested on fewer donors than the design minimum of 11, and in this analysis they **cannot reach significance at any effect size**. For them this is no evidence either way, not evidence of no effect.
 
 ---
 
@@ -85,12 +85,15 @@ Branch `analysis/balanced-donor-luad`. Registration: `registration/PHASE5_ISP_RE
   - GZMK: DELETION_ONLY → T_CELL_SIGNAL_AWAY under all-cells overexpress (B);
   - PRF1: OPEN → DELETION_ONLY if any control with ≥ 1 cell counts (3g rule 1);
   - CD69: DELETION_ONLY → DOSE_INCOHERENT if Holm m counts only tested genes (3g rule 2), and also under the global goal (S1).
-- **Cannot attain significance at any effect size** (minimum exact p substituted into the observed Holm family):
-  - **CD28** (n = 9; best possible Holm p 0.07 / 0.08);
-  - **CTLA4** (n = 6; 0.50 / 0.59);
-  - **PDCD1** (n = 5; 0.94 / 1.0).
-
-  Each of these is "OPEN, cannot attain significance at this n: no evidence either way". They had 18, 14 and 13 estimable donors. Donors were then dropped by the registered 3g.1 rule, which needs ≥ 10 of 20 controls estimable in the same donor. LEF1 (n = 10) is below the design d_min of 11 but could have been significant in this family.
+- **Rows tested below the design minimum.** The pre-registered, design-level criterion is n < d_min = 11 (s.4). It flags **CD28 (n = 9), CTLA4 (6), PDCD1 (5) and LEF1 (10)**, and it is the headline criterion.
+  - These genes had 18, 14, 13 and 21 estimable donors.
+  - Donors were then dropped by the registered 3g.1 rule, which needs ≥ 10 of 20 controls estimable in the same donor.
+- **Post hoc, conditional on the observed family: cannot attain significance at any effect size.** This check substitutes the minimum exact p (2/2^n) into the realized Holm family and depends on the other genes' observed p-values. It is **not** the registered criterion.
+  - **CD28**: best possible Holm p 0.07 / 0.08.
+  - **CTLA4**: 0.50 / 0.59.
+  - **PDCD1**: 0.94 / 1.0.
+  - Each of these three is "OPEN, cannot attain significance at this n: no evidence either way".
+  - LEF1, although below d_min, could have been significant in this family, because many genes are highly significant and its Holm step is loose.
 - **Four OPEN genes are overexpress-significant only:** CD2, RUNX3, SELL and CD8B (Holm p 1.5×10⁻⁹, 2.4×10⁻⁷, 0.010 and 0.032). One significant arm is not a call; the registration requires both.
 - **TRAC, TRBC1 and TRBC2** are NOT_RUN because their Ensembl IDs (ENSG00000277734, ENSG00000211751, ENSG00000211772) are **not among the 20,275 keys of the Geneformer V2 token dictionary**. The model cannot see or perturb them. That is a property of the model, not of these cells. Why the dictionary omits the TCR constant genes is not established here. These three rows were registered in s.1b before any GPU run (39 listed, 36 perturbable).
 - **Panel-level secondary.** 21 of 34 tested genes point toward normal on deletion and 13 away (sign test p = 0.23). **Genes in one stratum share their 20 controls (Amendment 3c.2), so these signs are not independent, and the sign test assumes they are.**

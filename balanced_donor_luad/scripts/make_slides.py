@@ -156,7 +156,7 @@ def main(argv=None):
     d.card(s, x0, 3050000, cw, 800000, head=f"Away from normal ({len(away)})", head_color=RED, body=[", ".join(away)], size=11.5)
     d.card(s, x0, 3950000, cw, 2050000, head="Stable — and what cannot be judged", body=[
         "None of the 13 moves under any registered sensitivity.",
-        f"Cannot attain significance at any effect size: {', '.join(ann['cannot_attain'])} (n = 9, 6, 5) — no evidence either way.",
+        f"Below the design d_min of 11 (registered): {', '.join(ann['below_registered_d_min'])}. Of these, {', '.join(ann['cannot_attain'])} cannot attain significance at any effect size in this family (post hoc) — no evidence either way.",
         "TRAC/TRBC1/TRBC2: not in the model's vocabulary."], size=11)
 
     # 7 concordance
