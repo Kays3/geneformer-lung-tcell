@@ -1,0 +1,681 @@
+{
+ "about": "Reporting-layer annotations appended after Phase 7; outcome_rows.json is not edited. estimable_donors for tested rows comes from the pre-GPU eligibility table, which analyse.py required to equal the Phase 6 estimable count (it raises otherwise). Attainability: minimum exact two-sided Wilcoxon p = 2/2^n_used; its Holm-adjusted value is computed by substituting it into the OBSERVED family (other genes at their actual p, untested members at 1). can_attain=false means the row cannot reach Holm p <= 0.05 at any effect size. below_registered_d_min is the design-level criterion (s.4 table, strictest Holm step).",
+ "rows": {
+  "POLR2J3": {
+   "panel": "A",
+   "estimable_donors": 40,
+   "status": "OPEN",
+   "del": {
+    "n_used": 40,
+    "min_attainable_raw_p": 1.8189894035458565e-12,
+    "min_attainable_holm_p_given_family": 2.7284841053187847e-11,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 40,
+    "min_attainable_raw_p": 1.8189894035458565e-12,
+    "min_attainable_holm_p_given_family": 2.7284841053187847e-11,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD3D": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 8.185452315956354e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.73070496506989e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD3E": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "OPEN",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD3G": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD247": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD2": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "OPEN",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD5": {
+   "panel": "B",
+   "estimable_donors": 25,
+   "status": "OPEN",
+   "del": {
+    "n_used": 20,
+    "min_attainable_raw_p": 1.9073486328125e-06,
+    "min_attainable_holm_p_given_family": 5.14984130859375e-05,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 20,
+    "min_attainable_raw_p": 1.9073486328125e-06,
+    "min_attainable_holm_p_given_family": 4.00543212890625e-05,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD6": {
+   "panel": "B",
+   "estimable_donors": 38,
+   "status": "OPEN",
+   "del": {
+    "n_used": 38,
+    "min_attainable_raw_p": 7.275957614183426e-12,
+    "min_attainable_holm_p_given_family": 2.473825588822365e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 38,
+    "min_attainable_raw_p": 7.275957614183426e-12,
+    "min_attainable_holm_p_given_family": 2.255546860396862e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD7": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.73070496506989e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD28": {
+   "panel": "B",
+   "estimable_donors": 18,
+   "status": "OPEN",
+   "del": {
+    "n_used": 9,
+    "min_attainable_raw_p": 0.00390625,
+    "min_attainable_holm_p_given_family": 0.08203125,
+    "can_attain": false,
+    "below_registered_d_min": true
+   },
+   "ovx": {
+    "n_used": 9,
+    "min_attainable_raw_p": 0.00390625,
+    "min_attainable_holm_p_given_family": 0.0703125,
+    "can_attain": false,
+    "below_registered_d_min": true
+   }
+  },
+  "LCK": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "ZAP70": {
+   "panel": "B",
+   "estimable_donors": 37,
+   "status": "OPEN",
+   "del": {
+    "n_used": 35,
+    "min_attainable_raw_p": 5.820766091346741e-11,
+    "min_attainable_holm_p_given_family": 1.9208528101444244e-09,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 35,
+    "min_attainable_raw_p": 5.820766091346741e-11,
+    "min_attainable_holm_p_given_family": 1.7462298274040222e-09,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "LAT": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "ITK": {
+   "panel": "B",
+   "estimable_donors": 34,
+   "status": "T_CELL_SIGNAL_AWAY",
+   "del": {
+    "n_used": 33,
+    "min_attainable_raw_p": 2.3283064365386963e-10,
+    "min_attainable_holm_p_given_family": 7.683411240577698e-09,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 33,
+    "min_attainable_raw_p": 2.3283064365386963e-10,
+    "min_attainable_holm_p_given_family": 6.752088665962219e-09,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "THEMIS": {
+   "panel": "B",
+   "estimable_donors": 27,
+   "status": "OPEN",
+   "del": {
+    "n_used": 24,
+    "min_attainable_raw_p": 1.1920928955078125e-07,
+    "min_attainable_holm_p_given_family": 3.490495146252215e-06,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 24,
+    "min_attainable_raw_p": 1.1920928955078125e-07,
+    "min_attainable_holm_p_given_family": 2.7418136596679688e-06,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "SKAP1": {
+   "panel": "B",
+   "estimable_donors": 40,
+   "status": "OPEN",
+   "del": {
+    "n_used": 39,
+    "min_attainable_raw_p": 3.637978807091713e-12,
+    "min_attainable_holm_p_given_family": 1.2369127944111824e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 39,
+    "min_attainable_raw_p": 3.637978807091713e-12,
+    "min_attainable_holm_p_given_family": 1.1641532182693481e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD8A": {
+   "panel": "B",
+   "estimable_donors": 39,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 39,
+    "min_attainable_raw_p": 3.637978807091713e-12,
+    "min_attainable_holm_p_given_family": 1.2369127944111824e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 39,
+    "min_attainable_raw_p": 3.637978807091713e-12,
+    "min_attainable_holm_p_given_family": 1.1641532182693481e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD8B": {
+   "panel": "B",
+   "estimable_donors": 34,
+   "status": "OPEN",
+   "del": {
+    "n_used": 33,
+    "min_attainable_raw_p": 2.3283064365386963e-10,
+    "min_attainable_holm_p_given_family": 7.683411240577698e-09,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 33,
+    "min_attainable_raw_p": 2.3283064365386963e-10,
+    "min_attainable_holm_p_given_family": 6.752088665962219e-09,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "IL7R": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "OPEN",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CCR7": {
+   "panel": "B",
+   "estimable_donors": 33,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 32,
+    "min_attainable_raw_p": 4.656612873077393e-10,
+    "min_attainable_holm_p_given_family": 1.5366822481155396e-08,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 32,
+    "min_attainable_raw_p": 4.656612873077393e-10,
+    "min_attainable_holm_p_given_family": 1.30385160446167e-08,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "TCF7": {
+   "panel": "B",
+   "estimable_donors": 30,
+   "status": "OPEN",
+   "del": {
+    "n_used": 30,
+    "min_attainable_raw_p": 1.862645149230957e-09,
+    "min_attainable_holm_p_given_family": 5.774199962615967e-08,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 30,
+    "min_attainable_raw_p": 1.862645149230957e-09,
+    "min_attainable_holm_p_given_family": 5.21540641784668e-08,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "LEF1": {
+   "panel": "B",
+   "estimable_donors": 21,
+   "status": "OPEN",
+   "del": {
+    "n_used": 10,
+    "min_attainable_raw_p": 0.001953125,
+    "min_attainable_holm_p_given_family": 0.041015625,
+    "can_attain": true,
+    "below_registered_d_min": true
+   },
+   "ovx": {
+    "n_used": 10,
+    "min_attainable_raw_p": 0.001953125,
+    "min_attainable_holm_p_given_family": 0.037109375,
+    "can_attain": true,
+    "below_registered_d_min": true
+   }
+  },
+  "SELL": {
+   "panel": "B",
+   "estimable_donors": 26,
+   "status": "OPEN",
+   "del": {
+    "n_used": 26,
+    "min_attainable_raw_p": 2.9802322387695312e-08,
+    "min_attainable_holm_p_given_family": 9.238719940185547e-07,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 26,
+    "min_attainable_raw_p": 2.9802322387695312e-08,
+    "min_attainable_holm_p_given_family": 7.152557373046875e-07,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "GZMA": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.73070496506989e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "GZMK": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "DELETION_ONLY",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "PRF1": {
+   "panel": "B",
+   "estimable_donors": 38,
+   "status": "OPEN",
+   "del": {
+    "n_used": 37,
+    "min_attainable_raw_p": 1.4551915228366852e-11,
+    "min_attainable_holm_p_given_family": 4.94765117764473e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 37,
+    "min_attainable_raw_p": 1.4551915228366852e-11,
+    "min_attainable_holm_p_given_family": 4.511093720793724e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "NKG7": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "OPEN",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CTSW": {
+   "panel": "B",
+   "estimable_donors": 40,
+   "status": "T_CELL_SIGNAL_AWAY",
+   "del": {
+    "n_used": 40,
+    "min_attainable_raw_p": 1.8189894035458565e-12,
+    "min_attainable_holm_p_given_family": 6.184563972055912e-11,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 40,
+    "min_attainable_raw_p": 1.8189894035458565e-12,
+    "min_attainable_holm_p_given_family": 6.002665031701326e-11,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD27": {
+   "panel": "B",
+   "estimable_donors": 41,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 40,
+    "min_attainable_raw_p": 1.8189894035458565e-12,
+    "min_attainable_holm_p_given_family": 6.184563972055912e-11,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 40,
+    "min_attainable_raw_p": 1.8189894035458565e-12,
+    "min_attainable_holm_p_given_family": 6.002665031701326e-11,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "ICOS": {
+   "panel": "B",
+   "estimable_donors": 32,
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del": {
+    "n_used": 32,
+    "min_attainable_raw_p": 4.656612873077393e-10,
+    "min_attainable_holm_p_given_family": 1.5366822481155396e-08,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 32,
+    "min_attainable_raw_p": 4.656612873077393e-10,
+    "min_attainable_holm_p_given_family": 1.30385160446167e-08,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CTLA4": {
+   "panel": "B",
+   "estimable_donors": 14,
+   "status": "OPEN",
+   "del": {
+    "n_used": 6,
+    "min_attainable_raw_p": 0.03125,
+    "min_attainable_holm_p_given_family": 0.59375,
+    "can_attain": false,
+    "below_registered_d_min": true
+   },
+   "ovx": {
+    "n_used": 6,
+    "min_attainable_raw_p": 0.03125,
+    "min_attainable_holm_p_given_family": 0.5,
+    "can_attain": false,
+    "below_registered_d_min": true
+   }
+  },
+  "PDCD1": {
+   "panel": "B",
+   "estimable_donors": 13,
+   "status": "OPEN",
+   "del": {
+    "n_used": 5,
+    "min_attainable_raw_p": 0.0625,
+    "min_attainable_holm_p_given_family": 1.0,
+    "can_attain": false,
+    "below_registered_d_min": true
+   },
+   "ovx": {
+    "n_used": 5,
+    "min_attainable_raw_p": 0.0625,
+    "min_attainable_holm_p_given_family": 0.9375,
+    "can_attain": false,
+    "below_registered_d_min": true
+   }
+  },
+  "RUNX3": {
+   "panel": "B",
+   "estimable_donors": 37,
+   "status": "OPEN",
+   "del": {
+    "n_used": 37,
+    "min_attainable_raw_p": 1.4551915228366852e-11,
+    "min_attainable_holm_p_given_family": 4.94765117764473e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 37,
+    "min_attainable_raw_p": 1.4551915228366852e-11,
+    "min_attainable_holm_p_given_family": 4.511093720793724e-10,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "BCL11B": {
+   "panel": "B",
+   "estimable_donors": 38,
+   "status": "OPEN",
+   "del": {
+    "n_used": 35,
+    "min_attainable_raw_p": 5.820766091346741e-11,
+    "min_attainable_holm_p_given_family": 1.9208528101444244e-09,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 35,
+    "min_attainable_raw_p": 5.820766091346741e-11,
+    "min_attainable_holm_p_given_family": 1.7462298274040222e-09,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  },
+  "CD69": {
+   "panel": "B",
+   "estimable_donors": 43,
+   "status": "DELETION_ONLY",
+   "del": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.958078640513122e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   },
+   "ovx": {
+    "n_used": 43,
+    "min_attainable_raw_p": 2.2737367544323206e-13,
+    "min_attainable_holm_p_given_family": 7.503331289626658e-12,
+    "can_attain": true,
+    "below_registered_d_min": false
+   }
+  }
+ },
+ "cannot_attain": [
+  "CD28",
+  "CTLA4",
+  "PDCD1"
+ ],
+ "below_registered_d_min": [
+  "CD28",
+  "CTLA4",
+  "LEF1",
+  "PDCD1"
+ ]
+}
