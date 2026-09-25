@@ -65,7 +65,17 @@ unset _lab_v _lab_p _LAB_VARS
 # own with geneformer_uv_setup/scripts/bootstrap_workspace.sh.
 : "${PYTHON_BIN:=$HOME/workspace/geneformer-uv-starter/.venv/bin/python}"
 
-export SCLC_PERTURBATION_ROOT TARGETED_PANEL_RUN_DIR HTAN_H5AD \
+# LAB_ROOT is resolved at the top of this file, BEFORE the per-machine file is
+# sourced, so the seven defaults above always use the caller's root. Republish
+# that same value and export it, so a child process cannot resolve LAB_ROOT to
+# a different root than the one these were built from. Without this, a script
+# reading os.environ["LAB_ROOT"] can get a second root out of the same command:
+# either from an `export LAB_ROOT=` in the per-machine file, which nothing here
+# restores, or from a caller who set LAB_ROOT without exporting it -- line 19
+# reads it either way, but a child never sees it. One command, one root.
+LAB_ROOT="$_LAB_ROOT"
+
+export LAB_ROOT SCLC_PERTURBATION_ROOT TARGETED_PANEL_RUN_DIR HTAN_H5AD \
        GSE263196_RAW_DIR GENEFORMER_TOKEN_DICT GENEFORMER_MODEL_DIR PYTHON_BIN
 
 lab_env__python_usable() {
