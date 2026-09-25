@@ -40,8 +40,12 @@ METHODS = (
 
 RESULTS = (
     "Four originally identified checkpoint/persistence candidates (TIGIT, TIM-3, "
-    "CTLA-4, IL7R) replicate and validate independently in spatial tissue data "
-    "(antigen-presentation programme, rho=0.361, 7.95 sigma above the null). A "
+    "CTLA-4, IL7R) replicate by deletion (FDR<0.05, same deletion sign in all three "
+    "SCLC donors) and validate independently in spatial tissue data "
+    "(antigen-presentation programme, rho=0.361, 7.95 sigma above the null); the "
+    "concordance half of their original call was scored by a panel runner that "
+    "overexpressed into all 2,424 SCLC cells but deleted only in detected cells, "
+    "and has not been rerun on paired cell sets. A "
     "checkpoint-axis ordering the original work had already flagged as an open, "
     "pending question is completed here: donor-level SCLC-vs-LUAD shows no "
     "significant difference (p=.216, two-sided Monte Carlo, 100,000 replicates, 19 "
@@ -89,6 +93,11 @@ def build() -> str:
     n_no_labels = word_count(body_no_labels)
     body_with_labels = " ".join(f"{label}: {text}" for label, text in SECTIONS)
     n_with_labels = word_count(body_with_labels)
+    # Overrun against the upper end of the default budget, computed rather than
+    # typed -- same rule as the word count itself (the one number in this file
+    # that had been wrong three times when it was hand-maintained).
+    _budget_hi = int(DEFAULT_WORD_BUDGET.split("-")[1])
+    overrun = round((n_no_labels - _budget_hi) / _budget_hi * 100)
 
     lines = [
         f"# Abstract (structured) — IMRaD restructure, 2026-09-25",
@@ -115,7 +124,14 @@ def build() -> str:
         f"Shinji Nakaoka — matching `poster_final` and `JSDP_P25_talk` exactly; "
         f"no AI-co-authorship line, pending the human's ruling, per the standing "
         f"instruction. Venue, duration and any abstract word limit remain "
-        f"unconfirmed with the human.)"
+        f"unconfirmed with the human -- and at {n_no_labels} words this is now "
+        f"{overrun}% over the {DEFAULT_WORD_BUDGET}-word default, so that question "
+        f"is no longer a formality: a real limit would force a real cut. If one "
+        f"does, the order is fixed -- cut the parenthetical precision (the "
+        f"202-1,131 detection range, the exact FDR), never the qualification. The "
+        f"number can lose precision; the reader cannot lose the caveat that the "
+        f"two arms were measured on different cell sets and the panel has not been "
+        f"rerun.)"
     )
     lines.append(note)
     lines.append("")

@@ -122,6 +122,25 @@ N_NBEAL1 = len(nbeal1_rows)
 N_NBEAL1_CONCORDANT = sum(1 for r in nbeal1_rows if r["concordant"] == "True")
 NBEAL1_DETECT = float(nbeal1_rows[0]["detect_frac"])
 
+# Cell-set caveat for the four original hits (added 2026-09-25, Michael's ruling):
+# the pre-2026-09-22 targeted-panel runner overexpressed into every source cell but
+# deleted only in token-positive cells. Detector: overexpress_n constant per contrast,
+# delete_n varying. The panel was never rerun after the 66d235b fix.
+_panel = read_csv("6882627", "sclc_validation/perturbation_workflow/targeted_panel/results/targeted_panel_delete_overexpress_merged.csv")
+_pon = {int(float(r["overexpress_n"])) for r in _panel if r["comparison"] == "sclc_to_normal"}
+assert _pon == {2424}, _pon
+PANEL_OVER_N = 2424
+PANEL_DEL_N = {r["Gene_name"]: int(float(r["delete_n"])) for r in _panel
+               if r["comparison"] == "sclc_to_normal" and r["Gene_name"] in ("HAVCR2", "TIGIT", "CTLA4", "IL7R")}
+assert PANEL_DEL_N == {"HAVCR2": 202, "TIGIT": 438, "CTLA4": 282, "IL7R": 1131}, PANEL_DEL_N
+assert all(r["concordant"] == "True" for r in _panel if r["comparison"] == "sclc_to_normal" and r["Gene_name"] in PANEL_DEL_N)
+_panel_log = subprocess.run(["git", "log", "origin/main", "--format=%h", "--",
+                             "sclc_validation/perturbation_workflow/targeted_panel/results/targeted_panel_delete_overexpress_merged.csv"],
+                            cwd=REPO, capture_output=True, check=True, text=True).stdout.split()
+assert _panel_log == ["6882627"], _panel_log
+PANEL_FIX_DATE = git_log_time("66d235b")[:10]
+assert PANEL_FIX_DATE == "2026-09-22", PANEL_FIX_DATE
+
 t6_recon = read_csv("9ec518c", "sclc_validation/immune_axis_test/results/t6_weighting_reconciliation.csv")
 t6_donors = read_csv("9ec518c", "sclc_validation/immune_axis_test/results/t6_donor_level_scores.csv")
 t6_perm = read_csv("9ec518c", "sclc_validation/immune_axis_test/results/t6_permutation_tests.csv")
@@ -433,17 +452,21 @@ img(c, ASSETS + "/spatial.png", M, 26 * mm, 130 * mm, 100 * mm)
 frame(c, M + 138 * mm, 66 * mm, W - M - 138 * mm - M, 60 * mm, [
     Paragraph("TIGIT, TIM-3 (HAVCR2), CTLA-4, IL7R", st(15, ACC, True, 19)),
     Paragraph("Four replicated checkpoint/persistence edits from the applied screen (screen_b.png, "
-              "Introduction).", st(10.5, colors.HexColor("#31423D"), False, 15)),
+              "Introduction). Replication here means: deletion FDR &lt; 0.05 and the same deletion sign in "
+              "all 3 SCLC donors.", st(10.5, colors.HexColor("#31423D"), False, 15)),
     Paragraph("GSE263196 Visium, 5 SCLC specimens, 15,632 in-tissue spots: antigen-presentation "
               "programme <b>rho = 0.361, 7.95 sigma above the null.</b>",
               st(10.5, colors.HexColor("#31423D"), False, 15)),
 ])
 card(c, M + 138 * mm, 26 * mm, W - M - 138 * mm - M, 32 * mm, BAND, BAND)
 frame(c, M + 146 * mm, 29 * mm, W - M - 138 * mm - M - 16 * mm, 26 * mm, [
-    Paragraph("No caveat on this slide. These four hits and this spatial-validation number are "
-              "unaffected by anything in the rest of Results.", st(9.6, colors.HexColor("#31423D"), True, 13.5)),
+    Paragraph(f"The concordance half of the original call was made by the pre-{PANEL_FIX_DATE} panel runner, which "
+              f"overexpressed into all {PANEL_OVER_N:,} SCLC cells while deleting only in the "
+              f"{min(PANEL_DEL_N.values())}&#8211;{max(PANEL_DEL_N.values()):,} cells expressing each gene; it has not been "
+              "rerun with paired cell sets. Unaffected by S100, ambient or T6 below; the spatial number is untouched. "
+              "A qualifier, not a retraction.", st(9.2, colors.HexColor("#31423D"), True, 12.8)),
 ])
-footer(c, 9, "talk/JSDP_P25_talk.pptx/pdf (rho, sigma: talk only, 0 hits in poster_final)")
+footer(c, 9, "talk/JSDP_P25_talk.pptx/pdf (rho, sigma: talk only); targeted_panel_delete_overexpress_merged.csv @ 6882627; runner fix 66d235b")
 c.showPage()
 
 # =========================================== 10. RESULTS R2 · own QC ===
