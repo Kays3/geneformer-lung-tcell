@@ -704,3 +704,34 @@ The probe runs INFERENCE with the SAME fine-tuned fold model files on both hosts
 **Erratum to 3f (appended 2026-09-24T20:50:47Z):** "No goal embedding had finished" is wrong. At commit time (2026-09-24T20:50:32Z), fold 0's global and per-donor goal embeddings already existed on thinkstation1. The claim that matters is unaffected: no ISP call had run and no ISP output existed. Goal embeddings contain no gene-perturbation result.
 
 **Precision to 3f.2 (appended 2026-09-24T20:52:10Z):** the gene-level correlation is conditioned on significance and describes those genes only. The panel-level donor correlation is the unconditioned quantity. No ISP output existed at this append.
+
+## Amendment 3g — three analysis rules left open by s.3, s.5a and 3f (appended 2026-09-25T04:04:06Z)
+
+**Registered before any Phase 6 output is read.** Phase 6 was still running at this append. The Phase 7 code (commit ab9af4b) has been run only on synthetic data. Rulings by god (message 2026-09-25, "three rules ruled"). In each case the proposal was chosen, not the alternative.
+
+### 3g.1 Controls per donor (s.3)
+- A control counts toward donor d's median only if it is **estimable in d under the same rule as the gene**: its token is present in >= 10 of d's 100 tumour analysis cells.
+- a(g,d) is **undefined if fewer than 10 of the 20** controls qualify, and that donor drops from that gene's test. **The 10-of-20 threshold is a convention fixed in advance. No principled basis is claimed for it.**
+- Every row reports the **count of qualifying controls per donor** as well as the list of dropped donors.
+- Eligibility is unchanged: s.4 counts estimable donors. If donors drop under 3g.1, the test runs on the rest, and the row reports both counts.
+
+### 3g.2 Holm family size (s.5a)
+- m = the **full registered panel**: 15 for Panel A and 36 for Panel B, each operation separately. Untested members enter as p = 1.
+- Reason: m was registered. The s.4 d_min table was derived from this m, and choosing m after learning which genes fell out would let the data pick the correction.
+- Every row reports the raw p, the Holm-adjusted p and m.
+
+### 3g.3 The 3f panel-level donor value
+- Per donor: the median of a_op(g,d) over that panel's tested genes where the donor is estimable. This is correlated with per-donor classifier BA by Spearman, per operation, **descriptive only**.
+- The **number of contributing genes per donor** is reported, and the write-up states that the value is a median over a varying number of genes.
+
+### 3g.4 Registered sensitivity line for 3g.1 and 3g.2
+After unblinding, the report states **whether any registered status would change** under each alternative rule, one at a time:
+- **3g.1 alternative:** any control with >= 1 perturbed cell counts, and 1 qualifying control suffices.
+- **3g.2 alternative:** m = the genes actually tested.
+
+This is **reported only. No registered or headline status ever changes on it.** A status that would flip under an alternative is reported as fragile, in the same sentence as the status.
+
+### 3g.5 Launch gate
+- The rules are frozen in `registration/phase7_rules.json`.
+- `registration/required_gates.json` lists every pre-analysis gate, with the registration line that requires it. The Phase 7 launcher refuses to start unless every listed result file exists and shows the required value.
+- The end-of-run equivalence result must **exist** before the launch. Per s.3.5, a FAIL does not block the analysis: every row then carries `host_drift: true`.

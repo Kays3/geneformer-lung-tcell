@@ -1,0 +1,5 @@
+{
+ "control_min_cells": 10,
+ "min_controls_per_donor": 10,
+ "holm_m": "panel"
+}
