@@ -7,9 +7,24 @@ derived UTC. Calendar-only dates (no time-of-day) are unaffected.
 
 Generators: `lung_tcell_talk_imrad_figures_20260925.py` (stages the six JSDP image assets; the four
 2026-09-24 figures are referenced directly, not copied), `make_lung_tcell_talk_imrad_20260925.py`
-(the deck). Every number is pulled from source at build time via `git_show(ref, path)` — nothing is
+(the deck), `make_lung_tcell_talk_imrad_abstract_20260925.py` (the abstract, added 2026-09-25 -- see
+below). Every number is pulled from source at build time via `git_show(ref, path)` — nothing is
 typed from memory. Base branch: `origin/main` at `bfeb82fc7437c4b991fe89524bffd777136e9245`,
 **2026-09-24 18:57 JST (09:57Z)** — fetched fresh at build time, not assumed from a prior message.
+
+**The abstract's word count is now generator-computed, not hand-typed.** It was wrong three times in a
+row -- 197 (undercounted before a caveat was added and never rechecked), 300 (stale after the bf16
+sentence grew), and 323 (a fresh recount that was itself wrong: truncated by an off-by-one line range
+in a throwaway `sed 6,34p` check, one line short of the paragraph's actual end, never re-verified
+against the file before being written down). Michael caught the 323 figure not matching his own
+independent `wc -w` (332/329) and named the structural problem: every other number in this deck is
+pulled through `git_show()` at build time, and the abstract's self-reported count was the one number
+still typed by hand -- the one value outside the rule the rest of the deck follows, and the one that
+had been wrong three times. `make_lung_tcell_talk_imrad_abstract_20260925.py` now defines the four
+section paragraphs as the single source of the abstract's text and computes the word count from that
+same text at generation time (**329 words without the four section-label words, 333 with them** --
+both over the 250-300-word default), so the number in the file can never again be stale relative to
+the text it describes.
 
 ## Correction checklist — six numbers, five surfaces each
 
