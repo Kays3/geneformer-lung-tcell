@@ -1,0 +1,247 @@
+{
+ "delete": {
+  "same_host_ts1": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   }
+  },
+  "same_host_ts2": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   }
+  },
+  "cross_host_run1": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   }
+  },
+  "cross_host_run2": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   }
+  },
+  "registered_PASS": true
+ },
+ "overexpress": {
+  "same_host_ts1": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   }
+  },
+  "same_host_ts2": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   }
+  },
+  "cross_host_run1": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   }
+  },
+  "cross_host_run2": {
+   "global_normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "normal_adjacent": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 1.0
+   },
+   "tumor_primary": {
+    "n": 100,
+    "bitwise_identical": true,
+    "max_abs_delta": 0.0,
+    "n_cells_differing": 0,
+    "spearman_rho": 0.9999999999999999
+   }
+  },
+  "registered_PASS": true
+ },
+ "meta": {
+  "probe": "B2M ENSG00000166710, donor He_Fan_2021_P1, both ops, twice per host (Amendment 3 s.3.5 end-of-run repeat)",
+  "registered_test": "ts1_run1 vs ts2_run1 per op: max|delta| <= 1e-3 and Spearman rho >= 0.999 on all three states",
+  "code_commit": {
+   "ts1": "2cfe3ebe959253b86b9f1c6d5dd541c337daba2b",
+   "ts2": "9410734e756d9df76b2ec845de2731cef067df28"
+  },
+  "code_note": "Phase 6 ran at 2cfe3eb on both hosts; ts2 worktree HEAD had advanced to 9410734 by additions only (Phase 7 scripts/tests/registration/notes); run_isp.py, model_cache.py, inproc_map.py, dtype_cast.py unchanged 2cfe3eb..9410734",
+  "run_times_utc": {
+   "ts1_run1": [
+    "2026-09-25T13:42:56Z",
+    "2026-09-25T13:43:21Z"
+   ],
+   "ts1_run2": [
+    "2026-09-25T13:43:21Z",
+    "2026-09-25T13:43:44Z"
+   ],
+   "ts2_run1": [
+    "2026-09-25T14:28:35Z",
+    "2026-09-25T14:29:01Z"
+   ],
+   "ts2_run2": [
+    "2026-09-25T14:29:01Z",
+    "2026-09-25T14:29:26Z"
+   ]
+  },
+  "gpu": {
+   "ts1": "NVIDIA GB10, 595.84",
+   "ts2": "NVIDIA GB10, 580.173.02"
+  },
+  "pickle_sha256": {
+   "ts1_run1|delete": "415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c",
+   "ts1_run1|overexpress": "d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef",
+   "ts1_run2|delete": "415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c",
+   "ts1_run2|overexpress": "d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef",
+   "ts2_run1|delete": "415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c",
+   "ts2_run1|overexpress": "d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef",
+   "ts2_run2|delete": "415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c",
+   "ts2_run2|overexpress": "d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef"
+  },
+  "pre_run_probe_3e3_pickle_sha256": {
+   "ts1_run1|delete": "415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c",
+   "ts1_run1|overexpress": "d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef",
+   "ts2_run1|delete": "415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c",
+   "ts2_run1|overexpress": "d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef"
+  },
+  "pre_run_probe_3e3_sha_source": "sha256sum of ~/workspace/balanced_donor_luad/probe_3e3/ts{1,2}_run1 pickles on thinkstation1 (the complete pre-run set), read 2026-09-25 after Phase 6",
+  "identical_to_pre_run_probe_3e3": {
+   "ts1|delete": true,
+   "ts1|overexpress": true,
+   "ts2|delete": true,
+   "ts2|overexpress": true
+  },
+  "consequence_if_fail": "host_drift: true on every Phase 7 row plus per-host rows; does not block (s.3.5)"
+ }
+}
