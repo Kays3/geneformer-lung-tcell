@@ -1,0 +1,39 @@
+# Abstract (structured, ~300 words) — IMRaD restructure, 2026-09-25
+
+**Working title:** A Foundation-Model T-cell Dysfunction Screen: Translational Candidates, Then a
+Full Audit
+
+**Background:** Foundation models fine-tuned on single-cell transcriptomes can be probed for
+candidate disease-state drivers via in-silico perturbation, but a classifier trained on real tissue
+also learns whatever else correlates with its labels — ambient RNA, detection artifacts, cohort
+composition — and a screen alone cannot say which one it found.
+
+**Methods:** A donor-disjoint SCLC/LUAD/normal T-cell classifier (91.9% accuracy, macro F1 0.903;
+46,140 cells, 42 donors) supported an in-silico deletion/overexpression screen, scored by
+significance and by bidirectional concordance between the two operations. A screen-level
+ambient-risk audit and a donor-weighted reanalysis were applied after the screen.
+
+**Results:** Four originally identified checkpoint/persistence candidates (TIGIT, TIM-3, CTLA-4,
+IL7R) replicate and validate independently in spatial tissue data (antigen-presentation programme,
+rho=0.361, 7.95 sigma above the null). A checkpoint-axis ordering the original work had already
+flagged as an open, pending question is completed here: donor-level SCLC-vs-LUAD shows no
+significant difference (p=.216, two-sided Monte Carlo, 100,000 replicates, 19 v 22 donors) once a
+single donor's 74.9% cell share is accounted for. A subsequent, expanded screen's two most
+significant hits by FDR (S100A8, S100A9; FDR~1e-224) fail bidirectional concordance in all six
+comparisons tested; screen-wide, half of the top 120 candidates by effect are ambient-flagged, a
+curated ambient anchor, or both. One candidate, NBEAL1, survives every check applied. Model precision
+(bf16 vs fp32) replicates cleanly (rho>0.998) and explains none of these results, though the
+pre-registered 104M sign-agreement gate remains recorded FAIL on an unrelated zero-noise-floor
+technicality.
+
+**Discussion:** A perturbation screen can support real translational candidates and still require
+gene-by-gene auditing for confounds; significance and effect size alone are not sufficient evidence
+of a cell-intrinsic driver, and an ordering claim built on a cell-weighted cross-cohort comparison
+needs a donor-level check before it is reported either way.
+
+(197 words as drafted — under the 250–300-word default the 2026-09-24 abstract used; there is room to
+add detail, e.g. the ambient-anchor breakdown (55/29/24/60) or the exact-enumeration floor for the
+test-only comparison, once a real word limit is known, rather than pad it now. Author list: Kaisar
+Dauyey, Shinji Nakaoka — matching `poster_final` and `JSDP_P25_talk` exactly; no AI-co-authorship
+line, pending the human's ruling, per the standing instruction. Venue, duration and any abstract word
+limit remain unconfirmed with the human.)
