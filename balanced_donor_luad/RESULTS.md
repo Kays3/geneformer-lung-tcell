@@ -130,6 +130,8 @@ Branch `analysis/balanced-donor-luad`. Registration: `registration/PHASE5_ISP_RE
 **Reading.**
 - The registered statuses stand. They answer "is this gene's shift consistent across donors, relative to its own matched controls".
 - "This gene is special among genes" is a different claim, and only CCR7, CD3D, GZMA and CD7 (and CD27 on overexpression) support it on effect size.
+- **This narrows what the registered result licenses; it does not overturn it.** It has the same shape as the S100A8/A9 finding (PR #16): there, an FDR of 1e-224 was a certainty claim, not a size claim. Here, **concordance is a direction claim, not a distinctiveness claim**, because the controls are concordant too. In both cases the null was what had not been drawn.
+- **The earlier whole-genome screen does not supply this null**, but it points the same way. It is committed at `sclc_validation/primary_test_perturbation/tables/allgene_delete_overexpress_shift.csv`: 104M fp32, class-centroid goal, cell-weighted, token-positive on both arms. Across genes with ≥ 25 detections, its delete and overexpress shifts are also anti-correlated, weaker than here (Spearman ρ −0.08 to −0.30 across its six comparisons, about half of genes opposite-signed). A null for this design (316M, donor-own goal, control-adjusted, per donor) would need new GPU time. Whether to run it is the human's decision.
 
 ## 5. Sensitivities
 
