@@ -8,10 +8,11 @@ candidate disease-state drivers via in-silico perturbation, but a classifier tra
 also learns whatever else correlates with its labels — ambient RNA, detection artifacts, cohort
 composition — and a screen alone cannot say which one it found.
 
-**Methods:** A donor-disjoint SCLC/LUAD/normal T-cell classifier (91.9% accuracy, macro F1 0.903;
-46,140 cells, 42 donors) supported an in-silico deletion/overexpression screen, scored by
-significance and by bidirectional concordance between the two operations. A screen-level
-ambient-risk audit and a donor-weighted reanalysis were applied after the screen.
+**Methods:** A donor-disjoint SCLC/LUAD/normal T-cell classifier (91.9% accuracy, macro F1 0.903 --
+a third of that macro-F1 from a single held-out normal-class donor, 566 cells; 46,140 cells, 42
+donors overall) supported an in-silico deletion/overexpression screen, scored by significance and by
+bidirectional concordance between the two operations. A screen-level ambient-risk audit and a
+donor-weighted reanalysis were applied after the screen.
 
 **Results:** Four originally identified checkpoint/persistence candidates (TIGIT, TIM-3, CTLA-4,
 IL7R) replicate and validate independently in spatial tissue data (antigen-presentation programme,
@@ -31,9 +32,11 @@ gene-by-gene auditing for confounds; significance and effect size alone are not 
 of a cell-intrinsic driver, and an ordering claim built on a cell-weighted cross-cohort comparison
 needs a donor-level check before it is reported either way.
 
-(197 words as drafted — under the 250–300-word default the 2026-09-24 abstract used; there is room to
-add detail, e.g. the ambient-anchor breakdown (55/29/24/60) or the exact-enumeration floor for the
-test-only comparison, once a real word limit is known, rather than pad it now. Author list: Kaisar
+(300 words as drafted, counted directly rather than restated — the build's original "197 words" note
+undercounted before the 1-test-donor caveat was added to Methods and was not re-checked after; this
+count is at the top of the 250–300-word default the 2026-09-24 abstract used, with no headroom left
+to add further detail (e.g. the ambient-anchor breakdown) without either trimming elsewhere or a
+confirmed larger word limit from the human. Author list: Kaisar
 Dauyey, Shinji Nakaoka — matching `poster_final` and `JSDP_P25_talk` exactly; no AI-co-authorship
 line, pending the human's ruling, per the standing instruction. Venue, duration and any abstract word
 limit remain unconfirmed with the human.)
