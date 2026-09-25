@@ -1,0 +1,1477 @@
+{
+ "S1_global_goal": {
+  "ENSG00000162896": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000254772": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000111057": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000185499": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000106541": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000101443": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000171345": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000157765": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000164265": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000170421": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000135480": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000133639": {
+   "status": "NOT_ESTIMABLE_CONTROLS",
+   "del_median": null
+  },
+  "ENSG00000168255": {
+   "status": "OPEN",
+   "del_median": -0.0010868487729974224
+  },
+  "ENSG00000206172": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000110492": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000167286": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.007494108883791653
+  },
+  "ENSG00000198851": {
+   "status": "OPEN",
+   "del_median": -0.00013666110993484172
+  },
+  "ENSG00000160654": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.002640088785300319
+  },
+  "ENSG00000198821": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.001944378094617499
+  },
+  "ENSG00000116824": {
+   "status": "OPEN",
+   "del_median": 0.0009182059432206343
+  },
+  "ENSG00000110448": {
+   "status": "OPEN",
+   "del_median": -0.0006345751267062354
+  },
+  "ENSG00000013725": {
+   "status": "OPEN",
+   "del_median": -0.0008684774545522836
+  },
+  "ENSG00000173762": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.005014997070698738
+  },
+  "ENSG00000178562": {
+   "status": "OPEN",
+   "del_median": 0.0019319444640069944
+  },
+  "ENSG00000182866": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.0029038379744842887
+  },
+  "ENSG00000115085": {
+   "status": "OPEN",
+   "del_median": 0.0013610597876717201
+  },
+  "ENSG00000213658": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.0020011364583193865
+  },
+  "ENSG00000113263": {
+   "status": "T_CELL_SIGNAL_AWAY",
+   "del_median": -0.004165988498263889
+  },
+  "ENSG00000172673": {
+   "status": "OPEN",
+   "del_median": 0.0007775217226780446
+  },
+  "ENSG00000141293": {
+   "status": "OPEN",
+   "del_median": -0.0005651423085925944
+  },
+  "ENSG00000153563": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.004031613412360824
+  },
+  "ENSG00000172116": {
+   "status": "OPEN",
+   "del_median": 0.002522571941366172
+  },
+  "ENSG00000168685": {
+   "status": "OPEN",
+   "del_median": -6.884777845126951e-05
+  },
+  "ENSG00000126353": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.024386892763607476
+  },
+  "ENSG00000081059": {
+   "status": "OPEN",
+   "del_median": -0.0010084890001810383
+  },
+  "ENSG00000138795": {
+   "status": "OPEN",
+   "del_median": 0.0007717132568359373
+  },
+  "ENSG00000188404": {
+   "status": "OPEN",
+   "del_median": 0.0024044074372379263
+  },
+  "ENSG00000145649": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.006932724081174364
+  },
+  "ENSG00000113088": {
+   "status": "DELETION_ONLY",
+   "del_median": -0.0030509530139513795
+  },
+  "ENSG00000180644": {
+   "status": "OPEN",
+   "del_median": 0.0017069201448779085
+  },
+  "ENSG00000105374": {
+   "status": "OPEN",
+   "del_median": -0.0005019676952603244
+  },
+  "ENSG00000172543": {
+   "status": "T_CELL_SIGNAL_AWAY",
+   "del_median": -0.003197783886170691
+  },
+  "ENSG00000139193": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.005190581344933348
+  },
+  "ENSG00000163600": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.0033503567223825814
+  },
+  "ENSG00000163599": {
+   "status": "OPEN",
+   "del_median": -0.0006635616987179489
+  },
+  "ENSG00000188389": {
+   "status": "OPEN",
+   "del_median": 0.0028708317340948642
+  },
+  "ENSG00000049768": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000030419": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000020633": {
+   "status": "OPEN",
+   "del_median": 0.0011671840262036182
+  },
+  "ENSG00000127152": {
+   "status": "OPEN",
+   "del_median": 0.0010336035252963582
+  },
+  "ENSG00000110848": {
+   "status": "DOSE_INCOHERENT",
+   "del_median": -0.001691145162546774
+  },
+  "ENSG00000277734": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000211751": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000211772": {
+   "status": "NOT_RUN",
+   "del_median": null
+  }
+ },
+ "A3h_B_all_cells_overexpress": {
+  "status_changes": {
+   "ENSG00000113088": {
+    "registered": "DELETION_ONLY",
+    "all_cells_overexpress": "T_CELL_SIGNAL_AWAY"
+   }
+  },
+  "ovx_median": {
+   "ENSG00000168255": 0.00019023895263671866,
+   "ENSG00000167286": -0.043724746704101564,
+   "ENSG00000198851": -0.00040256500244140615,
+   "ENSG00000160654": -0.004644246101379394,
+   "ENSG00000198821": -0.009274864196777343,
+   "ENSG00000116824": -0.0084478759765625,
+   "ENSG00000110448": -0.002321319580078125,
+   "ENSG00000013725": -0.0010154151916503904,
+   "ENSG00000173762": -0.038105468749999996,
+   "ENSG00000178562": -0.0022322845458984377,
+   "ENSG00000182866": -0.005421752929687501,
+   "ENSG00000115085": -0.0006465244293212889,
+   "ENSG00000213658": -0.00725240707397461,
+   "ENSG00000113263": 0.0129736328125,
+   "ENSG00000172673": -0.0003325748443603514,
+   "ENSG00000141293": 0.0023666954040527342,
+   "ENSG00000153563": -0.010932159423828126,
+   "ENSG00000172116": -0.0018746185302734373,
+   "ENSG00000168685": -0.001584796905517578,
+   "ENSG00000126353": -0.05915596008300781,
+   "ENSG00000081059": -0.0023553466796875,
+   "ENSG00000138795": -0.003185577392578125,
+   "ENSG00000188404": -0.012529144287109373,
+   "ENSG00000145649": -0.0425889778137207,
+   "ENSG00000113088": 0.005670166015625,
+   "ENSG00000180644": 0.003966369628906251,
+   "ENSG00000105374": 0.0009263038635253906,
+   "ENSG00000172543": 0.010023193359375,
+   "ENSG00000139193": -0.025399475097656252,
+   "ENSG00000163600": -0.010388336181640624,
+   "ENSG00000163599": -0.005981674194335937,
+   "ENSG00000188389": -0.014511566162109375,
+   "ENSG00000020633": -0.007154769897460937,
+   "ENSG00000127152": -0.0036358642578125,
+   "ENSG00000110848": -0.0023793697357177733
+  },
+  "note": "Amendment 3h sensitivity B, unregistered: overexpress over all 100 perturbed cells (mostly insertion into non-expressing cells); delete unchanged; never changes a status"
+ },
+ "A3g_alternative_rules": {
+  "rule1_any_control": {
+   "rules": {
+    "control_min_cells": 1,
+    "min_controls_per_donor": 1,
+    "holm_m": "panel"
+   },
+   "status_changes": {
+    "ENSG00000180644": {
+     "registered": "OPEN",
+     "alternative": "DELETION_ONLY"
+    }
+   },
+   "note": "sensitivity line only (Amendment 3g); no registered status changes on it"
+  },
+  "rule2_holm_tested": {
+   "rules": {
+    "control_min_cells": 10,
+    "min_controls_per_donor": 10,
+    "holm_m": "tested"
+   },
+   "status_changes": {
+    "ENSG00000110848": {
+     "registered": "DELETION_ONLY",
+     "alternative": "DOSE_INCOHERENT"
+    }
+   },
+   "note": "sensitivity line only (Amendment 3g); no registered status changes on it"
+  }
+ },
+ "S2_leader_merad_vs_rest": {
+  "ENSG00000168255|delete": {
+   "leader_merad_median": -0.0015138351797658863,
+   "n_lm": 23,
+   "others_median": 0.0008540839255852843,
+   "n_others": 17
+  },
+  "ENSG00000168255|overexpress": {
+   "leader_merad_median": 0.0007546164772727273,
+   "n_lm": 23,
+   "others_median": -0.0013351638595779222,
+   "n_others": 17
+  },
+  "ENSG00000167286|delete": {
+   "leader_merad_median": 0.005157360994448593,
+   "n_lm": 23,
+   "others_median": 0.006418925926041041,
+   "n_others": 20
+  },
+  "ENSG00000167286|overexpress": {
+   "leader_merad_median": -0.040622407331009205,
+   "n_lm": 23,
+   "others_median": -0.03138076020190446,
+   "n_others": 20
+  },
+  "ENSG00000198851|delete": {
+   "leader_merad_median": -0.0004268653040051248,
+   "n_lm": 23,
+   "others_median": 2.7725277239649704e-05,
+   "n_others": 20
+  },
+  "ENSG00000198851|overexpress": {
+   "leader_merad_median": -0.0007652377563571412,
+   "n_lm": 23,
+   "others_median": -0.00025311577054130767,
+   "n_others": 20
+  },
+  "ENSG00000160654|delete": {
+   "leader_merad_median": 0.0014595486236625215,
+   "n_lm": 23,
+   "others_median": 0.0023081809498784614,
+   "n_others": 20
+  },
+  "ENSG00000160654|overexpress": {
+   "leader_merad_median": -0.0037510553716793736,
+   "n_lm": 23,
+   "others_median": -0.0035485124962431414,
+   "n_others": 20
+  },
+  "ENSG00000198821|delete": {
+   "leader_merad_median": 0.0017587954897406118,
+   "n_lm": 23,
+   "others_median": 0.0019694598263533657,
+   "n_others": 20
+  },
+  "ENSG00000198821|overexpress": {
+   "leader_merad_median": -0.008668154761904762,
+   "n_lm": 23,
+   "others_median": -0.004049134673808072,
+   "n_others": 20
+  },
+  "ENSG00000116824|delete": {
+   "leader_merad_median": 0.00025390625,
+   "n_lm": 23,
+   "others_median": 0.0009945439788005266,
+   "n_others": 20
+  },
+  "ENSG00000116824|overexpress": {
+   "leader_merad_median": -0.008472806490384616,
+   "n_lm": 23,
+   "others_median": -0.006298722313298804,
+   "n_others": 20
+  },
+  "ENSG00000110448|delete": {
+   "leader_merad_median": 0.00030977298051883,
+   "n_lm": 9,
+   "others_median": -0.0013590494791666666,
+   "n_others": 11
+  },
+  "ENSG00000110448|overexpress": {
+   "leader_merad_median": -0.00017762795472756412,
+   "n_lm": 9,
+   "others_median": 0.0004091205018939394,
+   "n_others": 11
+  },
+  "ENSG00000013725|delete": {
+   "leader_merad_median": -0.00015134375220567477,
+   "n_lm": 22,
+   "others_median": -0.0016673047119831561,
+   "n_others": 16
+  },
+  "ENSG00000013725|overexpress": {
+   "leader_merad_median": -0.0009595309204684204,
+   "n_lm": 22,
+   "others_median": -0.0014597824285734694,
+   "n_others": 16
+  },
+  "ENSG00000173762|delete": {
+   "leader_merad_median": 0.00400831855078863,
+   "n_lm": 23,
+   "others_median": 0.0036196130694765034,
+   "n_others": 20
+  },
+  "ENSG00000173762|overexpress": {
+   "leader_merad_median": -0.033937580061859506,
+   "n_lm": 23,
+   "others_median": -0.02496251078004697,
+   "n_others": 20
+  },
+  "ENSG00000178562|delete": {
+   "leader_merad_median": 0.004087904283216783,
+   "n_lm": 3,
+   "others_median": 0.00035344759623209614,
+   "n_others": 6
+  },
+  "ENSG00000178562|overexpress": {
+   "leader_merad_median": -0.001156850961538461,
+   "n_lm": 3,
+   "others_median": -0.0025260667952280197,
+   "n_others": 6
+  },
+  "ENSG00000182866|delete": {
+   "leader_merad_median": 0.001818802070146845,
+   "n_lm": 23,
+   "others_median": 0.0021776020359926197,
+   "n_others": 20
+  },
+  "ENSG00000182866|overexpress": {
+   "leader_merad_median": -0.004578500423791274,
+   "n_lm": 23,
+   "others_median": -0.0035314577473885274,
+   "n_others": 20
+  },
+  "ENSG00000115085|delete": {
+   "leader_merad_median": 0.000757461939102564,
+   "n_lm": 21,
+   "others_median": 0.0010462795567308734,
+   "n_others": 14
+  },
+  "ENSG00000115085|overexpress": {
+   "leader_merad_median": 5.463286713286702e-05,
+   "n_lm": 21,
+   "others_median": 0.004755220190594955,
+   "n_others": 14
+  },
+  "ENSG00000213658|delete": {
+   "leader_merad_median": 0.0014393839530221536,
+   "n_lm": 23,
+   "others_median": 0.0031269482469465765,
+   "n_others": 20
+  },
+  "ENSG00000213658|overexpress": {
+   "leader_merad_median": -0.006430155745393237,
+   "n_lm": 23,
+   "others_median": -0.0056428700857569306,
+   "n_others": 20
+  },
+  "ENSG00000113263|delete": {
+   "leader_merad_median": -0.00234375,
+   "n_lm": 21,
+   "others_median": -0.005559285481770833,
+   "n_others": 12
+  },
+  "ENSG00000113263|overexpress": {
+   "leader_merad_median": 0.008875868055555555,
+   "n_lm": 21,
+   "others_median": 0.006579617169216778,
+   "n_others": 12
+  },
+  "ENSG00000172673|delete": {
+   "leader_merad_median": -0.0016741071428571428,
+   "n_lm": 13,
+   "others_median": 0.0019448960260117487,
+   "n_others": 11
+  },
+  "ENSG00000172673|overexpress": {
+   "leader_merad_median": -0.00045955882352941187,
+   "n_lm": 13,
+   "others_median": 0.0008792477054195809,
+   "n_others": 11
+  },
+  "ENSG00000141293|delete": {
+   "leader_merad_median": -0.0005544454109768907,
+   "n_lm": 23,
+   "others_median": 0.001020622522729712,
+   "n_others": 16
+  },
+  "ENSG00000141293|overexpress": {
+   "leader_merad_median": 0.0015419407894736842,
+   "n_lm": 23,
+   "others_median": 0.0003011391872525075,
+   "n_others": 16
+  },
+  "ENSG00000153563|delete": {
+   "leader_merad_median": 0.004137415142866357,
+   "n_lm": 22,
+   "others_median": 0.003386757590553977,
+   "n_others": 17
+  },
+  "ENSG00000153563|overexpress": {
+   "leader_merad_median": -0.013167195200492832,
+   "n_lm": 22,
+   "others_median": -0.00587516452955163,
+   "n_others": 17
+  },
+  "ENSG00000172116|delete": {
+   "leader_merad_median": 0.00222082305372807,
+   "n_lm": 17,
+   "others_median": 0.0034256117790358513,
+   "n_others": 16
+  },
+  "ENSG00000172116|overexpress": {
+   "leader_merad_median": -0.004616477272727273,
+   "n_lm": 17,
+   "others_median": -0.003880309633320923,
+   "n_others": 16
+  },
+  "ENSG00000168685|delete": {
+   "leader_merad_median": -0.0007073421448972735,
+   "n_lm": 23,
+   "others_median": -0.0018321366785267958,
+   "n_others": 20
+  },
+  "ENSG00000168685|overexpress": {
+   "leader_merad_median": -0.00278567662832645,
+   "n_lm": 23,
+   "others_median": -0.002440167379145118,
+   "n_others": 20
+  },
+  "ENSG00000126353|delete": {
+   "leader_merad_median": 0.019205729166666664,
+   "n_lm": 19,
+   "others_median": 0.02234775145541747,
+   "n_others": 13
+  },
+  "ENSG00000126353|overexpress": {
+   "leader_merad_median": -0.0373046875,
+   "n_lm": 19,
+   "others_median": -0.02951712629913744,
+   "n_others": 13
+  },
+  "ENSG00000081059|delete": {
+   "leader_merad_median": 0.0001558191636029411,
+   "n_lm": 16,
+   "others_median": -0.001495685507526328,
+   "n_others": 14
+  },
+  "ENSG00000081059|overexpress": {
+   "leader_merad_median": -0.004584418402777778,
+   "n_lm": 16,
+   "others_median": 0.001157238918363239,
+   "n_others": 14
+  },
+  "ENSG00000138795|delete": {
+   "leader_merad_median": 0.0018439486945346323,
+   "n_lm": 4,
+   "others_median": -0.0014150437854585196,
+   "n_others": 6
+  },
+  "ENSG00000138795|overexpress": {
+   "leader_merad_median": -0.0013255136790293039,
+   "n_lm": 4,
+   "others_median": 0.00017660685947963172,
+   "n_others": 6
+  },
+  "ENSG00000188404|delete": {
+   "leader_merad_median": 0.0007553779721394002,
+   "n_lm": 18,
+   "others_median": 0.0019783297452059664,
+   "n_others": 8
+  },
+  "ENSG00000188404|overexpress": {
+   "leader_merad_median": -0.005243844696969698,
+   "n_lm": 18,
+   "others_median": -0.0027044115805063985,
+   "n_others": 8
+  },
+  "ENSG00000145649|delete": {
+   "leader_merad_median": 0.005025812852642992,
+   "n_lm": 23,
+   "others_median": 0.007062232218017847,
+   "n_others": 20
+  },
+  "ENSG00000145649|overexpress": {
+   "leader_merad_median": -0.041325832353270614,
+   "n_lm": 23,
+   "others_median": -0.04010924826695593,
+   "n_others": 20
+  },
+  "ENSG00000113088|delete": {
+   "leader_merad_median": -0.003594650592071178,
+   "n_lm": 23,
+   "others_median": -0.0022103990827287943,
+   "n_others": 20
+  },
+  "ENSG00000113088|overexpress": {
+   "leader_merad_median": -0.001694649361275338,
+   "n_lm": 23,
+   "others_median": 0.003964857098563584,
+   "n_others": 20
+  },
+  "ENSG00000180644|delete": {
+   "leader_merad_median": 0.0016465928819444442,
+   "n_lm": 21,
+   "others_median": 0.0017767635841406918,
+   "n_others": 16
+  },
+  "ENSG00000180644|overexpress": {
+   "leader_merad_median": 0.0019934333958724205,
+   "n_lm": 21,
+   "others_median": 0.0061906023170879565,
+   "n_others": 16
+  },
+  "ENSG00000105374|delete": {
+   "leader_merad_median": -0.001127232142857143,
+   "n_lm": 23,
+   "others_median": 0.00021841506160114987,
+   "n_others": 20
+  },
+  "ENSG00000105374|overexpress": {
+   "leader_merad_median": -0.011379026906370656,
+   "n_lm": 23,
+   "others_median": 0.0007817247422601723,
+   "n_others": 20
+  },
+  "ENSG00000172543|delete": {
+   "leader_merad_median": -0.002387152777777778,
+   "n_lm": 23,
+   "others_median": -0.0019135173295392375,
+   "n_others": 17
+  },
+  "ENSG00000172543|overexpress": {
+   "leader_merad_median": 0.00624303006932803,
+   "n_lm": 23,
+   "others_median": 0.011099277854610418,
+   "n_others": 17
+  },
+  "ENSG00000139193|delete": {
+   "leader_merad_median": 0.002253200125860687,
+   "n_lm": 22,
+   "others_median": 0.005346459896496158,
+   "n_others": 18
+  },
+  "ENSG00000139193|overexpress": {
+   "leader_merad_median": -0.020250288985246973,
+   "n_lm": 22,
+   "others_median": -0.016999681481035242,
+   "n_others": 18
+  },
+  "ENSG00000163600|delete": {
+   "leader_merad_median": 0.0021484375,
+   "n_lm": 17,
+   "others_median": 0.0029749973695286196,
+   "n_others": 15
+  },
+  "ENSG00000163600|overexpress": {
+   "leader_merad_median": -0.01123046875,
+   "n_lm": 17,
+   "others_median": -0.005146297331779234,
+   "n_others": 15
+  },
+  "ENSG00000163599|delete": {
+   "leader_merad_median": -0.001995901776175214,
+   "n_lm": 2,
+   "others_median": -0.0014728055509637612,
+   "n_others": 4
+  },
+  "ENSG00000163599|overexpress": {
+   "leader_merad_median": -0.0029721797299922296,
+   "n_lm": 2,
+   "others_median": -0.0018231740073552207,
+   "n_others": 4
+  },
+  "ENSG00000188389|delete": {
+   "leader_merad_median": -0.0001963775751424807,
+   "n_lm": 2,
+   "others_median": 0.005892666903409091,
+   "n_others": 3
+  },
+  "ENSG00000188389|overexpress": {
+   "leader_merad_median": -0.01503258907433712,
+   "n_lm": 2,
+   "others_median": -0.010855538504464286,
+   "n_others": 3
+  },
+  "ENSG00000020633|delete": {
+   "leader_merad_median": 0.0017152095057850355,
+   "n_lm": 20,
+   "others_median": 0.0002978754978553921,
+   "n_others": 17
+  },
+  "ENSG00000020633|overexpress": {
+   "leader_merad_median": -0.0080326263249269,
+   "n_lm": 20,
+   "others_median": -0.007403891681235431,
+   "n_others": 17
+  },
+  "ENSG00000127152|delete": {
+   "leader_merad_median": 0.001486670788545286,
+   "n_lm": 18,
+   "others_median": -0.0005187240301393995,
+   "n_others": 17
+  },
+  "ENSG00000127152|overexpress": {
+   "leader_merad_median": -0.0014877286860557918,
+   "n_lm": 18,
+   "others_median": -0.0007548178395917335,
+   "n_others": 17
+  },
+  "ENSG00000110848|delete": {
+   "leader_merad_median": -0.0018442670036764707,
+   "n_lm": 23,
+   "others_median": -0.002099990738795853,
+   "n_others": 20
+  },
+  "ENSG00000110848|overexpress": {
+   "leader_merad_median": -0.0016911050292442663,
+   "n_lm": 23,
+   "others_median": -0.004851130459637125,
+   "n_others": 20
+  }
+ },
+ "S4_cell_weighted": {
+  "ENSG00000168255|delete": {
+   "cell_weighted_mean_shift": -0.0008158140057391524,
+   "n_cells": 991,
+   "donor_median_a": -0.0009170270114901942,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000168255|overexpress": {
+   "cell_weighted_mean_shift": 0.0013951860691536328,
+   "n_cells": 991,
+   "donor_median_a": -0.000592478390776706,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000167286|delete": {
+   "cell_weighted_mean_shift": 0.006693582357931749,
+   "n_cells": 3505,
+   "donor_median_a": 0.006435301686201068,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000167286|overexpress": {
+   "cell_weighted_mean_shift": -0.03995517616435226,
+   "n_cells": 3505,
+   "donor_median_a": -0.041872839013808644,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000198851|delete": {
+   "cell_weighted_mean_shift": -0.0003936031689136664,
+   "n_cells": 2623,
+   "donor_median_a": -0.00012734407942453104,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000198851|overexpress": {
+   "cell_weighted_mean_shift": 0.0018159180618268682,
+   "n_cells": 2623,
+   "donor_median_a": -0.0006282491754199728,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000160654|delete": {
+   "cell_weighted_mean_shift": 0.0020172323682033345,
+   "n_cells": 1865,
+   "donor_median_a": 0.0020513441839291034,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000160654|overexpress": {
+   "cell_weighted_mean_shift": -0.002207543830769311,
+   "n_cells": 1865,
+   "donor_median_a": -0.00370615826376115,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000198821|delete": {
+   "cell_weighted_mean_shift": 0.0017415741343557098,
+   "n_cells": 1134,
+   "donor_median_a": 0.001855540086725433,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000198821|overexpress": {
+   "cell_weighted_mean_shift": -0.006899986738040123,
+   "n_cells": 1134,
+   "donor_median_a": -0.007034600233715393,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000116824|delete": {
+   "cell_weighted_mean_shift": 0.0003654293478704718,
+   "n_cells": 3109,
+   "donor_median_a": 0.0004889048027254247,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000116824|overexpress": {
+   "cell_weighted_mean_shift": -0.008246474881078622,
+   "n_cells": 3109,
+   "donor_median_a": -0.007263734344305044,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000110448|delete": {
+   "cell_weighted_mean_shift": -0.0027087529500325522,
+   "n_cells": 312,
+   "donor_median_a": -0.0009962145854856821,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000110448|overexpress": {
+   "cell_weighted_mean_shift": 0.002505180163261218,
+   "n_cells": 312,
+   "donor_median_a": -0.00033550406293451863,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000013725|delete": {
+   "cell_weighted_mean_shift": -0.0012050546625609038,
+   "n_cells": 930,
+   "donor_median_a": -0.0006412338849664536,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000013725|overexpress": {
+   "cell_weighted_mean_shift": 0.0023372855237735217,
+   "n_cells": 930,
+   "donor_median_a": -0.0010677185836519714,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000173762|delete": {
+   "cell_weighted_mean_shift": 0.00410922215043668,
+   "n_cells": 1866,
+   "donor_median_a": 0.004205669711746147,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000173762|overexpress": {
+   "cell_weighted_mean_shift": -0.030392678476478766,
+   "n_cells": 1866,
+   "donor_median_a": -0.032149003610391316,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000178562|delete": {
+   "cell_weighted_mean_shift": 0.0016313710607084116,
+   "n_cells": 133,
+   "donor_median_a": 0.0019188514122596154,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000178562|overexpress": {
+   "cell_weighted_mean_shift": 0.0006382304026668233,
+   "n_cells": 133,
+   "donor_median_a": -0.0016883263221153847,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000182866|delete": {
+   "cell_weighted_mean_shift": 0.0018898018023147116,
+   "n_cells": 1964,
+   "donor_median_a": 0.0022604510183002586,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000182866|overexpress": {
+   "cell_weighted_mean_shift": -0.0033949251815889128,
+   "n_cells": 1964,
+   "donor_median_a": -0.004516454423250826,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000115085|delete": {
+   "cell_weighted_mean_shift": 3.384676846590909e-05,
+   "n_cells": 605,
+   "donor_median_a": 0.0010848607772435898,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000115085|overexpress": {
+   "cell_weighted_mean_shift": 0.0038583802782799588,
+   "n_cells": 605,
+   "donor_median_a": 0.0013594927462765704,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000213658|delete": {
+   "cell_weighted_mean_shift": 0.0013904792218168904,
+   "n_cells": 1210,
+   "donor_median_a": 0.002117386539688786,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000213658|overexpress": {
+   "cell_weighted_mean_shift": -0.002898053886476627,
+   "n_cells": 1210,
+   "donor_median_a": -0.005776528244919347,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000113263|delete": {
+   "cell_weighted_mean_shift": -0.00431539306640625,
+   "n_cells": 625,
+   "donor_median_a": -0.0036508490984956737,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000113263|overexpress": {
+   "cell_weighted_mean_shift": 0.0129427734375,
+   "n_cells": 625,
+   "donor_median_a": 0.009507399338942308,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172673|delete": {
+   "cell_weighted_mean_shift": -0.0007833463442724164,
+   "n_cells": 329,
+   "donor_median_a": -3.2487288236237655e-05,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172673|overexpress": {
+   "cell_weighted_mean_shift": 0.0029483319778210487,
+   "n_cells": 329,
+   "donor_median_a": 7.478166603999562e-05,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000141293|delete": {
+   "cell_weighted_mean_shift": -0.0008772174517313639,
+   "n_cells": 960,
+   "donor_median_a": -0.0002764795587854859,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000141293|overexpress": {
+   "cell_weighted_mean_shift": 0.004753478368123372,
+   "n_cells": 960,
+   "donor_median_a": 0.0012231418848843412,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000153563|delete": {
+   "cell_weighted_mean_shift": 0.00362331200376781,
+   "n_cells": 1044,
+   "donor_median_a": 0.0034327398401238505,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000153563|overexpress": {
+   "cell_weighted_mean_shift": -0.008129558343996948,
+   "n_cells": 1044,
+   "donor_median_a": -0.010487128713562041,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172116|delete": {
+   "cell_weighted_mean_shift": 0.0015588555454222623,
+   "n_cells": 726,
+   "donor_median_a": 0.002293477447438629,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172116|overexpress": {
+   "cell_weighted_mean_shift": -0.002272109354823089,
+   "n_cells": 726,
+   "donor_median_a": -0.0037706756829250796,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000168685|delete": {
+   "cell_weighted_mean_shift": -0.0004828786008377502,
+   "n_cells": 2323,
+   "donor_median_a": -0.0005375940540794553,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000168685|overexpress": {
+   "cell_weighted_mean_shift": -0.002740249929374731,
+   "n_cells": 2323,
+   "donor_median_a": -0.0036963742742922023,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000126353|delete": {
+   "cell_weighted_mean_shift": 0.021252659739405395,
+   "n_cells": 622,
+   "donor_median_a": 0.02034721401650455,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000126353|overexpress": {
+   "cell_weighted_mean_shift": -0.0300878788497287,
+   "n_cells": 622,
+   "donor_median_a": -0.03227542381926829,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000081059|delete": {
+   "cell_weighted_mean_shift": -0.0008862121467518762,
+   "n_cells": 533,
+   "donor_median_a": -0.000640277225755167,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000081059|overexpress": {
+   "cell_weighted_mean_shift": 0.002033713163622772,
+   "n_cells": 533,
+   "donor_median_a": -0.001601209009648905,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000138795|delete": {
+   "cell_weighted_mean_shift": -6.398168103448276e-05,
+   "n_cells": 145,
+   "donor_median_a": 0.00027105869391025653,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000138795|overexpress": {
+   "cell_weighted_mean_shift": 0.003027764682112069,
+   "n_cells": 145,
+   "donor_median_a": -0.0005017164981726443,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000188404|delete": {
+   "cell_weighted_mean_shift": 0.0008699375143261003,
+   "n_cells": 409,
+   "donor_median_a": 0.0018388759922914478,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000188404|overexpress": {
+   "cell_weighted_mean_shift": -0.00308220077551956,
+   "n_cells": 409,
+   "donor_median_a": -0.00523748213860443,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000145649|delete": {
+   "cell_weighted_mean_shift": 0.00608102288812905,
+   "n_cells": 2238,
+   "donor_median_a": 0.006145041938468634,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000145649|overexpress": {
+   "cell_weighted_mean_shift": -0.04035164949827902,
+   "n_cells": 2238,
+   "donor_median_a": -0.041646140726143074,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000113088|delete": {
+   "cell_weighted_mean_shift": -0.0033331576937868693,
+   "n_cells": 1229,
+   "donor_median_a": -0.002956021502100355,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000113088|overexpress": {
+   "cell_weighted_mean_shift": 0.0033305379993261797,
+   "n_cells": 1229,
+   "donor_median_a": 0.0009340560110115666,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000180644|delete": {
+   "cell_weighted_mean_shift": 0.0005692917236636774,
+   "n_cells": 791,
+   "donor_median_a": 0.0015339804904037982,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000180644|overexpress": {
+   "cell_weighted_mean_shift": 0.006624677539926714,
+   "n_cells": 791,
+   "donor_median_a": 0.004030171771186447,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000105374|delete": {
+   "cell_weighted_mean_shift": -0.0010998070958149002,
+   "n_cells": 1660,
+   "donor_median_a": -0.0006243104676232523,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000105374|overexpress": {
+   "cell_weighted_mean_shift": -0.002489480627588479,
+   "n_cells": 1660,
+   "donor_median_a": -0.004269662046880765,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172543|delete": {
+   "cell_weighted_mean_shift": -0.0030421949859358306,
+   "n_cells": 1170,
+   "donor_median_a": -0.0027840998244502272,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172543|overexpress": {
+   "cell_weighted_mean_shift": 0.008351422171307426,
+   "n_cells": 1170,
+   "donor_median_a": 0.007300682973822107,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000139193|delete": {
+   "cell_weighted_mean_shift": 0.003602336161845439,
+   "n_cells": 925,
+   "donor_median_a": 0.003932411748828401,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000139193|overexpress": {
+   "cell_weighted_mean_shift": -0.015799082163217907,
+   "n_cells": 925,
+   "donor_median_a": -0.019314178145135974,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000163600|delete": {
+   "cell_weighted_mean_shift": 0.002670611757220644,
+   "n_cells": 660,
+   "donor_median_a": 0.002772102386986849,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000163600|overexpress": {
+   "cell_weighted_mean_shift": -0.0036846970066879733,
+   "n_cells": 660,
+   "donor_median_a": -0.008032248081426658,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000163599|delete": {
+   "cell_weighted_mean_shift": -0.0011243272101742097,
+   "n_cells": 87,
+   "donor_median_a": -0.001995901776175214,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000163599|overexpress": {
+   "cell_weighted_mean_shift": -0.0011342366536458333,
+   "n_cells": 87,
+   "donor_median_a": -0.0018231740073552207,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000188389|delete": {
+   "cell_weighted_mean_shift": 0.004000780059070122,
+   "n_cells": 82,
+   "donor_median_a": 0.002819750078206208,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000188389|overexpress": {
+   "cell_weighted_mean_shift": -0.010618349400962271,
+   "n_cells": 82,
+   "donor_median_a": -0.01234441352533651,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000020633|delete": {
+   "cell_weighted_mean_shift": 0.0004925015824952276,
+   "n_cells": 884,
+   "donor_median_a": 0.0012657218625693968,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000020633|overexpress": {
+   "cell_weighted_mean_shift": -0.0039075618415936085,
+   "n_cells": 884,
+   "donor_median_a": -0.007384011108950792,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000127152|delete": {
+   "cell_weighted_mean_shift": 0.00030190920449133706,
+   "n_cells": 689,
+   "donor_median_a": 0.0009633845476873671,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000127152|overexpress": {
+   "cell_weighted_mean_shift": 0.0018275777210517961,
+   "n_cells": 689,
+   "donor_median_a": -0.0010622207451206692,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000110848|delete": {
+   "cell_weighted_mean_shift": -0.002250364960217085,
+   "n_cells": 3050,
+   "donor_median_a": -0.001962725897600758,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000110848|overexpress": {
+   "cell_weighted_mean_shift": -0.003240333932345031,
+   "n_cells": 3050,
+   "donor_median_a": -0.0030793138342667206,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  }
+ },
+ "A3f_accuracy_vs_effect": {
+  "ENSG00000167286|delete": {
+   "spearman_ba_vs_a": 0.11185378586481591,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000167286|overexpress": {
+   "spearman_ba_vs_a": 0.14251728151715573,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000160654|delete": {
+   "spearman_ba_vs_a": 0.29810053531966807,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000160654|overexpress": {
+   "spearman_ba_vs_a": -0.1769570697375177,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000198821|delete": {
+   "spearman_ba_vs_a": 0.3206072390250801,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000198821|overexpress": {
+   "spearman_ba_vs_a": 0.11389298385154788,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000116824|overexpress": {
+   "spearman_ba_vs_a": -0.1259015942178583,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000173762|delete": {
+   "spearman_ba_vs_a": -0.0743174377386758,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000173762|overexpress": {
+   "spearman_ba_vs_a": 0.27340358192480324,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000182866|delete": {
+   "spearman_ba_vs_a": 0.21320947839053025,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000182866|overexpress": {
+   "spearman_ba_vs_a": -0.07801820445533751,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000213658|delete": {
+   "spearman_ba_vs_a": 0.17280314791269336,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000213658|overexpress": {
+   "spearman_ba_vs_a": 0.04750576050571857,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000113263|delete": {
+   "spearman_ba_vs_a": -0.36615955116068755,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000113263|overexpress": {
+   "spearman_ba_vs_a": 0.12071561458356914,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000153563|delete": {
+   "spearman_ba_vs_a": 0.07785765267512942,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000153563|overexpress": {
+   "spearman_ba_vs_a": 0.2117039684573415,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000172116|overexpress": {
+   "spearman_ba_vs_a": -0.12973335581015508,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000126353|delete": {
+   "spearman_ba_vs_a": 0.04638797524947302,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000126353|overexpress": {
+   "spearman_ba_vs_a": 0.45342870668753665,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000188404|overexpress": {
+   "spearman_ba_vs_a": 0.5041039966488018,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000145649|delete": {
+   "spearman_ba_vs_a": 0.27846381396595293,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000145649|overexpress": {
+   "spearman_ba_vs_a": 0.059136741615226786,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000113088|delete": {
+   "spearman_ba_vs_a": -0.10294173540428365,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000172543|delete": {
+   "spearman_ba_vs_a": 0.02664915184881383,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000172543|overexpress": {
+   "spearman_ba_vs_a": 0.2199493377944353,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000139193|delete": {
+   "spearman_ba_vs_a": 0.10219115645249967,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000139193|overexpress": {
+   "spearman_ba_vs_a": 0.2807676217684839,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000163600|delete": {
+   "spearman_ba_vs_a": -0.1223067883166836,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000163600|overexpress": {
+   "spearman_ba_vs_a": 0.16411480591219163,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000020633|overexpress": {
+   "spearman_ba_vs_a": 0.2733309789937526,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000110848|delete": {
+   "spearman_ba_vs_a": -0.12952683508315954,
+   "conditioned_on_significance": true
+  },
+  "panel_A|delete": {
+   "spearman_ba_vs_panel_median_a": 0.13653639360733424,
+   "n_donors": 40,
+   "conditioned_on_significance": false,
+   "n_genes_per_donor": {
+    "He_Fan_2021_P1": 1,
+    "He_Fan_2021_P2": 1,
+    "He_Fan_2021_P5": 1,
+    "Kim_Lee_2020_P0006": 1,
+    "Kim_Lee_2020_P0008": 1,
+    "Kim_Lee_2020_P0009": 1,
+    "Kim_Lee_2020_P0018": 1,
+    "Kim_Lee_2020_P0019": 1,
+    "Kim_Lee_2020_P0020": 1,
+    "Kim_Lee_2020_P0028": 1,
+    "Kim_Lee_2020_P0030": 1,
+    "Kim_Lee_2020_P0034": 1,
+    "Lambrechts_Thienpont_2018_6149v2_3": 1,
+    "Lambrechts_Thienpont_2018_6149v2_4": 1,
+    "Lambrechts_Thienpont_2018_6653_6": 1,
+    "Laughney_Massague_2020_LX675": 1,
+    "Laughney_Massague_2020_LX682": 1,
+    "Leader_Merad_2021_370": 1,
+    "Leader_Merad_2021_371": 1,
+    "Leader_Merad_2021_378": 1,
+    "Leader_Merad_2021_403": 1,
+    "Leader_Merad_2021_406": 1,
+    "Leader_Merad_2021_408": 1,
+    "Leader_Merad_2021_410": 1,
+    "Leader_Merad_2021_458": 1,
+    "Leader_Merad_2021_460": 1,
+    "Leader_Merad_2021_514": 1,
+    "Leader_Merad_2021_532": 1,
+    "Leader_Merad_2021_564": 1,
+    "Leader_Merad_2021_569": 1,
+    "Leader_Merad_2021_570": 1,
+    "Leader_Merad_2021_572": 1,
+    "Leader_Merad_2021_578": 1,
+    "Leader_Merad_2021_581": 1,
+    "Leader_Merad_2021_593": 1,
+    "Leader_Merad_2021_596": 1,
+    "Leader_Merad_2021_626": 1,
+    "Leader_Merad_2021_630": 1,
+    "Leader_Merad_2021_695": 1,
+    "Leader_Merad_2021_729": 1
+   },
+   "note": "per-donor value = median of a over a VARYING number of genes"
+  },
+  "panel_B|delete": {
+   "spearman_ba_vs_panel_median_a": 0.1280163180559507,
+   "n_donors": 43,
+   "conditioned_on_significance": false,
+   "n_genes_per_donor": {
+    "He_Fan_2021_P1": 17,
+    "He_Fan_2021_P2": 21,
+    "He_Fan_2021_P3": 14,
+    "He_Fan_2021_P4": 13,
+    "He_Fan_2021_P5": 24,
+    "Kim_Lee_2020_P0006": 32,
+    "Kim_Lee_2020_P0008": 29,
+    "Kim_Lee_2020_P0009": 30,
+    "Kim_Lee_2020_P0018": 29,
+    "Kim_Lee_2020_P0019": 31,
+    "Kim_Lee_2020_P0020": 29,
+    "Kim_Lee_2020_P0028": 27,
+    "Kim_Lee_2020_P0030": 27,
+    "Kim_Lee_2020_P0031": 26,
+    "Kim_Lee_2020_P0034": 26,
+    "Lambrechts_Thienpont_2018_6149v2_3": 23,
+    "Lambrechts_Thienpont_2018_6149v2_4": 29,
+    "Lambrechts_Thienpont_2018_6653_6": 34,
+    "Laughney_Massague_2020_LX675": 32,
+    "Laughney_Massague_2020_LX682": 34,
+    "Leader_Merad_2021_370": 25,
+    "Leader_Merad_2021_371": 26,
+    "Leader_Merad_2021_378": 24,
+    "Leader_Merad_2021_403": 27,
+    "Leader_Merad_2021_406": 30,
+    "Leader_Merad_2021_408": 29,
+    "Leader_Merad_2021_410": 28,
+    "Leader_Merad_2021_458": 25,
+    "Leader_Merad_2021_460": 29,
+    "Leader_Merad_2021_514": 32,
+    "Leader_Merad_2021_532": 24,
+    "Leader_Merad_2021_564": 27,
+    "Leader_Merad_2021_569": 31,
+    "Leader_Merad_2021_570": 33,
+    "Leader_Merad_2021_572": 30,
+    "Leader_Merad_2021_578": 28,
+    "Leader_Merad_2021_581": 25,
+    "Leader_Merad_2021_593": 19,
+    "Leader_Merad_2021_596": 29,
+    "Leader_Merad_2021_626": 29,
+    "Leader_Merad_2021_630": 27,
+    "Leader_Merad_2021_695": 31,
+    "Leader_Merad_2021_729": 24
+   },
+   "note": "per-donor value = median of a over a VARYING number of genes"
+  },
+  "panel_A|overexpress": {
+   "spearman_ba_vs_panel_median_a": -0.3843663699076571,
+   "n_donors": 40,
+   "conditioned_on_significance": false,
+   "n_genes_per_donor": {
+    "He_Fan_2021_P1": 1,
+    "He_Fan_2021_P2": 1,
+    "He_Fan_2021_P5": 1,
+    "Kim_Lee_2020_P0006": 1,
+    "Kim_Lee_2020_P0008": 1,
+    "Kim_Lee_2020_P0009": 1,
+    "Kim_Lee_2020_P0018": 1,
+    "Kim_Lee_2020_P0019": 1,
+    "Kim_Lee_2020_P0020": 1,
+    "Kim_Lee_2020_P0028": 1,
+    "Kim_Lee_2020_P0030": 1,
+    "Kim_Lee_2020_P0034": 1,
+    "Lambrechts_Thienpont_2018_6149v2_3": 1,
+    "Lambrechts_Thienpont_2018_6149v2_4": 1,
+    "Lambrechts_Thienpont_2018_6653_6": 1,
+    "Laughney_Massague_2020_LX675": 1,
+    "Laughney_Massague_2020_LX682": 1,
+    "Leader_Merad_2021_370": 1,
+    "Leader_Merad_2021_371": 1,
+    "Leader_Merad_2021_378": 1,
+    "Leader_Merad_2021_403": 1,
+    "Leader_Merad_2021_406": 1,
+    "Leader_Merad_2021_408": 1,
+    "Leader_Merad_2021_410": 1,
+    "Leader_Merad_2021_458": 1,
+    "Leader_Merad_2021_460": 1,
+    "Leader_Merad_2021_514": 1,
+    "Leader_Merad_2021_532": 1,
+    "Leader_Merad_2021_564": 1,
+    "Leader_Merad_2021_569": 1,
+    "Leader_Merad_2021_570": 1,
+    "Leader_Merad_2021_572": 1,
+    "Leader_Merad_2021_578": 1,
+    "Leader_Merad_2021_581": 1,
+    "Leader_Merad_2021_593": 1,
+    "Leader_Merad_2021_596": 1,
+    "Leader_Merad_2021_626": 1,
+    "Leader_Merad_2021_630": 1,
+    "Leader_Merad_2021_695": 1,
+    "Leader_Merad_2021_729": 1
+   },
+   "note": "per-donor value = median of a over a VARYING number of genes"
+  },
+  "panel_B|overexpress": {
+   "spearman_ba_vs_panel_median_a": 0.1360975841515181,
+   "n_donors": 43,
+   "conditioned_on_significance": false,
+   "n_genes_per_donor": {
+    "He_Fan_2021_P1": 17,
+    "He_Fan_2021_P2": 21,
+    "He_Fan_2021_P3": 14,
+    "He_Fan_2021_P4": 13,
+    "He_Fan_2021_P5": 24,
+    "Kim_Lee_2020_P0006": 32,
+    "Kim_Lee_2020_P0008": 29,
+    "Kim_Lee_2020_P0009": 30,
+    "Kim_Lee_2020_P0018": 29,
+    "Kim_Lee_2020_P0019": 31,
+    "Kim_Lee_2020_P0020": 29,
+    "Kim_Lee_2020_P0028": 27,
+    "Kim_Lee_2020_P0030": 27,
+    "Kim_Lee_2020_P0031": 26,
+    "Kim_Lee_2020_P0034": 26,
+    "Lambrechts_Thienpont_2018_6149v2_3": 23,
+    "Lambrechts_Thienpont_2018_6149v2_4": 29,
+    "Lambrechts_Thienpont_2018_6653_6": 34,
+    "Laughney_Massague_2020_LX675": 32,
+    "Laughney_Massague_2020_LX682": 34,
+    "Leader_Merad_2021_370": 25,
+    "Leader_Merad_2021_371": 26,
+    "Leader_Merad_2021_378": 24,
+    "Leader_Merad_2021_403": 27,
+    "Leader_Merad_2021_406": 30,
+    "Leader_Merad_2021_408": 29,
+    "Leader_Merad_2021_410": 28,
+    "Leader_Merad_2021_458": 25,
+    "Leader_Merad_2021_460": 29,
+    "Leader_Merad_2021_514": 32,
+    "Leader_Merad_2021_532": 24,
+    "Leader_Merad_2021_564": 27,
+    "Leader_Merad_2021_569": 31,
+    "Leader_Merad_2021_570": 33,
+    "Leader_Merad_2021_572": 30,
+    "Leader_Merad_2021_578": 28,
+    "Leader_Merad_2021_581": 25,
+    "Leader_Merad_2021_593": 19,
+    "Leader_Merad_2021_596": 29,
+    "Leader_Merad_2021_626": 29,
+    "Leader_Merad_2021_630": 27,
+    "Leader_Merad_2021_695": 31,
+    "Leader_Merad_2021_729": 24
+   },
+   "note": "per-donor value = median of a over a VARYING number of genes"
+  }
+ },
+ "A3f_low_ba_donors": [
+  "Kim_Lee_2020_P0030",
+  "Leader_Merad_2021_378",
+  "Leader_Merad_2021_569",
+  "Leader_Merad_2021_593",
+  "Leader_Merad_2021_596",
+  "Leader_Merad_2021_626",
+  "Leader_Merad_2021_630"
+ ]
+}

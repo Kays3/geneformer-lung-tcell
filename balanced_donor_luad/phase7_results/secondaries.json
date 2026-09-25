@@ -1,0 +1,20 @@
+{
+ "A_all": {
+  "status": "not run: n_eligible = 1 < 12"
+ },
+ "A_ambient_flagged": {
+  "status": "not run: n_eligible = 0 < 12"
+ },
+ "A_not_flagged": {
+  "status": "not run: n_eligible = 1 < 12"
+ },
+ "A_n_coherent": 0,
+ "B_all": {
+  "n_eligible": 34,
+  "n_toward": 21,
+  "n_away": 13,
+  "sign_test_p": 0.22948101302608848,
+  "caveat": "genes in one stratum share controls (Amendment 3c.2)"
+ },
+ "B_n_coherent": 13
+}

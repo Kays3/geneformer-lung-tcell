@@ -1,0 +1,34 @@
+{
+ "ambient": {
+  "path": "ambient/ambient_panelA.csv",
+  "sha256": "9388e293f76b54234f0bab32133fb313bc731f54962f7678ce074c32fe562fbe"
+ },
+ "classifier_gate": {
+  "path": "phase4_results/classifier_gate.json",
+  "sha256": "67fe0a2b9a9630c589c23a49868a462d1b119579543a088c87fdee4705acc71b"
+ },
+ "eligibility": {
+  "path": "controls/pre_gpu_eligibility.csv",
+  "sha256": "bed120d6477f4bf4418e8443913f9eb39b67e3eda7dc6eaad487402dd145f1aa"
+ },
+ "folds": {
+  "path": "cohort/folds.json",
+  "sha256": "67e48b42ecdff8e80556e19694333bf7ecdf1d25b7778320d039a002cf632bc7"
+ },
+ "host_map": {
+  "path": "controls/pre_gpu_host_map.csv",
+  "sha256": "68c62a4854697db444239b654074c74fe53797af90ec3a3d13ae27fde3f77bf2"
+ },
+ "panel_a": {
+  "path": "registration/panel_A.json",
+  "sha256": "0fdef004e28ddf2cde850136a9f25df38586cffb5e53b4c6c81ec41694fc303f"
+ },
+ "panel_b": {
+  "path": "registration/panel_B.json",
+  "sha256": "51b528b73ad3f9d5aa28ed881f4014e32a8c7a6f96b44f3894acf0d75ca407cd"
+ },
+ "strata": {
+  "path": "controls/pre_gpu_strata.json",
+  "sha256": "48ecc948db263303041f448bdcc41046043691a8237e42c09b49b8d4c4ab592e"
+ }
+}
