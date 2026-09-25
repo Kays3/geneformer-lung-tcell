@@ -735,3 +735,82 @@ This is **reported only. No registered or headline status ever changes on it.** 
 - The rules are frozen in `registration/phase7_rules.json`.
 - `registration/required_gates.json` lists every pre-analysis gate, with the registration line that requires it. The Phase 7 launcher refuses to start unless every listed result file exists and shows the required value.
 - The end-of-run equivalence result must **exist** before the launch. Per s.3.5, a FAIL does not block the analysis: every row then carries `host_drift: true`.
+
+## Amendment 3h — overexpress cell set, reconstruction and its identity check (appended 2026-09-25T14:43:32Z)
+
+**Registered after Phase 6 finished and before any outcome value is read.** At this append, Phase 7 had been launched once. It refused at the loader (`IncompleteRun`) before computing any statistic. What has been read since: markers, per-cell vector lengths, cell lengths and tokens, and the B2M end-of-run probe. No panel or control gene's shift value has been read. Rulings by god (messages 2026-09-25 14:35Z, 14:39Z and 14:41Z).
+
+### 3h.1 The finding
+- s.3 says the per-cell shift is computed "in the cells the operation applies to, **which are the cells where the gene's token is present**". That is true for delete. **It is not true for overexpress with a gene list.** The vendored Geneformer (`in_silico_perturber.py`, ~L524) skips the token filter when `perturb_type == "overexpress"`, and inserts the gene into every start-state cell.
+- So every Phase 6 overexpress pickle holds **100 per-cell values**, where the marker's `n_token_cells` = k.
+  - This applies to 14,738 of the 15,179 overexpress calls.
+  - The rest are 404 calls with k = 100 and 37 `no_token_cells` calls.
+  - Every delete pickle holds exactly k values.
+- Both operations then pass through `downsample_and_sort` (`Dataset.sort("length", reverse=True)`). So pickle order is length-descending, not dataset order.
+- **Prior art in this repository, missed:** card `isp-runner-paired-arms-20260922` documented this library behaviour and removed it by construction, pre-filtering both operations to token-positive cells. The earlier whole-genome screen (`genes_to_perturb="all"`, PR #16) overexpressed only genes already in each cell, so it was token-positive by construction. The pre-2026-09-22 targeted 50-gene panel overexpressed into every cell.
+
+### 3h.2 Primary: token-positive cells for both operations (Option A)
+- s_overexpress(g,d) = mean per-cell shift over the **same k token-positive cells** that delete uses.
+- **Reason:** the s.5b concordance test asks whether deletion and overexpression move the classifier in opposite directions. That is only meaningful if both arms perturb the same cells. With all cells, the overexpress arm would be mostly insertion into cells that never expressed the gene (88 of 100 cells at k = 12). The clause in s.3 happens to encode this. The ruling would be the same without it.
+- **Cost, stated:** the overexpress arm's n per (gene, donor) falls from 100 to k.
+
+### 3h.3 Sensitivity B (unregistered, labelled)
+- Overexpress over all 100 perturbed cells; delete unchanged. It is reported next to the primary and **never changes a status**.
+
+### 3h.4 Reconstruction rule
+- Replay Geneformer's own calls on each donor's ISP input: the start-state filter (`origin == tumor_primary`, a no-op because all 100 cells are tumour), then `Dataset.sort("length", reverse=True)`.
+- The token-positive subset = the positions, in that order, of cells whose `input_ids` contain the gene's token.
+- `datasets` 5.0.1, `pyarrow` 25.0.1 and `torch` 2.13.0 are identical on thinkstation1 and thinkstation2.
+- Ties in length resolve by the sort's stability (pyarrow `sort_indices`).
+- **Measured:** 12,184 of the 15,142 (gene, donor) pairs with k >= 1 (80.5%) contain a length shared by a token-positive and a token-negative cell.
+
+### 3h.5 Count checks (must-match; refusal on any failure)
+- (i) For every delete call, the replayed positive count equals the pickle's per-cell length.
+- (ii) For every overexpress call, the reconstructed positive count equals the marker's `n_token_cells`, and the pickle length equals the donor's cell count.
+- These test **cardinality only**. They cannot detect the right number of wrong cells.
+
+### 3h.6 GPU identity check (tests identity; stop rule)
+- **Pair selection rule, frozen before any pair runs.**
+  - Candidates are (control gene, donor) pairs with 10 <= k <= 99.
+  - A pair is assigned to the host that ran that gene in Phase 6.
+  - "Mixed-tie positives" = token-positive cells whose length is shared with a token-negative cell.
+  - Per host, four distinct pairs, chosen in this order. Every tie-break is by ascending (Ensembl ID, donor ID).
+    1. **Tie-rich:** the most mixed-tie positives.
+    2. **Tie-free positive control:** zero mixed-tie positives, largest k. If this pair also fails, the reconstruction model is wrong in general, not only at ties.
+    3. **Low k:** 10 <= k <= 12 and >= 1 mixed-tie positive; the most mixed-tie positives.
+    4. **High k:** 90 <= k <= 99 and >= 1 mixed-tie positive; the most mixed-tie positives.
+  - An empty category is reported as empty, never substituted.
+  - The selected pairs are written to `phase7_prep/identity_pairs.json` and committed **before any of them runs**. No pair is added afterwards.
+- **Procedure.**
+  - For each pair, build a token-positive-only copy of the donor's ISP input, in dataset order. This is the 09-22 construction, where the order is known.
+  - Run `run_isp.py` for that gene and donor on its Phase 6 host, with the same fold model, goals, code path and package set.
+  - Compare the overexpress output with the full Phase 6 pickle at the reconstructed positions.
+  - Delete is compared the same way and reported.
+- **Pass:** for every pair and all three states, max|Δ| <= 1e-3 **and** Spearman rho >= 0.999. This is the tolerance of the equivalence gates.
+  - **Bit identity is not expected.** The forward batch is padded differently: k cells versus 100.
+  - The tolerance is the criterion; 0.0 is not.
+  - The known failure signature for misalignment is a comparator control with reversed order: Δ ≈ 0.14, rho ≈ 0.
+- **Stop:** if any pair fails, Phase 7 does not run and the matter goes to god.
+- **Scope:** up to eight control genes' shift values are read, as a technical check, not an outcome. Controls are not registered outcomes, and the analysis rules are frozen in `phase7_rules.json` and compared byte for byte at launch.
+
+### 3h.7 Registered fallback C
+- If 3h.6 fails, overexpress is re-run by construction on token-positive-only inputs for all 15,142 pairs. The end-of-run equivalence is then repeated.
+- Before committing to C, one gene is timed, and the measured estimate goes to god. The unmeasured 3-4 h figure is not used.
+
+### 3h.8 Withdrawn instruction, stated plainly
+- An instruction given at 14:35Z, to **refuse on any positive/negative length tie**, is **withdrawn, not amended**.
+- It was keyed to the wrong condition. A tie makes the subset ambiguous only if the sort is unstable, and 3h.6 tests exactly that.
+- Refusing on ties would have refused 80.5% of the analysis.
+
+### 3h.9 Launch gate additions
+- `required_gates.json` gains two gates:
+  - `ovx_count_checks`: `phase7_prep/ovx_index_checks.json` has `failures` = 0;
+  - `ovx_identity_check`: `phase7_prep/identity_check_result.json` has `PASS` = true.
+- The launcher passes the committed position index to the analysis.
+
+### 3h.10 Late comparator control, disclosed
+- After the end-of-run gate had passed, `probe_cmp.py` was shown to detect planted differences:
+  - +1e-6 in one cell: detected, within tolerance;
+  - +2e-3 in one cell: FAIL;
+  - reversed order: FAIL, rho -0.16 to 0.02.
+- This control was run late, not before the gate.

@@ -21,6 +21,12 @@
    "type": "text_contains", "file": "registration/PHASE5_ISP_REGISTRATION.md", "text": "## Amendment 3g"},
   {"id": "rules_frozen", "source": "Amendment 3g.5",
    "type": "json_equals", "file": "registration/phase7_rules.json",
-   "value": {"control_min_cells": 10, "min_controls_per_donor": 10, "holm_m": "panel"}}
+   "value": {"control_min_cells": 10, "min_controls_per_donor": 10, "holm_m": "panel"}},
+  {"id": "amendment_3h_registered", "source": "Amendment 3h.9",
+   "type": "text_contains", "file": "registration/PHASE5_ISP_REGISTRATION.md", "text": "## Amendment 3h"},
+  {"id": "ovx_count_checks", "source": "Amendment 3h.5 (cardinality: delete lengths, overexpress n_token_cells)",
+   "type": "json_field", "file": "phase7_prep/ovx_index_checks.json", "path": ["failures"], "equals": 0},
+  {"id": "ovx_identity_check", "source": "Amendment 3h.6 (identity: GPU re-run on token-positive-only input, frozen pairs)",
+   "type": "json_field", "file": "phase7_prep/identity_check_result.json", "path": ["PASS"], "equals": true}
  ]
 }
