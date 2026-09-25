@@ -335,6 +335,15 @@ def sensitivities(calls, design, primary, rules=RULES):
 
 
 # ----------------------------------------------------------------------------- driver
+def genes_to_load(design):
+    """Genes Phase 6 ran: panel genes in an eligible stratum (not in not_run_genes) plus every control.
+    Panel genes without a stratum (ineligible before GPU, s.4) were never perturbed and have no output."""
+    run_panel = {g for g, s in design.gene_stratum.items()
+                 if design.strata[s]["status"] == "eligible" and g not in set(design.not_run_genes)}
+    controls = {c for s in design.strata.values() for c in (s.get("controls") or [])}
+    return sorted(run_panel | controls)
+
+
 def load_all(root, genes, donors):
     calls, missing = {}, []
     for op in OPS:
@@ -373,9 +382,7 @@ def main():
     assert set(rules) == set(RULES), f"rules must set exactly {sorted(RULES)}"
     design = Design(**json.load(open(a.design)))
     design.not_run_genes = set(design.not_run_genes)
-    genes = sorted({g["ensembl_id"] for g in design.panel_a + design.panel_b} - design.not_run_genes
-                   | {c for s in design.strata.values() for c in (s.get("controls") or [])})
-    calls = load_all(a.phase6_root, genes, design.donors)
+    calls = load_all(a.phase6_root, genes_to_load(design), design.donors)
     primary = analyse(calls, design, rules)
     for r in primary["rows"]:
         r["host_drift"] = a.host_drift == "true"

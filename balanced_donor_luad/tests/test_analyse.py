@@ -193,3 +193,12 @@ def test_3f_reports_genes_per_donor_and_alt_rules_line(result):
     assert set(f["n_genes_per_donor"].values()) == {5}
     assert set(sens["A3g_alternative_rules"]) == {"rule1_any_control", "rule2_holm_tested"}
     assert all("status_changes" in v for v in sens["A3g_alternative_rules"].values())
+
+
+# ---------------------------------------------------------------- loader requests only genes Phase 6 ran
+def test_genes_to_load_excludes_never_run_panel_genes(tree):
+    d = an.Design(**synth.design())
+    got = an.genes_to_load(d)
+    assert "GA_LOWD" not in got and "GA_NOCTL" not in got          # no stratum / control-less stratum
+    assert set(got) == set(genes_all())
+    an.load_all(tree, got, d.donors)                                # and every one of them loads
