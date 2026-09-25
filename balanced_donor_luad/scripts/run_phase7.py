@@ -53,6 +53,8 @@ def main():
     p.add_argument("--phase6-root", required=True)
     p.add_argument("--design", required=True)
     p.add_argument("--out", required=True)
+    p.add_argument("--ovx-index", default=None,
+                   help="overexpress position index (Amendment 3h); default phase7_prep/ovx_index.json")
     a = p.parse_args()
     failures = check_gates(a.base, os.path.join(a.base, "registration", "required_gates.json"))
     if failures:
@@ -62,7 +64,8 @@ def main():
     host_drift = not (end["delete"]["registered_PASS"] and end["overexpress"]["registered_PASS"])
     sys.argv = [sys.argv[0], "--phase6-root", a.phase6_root, "--design", a.design,
                 "--rules", os.path.join(a.base, "registration", "phase7_rules.json"), "--out", a.out,
-                "--host-drift", "true" if host_drift else "false"]
+                "--host-drift", "true" if host_drift else "false",
+                "--ovx-index", a.ovx_index or os.path.join(a.base, "phase7_prep", "ovx_index.json")]
     import analyse
     analyse.main()
 

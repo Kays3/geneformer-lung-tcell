@@ -29,7 +29,9 @@ def satisfied_base(tmp_path):
     _write(b, "phase6_prep/probe_3e3_probe_3e3_result.json", {"delete": {"registered_PASS": True}, "overexpress": {"registered_PASS": True}})
     _write(b, "phase7_prep/probe_end_result.json", {"delete": {"registered_PASS": False}, "overexpress": {"registered_PASS": True}})
     _write(b, "phase6_prep/token_edit_verification.json", {"PASS": True})
-    _write(b, "registration/PHASE5_ISP_REGISTRATION.md", "...\n## Amendment 3g — rules\n")
+    _write(b, "registration/PHASE5_ISP_REGISTRATION.md", "...\n## Amendment 3g — rules\n...\n## Amendment 3h — cells\n")
+    _write(b, "phase7_prep/ovx_index_checks.json", {"failures": 0})
+    _write(b, "phase7_prep/identity_check_result.json", {"PASS": True})
     _write(b, "registration/phase7_rules.json", {"control_min_cells": 10, "min_controls_per_donor": 10, "holm_m": "panel"})
     return b
 
@@ -70,3 +72,21 @@ def test_missing_amendment_text_blocks(tmp_path):
     b = satisfied_base(tmp_path)
     _write(b, "registration/PHASE5_ISP_REGISTRATION.md", "no amendment here\n")
     assert any(f.startswith("amendment_3g_registered:") for f in rp.check_gates(b, MANIFEST))
+
+
+def test_identity_check_fail_blocks(tmp_path):
+    b = satisfied_base(tmp_path)
+    _write(b, "phase7_prep/identity_check_result.json", {"PASS": False})
+    assert any(f.startswith("ovx_identity_check") for f in rp.check_gates(b, MANIFEST))
+
+
+def test_count_check_failures_block(tmp_path):
+    b = satisfied_base(tmp_path)
+    _write(b, "phase7_prep/ovx_index_checks.json", {"failures": 3})
+    assert any(f.startswith("ovx_count_checks") for f in rp.check_gates(b, MANIFEST))
+
+
+def test_missing_3h_text_blocks(tmp_path):
+    b = satisfied_base(tmp_path)
+    _write(b, "registration/PHASE5_ISP_REGISTRATION.md", "...\n## Amendment 3g — rules\n")
+    assert any(f.startswith("amendment_3h_registered") for f in rp.check_gates(b, MANIFEST))

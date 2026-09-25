@@ -62,8 +62,13 @@ class IncompleteRun(RuntimeError):
     pass
 
 
-def load_call(root, op, gene, donor):
-    """Return dict(status, n_token_cells, shifts={state: np.array}) or raise IncompleteRun."""
+def load_call(root, op, gene, donor, positions=None, n_total=None):
+    """Return dict(status, n_token_cells, shifts={state: np.array}) or raise IncompleteRun.
+
+    delete: one value per token-positive cell (Geneformer filters), so length == n_token_cells.
+    overexpress (Amendment 3h): Geneformer perturbs every start-state cell, so the pickle holds n_total
+    values in length-sorted order; `positions` (isp_order.positive_positions) selects the token-positive
+    ones. Both counts are checked. The full vector is kept as shifts_all for sensitivity B only."""
     safe = donor.replace("/", "_")
     marker = os.path.join(root, op, gene, f"{safe}.complete.json")
     if not os.path.exists(marker):
@@ -87,7 +92,20 @@ def load_call(root, op, gene, donor):
             raise IncompleteRun(f"{op}/{gene}/{donor} state {state}: {len(vals)} keys, expected 1")
         shifts[state] = np.asarray(vals[0], dtype=float)
     n = rec.get("n_token_cells")
-    if n is None or any(len(v) != n for v in shifts.values()):
+    if n is None:
+        raise IncompleteRun(f"{op}/{gene}/{donor}: marker has no n_token_cells")
+    if op == "overexpress":
+        if positions is None or n_total is None:
+            raise IncompleteRun(f"{op}/{gene}/{donor}: overexpress needs token-positive positions (3h)")
+        if any(len(v) != n_total for v in shifts.values()):
+            raise IncompleteRun(f"{op}/{gene}/{donor}: per-cell count != donor cell count ({n_total})")
+        if len(positions) != n:
+            raise IncompleteRun(f"{op}/{gene}/{donor}: {len(positions)} reconstructed positive positions "
+                                f"!= marker n_token_cells ({n})")
+        shifts_all = shifts
+        shifts = {s: v[np.asarray(positions, dtype=int)] for s, v in shifts_all.items()}
+        return {"status": "done", "n_token_cells": int(n), "shifts": shifts, "shifts_all": shifts_all}
+    if any(len(v) != n for v in shifts.values()):
         raise IncompleteRun(f"{op}/{gene}/{donor}: per-cell count != marker n_token_cells ({n})")
     return {"status": "done", "n_token_cells": int(n), "shifts": shifts}
 
@@ -329,12 +347,27 @@ def sensitivities(calls, design, primary, rules=RULES):
         alt[name] = {"rules": ar, "status_changes": {g: {"registered": base[g], "alternative": other[g]}
                                                     for g in base if other.get(g) != base[g]},
                      "note": "sensitivity line only (Amendment 3g); no registered status changes on it"}
-    out.update({"A3g_alternative_rules": alt, "S2_leader_merad_vs_rest": s2, "S4_cell_weighted": s4, "A3f_accuracy_vs_effect": f3,
+    b_rows = {r["gene"]: r for r in analyse(all_cells_overexpress(calls), design, rules)["rows"]}
+    sens_b = {"status_changes": {g: {"registered": base[g], "all_cells_overexpress": b_rows[g]["status"]}
+                                 for g in base if b_rows[g]["status"] != base[g]},
+              "ovx_median": {g: r.get("ovx_median") for g, r in b_rows.items() if "ovx_median" in r},
+              "note": "Amendment 3h sensitivity B, unregistered: overexpress over all 100 perturbed cells "
+                      "(mostly insertion into non-expressing cells); delete unchanged; never changes a status"}
+    out.update({"A3h_B_all_cells_overexpress": sens_b, "A3g_alternative_rules": alt, "S2_leader_merad_vs_rest": s2, "S4_cell_weighted": s4, "A3f_accuracy_vs_effect": f3,
                 "A3f_low_ba_donors": sorted(d for d, b in design.donor_ba.items() if b < 0.65)})
     return out
 
 
 # ----------------------------------------------------------------------------- driver
+def all_cells_overexpress(calls):
+    """Sensitivity B (3h, unregistered): overexpress donor values over ALL perturbed cells."""
+    out = {}
+    for key, per_d in calls.items():
+        out[key] = {d: (dict(c, shifts=c["shifts_all"]) if key[0] == "overexpress" and c["status"] == "done" else c)
+                    for d, c in per_d.items()}
+    return out
+
+
 def genes_to_load(design):
     """Genes Phase 6 ran: panel genes in an eligible stratum (not in not_run_genes) plus every control.
     Panel genes without a stratum (ineligible before GPU, s.4) were never perturbed and have no output."""
@@ -344,14 +377,17 @@ def genes_to_load(design):
     return sorted(run_panel | controls)
 
 
-def load_all(root, genes, donors):
+def load_all(root, genes, donors, ovx_positions=None, n_total=None):
+    """ovx_positions: {(gene, donor): [positions]}; n_total: {donor: cells}. Required for overexpress."""
     calls, missing = {}, []
     for op in OPS:
         for g in genes:
             calls[(op, g)] = {}
             for d in donors:
                 try:
-                    calls[(op, g)][d] = load_call(root, op, g, d)
+                    calls[(op, g)][d] = load_call(root, op, g, d,
+                                                  positions=(ovx_positions or {}).get((g, d)),
+                                                  n_total=(n_total or {}).get(d))
                 except IncompleteRun as e:
                     missing.append(str(e))
     if missing:
@@ -377,12 +413,15 @@ def main():
     p.add_argument("--out", required=True)
     p.add_argument("--host-drift", choices=("true", "false"), required=True,
                    help="from the end-of-run equivalence gate (s.3.5): true stamps every row")
+    p.add_argument("--ovx-index", required=True, help="ovx_index.json from build_ovx_index.py (Amendment 3h)")
     a = p.parse_args()
     rules = json.load(open(a.rules))
     assert set(rules) == set(RULES), f"rules must set exactly {sorted(RULES)}"
     design = Design(**json.load(open(a.design)))
     design.not_run_genes = set(design.not_run_genes)
-    calls = load_all(a.phase6_root, genes_to_load(design), design.donors)
+    ix = json.load(open(a.ovx_index))
+    positions = {tuple(k.split("|")): v for k, v in ix["positions"].items()}
+    calls = load_all(a.phase6_root, genes_to_load(design), design.donors, positions, ix["n_total"])
     primary = analyse(calls, design, rules)
     for r in primary["rows"]:
         r["host_drift"] = a.host_drift == "true"

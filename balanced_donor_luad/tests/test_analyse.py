@@ -21,16 +21,24 @@ def genes_all():
 
 
 @pytest.fixture(scope="module")
-def tree(tmp_path_factory):
+def built(tmp_path_factory):
     root = str(tmp_path_factory.mktemp("phase6"))
-    synth.build(root)
-    return root
+    return (root, *synth.build(root))
 
 
 @pytest.fixture(scope="module")
-def result(tree):
+def tree(built):
+    return built[0]
+
+
+def load(root, ix, donors, genes=None):
+    return an.load_all(root, genes or genes_all(), donors, ix[0], ix[1])
+
+
+@pytest.fixture(scope="module")
+def result(built):
     d = an.Design(**synth.design())
-    calls = an.load_all(tree, genes_all(), d.donors)
+    calls = load(built[0], built[1:], d.donors)
     primary = an.analyse(calls, d, RULES)
     return d, calls, primary
 
@@ -66,9 +74,9 @@ def test_not_run_rows_state_their_reason(result):
 def test_control_adjustment_removes_a_shared_offset(tmp_path):
     # Add +0.5 to EVERY gene (panel and controls) in every donor: a must not change.
     root = str(tmp_path)
-    synth.build(root)
+    ix = synth.build(root)
     d = an.Design(**synth.design())
-    calls = an.load_all(root, genes_all(), d.donors)
+    calls = load(root, ix, d.donors)
     base = an.analyse(calls, d, RULES)["arms"][("GA_REP", "delete")]
     for key, per_d in calls.items():
         for c in per_d.values():
@@ -88,32 +96,32 @@ def test_donor_values_come_from_the_goal_state_not_another(result):
 
 # ---------------------------------------------------------------- must FAIL on broken input
 def test_missing_marker_refuses_partial_arm(tmp_path):
-    root = str(tmp_path); synth.build(root)
+    root = str(tmp_path); ix = synth.build(root)
     os.remove(os.path.join(root, "delete", "GA_REP", f"{synth.DONORS[3]}.complete.json"))
     with pytest.raises(an.IncompleteRun, match="partial arm"):
-        an.load_all(root, genes_all(), synth.DONORS)
+        load(root, ix, synth.DONORS)
 
 
 def test_truncated_marker_is_refused(tmp_path):
-    root = str(tmp_path); synth.build(root)
+    root = str(tmp_path); ix = synth.build(root)
     p = os.path.join(root, "overexpress", "CTRL05", f"{synth.DONORS[0]}.complete.json")
     open(p, "w").write('{"gene": "CTRL05", "op"')        # a kill mid-write
     with pytest.raises(an.IncompleteRun, match="unparseable marker"):
-        an.load_all(root, genes_all(), synth.DONORS)
+        load(root, ix, synth.DONORS)
 
 
 def test_cell_count_mismatch_is_refused(tmp_path):
-    root = str(tmp_path); synth.build(root)
+    root = str(tmp_path); ix = synth.build(root)
     p = os.path.join(root, "delete", "GB_TOW", f"{synth.DONORS[1]}.complete.json")
     rec = json.load(open(p)); rec["n_token_cells"] = 29; json.dump(rec, open(p, "w"))
     with pytest.raises(an.IncompleteRun, match="per-cell count"):
-        an.load_all(root, genes_all(), synth.DONORS)
+        load(root, ix, synth.DONORS)
 
 
-def test_estimable_count_disagreeing_with_pre_gpu_table_is_refused(tree):
+def test_estimable_count_disagreeing_with_pre_gpu_table_is_refused(built):
     dd = synth.design(); dd["expected_estimable"]["GA_REP"] = 39
     d = an.Design(**dd)
-    calls = an.load_all(tree, genes_all(), d.donors)
+    calls = load(built[0], built[1:], d.donors)
     with pytest.raises(ValueError, match="pre-GPU table"):
         an.analyse(calls, d, RULES)
 
@@ -127,9 +135,9 @@ def test_validator_refuses_a_row_without_the_qualifier():
 # ---------------------------------------------------------------- the two open rules behave as specified
 def test_min_controls_rule_drops_donors_below_it(tmp_path):
     root = str(tmp_path)
-    synth.build(root, ctrl_missing={synth.DONORS[0]: 11, synth.DONORS[1]: 10})   # 9 and 10 controls left
+    ix = synth.build(root, ctrl_missing={synth.DONORS[0]: 11, synth.DONORS[1]: 10})   # 9 and 10 controls left
     d = an.Design(**synth.design())
-    calls = an.load_all(root, genes_all(), d.donors)
+    calls = load(root, ix, d.donors)
     a = an.analyse(calls, d, RULES)["arms"][("GA_REP", "delete")]
     assert synth.DONORS[0] not in a and synth.DONORS[1] in a
 
@@ -168,9 +176,9 @@ def test_rows_report_raw_p_holm_p_and_m(result):
 
 def test_rows_report_qualifying_controls_per_donor(tmp_path):
     root = str(tmp_path)
-    synth.build(root, ctrl_missing={synth.DONORS[0]: 11})
+    ix = synth.build(root, ctrl_missing={synth.DONORS[0]: 11})
     d = an.Design(**synth.design())
-    calls = an.load_all(root, genes_all(), d.donors)
+    calls = load(root, ix, d.donors)
     row = next(r for r in an.analyse(calls, d, RULES)["rows"] if r["gene"] == "GA_REP")
     q = row["controls_qualifying_per_donor"]["delete"]
     assert q[synth.DONORS[0]] == 9 and q[synth.DONORS[1]] == 20
@@ -179,9 +187,9 @@ def test_rows_report_qualifying_controls_per_donor(tmp_path):
 
 def test_alternative_rule1_counts_low_cell_controls(tmp_path):
     root = str(tmp_path)
-    synth.build(root, ctrl_missing={synth.DONORS[0]: 11})
+    ix = synth.build(root, ctrl_missing={synth.DONORS[0]: 11})
     d = an.Design(**synth.design())
-    calls = an.load_all(root, genes_all(), d.donors)
+    calls = load(root, ix, d.donors)
     alt = an.analyse(calls, d, an.ALT_RULES["rule1_any_control"])["arms"][("GA_REP", "delete")]
     assert synth.DONORS[0] in alt                                   # 3-cell controls count under the alternative
 
@@ -196,9 +204,60 @@ def test_3f_reports_genes_per_donor_and_alt_rules_line(result):
 
 
 # ---------------------------------------------------------------- loader requests only genes Phase 6 ran
-def test_genes_to_load_excludes_never_run_panel_genes(tree):
+def test_genes_to_load_excludes_never_run_panel_genes(built):
     d = an.Design(**synth.design())
     got = an.genes_to_load(d)
     assert "GA_LOWD" not in got and "GA_NOCTL" not in got          # no stratum / control-less stratum
     assert set(got) == set(genes_all())
-    an.load_all(tree, got, d.donors)                                # and every one of them loads
+    load(built[0], built[1:], d.donors, got)                        # and every one of them loads
+
+
+# ---------------------------------------------------------------- Amendment 3h: overexpress cell set
+def test_overexpress_donor_value_uses_only_token_positive_positions(built):
+    root, index, n_total = built
+    d0 = synth.DONORS[0]
+    c = an.load_call(root, "overexpress", "GA_REP", d0, index[("GA_REP", d0)], n_total[d0])
+    assert len(c["shifts_all"]["normal_adjacent"]) == synth.N_TOTAL
+    assert len(c["shifts"]["normal_adjacent"]) == 30
+    assert abs(np.mean(c["shifts"]["normal_adjacent"]) - (-0.03)) < 0.005          # planted effect, no decoys
+    assert np.mean(c["shifts_all"]["normal_adjacent"]) > 1.0                       # decoys dominate all-cells
+
+
+def test_overexpress_without_positions_is_refused(tree):
+    with pytest.raises(an.IncompleteRun, match="needs token-positive positions"):
+        an.load_call(tree, "overexpress", "GA_REP", synth.DONORS[0])
+
+
+def test_overexpress_position_count_must_match_marker(built):
+    root, index, n_total = built
+    d0 = synth.DONORS[0]
+    with pytest.raises(an.IncompleteRun, match="reconstructed positive positions"):
+        an.load_call(root, "overexpress", "GA_REP", d0, index[("GA_REP", d0)][:-1], n_total[d0])
+
+
+def test_overexpress_pickle_length_must_match_donor_cells(built):
+    root, index, n_total = built
+    d0 = synth.DONORS[0]
+    with pytest.raises(an.IncompleteRun, match="donor cell count"):
+        an.load_call(root, "overexpress", "GA_REP", d0, index[("GA_REP", d0)], n_total[d0] + 1)
+
+
+def test_right_count_wrong_cells_passes_the_loader_but_corrupts_values(built):
+    """Why 3h.6 exists: a same-size wrong subset is invisible to every count check."""
+    root, index, n_total = built
+    d0 = synth.DONORS[0]
+    right = index[("GA_REP", d0)]
+    neg = sorted(set(range(synth.N_TOTAL)) - set(right))
+    wrong = sorted(neg + right[: len(right) - len(neg)])                    # same size, 10 wrong cells
+    c = an.load_call(root, "overexpress", "GA_REP", d0, wrong, n_total[d0])    # no exception
+    assert np.mean(c["shifts"]["normal_adjacent"]) > 1.0
+
+
+def test_sensitivity_b_uses_all_cells_and_never_changes_status(result):
+    d, calls, primary = result
+    before = {r["gene"]: r["status"] for r in primary["rows"]}
+    sens = an.sensitivities(calls, d, primary, RULES)
+    assert before == {r["gene"]: r["status"] for r in primary["rows"]}
+    b = sens["A3h_B_all_cells_overexpress"]
+    assert "never changes a status" in b["note"]
+    assert b["ovx_median"]["GA_REP"] != next(r for r in primary["rows"] if r["gene"] == "GA_REP")["ovx_median"]
