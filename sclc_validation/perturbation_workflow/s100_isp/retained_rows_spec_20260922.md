@@ -773,3 +773,64 @@ frozen gate-3 tables and was run on thinkstation1 with every root set
 explicitly. Its log and outputs are in
 `bf16_bench/runs/s100_luad_preflight_pergene_20260928/` on thinkstation1.
 
+
+## Amendment 9 -- 2026-09-28 (budget stop and resume at 4.2 GPU-h; s100-isp-execution-20260922)
+
+Appended after the first launch was stopped by the registered budget rule and
+before the resume. **No output has been analysed.** Effect data now exists:
+the 7 completed delete arms wrote raw pickles and the no-op arm wrote 2 stats
+tables. Stanley confirmed by access time that none of these 9 files had been
+opened as of 04:16Z (relatime filesystem; access time equals write time for
+all 9). Amendments 1-8 stand unedited.
+
+**1. The stop.** Launched 04:02:14Z (13:02:14 JST) on runner `974535b7` at
+`de8cda2`. The budget watcher stopped the run at 04:14:20Z (13:14:20 JST).
+`s100_luad_20260928.BUDGET_STOP` reads "projected 3.473 h > 3.4 at elapsed
+0.202 h". **GPU used: 0.202 h.** Completed: no-op on the 10 eligible panel
+genes (plus not-estimable records for S100P and S100A16); delete on S100A4,
+S100A6, S100A10, S100A11, S100A2, S100B and S100A13 (plus the two
+not-estimable records). No overexpress arm and no control arm ran. The
+S100A8 delete arm was in progress and left no files. For the first 3 min 6 s
+(04:02:14-04:05:20Z) the run had no working budget stop, because watcher v1
+was given the SSH shell's process group (Kevin's error). Watcher v2, on the
+run's real group 1482351, made the stop.
+
+**2. Cause: the projection, not the rule.** Amendment 8 projected each arm as
+6.7 s + 0.1113 s/cell. Every 316M calibration run had exactly 300 cells, so
+the fixed part could not be fitted; 6.7 s came from the tiny no-op, whose
+setup is far smaller. Observed: each delete arm spends 18.5-20.3 s in library
+setup before the first forward pass (new perturber, model load, dataset
+filter and sort, repeated for every gene), whatever its cell count.
+
+**3. Revised projection method.** Per delete or overexpress arm: 37.88 s +
+0.0394 s/cell. This is the least-squares fit on the 7 completed delete arms
+(residual sd 4.5 s, intercept standard error 3.5 s), reproduced independently
+by Kevin and Stanley. Overexpress is projected at the delete rate (the
+conservative choice; the old 316M overexpress arms ran about 17% faster).
+The total, including the 0.202 h spent, is 3.84 h (overexpress 17% faster)
+to 4.19 h (same speed). With the fixed cost 2 standard errors either side and
+overexpress at delete speed, it is 3.62-4.76 h. Stanley's wider range is
+3.14-4.95 h. **A 4.2 h budget sits at the central estimate, so a second
+budget stop is possible.** The fit rests on 3 small-cell genes, and 54 of
+the 152 run genes have 150 or fewer capped cells.
+
+**4. Human ruling, 13:16 JST.** Budget raised to **4.2 GPU-hours total, a
+hard stop, with the 0.202 h already spent counted toward it.** Resume the
+same run. No runner change.
+
+**5. Resume.** Same launcher, runner (`974535b7`), run panel (`8a0b3668`),
+inputs (re-hashed unchanged after the stop), `--sources luad`, run tags and
+seed. Completed arms are kept and not rerun: the runner skips any gene with
+a completion marker, and they came from the identical runner, config and
+inputs. Before the resume, the first launch's `run_config.json` for both run
+tags, `started_utc`, log and `BUDGET_STOP` were copied with a
+`first_launch` or `_1` suffix. The original `BUDGET_STOP` is moved to
+`BUDGET_STOP_1`, so a new `BUDGET_STOP` can only come from the resumed run.
+Watcher v3 (`watch_s100_budget_v3.py`, sha256 `ae87c5f5...`) counts the
+0.202 h already spent plus wall clock since the resume. It projects the
+remaining delete and overexpress arms with the section 3 method, scaled by
+the observed rate when that is slower. It stops the run's process group at
+4.2 h, and refuses to start unless its process group contains the run.
+
+**6. Unchanged.** If the run is stopped again, nothing from it is analysed,
+exactly as for this stop.
