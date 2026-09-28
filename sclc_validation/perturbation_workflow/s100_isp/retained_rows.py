@@ -80,6 +80,10 @@ STATUS_NOT_ESTIMABLE_DONOR_COUNT = "not_estimable_donor_count"
 STATUS_NOT_ESTIMABLE_CONTROL_STRATUM = "not_estimable_control_stratum"
 STATUS_RUN_FAILED = "run_failed"
 STATUS_NO_OP_FAILED = "no_op_failed"
+# Amendment 8 (human ruling 2026-09-28 12:55 JST): the no-op arm runs on the
+# eligible S100 panel genes only; matched-control rows carry this no-op
+# status so they never read as "not yet run" or "failed".
+NO_OP_NOT_RUN_BY_DESIGN = "not_run_by_design"
 # Not in retained_rows_spec_20260922.md's enum -- see module docstring.
 STATUS_NOT_RUN = "not_run"
 
@@ -335,7 +339,9 @@ def build_retained_rows(
             row["stats_row_present"] = bool((stats_df["Ensembl_ID"] == ensembl_id).any())
 
         noop_marker = load_completion_marker(raw_root, "noop", source_slug, symbol)
-        if noop_marker is None:
+        if row.get("role") == "matched_control":
+            row["no_op_status"] = NO_OP_NOT_RUN_BY_DESIGN
+        elif noop_marker is None:
             row["no_op_status"] = STATUS_NOT_RUN
         elif noop_marker.get("skipped_zero_cells_detected"):
             row["no_op_status"] = STATUS_NO_OP_FAILED

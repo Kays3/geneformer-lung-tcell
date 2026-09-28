@@ -194,6 +194,22 @@ def main() -> None:
     assert r3["no_op_score"] is not None and abs(r3["no_op_score"]) < 0.01
     print("GENEA/sclc no-op join: eligible_completed, small independent-pass score -- OK")
 
+    # Amendment 8: a matched-control row gets no_op_status not_run_by_design,
+    # even when a no-op marker happens to exist for it.
+    ctrl_genes = [dict(g, role="matched_control") if g["gene"] == "GENEA" else g for g in fx["panel_genes"]]
+    ctrl = rr.build_retained_rows(
+        panel_id="test-panel", panel_genes=ctrl_genes,
+        raw_root=fx["raw_root"], paired_eligible_dir=fx["paired_eligible_dir"],
+        stats_root=fx["stats_root"], gene_token_dict=fx["gene_token_dict"],
+        run_id="test-run", runner_sha256="deadbeef", panel_sha256="cafef00d",
+        sources=("sclc", "luad"),
+    )
+    rc = ctrl[(ctrl.gene == "GENEA") & (ctrl.source_state == rr.SCLC) & (ctrl.goal_state == rr.LUAD)
+              & (ctrl.perturbation_type == "delete")].iloc[0]
+    assert rc["no_op_status"] == rr.NO_OP_NOT_RUN_BY_DESIGN and rc["no_op_score"] is None, rc
+    assert rc["status"] == rr.STATUS_ELIGIBLE_COMPLETED
+    print("matched_control row: no_op_status=not_run_by_design, run status unaffected -- OK")
+
     # GENEA/luad/*: not_estimable_donor_count (2 donors < 3)
     r4 = row("GENEA", rr.LUAD, rr.SCLC, "delete")
     assert r4["status"] == rr.STATUS_NOT_ESTIMABLE_DONOR_COUNT, r4["status"]

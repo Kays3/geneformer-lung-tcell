@@ -644,3 +644,132 @@ has been widened or split.
 tolerances), is the human's decision. That decision, if it changes the
 matching rule, must be a further dated amendment registered before any GPU
 run. No GPU beyond the tiny no-op has been spent.
+
+## Amendment 8 -- 2026-09-28 (human ruling: per-gene matching, 3.4 GPU-h; s100-isp-execution-20260922)
+
+**This amendment overrides design lines 171-172 ("it is not widened,
+split, or given private controls after the preflight has been viewed"),
+after the gate-3 preflight was viewed, because two of the six registered
+strata are infeasible by arithmetic on the LUAD-only statistics (Amendment
+7, item 4); no effect, `E`, `Q` or perturbation-shift data existed for any
+gene when it was written.** The human ruled at about 12:37 JST on
+2026-09-28 (relayed 12:38) and reconfirmed at 12:55 JST after being told
+this reverses lines 171-172. Amendments 1-7 stand unedited.
+
+**Root cause (Stanley's question).** The six strata were grouped on pooled
+detection fraction only, before any token rank existed (22 Sep preflight:
+"source-specific token ranks require the held-out dataset, absent
+locally"). On the pooled table S100A9 and S100PBP differ by 0.07 log2
+units and clean_high spans 0.40; on LUAD-only statistics they differ by
+1.34 and clean_high's ranks span 20.3 percentile points. Amendment 2 moved
+both matching axes to LUAD-only and nobody, Kevin included, re-checked that
+the strata were still satisfiable.
+
+**1. Matching rule.** Each of the eight primary genes gets its own 20
+controls. A candidate qualifies for gene g if it is within 0.5 log2
+detection units and 5 rank-percentile points of g (the registered
+tolerances), passes the run's LUAD eligibility gate (>= 50 token-positive
+cells from >= 3 donors), and is not an S100-family gene (32 ensembl ids)
+or a panel gene. Statistics: the frozen LUAD tables from gate 3
+(`luad_gene_stats.csv` sha256 `cbad7c7b...`, `luad_isp_eligibility_all_genes.csv`
+sha256 `552ee81d...`). Drawn once, without replacement, by
+`matched_controls.build_matched_control_table()` with one set per gene; the
+generator is seeded from (20260922, gene symbol); qualifying candidates are
+sorted by ensembl_id before the draw. Never re-sampled. A control may serve
+more than one gene; it is run once and its `E` is reused.
+
+| gene | group | candidates | drawn |
+|---|---|---:|---:|
+| S100A2 | ambient-high | 152 | 20 |
+| S100B | ambient-high | 129 | 20 |
+| S100A13 | ambient-high | 141 | 20 |
+| S100PBP | ambient-high | 298 | 20 |
+| S100A4 | ambient-low | 51 | 20 |
+| S100A6 | ambient-low | 34 | 20 |
+| S100A10 | ambient-low | 71 | 20 |
+| S100A11 | ambient-low | 45 | 20 |
+
+160 draws, 142 distinct controls, 18 shared by more than one gene. All 142
+confirmed eligible by the runner's own `paired_eligible_dataset()`; paired
+cell lists built. Committed before any GPU run: control sets
+`matched_control_sets_pergene.json` sha256 `607ac6c9...`; run panel
+`s100_luad_run_panel_pergene_20260928.json` (154 genes: 12 registered +
+142 controls) sha256 `8a0b3668...`; eligibility manifest sha256
+`b8d989f3...`. The registered panel file is unchanged (`06ee2a51...`).
+
+**1a. Realised control overlap, S100A6's small pool (a limitation,
+reported with the result).** Candidate pools overlap heavily (S100A6 and
+S100A10 share 32 of S100A6's 34 candidates; S100A2 and S100A13 69%; S100B
+and S100A13 59%). The drawn sets share 18 controls, all within a group,
+none across: S100A2 x S100B 2, S100A2 x S100A13 4, S100B x S100A13 1,
+S100A6 x S100A10 6, S100A6 x S100A11 2, S100A10 x S100A11 3 (of 20 each;
+`pairwise_control_overlap.csv`, sha256 `91ea3afd...`). Q values within a
+group are therefore correlated, which weakens the exchangeability the
+permutation null assumes; the p-value is reported with that caveat.
+S100A6 draws 20 of only 34 candidates, so its reference set is close to
+exhaustive rather than a sample.
+
+**1b. What a positive can claim.** Only: "sparse ambient-high genes beat
+their own detection-matched controls by more than dense clean genes beat
+theirs." A claim that ambient-high genes simply have larger effects is not
+supported, for two separate reasons. (1) The two groups sit at opposite
+ends of detection: Spearman -0.952 between LUAD detection fraction and
+ambient risk across these eight genes (ambient-high genes detected in
+1.1-4.6% of LUAD cells, clean genes in 63-88%; the design's own figure is
+-0.9758 on the pooled ten-gene table). (2) Genes detected in fewer cells
+tend to show larger nominal perturbation effects. Together, raw effects
+would favour the ambient-high group from detection alone, which is why `Q`
+is matched to each gene's own detection and raw `E` stays a diagnostic.
+
+**2. Anchors and ineligible genes.** S100A8 and S100A9 run as panel genes
+without their own control sets, so they have `E` and dose-response results
+but no `Q`; the design's secondary circular `Q` analysis for the anchors
+is `not_estimable`. S100P and S100A16 fail LUAD eligibility and are not
+run; their rows are retained with status and reason. The gate-3 strata
+table (Amendment 7) is not used.
+
+**2a. No-op (human ruling, 12:55 JST).** The design's "unperturbed/no-op
+inference on the same cell lists" runs on the 10 eligible S100 panel genes
+(S100A2, S100B, S100A13, S100PBP, S100A4, S100A6, S100A10, S100A11, S100A8,
+S100A9), on the same paired cell lists as their delete and overexpress
+arms. Matched-control rows are not given a no-op arm; their `no_op_status`
+is `not_run_by_design` in the retained-row output
+(`retained_rows.NO_OP_NOT_RUN_BY_DESIGN`), never `not_run` or
+`no_op_failed`.
+
+**3. Stability gate, per gene (Amendment 6 item 5, confirmed by the
+human).** Leave-one-control-out: 160 recomputations, each dropping one
+control from one gene's set and recomputing that gene's `Q` and the
+primary test. Bootstrap: 10,000 redraws, seed 20260922, of 20 controls with
+replacement within every gene's set simultaneously (a shared control is
+resampled independently in each set). The primary positive stands only if
+the unresampled test is positive, all 160 leave-one-control-out
+recomputations are positive, and at least 95% of bootstrap redraws are
+positive. The design's line-188 note about shared controls correlating `Q`
+within a stratum no longer applies as written: sharing is now partial (18
+controls); the exact permutation p still conditions on the observed `Q`
+vector, and the stability gate is what tests sensitivity to the draw.
+
+**4. Budget and run.** 3.4 GPU-hours, a hard stop, not a target (human
+ruling). Projection 3.15 GPU-h: 3.05 h for 152 genes (10 eligible panel
+genes + 142 controls) x 2 operations (delete, overexpress), LUAD only,
+40,144 capped cells per operation, plus 0.10 h for the no-op arm on the
+10 panel genes (2,615 capped cells; a no-op arm is two forward passes per
+cell, the same work as a perturbation arm);
+per arm = 6.7 s + 0.1113 s/cell, fitted from the 316M bf16 LUAD
+overexpress arms of run `316m_bf16` (50 genes at 300 cells, median 39.7 s,
+range 39.0-41.5). Sensitivity: the one paired 316M calibration point has
+delete 12% slower than overexpress (46.1 s vs 41.2 s), which gives about
+3.33 h. During the run, cumulative GPU time is read from the completion
+markers; if elapsed plus the remaining projection (rescaled by the observed
+rate) exceeds 3.4 h, the run is stopped and reported. No gene, control,
+source or direction is dropped to fit, and a partial run is not analysed.
+Runner: main at `de8cda2` (sha256 `974535b7...`), `--sources luad`,
+verified on thinkstation1 by fast-forward pull immediately before GPU.
+
+**5. Provenance.** Build script `preflight_s100_luad_pergene_20260928.py`
+(sha256 `5fe5715e...`) is committed with this amendment; it reuses the
+frozen gate-3 tables and was run on thinkstation1 with every root set
+explicitly. Its log and outputs are in
+`bf16_bench/runs/s100_luad_preflight_pergene_20260928/` on thinkstation1.
+
