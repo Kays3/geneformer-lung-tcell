@@ -834,3 +834,31 @@ the observed rate when that is slower. It stops the run's process group at
 
 **6. Unchanged.** If the run is stopped again, nothing from it is analysed,
 exactly as for this stop.
+
+## Amendment 10 -- 2026-09-28 (human ruling 13:20 JST: no GPU-hour cap today; s100-isp-execution-20260922)
+
+Appended before the resume; no new output exists since Amendment 9, and none
+has been analysed. Amendments 1-9 stand unedited.
+
+**1. Budget.** The human ruled at 13:20 JST that runs on 2026-09-28 have
+**no GPU-hour cap**. This supersedes Amendment 9's 4.2 GPU-h (ruled 13:16
+JST). It also supersedes a 5.0 GPU-h figure the human set a few minutes
+earlier, relayed by Michael and superseded within minutes. The projection
+method and range in Amendment 9 section 3 stay on the record as the
+expected cost: central 3.84-4.19 GPU-h including the 0.202 h already
+spent, ranges 3.62-4.76 h (Kevin, intercept +/-2 standard errors) and
+3.14-4.95 h (Stanley). Kevin's first fit on the same 7 delete arms (34 s +
+0.047 s/cell) gives about 2 h per operation, the same as the OLS fit.
+
+**2. Monitor instead of a kill switch.** `watch_s100_monitor_v4.py` (sha256
+`99edb6f3...`), derived from watcher v3. It logs elapsed GPU time (0.202 h
+plus wall clock since the resume) and the Amendment 9 projection every 60 s.
+It never signals the run. If no arm completes for 30 minutes it writes
+`s100_luad_20260928.STALL_ALERT`, and Kevin relays that to Michael. The run
+is not killed on a stall; that decision stays with Michael and the human.
+
+**3. Scope unchanged.** The same 154-gene LUAD run: the same launcher
+(`0a7813b2`), runner (`974535b7`), run panel (`8a0b3668`), `--sources luad`,
+and no-op on the 10 eligible panel genes only. Module B (CAR-T) is not
+approved. No arm, gene, source or direction is added because the budget is
+now uncapped.
