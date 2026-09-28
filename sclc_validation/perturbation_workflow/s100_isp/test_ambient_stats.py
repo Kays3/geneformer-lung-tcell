@@ -273,6 +273,31 @@ def test_exact_group_separation_test():
     result3 = astats.exact_group_separation_test(Q_missing, high, low)
     assert np.isnan(result3["p_exact"]) and result3["reason"] is not None
     print("exact_group_separation_test: missing Q -> NaN + reason, not silently dropped -- OK")
+    assert result3["positive"] is False
+
+    assert result["positive"] is True and result["complete_separation"] is True
+    assert result["direction"] == "high_above_low" and result["statistic"] == 16.0
+
+    # Amendment 6: one inversion is already not significant (4/70 = 0.0571).
+    Q_one_inversion = {"h1": 3.5, "h2": 6.0, "h3": 7.0, "h4": 8.0, "l1": 1.0, "l2": 2.0, "l3": 3.0, "l4": 4.0}
+    r_inv = astats.exact_group_separation_test(Q_one_inversion, high, low)
+    assert abs(r_inv["p_exact"] - 4 / 70) < 1e-12 and r_inv["positive"] is False, r_inv
+
+    # Amendment 6: complete separation in the WRONG direction has p = 2/70
+    # but is never a positive.
+    Q_reversed = {g: -v for g, v in Q_separated.items()}
+    r_rev = astats.exact_group_separation_test(Q_reversed, high, low)
+    assert abs(r_rev["p_exact"] - 2 / 70) < 1e-12
+    assert r_rev["direction"] == "low_above_high" and r_rev["positive"] is False, r_rev
+
+    # Amendment 6: with a cross-group tie, p must be the true 70-split
+    # permutation p (16/70), not scipy's no-ties exact p (24/70 = 0.343).
+    Q_tie = {"h1": 0.90, "h2": 0.95, "h3": 0.97, "h4": 1.0, "l1": 0.1, "l2": 0.2, "l3": 0.3, "l4": 1.0}
+    r_tie = astats.exact_group_separation_test(Q_tie, high, low)
+    assert r_tie["statistic"] == 12.5 and abs(r_tie["p_exact"] - 16 / 70) < 1e-12, r_tie
+    assert r_tie["complete_separation"] is False
+    print("exact_group_separation_test: one inversion 4/70, reversed not positive, "
+          "cross-group tie 16/70 (not scipy's 24/70) -- OK")
 
 
 def test_within_cluster_spearman():

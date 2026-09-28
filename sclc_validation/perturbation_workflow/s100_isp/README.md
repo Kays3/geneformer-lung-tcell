@@ -143,3 +143,14 @@ within-cluster rho can ever be significant at this n. This isn't a
 min_attainable_p_note}` per group and is documented as descriptive only;
 the claim rests entirely on `exact_group_separation_test()` (genuinely
 reachable at p<=0.05, min p=2/70=0.0286).
+
+## Amendment 6 (2026-09-28): LUAD run approved, primary re-declared
+
+The human approved the LUAD arm (tiny no-op + 2.98 GPU-h hard stop;
+Module B not approved). The primary test is now
+`exact_group_separation_test()` per contrast: exact two-sided Mann-Whitney
+U of `Q`, four ambient-high vs four ambient-low genes, positive only at
+p <= 0.05 with the high group above (minimum p 2/70 = 0.0286, i.e.
+complete separation). The eight-point Spearman is descriptive only. The
+function now enumerates the 70 splits itself because scipy's exact mode
+mishandles ties. See `retained_rows_spec_20260922.md`, Amendment 6.

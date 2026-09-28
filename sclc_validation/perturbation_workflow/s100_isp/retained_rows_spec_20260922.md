@@ -490,3 +490,98 @@ derived from an exact enumeration, a registered design-doc line, or a
 panel-file lookup by ensembl_id -- none is negotiable after the fact, and
 none was invented ahead of a real result.** GPU remains held; nothing in
 this amendment authorizes it.
+
+## Amendment 6 -- 2026-09-28 (human approval of the LUAD run, s100-isp-execution-20260922)
+
+Registered before any Module A output exists: no S100 LUAD perturbation
+has been run, no `Q`, `E`, or shift value exists for any panel gene.
+Amendments 1-5 stand unedited. The human approved the LUAD arm on
+2026-09-28 on the condition that the primary analysis is re-declared as
+the exact two-group test. Budget: tiny no-op inference plus 2.98 GPU-hours,
+a hard stop. Module B is not approved. The SCLC source arm stays dropped.
+
+**1. The primary test is now the exact two-group test.** For each LUAD
+contrast separately (`LUAD -> normal` and `LUAD -> SCLC`), compare `Q`
+between two fixed groups with an exact two-sided Mann-Whitney U test
+(`ambient_stats.exact_group_separation_test()`). The groups are fixed by
+the ambient-risk table in Amendment 2 and identified by the `ensembl_id`
+registered in `s100_gene_panel_20260922.json` (sha256 `06ee2a51...`):
+
+| group | genes (ensembl_id) | ambient_risk |
+|---|---|---|
+| ambient-high | S100A2 (ENSG00000196754), S100B (ENSG00000160307), S100A13 (ENSG00000189171), S100PBP (ENSG00000116497) | 0.744 - 0.955 |
+| ambient-low | S100A4 (ENSG00000196154), S100A6 (ENSG00000197956), S100A10 (ENSG00000197747), S100A11 (ENSG00000163191) | 1.1e-6 - 3.1e-4 |
+
+The p-value is an explicit label permutation: all C(8,4) = 70 ways of
+assigning the eight observed `Q` values to a 4-vs-4 split are enumerated,
+U is computed on midranks, and p is the fraction of splits at least as far
+from the null mean (8) as the observed U. This is exact with or without
+ties.
+
+**2. The exact p floor.** With no ties, the minimum attainable two-sided p
+is 2/70 = 0.02857, reached only by complete separation. One inversion
+already gives 4/70 = 0.05714, which fails p <= 0.05. In practice this test
+passes only when every ambient-high gene's `Q` sits above every
+ambient-low gene's `Q`.
+
+**3. What counts as a positive, per contrast:** exact p <= 0.05 **and** the
+ambient-high group above the ambient-low group. A separation significant
+in the opposite direction (p = 2/70 with the clean genes above) is reported
+as "significant in the direction opposite the prediction", never as a
+positive. If any of the eight genes has no estimable `Q` in a contrast,
+that contrast's primary result is `not_estimable`; it is not re-run on
+fewer genes. The two contrasts are each reported. Carried over unchanged
+from the design ("all six contrasts within a module are reported ...
+multiple contrasts are descriptive unless a later, separately registered
+family-level correction is added"): no family-wise correction is applied,
+and none can be added after results exist. Note for whoever reads this
+later: a Bonferroni correction across the two contrasts (alpha 0.025 each)
+would make the test unreachable, since 2/70 = 0.02857 > 0.025.
+
+**4. The monotone statistic is demoted to descriptive.** The eight-point
+Spearman rho of `Q` against ambient risk (`primary_test()`) and its
+leave-one-gene-out check (`leave_one_gene_out_check()`) are still computed
+and always reported with their exact two-sided p, but they no longer gate
+any conclusion. Reason, from Amendment 4: a pure 4-vs-4 group difference
+with no within-group rank information clears the old rho gate 365/576 =
+63.4% of the time. `within_cluster_spearman()` stays descriptive, as ruled
+in Amendment 5. The claim this run can support is "`Q` is higher in the four
+ambient-high genes than in the four clean genes after detection and
+token-rank matching", not "`Q` rises with ambient risk".
+
+**5. Knock-on re-declarations, proposed by Kevin, for Stanley and the
+human to confirm or amend before any output exists.** The design ties
+three further rules to the rho gate. Each is re-stated for the new primary
+so no gate is left undefined:
+
+- **Control-stability gate.** Same resampling as registered (the 120
+  leave-one-control-out recomputations; 10,000 within-stratum bootstrap
+  redraws, seed `20260922`), now recomputing `Q` and the group-separation
+  test each time. The primary positive stands only if (a) the unresampled
+  test is positive, (b) every leave-one-control-out recomputation is still
+  positive, and (c) at least 95% of bootstrap redraws are positive.
+  Otherwise the contrast is "control-draw-sensitive / open".
+- **Raw diagnostic.** The same exact two-group test run on raw `E` instead
+  of `Q`, so the "detection/token-frequency pattern" row compares like with
+  like. The raw `E` Spearman stays descriptive.
+- **Interpretation table.** Wherever the design says "the detection-adjusted
+  `Q` rho gate passes/fails", read "the stable group-separation primary is
+  positive/not positive". All other conditions in each row are unchanged
+  (including `S100A2` being non-dose-responsive or donor-inconsistent for
+  the ambient-compatible row).
+
+**6. Correction to Amendment 4, item 4, found while registering this
+amendment.** Amendment 4 said the group-separation test was "verified
+against `scipy.stats.mannwhitneyu(method="exact")` directly". That is true
+only without ties. scipy's exact mode uses the no-ties null even when ties
+are present: for high `Q` = (0.90, 0.95, 0.97, 1.0) and low `Q` = (0.1, 0.2,
+0.3, 1.0), scipy gives p = 0.343 where the true 70-split permutation p is
+16/70 = 0.229. `Q` is a percentile against 20 controls, so ties across
+genes can happen (two genes that both beat every control). The function
+now enumerates the 70 splits itself; tests cover complete separation
+(2/70), one inversion (4/70), the reversed direction (not positive), and
+the tie case (16/70). The error was Kevin's.
+
+**Order of work from here:** re-pin the runner hash on thinkstation1 after
+PR #32; tiny no-op inference; CPU completion (gate 3); manifests to Stanley.
+No GPU until Stanley signs. Nothing in this amendment starts GPU work.

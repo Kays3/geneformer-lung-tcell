@@ -15,7 +15,7 @@ import math
 
 import numpy as np
 import pandas as pd
-from scipy.stats import mannwhitneyu, rankdata
+from scipy.stats import rankdata
 
 # bf16 canary's max absolute delta vs fp32 (design doc, "Model and
 # precision plan"): an arm's donor-balanced mean absolute shift at or
@@ -347,30 +347,62 @@ def primary_test_with_single_gene_check(
 # ---------------------------------------------------------------------------
 
 
+GROUP_SEPARATION_ALPHA = 0.05
+
+
 def exact_group_separation_test(
     Q_by_gene: dict[str, float],
     high_ambient_genes: list[str],
     low_ambient_genes: list[str],
 ) -> dict:
-    """Exact two-sided Mann-Whitney U test of Q between the ambient-high
-    and ambient-low gene groups -- the test the data's actual 4-vs-4
-    structure supports ("is Q higher in the high-ambient group than the
-    low-ambient group"), as opposed to the primary test's implicit claim
-    of a monotone association across all 8 points. With 4-vs-4 groups and
-    no ties, the minimum attainable two-sided p (complete separation) is
-    2 / C(8,4) = 2/70 = 0.02857 -- so perfect separation is honestly
-    significant by this test, which is exactly the point: this measures
-    what the primary rho conflates. Uses scipy's own exact enumeration
-    (method="exact"), cross-checked directly against 2/70 for the
-    complete-separation case. Reported always."""
+    """PRIMARY TEST since Amendment 6 (2026-09-28): exact two-sided
+    Mann-Whitney U of Q, ambient-high vs ambient-low genes, one call per
+    contrast.
+
+    The p-value is an explicit label permutation: every one of the
+    C(8,4) = 70 ways to assign the observed Q values to a high/low split is
+    enumerated, U is computed on midranks, and p is the fraction of splits
+    with |U - mean| >= the observed |U - mean|. This is exact with or
+    without ties. scipy's mannwhitneyu(method="exact") is NOT used: it
+    applies the no-ties null even when ties are present (single cross-group
+    tie at the ceiling: scipy 0.343 vs true 0.229), and Q -- a percentile
+    against 20 controls -- can tie across genes.
+
+    With no ties the minimum attainable p is 2/70 = 0.02857, reached only by
+    complete separation; one inversion already gives 4/70 = 0.0571.
+    `positive` is True only when p <= 0.05 AND the high group sits above the
+    low group -- a significant separation in the opposite direction is
+    reported as such, never as a positive."""
     Q_high = np.array([Q_by_gene.get(g, np.nan) for g in high_ambient_genes], dtype=float)
     Q_low = np.array([Q_by_gene.get(g, np.nan) for g in low_ambient_genes], dtype=float)
     if np.isnan(Q_high).any() or np.isnan(Q_low).any():
-        return {"statistic": np.nan, "p_exact": np.nan,
+        return {"statistic": np.nan, "p_exact": np.nan, "direction": None,
+                "complete_separation": None, "positive": False,
                 "reason": "one or more genes in the two groups has no estimable Q"}
-    result = mannwhitneyu(Q_high, Q_low, alternative="two-sided", method="exact")
-    return {"statistic": float(result.statistic), "p_exact": float(result.pvalue), "reason": None}
-
+    n_high, n_low = len(Q_high), len(Q_low)
+    ranks = rankdata(np.concatenate([Q_high, Q_low]))
+    offset = n_high * (n_high + 1) / 2
+    mean_u = n_high * n_low / 2
+    u_obs = ranks[:n_high].sum() - offset
+    dev_obs = abs(u_obs - mean_u)
+    n_splits = 0
+    n_extreme = 0
+    for idx in itertools.combinations(range(n_high + n_low), n_high):
+        n_splits += 1
+        if abs(ranks[list(idx)].sum() - offset - mean_u) >= dev_obs - 1e-9:
+            n_extreme += 1
+    p_exact = n_extreme / n_splits
+    if u_obs > mean_u:
+        direction = "high_above_low"
+    elif u_obs < mean_u:
+        direction = "low_above_high"
+    else:
+        direction = "none"
+    return {"statistic": float(u_obs), "p_exact": float(p_exact),
+            "n_splits": n_splits, "direction": direction,
+            "complete_separation": bool(Q_high.min() > Q_low.max()),
+            "positive": bool(p_exact <= GROUP_SEPARATION_ALPHA and direction == "high_above_low"),
+            "reason": None}
 
 
 # RULED 2026-09-23 (human ruling, fifth dated amendment,
