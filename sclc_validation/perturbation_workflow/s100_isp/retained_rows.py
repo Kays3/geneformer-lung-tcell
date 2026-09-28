@@ -151,7 +151,11 @@ def find_raw_pickle(raw_root, perturb_type: str, source_slug: str, symbol: str):
     """
     raw_dir = Path(raw_root) / perturb_type / source_slug
     prefix = f"targeted_{source_slug}_{symbol}"
-    matches = sorted(raw_dir.glob(f"in_silico_{perturb_type}_{prefix}_*_raw.pickle"))
+    # "_*raw.pickle", not "_*_raw.pickle": run_noop_gene() writes
+    # in_silico_noop_<prefix>_raw.pickle (nothing between the symbol and
+    # "_raw"), while delete/overexpress write <prefix>_cell_embs_dict_[tok]_raw.pickle.
+    # The underscore right after the symbol still keeps S100A1 from matching S100A10.
+    matches = sorted(raw_dir.glob(f"in_silico_{perturb_type}_{prefix}_*raw.pickle"))
     if len(matches) > 1:
         return "ambiguous", matches
     return (matches[0] if matches else None), matches
@@ -237,7 +241,11 @@ def build_retained_rows(
     perturbation_types: tuple[str, ...] = PERTURBATION_TYPES,
     min_cells_eligible: int = 50,
     min_donors_eligible: int = 3,
+    noop_raw_root=None,
 ) -> pd.DataFrame:
+    """noop_raw_root: raw root of the separate no-op run (Amendment 8 item 2a
+    ran no-op under its own run tag); defaults to raw_root."""
+    noop_raw_root = raw_root if noop_raw_root is None else noop_raw_root
     planned = planned_cartesian_rows(panel_genes, sources, perturbation_types)
     manifest_cache: dict[str, pd.DataFrame] = {}
     stats_cache: dict[str, pd.DataFrame] = {}
@@ -338,7 +346,7 @@ def build_retained_rows(
             row["raw_stats_sha256"] = sha256_file(stats_path)
             row["stats_row_present"] = bool((stats_df["Ensembl_ID"] == ensembl_id).any())
 
-        noop_marker = load_completion_marker(raw_root, "noop", source_slug, symbol)
+        noop_marker = load_completion_marker(noop_raw_root, "noop", source_slug, symbol)
         if row.get("role") == "matched_control":
             row["no_op_status"] = NO_OP_NOT_RUN_BY_DESIGN
         elif noop_marker is None:
@@ -346,7 +354,7 @@ def build_retained_rows(
         elif noop_marker.get("skipped_zero_cells_detected"):
             row["no_op_status"] = STATUS_NO_OP_FAILED
         else:
-            noop_pickle, noop_matches = find_raw_pickle(raw_root, "noop", source_slug, symbol)
+            noop_pickle, noop_matches = find_raw_pickle(noop_raw_root, "noop", source_slug, symbol)
             if noop_pickle in (None, "ambiguous"):
                 row["no_op_status"] = STATUS_NO_OP_FAILED
             else:

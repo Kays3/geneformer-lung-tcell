@@ -82,7 +82,7 @@ def build_fixture() -> dict:
             "completed_utc": "2026-09-23T00:00:00Z", "perturb_type": ptype, "source": "sclc",
             "gene": "GENEA", "ensembl_id": "ENSGA", "elapsed_seconds": 1.0, "n_raw_files": 1,
         })
-        _write_pickle(raw_dir / f"in_silico_{ptype}_targeted_sclc_GENEA_batch0_raw.pickle", {
+        _write_pickle(raw_dir / f"in_silico_{ptype}_targeted_sclc_GENEA_cell_embs_dict_[111]_raw.pickle", {
             "lung adenocarcinoma": {(111, "cell_emb"): shifts_luad},
             "normal": {(111, "cell_emb"): shifts_normal},
         })
@@ -92,7 +92,7 @@ def build_fixture() -> dict:
         "completed_utc": "2026-09-23T00:00:00Z", "perturb_type": "noop", "source": "sclc",
         "gene": "GENEA", "ensembl_id": "ENSGA", "elapsed_seconds": 1.0, "n_cells": 6, "n_raw_files": 1,
     })
-    _write_pickle(raw_noop_dir / "in_silico_noop_targeted_sclc_GENEA_batch0_raw.pickle", {
+    _write_pickle(raw_noop_dir / "in_silico_noop_targeted_sclc_GENEA_raw.pickle", {
         "lung adenocarcinoma": {(111, "cell_emb"): [0.001, -0.001, 0.0005, -0.0005, 0.0002, -0.0002]},
         "normal": {(111, "cell_emb"): [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]},
     })
@@ -209,6 +209,41 @@ def main() -> None:
     assert rc["no_op_status"] == rr.NO_OP_NOT_RUN_BY_DESIGN and rc["no_op_score"] is None, rc
     assert rc["status"] == rr.STATUS_ELIGIBLE_COMPLETED
     print("matched_control row: no_op_status=not_run_by_design, run status unaffected -- OK")
+
+    # No-op under its own run tag (Amendment 8 item 2a): move the noop tree to
+    # a separate root; with noop_raw_root the join still finds it, without it
+    # the row says not_run (never silently another run's output).
+    noop_root = fx["raw_root"].parent / "raw_noop_separate"
+    shutil.copytree(fx["raw_root"] / "noop", noop_root / "noop")
+    shutil.rmtree(fx["raw_root"] / "noop")
+    kw = dict(panel_id="test-panel", panel_genes=fx["panel_genes"], raw_root=fx["raw_root"],
+              paired_eligible_dir=fx["paired_eligible_dir"], stats_root=fx["stats_root"],
+              gene_token_dict=fx["gene_token_dict"], run_id="test-run", runner_sha256="deadbeef",
+              panel_sha256="cafef00d", sources=("sclc", "luad"))
+    sep = rr.build_retained_rows(noop_raw_root=noop_root, **kw)
+    rs = sep[(sep.gene == "GENEA") & (sep.source_state == rr.SCLC) & (sep.goal_state == rr.LUAD)
+             & (sep.perturbation_type == "delete")].iloc[0]
+    assert rs["no_op_status"] == rr.STATUS_ELIGIBLE_COMPLETED and abs(rs["no_op_score"] - r3["no_op_score"]) < 1e-12
+    same = rr.build_retained_rows(**kw)
+    rn = same[(same.gene == "GENEA") & (same.source_state == rr.SCLC) & (same.goal_state == rr.LUAD)
+              & (same.perturbation_type == "delete")].iloc[0]
+    assert rn["no_op_status"] == rr.STATUS_NOT_RUN, rn["no_op_status"]
+    print("separate no-op root: joined via noop_raw_root; not_run without it -- OK")
+
+    # Real runner file names: noop has nothing between the symbol and "_raw";
+    # a symbol that is a prefix of another (S100A1 / S100A10) must not match.
+    names = tmp_names = fx["raw_root"].parent / "names"
+    d = names / "noop" / "luad"
+    d.mkdir(parents=True)
+    (d / "in_silico_noop_targeted_luad_S100A10_raw.pickle").write_bytes(b"")
+    assert rr.find_raw_pickle(names, "noop", "luad", "S100A1")[0] is None
+    assert rr.find_raw_pickle(names, "noop", "luad", "S100A10")[0].name == "in_silico_noop_targeted_luad_S100A10_raw.pickle"
+    d2 = names / "delete" / "luad"
+    d2.mkdir(parents=True)
+    (d2 / "in_silico_delete_targeted_luad_S100A10_cell_embs_dict_[16314]_raw.pickle").write_bytes(b"")
+    assert rr.find_raw_pickle(names, "delete", "luad", "S100A1")[0] is None
+    assert rr.find_raw_pickle(names, "delete", "luad", "S100A10")[0] is not None
+    print("find_raw_pickle: real noop and delete names match; S100A1 does not match S100A10 -- OK")
 
     # GENEA/luad/*: not_estimable_donor_count (2 donors < 3)
     r4 = row("GENEA", rr.LUAD, rr.SCLC, "delete")
