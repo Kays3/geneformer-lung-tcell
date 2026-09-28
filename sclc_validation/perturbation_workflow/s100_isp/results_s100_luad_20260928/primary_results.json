@@ -1,0 +1,150 @@
+{
+  "luad_to_normal": {
+    "status": "negative",
+    "E": {
+      "S100A2": 0.015022970577701926,
+      "S100B": 0.0010519788421567422,
+      "S100A13": 0.0009385734339620135,
+      "S100PBP": 0.0013088247133057453,
+      "S100A4": 0.004178736574831419,
+      "S100A6": 0.007960587366251274,
+      "S100A10": 0.00840810892637819,
+      "S100A11": 0.0014486307580955325
+    },
+    "Q": {
+      "S100A2": 88.0952380952381,
+      "S100B": 21.428571428571427,
+      "S100A13": 26.19047619047619,
+      "S100PBP": 54.76190476190476,
+      "S100A4": 88.0952380952381,
+      "S100A6": 97.61904761904762,
+      "S100A10": 92.85714285714286,
+      "S100A11": 64.28571428571429
+    },
+    "n_valid_controls": {
+      "S100A2": 20,
+      "S100B": 20,
+      "S100A13": 20,
+      "S100PBP": 20,
+      "S100A4": 20,
+      "S100A6": 20,
+      "S100A10": 20,
+      "S100A11": 20
+    },
+    "primary_test": {
+      "statistic": 1.5,
+      "p_exact": 0.08571428571428572,
+      "n_splits": 70,
+      "direction": "low_above_high",
+      "complete_separation": false,
+      "positive": false,
+      "reason": null
+    },
+    "stability_gate": {
+      "unresampled_positive": false,
+      "all_loo_positive": false,
+      "n_loo": 160,
+      "bootstrap_positive_fraction": 0.0,
+      "bootstrap_ok": false,
+      "stands": false,
+      "outcome": "not_positive"
+    },
+    "loo_n_positive": 0,
+    "loo_direction_counts": {
+      "low_above_high": 160
+    },
+    "loo_p_range": [
+      0.05714285714285714,
+      0.11428571428571428
+    ],
+    "descriptive_spearman_Q_vs_risk": {
+      "rho": -0.5389318178609664,
+      "p_exact": 0.17688492063492064,
+      "n": 8,
+      "gate_pass": false,
+      "reason": null
+    },
+    "descriptive_leave_one_gene_out": {
+      "watch_gene": "S100A2",
+      "leave_one_out_n": 7,
+      "leave_one_out_rho": -0.8214285714285713,
+      "leave_one_out_p_exact": 0.034126984126984124,
+      "outcome": "carried_by_single_gene",
+      "carried_by_single_gene": true
+    }
+  },
+  "luad_to_sclc": {
+    "status": "negative",
+    "E": {
+      "S100A2": 0.01834156589466147,
+      "S100B": 0.0012606661167810047,
+      "S100A13": 0.002647655607467894,
+      "S100PBP": 0.0034715862805816226,
+      "S100A4": 0.006843293289421126,
+      "S100A6": 0.005938881830079481,
+      "S100A10": 0.0055313250003382565,
+      "S100A11": 0.002199410339817405
+    },
+    "Q": {
+      "S100A2": 97.61904761904762,
+      "S100B": 16.666666666666668,
+      "S100A13": 59.523809523809526,
+      "S100PBP": 78.57142857142857,
+      "S100A4": 97.61904761904762,
+      "S100A6": 88.0952380952381,
+      "S100A10": 88.0952380952381,
+      "S100A11": 50.0
+    },
+    "n_valid_controls": {
+      "S100A2": 20,
+      "S100B": 20,
+      "S100A13": 20,
+      "S100PBP": 20,
+      "S100A4": 20,
+      "S100A6": 20,
+      "S100A10": 20,
+      "S100A11": 20
+    },
+    "primary_test": {
+      "statistic": 5.5,
+      "p_exact": 0.4857142857142857,
+      "n_splits": 70,
+      "direction": "low_above_high",
+      "complete_separation": false,
+      "positive": false,
+      "reason": null
+    },
+    "stability_gate": {
+      "unresampled_positive": false,
+      "all_loo_positive": false,
+      "n_loo": 160,
+      "bootstrap_positive_fraction": 0.0,
+      "bootstrap_ok": false,
+      "stands": false,
+      "outcome": "not_positive"
+    },
+    "loo_n_positive": 0,
+    "loo_direction_counts": {
+      "low_above_high": 160
+    },
+    "loo_p_range": [
+      0.45714285714285713,
+      0.6285714285714286
+    ],
+    "descriptive_spearman_Q_vs_risk": {
+      "rho": -0.25303041367373696,
+      "p_exact": 0.5410714285714285,
+      "n": 8,
+      "gate_pass": false,
+      "reason": null
+    },
+    "descriptive_leave_one_gene_out": {
+      "watch_gene": "S100A2",
+      "leave_one_out_n": 7,
+      "leave_one_out_rho": -0.7567874686642695,
+      "leave_one_out_p_exact": 0.05793650793650794,
+      "outcome": "carried_by_single_gene",
+      "carried_by_single_gene": true
+    }
+  }
+}

@@ -1,0 +1,89 @@
+s100_luad_run_panel_pergene_20260928.json sha256=8a0b36683542e51fa81a655505a348f9286669df9adac22859d5f6406f34afba
+matched_control_sets_pergene.json sha256=607ac6c93767406a70f59ef72f918846eae166cc6bc1ada87dd397c5c3f46e36
+run_targeted_panel.py sha256=974535b7b9ad6b49e33e4dfaf2a84e7070f0cc63e64bd8b271233cf77b60f754
+
+retained rows: 616 (154 genes x 2 goals x 2 operations); sha256=be848bb81409968ba1041b2df29cd50ce7335e12699f96ad7f9ab46cd2fe3963
+status
+eligible_completed          608
+not_estimable_cell_count      8
+no_op_status: no_op_status; not_run_by_design     568; eligible_completed     40; NaN                     8
+
+panel rows (status / reason / no-op):
+    S100A4      delete ->sclc   eligible_completed         shift=0.003913380126468837 no_op=eligible_completed 0.0 reason=nan
+    S100A4 overexpress ->sclc   eligible_completed         shift=-0.009773206452373416 no_op=eligible_completed 0.0 reason=nan
+    S100A4      delete ->normal eligible_completed         shift=-0.0010685467952862382 no_op=eligible_completed 0.0 reason=nan
+    S100A4 overexpress ->normal eligible_completed         shift=0.0072889263543765995 no_op=eligible_completed 0.0 reason=nan
+    S100A6      delete ->sclc   eligible_completed         shift=0.0027113981335423884 no_op=eligible_completed 0.0 reason=nan
+    S100A6 overexpress ->sclc   eligible_completed         shift=-0.009166365526616573 no_op=eligible_completed 0.0 reason=nan
+    S100A6      delete ->normal eligible_completed         shift=-0.002498930227011442 no_op=eligible_completed 0.0 reason=nan
+    S100A6 overexpress ->normal eligible_completed         shift=0.013422244505491107 no_op=eligible_completed 0.0 reason=nan
+   S100A10      delete ->sclc   eligible_completed         shift=0.0030521230679005384 no_op=eligible_completed 0.0 reason=nan
+   S100A10 overexpress ->sclc   eligible_completed         shift=-0.008010526932775975 no_op=eligible_completed 0.0 reason=nan
+   S100A10      delete ->normal eligible_completed         shift=-0.004638106138445437 no_op=eligible_completed 0.0 reason=nan
+   S100A10 overexpress ->normal eligible_completed         shift=0.012178111714310944 no_op=eligible_completed 0.0 reason=nan
+   S100A11      delete ->sclc   eligible_completed         shift=0.0012098698876798152 no_op=eligible_completed 0.0 reason=nan
+   S100A11 overexpress ->sclc   eligible_completed         shift=-0.003188950791954994 no_op=eligible_completed 0.0 reason=nan
+   S100A11      delete ->normal eligible_completed         shift=-0.00022536967648193238 no_op=eligible_completed 0.0 reason=nan
+   S100A11 overexpress ->normal eligible_completed         shift=0.0026718918397091325 no_op=eligible_completed 0.0 reason=nan
+     S100P      delete ->sclc   not_estimable_cell_count   shift=nan no_op=nan nan reason=40 token-positive cells from 4 donors (need >= 50 cells from >= 3 donors)
+     S100P overexpress ->sclc   not_estimable_cell_count   shift=nan no_op=nan nan reason=40 token-positive cells from 4 donors (need >= 50 cells from >= 3 donors)
+     S100P      delete ->normal not_estimable_cell_count   shift=nan no_op=nan nan reason=40 token-positive cells from 4 donors (need >= 50 cells from >= 3 donors)
+     S100P overexpress ->normal not_estimable_cell_count   shift=nan no_op=nan nan reason=40 token-positive cells from 4 donors (need >= 50 cells from >= 3 donors)
+   S100A16      delete ->sclc   not_estimable_cell_count   shift=nan no_op=nan nan reason=48 token-positive cells from 4 donors (need >= 50 cells from >= 3 donors)
+   S100A16 overexpress ->sclc   not_estimable_cell_count   shift=nan no_op=nan nan reason=48 token-positive cells from 4 donors (need >= 50 cells from >= 3 donors)
+   S100A16      delete ->normal not_estimable_cell_count   shift=nan no_op=nan nan reason=48 token-positive cells from 4 donors (need >= 50 cells from >= 3 donors)
+   S100A16 overexpress ->normal not_estimable_cell_count   shift=nan no_op=nan nan reason=48 token-positive cells from 4 donors (need >= 50 cells from >= 3 donors)
+    S100A2      delete ->sclc   eligible_completed         shift=0.019349874365143478 no_op=eligible_completed 0.0 reason=nan
+    S100A2 overexpress ->sclc   eligible_completed         shift=0.017333257424179464 no_op=eligible_completed 0.0 reason=nan
+    S100A2      delete ->normal eligible_completed         shift=0.015731571558862924 no_op=eligible_completed 0.0 reason=nan
+    S100A2 overexpress ->normal eligible_completed         shift=0.014314369596540928 no_op=eligible_completed 0.0 reason=nan
+     S100B      delete ->sclc   eligible_completed         shift=-0.001403308291464372 no_op=eligible_completed 0.0 reason=nan
+     S100B overexpress ->sclc   eligible_completed         shift=-0.0011180239420976374 no_op=eligible_completed 0.0 reason=nan
+     S100B      delete ->normal eligible_completed         shift=0.0014391977580816401 no_op=eligible_completed 0.0 reason=nan
+     S100B overexpress ->normal eligible_completed         shift=0.0006647599262318443 no_op=eligible_completed 0.0 reason=nan
+   S100A13      delete ->sclc   eligible_completed         shift=-0.00243311010595215 no_op=eligible_completed 0.0 reason=nan
+   S100A13 overexpress ->sclc   eligible_completed         shift=-0.002862201108983638 no_op=eligible_completed 0.0 reason=nan
+   S100A13      delete ->normal eligible_completed         shift=0.000800897475471653 no_op=eligible_completed 0.0 reason=nan
+   S100A13 overexpress ->normal eligible_completed         shift=0.001076249392452374 no_op=eligible_completed 0.0 reason=nan
+    S100A8      delete ->sclc   eligible_completed         shift=0.009303981921062182 no_op=eligible_completed 0.0 reason=nan
+    S100A8 overexpress ->sclc   eligible_completed         shift=0.0064620311105067565 no_op=eligible_completed 0.0 reason=nan
+    S100A8      delete ->normal eligible_completed         shift=-0.0019107357328221877 no_op=eligible_completed 0.0 reason=nan
+    S100A8 overexpress ->normal eligible_completed         shift=-0.004778985195215267 no_op=eligible_completed 0.0 reason=nan
+    S100A9      delete ->sclc   eligible_completed         shift=0.006729480588450275 no_op=eligible_completed 0.0 reason=nan
+    S100A9 overexpress ->sclc   eligible_completed         shift=0.004731946828500463 no_op=eligible_completed 0.0 reason=nan
+    S100A9      delete ->normal eligible_completed         shift=-0.0032488805105939746 no_op=eligible_completed 0.0 reason=nan
+    S100A9 overexpress ->normal eligible_completed         shift=-0.0043324334206141825 no_op=eligible_completed 0.0 reason=nan
+   S100PBP      delete ->sclc   eligible_completed         shift=0.001089219410582884 no_op=eligible_completed 0.0 reason=nan
+   S100PBP overexpress ->sclc   eligible_completed         shift=-0.005853953150580361 no_op=eligible_completed 0.0 reason=nan
+   S100PBP      delete ->normal eligible_completed         shift=-0.0015718127305088762 no_op=eligible_completed 0.0 reason=nan
+   S100PBP overexpress ->normal eligible_completed         shift=0.0010458366961026146 no_op=eligible_completed 0.0 reason=nan
+
+arms with |donor_balanced_shift| <= numerical floor 0.00072: 147 of 608
+
+== luad_to_normal: STATUS negative
+    S100A2 high E=0.015023 Q=88.10 valid_controls=20
+     S100B high E=0.001052 Q=21.43 valid_controls=20
+   S100A13 high E=0.000939 Q=26.19 valid_controls=20
+   S100PBP high E=0.001309 Q=54.76 valid_controls=20
+    S100A4 low  E=0.004179 Q=88.10 valid_controls=20
+    S100A6 low  E=0.007961 Q=97.62 valid_controls=20
+   S100A10 low  E=0.008408 Q=92.86 valid_controls=20
+   S100A11 low  E=0.001449 Q=64.29 valid_controls=20
+  exact MWU: U=1.5 p=0.0857 (6/70) direction=low_above_high complete_separation=False positive=False
+  stability: LOO positive 0/160, bootstrap positive fraction 0.0000, outcome=not_positive
+  descriptive rho(Q, risk)=-0.5389318178609664 p=0.17688492063492064
+
+== luad_to_sclc: STATUS negative
+    S100A2 high E=0.018342 Q=97.62 valid_controls=20
+     S100B high E=0.001261 Q=16.67 valid_controls=20
+   S100A13 high E=0.002648 Q=59.52 valid_controls=20
+   S100PBP high E=0.003472 Q=78.57 valid_controls=20
+    S100A4 low  E=0.006843 Q=97.62 valid_controls=20
+    S100A6 low  E=0.005939 Q=88.10 valid_controls=20
+   S100A10 low  E=0.005531 Q=88.10 valid_controls=20
+   S100A11 low  E=0.002199 Q=50.00 valid_controls=20
+  exact MWU: U=5.5 p=0.4857 (34/70) direction=low_above_high complete_separation=False positive=False
+  stability: LOO positive 0/160, bootstrap positive fraction 0.0000, outcome=not_positive
+  descriptive rho(Q, risk)=-0.25303041367373696 p=0.5410714285714285
+
+primary_results.json sha256=1934acbdf7274cc497c26fa7d8a602b2cb26d1817709837aa7fadc45cea44230
