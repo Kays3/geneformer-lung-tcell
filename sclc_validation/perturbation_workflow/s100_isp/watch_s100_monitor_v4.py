@@ -9,7 +9,9 @@ remaining = unfinished delete/overexpress arms at 37.88 s + 0.0394 s/cell, times
             max(observed/projected on completed delete/overexpress arms, 1.0).
 Checks the process group only with signal 0 (existence), and exits when the run
 is gone. Refuses to start unless <pgid> contains a run_targeted_panel.py process.
-Usage: watch_s100_monitor_v4.py <pgid>"""
+Once every delete/overexpress arm has a marker, it logs "all GPU arms complete"
+once and stops stall-checking (the runner's CPU-only stats phase that follows is
+not a stall). Usage: watch_s100_monitor_v4.py <pgid>"""
 import calendar, csv, json, os, re, sys, time
 from pathlib import Path
 B = Path("/home/kaisar/workspace/geneformer-lung-tcell/sclc_validation/bf16_bench/runs")
@@ -35,7 +37,7 @@ proj = lambda g: A + PER * cells[g]
 log = open(B / "s100_luad_20260928.budget_watch.log", "a")
 log.write(f"{time.strftime('%FT%TZ', time.gmtime())} monitor v4 start (no kill, stall alarm 30 min): pgid={pgid} members={members} "
           f"prior_spent_h={prior_s/3600:.3f} resume_clock_from={time.strftime('%FT%TZ', time.gmtime(start))}\n"); log.flush()
-last_done, last_change, alerted = None, time.time(), False
+last_done, last_change, alerted, gpu_done = None, time.time(), False, False
 while True:
     try:
         os.killpg(pgid, 0)
@@ -53,7 +55,11 @@ while True:
     total = elapsed + remaining * max(ratio, 1.0)
     log.write(f"{time.strftime('%FT%TZ', time.gmtime())} v4 arms_done={n_done}/{len(arms)} elapsed_h={elapsed/3600:.3f} "
               f"rate_ratio={ratio:.3f} projected_total_h={total/3600:.3f}\n"); log.flush()
-    if n_done != last_done:
+    if remaining == 0:
+        if not gpu_done:
+            log.write(f"{time.strftime('%FT%TZ', time.gmtime())} all GPU arms complete at elapsed_h={elapsed/3600:.3f}; "
+                      f"stall alarm off (CPU stats phase)\n"); log.flush(); gpu_done = True
+    elif n_done != last_done:
         last_done, last_change, alerted = n_done, time.time(), False
     elif not alerted and time.time() - last_change > STALL_S:
         (B / "s100_luad_20260928.STALL_ALERT").write_text(

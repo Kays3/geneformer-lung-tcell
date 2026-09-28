@@ -862,3 +862,16 @@ is not killed on a stall; that decision stays with Michael and the human.
 and no-op on the 10 eligible panel genes only. Module B (CAR-T) is not
 approved. No arm, gene, source or direction is added because the budget is
 now uncapped.
+
+## Amendment 11 -- 2026-09-28 (monitor fix from Stanley's review; s100-isp-execution-20260922)
+
+Appended before the resume; no new output exists. Amendments 1-10 stand
+unedited. Stanley found that watcher v3 would have stopped the run during the
+runner's CPU-only stats phase, after every GPU arm had finished, and so
+discarded a complete run. The same pattern would have raised a false stall
+alert in monitor v4. Monitor v4 now logs "all GPU arms complete" once every
+delete/overexpress arm has a completion marker, and turns its stall alarm off
+for the stats phase that follows. It still never signals the run. The version
+used for the resume is `watch_s100_monitor_v4.py`, sha256 `efac8bdd...`, which
+replaces the `99edb6f3...` named in Amendment 10. Watcher v3 (4.2 h kill) is
+not used: the cap was removed at 13:20 JST.
