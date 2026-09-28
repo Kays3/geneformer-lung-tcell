@@ -256,6 +256,36 @@ RUN_TAG = ARGS.run_tag or ARGS.dtype
 OUT_ROOT = BF16_BENCH_ROOT / "runs" / RUN_TAG / "targeted_panel"
 
 MODEL_PATH_FILE = FINETUNE_ROOT / "runs" / "MODEL_SCLC_LUAD_NORMAL_HTAN_PATH.txt"
+
+
+# The pointer file holds an ABSOLUTE path, written when the model was trained.
+# A tree copied into the shared install keeps that path, so the pointer can name
+# a directory in someone else's home. Unreachable, that fails deep inside model
+# loading -- and pathlib's exists()/is_dir() raise PermissionError there rather
+# than returning False. Reachable, it loads a different model with no error at
+# all. So check containment first (resolve() is pure path arithmetic and does
+# not raise), then existence. Set ALLOW_MODEL_OUTSIDE_FINETUNE_ROOT=1 for a
+# model that is deliberately kept elsewhere.
+ALLOW_MODEL_OUTSIDE_FINETUNE_ROOT = os.environ.get("ALLOW_MODEL_OUTSIDE_FINETUNE_ROOT") == "1"
+
+
+def resolve_model_dir() -> Path:
+    path = Path(MODEL_PATH_FILE.read_text().strip())
+    root = FINETUNE_ROOT.resolve()
+    if not ALLOW_MODEL_OUTSIDE_FINETUNE_ROOT and root not in path.resolve().parents:
+        raise ValueError(
+            f"Model directory named by {MODEL_PATH_FILE} is outside FINETUNE_ROOT ({root}): {path}. "
+            "Retarget the pointer file, or set ALLOW_MODEL_OUTSIDE_FINETUNE_ROOT=1 if this is intended."
+        )
+    try:
+        present = path.is_dir()
+    except PermissionError:
+        present = False
+    if not present:
+        raise FileNotFoundError(f"Model directory named by {MODEL_PATH_FILE} does not exist or is not reachable: {path}")
+    return path
+
+
 TRAIN_DATASET = ALLGENE_ROOT / "data/train_reference.dataset"
 TEST_DATASET = ALLGENE_ROOT / "data/heldout_test.dataset"
 # Overridable (2026-09-18): this pickle is a fixed per-disease-state
@@ -321,7 +351,7 @@ def utc_now() -> str:
 
 
 def model_dir() -> Path:
-    return Path(MODEL_PATH_FILE.read_text().strip())
+    return resolve_model_dir()
 
 
 def ensure_dirs() -> None:
