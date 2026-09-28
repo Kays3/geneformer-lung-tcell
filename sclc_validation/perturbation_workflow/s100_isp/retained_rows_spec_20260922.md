@@ -585,3 +585,62 @@ the tie case (16/70). The error was Kevin's.
 **Order of work from here:** re-pin the runner hash on thinkstation1 after
 PR #32; tiny no-op inference; CPU completion (gate 3); manifests to Stanley.
 No GPU until Stanley signs. Nothing in this amendment starts GPU work.
+
+## Amendment 7 -- 2026-09-28 (conditions from Michael and Stanley; gate-3 record)
+
+Appended before any `Q`, `E` or perturbation shift exists for any gene.
+The only S100 outputs on thinkstation1 are the tiny no-op (S100A2, LUAD,
+shift exactly 0.0) and the CPU preflight tables. Amendments 1-6 stand
+unedited; Stanley signed off Amendment 6 (sign-off 1, PASS).
+
+**1. Ties rule, stated in the spec (Michael's condition).** Amendment 6
+item 1 already registers it; restated here so it cannot be missed. The
+eight `Q` values of a contrast are ranked together; tied values get the
+average of the ranks they span (midranks). U for the ambient-high group is
+the sum of its midranks minus 10. The p-value is the exact permutation p:
+the fraction of all C(8,4) = 70 assignments of the eight observed values to
+a 4-vs-4 split whose U is at least as far from 8 as the observed U. No
+normal approximation, no tie correction formula, no library "exact" mode
+that assumes no ties.
+
+**2. Leave-one-gene-out under the new primary (Stanley's finding 2).** It
+stays on rho and is descriptive only, as Amendment 6 item 4 says. No
+leave-one-gene-out version of the group test is registered, because it
+could never pass: with one gene removed the design is 4 vs 3, and the
+minimum attainable exact two-sided p is 2/C(7,3) = 2/35 = 0.0571 > 0.05
+(verified by enumeration). Any such number, if reported, carries that
+floor next to it.
+
+**3. Control drawing implements the design's "common eligible ...
+non-S100" wording (commit `3733aa89`).** A control must pass the run's own
+LUAD eligibility gate (>= 50 token-positive cells from >= 3 donors) and
+must not be any S100-family gene (32 ensembl ids by symbol prefix in the
+gc104M name dictionary), not only the twelve panel genes. Matching
+tolerances, the all-members rule, the seed and the 20-control floor are
+unchanged.
+
+**4. Gate-3 record: as registered, the primary is not estimable.** Built on
+2026-09-28 from LUAD-only statistics (Amendment 2 ruling):
+
+| stratum | candidates | status |
+|---|---:|---|
+| clean_high (S100A4, S100A6, S100A10, S100A11) | 0 | not estimable: members' rank percentiles span 70.2-90.6 (20.3 points); a control within 5 points of every member needs a span <= 10 |
+| low_p_a16 (S100P, S100A16) | 27 | controls drawn, but both members fail LUAD eligibility |
+| low_a2_b (S100A2, S100B) | 43 | eligible |
+| singleton_a13 (S100A13) | 141 | eligible |
+| singleton_a8 (S100A8) | 69 | eligible |
+| low_a9_pbp (S100A9, S100PBP) | 0 | not estimable: detection differs by 1.34 log2 units (max 1.0), rank by 48.8 points |
+
+The zero counts do not come from the item-3 filters: with both filters
+off they are still 0 and 0. Under Amendment 6 item 3, missing `Q` for any
+of the eight primary genes makes the contrast `not_estimable`; five of the
+eight (all four ambient-low genes and S100PBP) have no stratum, so both
+contrasts' primary result is `not_estimable` as registered. The design
+forbids widening or splitting a stratum after the preflight, and nothing
+has been widened or split.
+
+**No ruling is made here.** Whether to stop, or to re-register matching
+(for example, each primary gene matched on its own with the same
+tolerances), is the human's decision. That decision, if it changes the
+matching rule, must be a further dated amendment registered before any GPU
+run. No GPU beyond the tiny no-op has been spent.
