@@ -172,6 +172,14 @@ def parse_args() -> argparse.Namespace:
                         "a scored arm). Second sizing lever: pass "
                         "'--perturb-types overexpress' to drop delete entirely "
                         "(see the plan's dated 2026-09-17 sizing amendment).")
+    p.add_argument("--sources", nargs="+", choices=("normal", "sclc", "luad"),
+                   default=["normal", "sclc", "luad"],
+                   help="Which source states to perturb (default: all three). A "
+                        "source left out is not run at all -- no forward passes, "
+                        "no completion markers, no stats -- and is recorded in "
+                        "run_config.json's source_order, so a run scoped to one "
+                        "source cannot be mistaken for one that found the others "
+                        "not estimable.")
     return p.parse_args()
 
 
@@ -286,6 +294,7 @@ STATES = (SCLC, LUAD, NORMAL)
 SLUGS = {SCLC: "sclc", LUAD: "luad", NORMAL: "normal"}
 STATE_BY_SLUG = {v: k for k, v in SLUGS.items()}
 DEFAULT_SOURCE_ORDER = ("normal", "sclc", "luad")
+ACTIVE_SOURCES = tuple(s for s in DEFAULT_SOURCE_ORDER if s in ARGS.sources)
 # Full valid set. ACTIVE_PERTURB_TYPES (below, from --perturb-types) is what
 # ensure_dirs()/main() actually iterate -- kept separate so a run scoped to
 # just "overexpress" doesn't create/expect "delete" dirs at all.
@@ -318,7 +327,7 @@ def model_dir() -> Path:
 def ensure_dirs() -> None:
     dirs = [TABLE_ROOT, LOG_ROOT]
     for ptype in ACTIVE_PERTURB_TYPES:
-        for slug in SLUGS.values():
+        for slug in ACTIVE_SOURCES:
             dirs.append(RAW_ROOT / ptype / slug)
         dirs.append(STATS_ROOT / ptype)
     for d in dirs:
@@ -777,7 +786,7 @@ def main() -> None:
         "perturbation_types": list(ACTIVE_PERTURB_TYPES),
         "forward_batch_size": FORWARD_BATCH_SIZE,
         "nproc": NPROC,
-        "source_order": list(DEFAULT_SOURCE_ORDER),
+        "source_order": list(ACTIVE_SOURCES),
         "target_genes_file": str(TARGET_GENES_FILE),
         "target_genes_file_sha256": input_file_sha256(TARGET_GENES_FILE),
         "state_emb_file": str(STATE_EMB_FILE),
@@ -810,12 +819,12 @@ def main() -> None:
 
     # Materialize every source's held-out dataset before any perturb_data()
     # call touches CUDA (see source_dataset_path note).
-    for source in DEFAULT_SOURCE_ORDER:
+    for source in ACTIVE_SOURCES:
         path = source_dataset_path(source)
         logging.info("Source dataset ready: %s -> %s", source, path)
 
     for ptype in ACTIVE_PERTURB_TYPES:
-        for source in DEFAULT_SOURCE_ORDER:
+        for source in ACTIVE_SOURCES:
             logging.info("=== %s / %s: %d genes ===", ptype, source, len(target_genes))
             for gene in target_genes:
                 if ptype == "noop":
@@ -824,7 +833,7 @@ def main() -> None:
                     run_gene(ptype, source, gene, state_embs, force=ARGS.force)
 
     for ptype in ACTIVE_PERTURB_TYPES:
-        for source in DEFAULT_SOURCE_ORDER:
+        for source in ACTIVE_SOURCES:
             run_stats(ptype, source, target_genes, force=ARGS.force)
 
     logging.info("Targeted panel perturbation complete.")
