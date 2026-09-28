@@ -180,6 +180,8 @@ def build_matched_control_table(
     rank_tolerance_percentile: float = 5.0,
     min_common_controls: int = MIN_COMMON_CONTROLS,
     seed: int = SEED,
+    isp_eligible_ensembl_ids: set[str] | None = None,
+    excluded_ensembl_ids: set[str] | None = None,
 ) -> dict[str, dict]:
     """The six fixed 20-control matched strata tables, matched on LUAD-only
     detection fraction and median token rank (both computed by
@@ -207,6 +209,15 @@ def build_matched_control_table(
     replacement, from a generator seeded deterministically from `seed` and
     the stratum name -- never re-sampled.
 
+    Two filters on the candidate pool (Amendment 7, 2026-09-28), both from
+    the design's own wording, "20 common eligible ... non-S100 controls":
+    `isp_eligible_ensembl_ids` -- only genes that pass the run's own
+    eligibility gate in LUAD (>= 50 token-positive cells from >= 3 donors)
+    can be drawn, so every drawn control yields an E and N stays 20; and
+    `excluded_ensembl_ids` -- every S100-family gene, not only the twelve
+    on the panel. Both are required for a real run; None is accepted only
+    so the synthetic tests can exercise matching on its own.
+
     Returns {stratum_name: {"status": ..., "controls": tuple[str, ...] | None,
     "n_candidates": int}}. "controls" holds ensembl ids.
     """
@@ -219,9 +230,12 @@ def build_matched_control_table(
     log2_detect = np.log2(estimable["detect_frac"])
     rank_pctile = rank_percentile_transform(estimable["median_token_rank"])
 
+    excluded = set(excluded_ensembl_ids or ())
     candidate_pool = [
         eid for eid in estimable.index
         if eid not in panel_ensembl_ids and eid not in anchor_ensembl_ids
+        and eid not in excluded
+        and (isp_eligible_ensembl_ids is None or eid in isp_eligible_ensembl_ids)
     ]
 
     result: dict[str, dict] = {}

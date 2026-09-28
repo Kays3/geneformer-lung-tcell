@@ -141,6 +141,34 @@ def test_build_matched_control_table_qualifying_and_deterministic() -> None:
     print(f"stratB: not_estimable_control_stratum ({b['n_candidates']} candidates, < {mc.MIN_COMMON_CONTROLS}) -- OK")
 
 
+def test_build_matched_control_table_eligibility_and_s100_filters() -> None:
+    """Amendment 7: controls must be ISP-eligible in LUAD and non-S100.
+    25 candidates qualify on matching alone; making 6 ineligible leaves 19,
+    so the stratum must go not_estimable -- not be drawn from ineligible
+    genes, which would leave fewer than 20 usable E values after the run."""
+    panel_genes, strata, luad_gene_stats = _build_synthetic_universe()
+    good = [f"ENSGGOOD{i:03d}" for i in range(25)]
+
+    eligible_all = set(good)
+    r = mc.build_matched_control_table(panel_genes, luad_gene_stats, strata=strata,
+                                       isp_eligible_ensembl_ids=eligible_all, excluded_ensembl_ids=set())
+    assert r["stratA"]["status"] == "eligible" and r["stratA"]["n_candidates"] == 25
+
+    eligible_19 = set(good[6:])
+    r = mc.build_matched_control_table(panel_genes, luad_gene_stats, strata=strata,
+                                       isp_eligible_ensembl_ids=eligible_19, excluded_ensembl_ids=set())
+    assert r["stratA"]["status"] == mc.STATUS_NOT_ESTIMABLE_CONTROL_STRATUM, r["stratA"]
+    assert r["stratA"]["n_candidates"] == 19
+
+    s100_family = set(good[:3])
+    r = mc.build_matched_control_table(panel_genes, luad_gene_stats, strata=strata,
+                                       isp_eligible_ensembl_ids=eligible_all, excluded_ensembl_ids=s100_family)
+    assert r["stratA"]["n_candidates"] == 22
+    assert not (set(r["stratA"]["controls"]) & s100_family)
+    print("build_matched_control_table: ineligible candidates never drawn (25 -> 19 = not_estimable), "
+          "S100-family exclusions honoured -- OK")
+
+
 def test_build_matched_control_table_missing_member() -> None:
     """PANELX stays a registered panel gene (it always is -- it's pre-
     registered), but its stats row is absent from luad_gene_stats (e.g. zero
@@ -171,6 +199,7 @@ def main() -> None:
     test_median_token_rank_and_detection()
     test_rank_percentile_transform()
     test_build_matched_control_table_qualifying_and_deterministic()
+    test_build_matched_control_table_eligibility_and_s100_filters()
     test_build_matched_control_table_missing_member()
     test_synthetic_control_table_still_fake()
     print("\nALL MATCHED-CONTROLS CHECKS PASSED")
