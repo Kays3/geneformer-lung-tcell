@@ -19,6 +19,7 @@ bf16-vs-fp32 canary.
 
 **Numerical floor:** 147 of 608 completed arms have |donor-balanced shift| <= 0.00072. Two of them are primary-gene
 arms: S100A11 delete -> normal and S100B overexpress -> normal. No exclusion is registered, so none is applied.
+Four primary genes (S100B, S100A13, S100PBP, S100A11) have 4-14 controls within the 0.00072 bf16 floor of their own E, so their Q is imprecise; treating every such near-tie as either way leaves both contrasts negative (Stanley, 17:35 JST: most favourable extreme p = 52/70 and 68/70, opposite extreme 6/70 and 18/70).
 
 **Retained rows:** 616 rows, none dropped. 608 are `eligible_completed`. 8 are `not_estimable_cell_count`:
 S100P (40 cells) and S100A16 (48 cells), all 4 rows each, below the 50-cell gate. S100A8 and S100A9 are anchors,

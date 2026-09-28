@@ -170,3 +170,5 @@ Released after Stanley's independent reproduction (17:34 JST). Full statement:
   measure bf16 error.
 - Numerical floor: 147 of 608 arms at or below 0.00072, 2 of them primary arms (S100A11 delete -> normal,
   S100B overexpress -> normal); no exclusion is registered, so none is applied.
+- Four primary genes (S100B, S100A13, S100PBP, S100A11) have 4-14 controls within the 0.00072 bf16 floor of their own
+  E, so their Q is imprecise; treating every such near-tie as either way leaves both contrasts negative (Stanley, 17:35 JST: most favourable extreme p = 52/70 and 68/70, opposite extreme 6/70 and 18/70).
