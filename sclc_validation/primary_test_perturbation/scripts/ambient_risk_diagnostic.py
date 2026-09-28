@@ -34,15 +34,19 @@ import numpy as np
 import pandas as pd
 import scipy.sparse as sp
 
+# Same variable and idiom as tools/lab_env.sh, which resolves
+# ${LAB_ROOT:-/srv/lab} and states these same defaults. The two are
+# separate copies: change one and they diverge silently.
+LAB_ROOT = Path(os.environ.get("LAB_ROOT", "/srv/lab"))
 H5AD = Path(os.environ.get(
     "HTAN_H5AD",
-    Path.home() / "workspace/KD/sclc_luad_normal_htan_finetune/data/htan_sclc_luad_normal_tcells_prepared.h5ad",
+    LAB_ROOT / "KD/sclc_luad_normal_htan_finetune/data/htan_sclc_luad_normal_tcells_prepared.h5ad",
 ))
 # The h5ad is indexed by Ensembl ID with no symbol column, so the symbol mapping is
 # taken from the perturbation stats tables, which carry both identifiers.
 STATS_ROOT = Path(os.environ.get(
     "SCLC_PERTURBATION_ROOT",
-    Path.home() / "workspace/KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
+    LAB_ROOT / "KD/sclc_luad_normal_htan_heldout_allgene_perturbation",
 )) / "stats"
 CANDIDATES = Path(os.environ.get(
     "DENOISED_CANDIDATES",
