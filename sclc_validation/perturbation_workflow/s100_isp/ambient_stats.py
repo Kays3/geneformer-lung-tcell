@@ -491,14 +491,16 @@ def leave_one_control_out(
     control, recompute all affected Q values and the ten-gene primary
     rho"). Returns one row per (stratum, dropped_control) with the
     resulting rho -- rho only, not the exact p (see spearman_rho's
-    docstring)."""
+    docstring). The set that lost a control is scored against its 19
+    remaining controls (fixed at min_common_controls - 1); scoring it
+    against the 20-control floor would make every recomputation NaN."""
     rows = []
     for stratum, controls in control_E_by_stratum.items():
         for dropped_id in controls:
             reduced = {cid: v for cid, v in controls.items() if cid != dropped_id}
             adjusted = dict(control_E_by_stratum)
             adjusted[stratum] = reduced
-            Q_adj = compute_Q_for_contrast(E_by_gene, stratum_by_gene, adjusted, min_common_controls)
+            Q_adj = compute_Q_for_contrast(E_by_gene, stratum_by_gene, adjusted, min_common_controls - 1)
             Q_vals = np.array([Q_adj.get(g, np.nan) for g in non_anchor_genes], dtype=float)
             risk_vals = np.array([risk_by_gene.get(g, np.nan) for g in non_anchor_genes], dtype=float)
             rho = np.nan if (np.isnan(Q_vals).any() or np.isnan(risk_vals).any()) else spearman_rho(Q_vals, risk_vals)
@@ -549,6 +551,78 @@ def bootstrap_stability(
         rhos[i] = np.nan if (np.isnan(Q_vals).any() or np.isnan(risk_vals).any()) else spearman_rho(Q_vals, risk_vals)
 
     return rhos
+
+
+def group_separation_leave_one_control_out(
+    E_by_gene: dict[str, float],
+    stratum_by_gene: dict[str, str],
+    control_E_by_stratum: dict[str, dict[str, float]],
+    high_ambient_genes: list[str],
+    low_ambient_genes: list[str],
+    min_common_controls: int = MIN_COMMON_CONTROLS,
+) -> pd.DataFrame:
+    """Amendment 6 item 5 / Amendment 8: for every (control set, control)
+    pair, drop that control, recompute Q for the genes scored against that
+    set (against its 19 remaining controls) and re-run
+    exact_group_separation_test(). One row per recomputation with p,
+    direction and positive."""
+    rows = []
+    for stratum, controls in control_E_by_stratum.items():
+        for dropped_id in controls:
+            adjusted = dict(control_E_by_stratum)
+            adjusted[stratum] = {cid: v for cid, v in controls.items() if cid != dropped_id}
+            Q_adj = compute_Q_for_contrast(E_by_gene, stratum_by_gene, adjusted, min_common_controls - 1)
+            r = exact_group_separation_test(Q_adj, high_ambient_genes, low_ambient_genes)
+            rows.append({"stratum": stratum, "dropped_control": dropped_id, "p_exact": r["p_exact"],
+                         "direction": r["direction"], "positive": r["positive"]})
+    return pd.DataFrame(rows)
+
+
+def group_separation_bootstrap(
+    E_by_gene: dict[str, float],
+    stratum_by_gene: dict[str, str],
+    control_E_by_stratum: dict[str, dict[str, float]],
+    high_ambient_genes: list[str],
+    low_ambient_genes: list[str],
+    seed: int = SEED,
+    n_boot: int = BOOTSTRAP_N,
+    min_common_controls: int = MIN_COMMON_CONTROLS,
+) -> np.ndarray:
+    """Amendment 6 item 5 / Amendment 8: 10,000 redraws, seed 20260922, of
+    each control set with replacement, all sets simultaneously from one
+    Generator (a control shared by two sets is resampled independently in
+    each). Returns a boolean array: was the group test positive on that
+    draw."""
+    rng = np.random.default_rng(seed)
+    sets = list(control_E_by_stratum.keys())
+    values = {s: list(control_E_by_stratum[s].values()) for s in sets}
+    positive = np.zeros(n_boot, dtype=bool)
+    for i in range(n_boot):
+        resampled = {}
+        for s in sets:
+            draw = rng.choice(values[s], size=len(values[s]), replace=True)
+            resampled[s] = {f"boot_{j}": v for j, v in enumerate(draw)}
+        Q_boot = compute_Q_for_contrast(E_by_gene, stratum_by_gene, resampled, min_common_controls)
+        positive[i] = exact_group_separation_test(Q_boot, high_ambient_genes, low_ambient_genes)["positive"]
+    return positive
+
+
+def group_separation_stability_gate(unresampled: dict, loo_df: pd.DataFrame, boot_positive: np.ndarray,
+                                    min_fraction: float = 0.95) -> dict:
+    """Amendment 6 item 5, confirmed by the human: the primary positive
+    stands only if (a) the unresampled test is positive, (b) every
+    leave-one-control-out recomputation is positive, and (c) at least 95%
+    of bootstrap draws are positive. Otherwise control-draw-sensitive /
+    open."""
+    a = bool(unresampled.get("positive"))
+    b = bool(len(loo_df) > 0 and loo_df["positive"].all())
+    frac = float(np.mean(boot_positive)) if len(boot_positive) else 0.0
+    c = frac >= min_fraction
+    return {"unresampled_positive": a, "all_loo_positive": b, "n_loo": int(len(loo_df)),
+            "bootstrap_positive_fraction": frac, "bootstrap_ok": c,
+            "stands": a and b and c,
+            "outcome": "positive_stable" if (a and b and c) else
+                       ("control_draw_sensitive_open" if a else "not_positive")}
 
 
 def bootstrap_gate_passes(rhos: np.ndarray, min_rho: float = 0.70, min_fraction: float = 0.95) -> bool:

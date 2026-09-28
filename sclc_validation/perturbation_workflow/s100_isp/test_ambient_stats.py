@@ -407,6 +407,59 @@ def test_end_to_end_with_synthetic_controls():
           f"120 LOO rows, 200 bootstrap draws -- all ran through the same interface build_matched_control_table() will satisfy -- OK")
 
 
+
+def _per_gene_fixture(low_gene_E=0.1):
+    """Amendment 8 shape: 8 primary genes, each with its own 20 controls
+    (E = 1..20 for every set). High genes' E beat every control; low genes'
+    E sit at the bottom unless low_gene_E moves one of them up."""
+    high = ["h1", "h2", "h3", "h4"]
+    low = ["l1", "l2", "l3", "l4"]
+    E = {g: 100.0 for g in high}
+    E.update({g: 0.5 for g in low})
+    E["l4"] = low_gene_E if low_gene_E != 0.1 else 0.5
+    stratum_by_gene = {g: g for g in high + low}
+    controls = {g: {f"{g}_c{i}": float(i) for i in range(1, 21)} for g in high + low}
+    return E, stratum_by_gene, controls, high, low
+
+
+def test_group_separation_stability():
+    """Amendment 6 item 5 / Amendment 8: LOO over 8 x 20 = 160 pairs, each
+    scored on its 19 remaining controls (never NaN), bootstrap all sets
+    simultaneously, gate = unresampled positive AND all LOO positive AND
+    >= 95% bootstrap positive."""
+    E, sbg, ctrl, high, low = _per_gene_fixture()
+    Q = astats.compute_Q_for_contrast(E, sbg, ctrl)
+    unres = astats.exact_group_separation_test(Q, high, low)
+    loo = astats.group_separation_leave_one_control_out(E, sbg, ctrl, high, low)
+    assert len(loo) == 160 and loo["p_exact"].notna().all(), loo
+    boot = astats.group_separation_bootstrap(E, sbg, ctrl, high, low, n_boot=200)
+    gate = astats.group_separation_stability_gate(unres, loo, boot)
+    assert gate["stands"] and gate["outcome"] == "positive_stable", gate
+
+    # Fragile: l4 beats 19 of its 20 controls, just below the high genes;
+    # any bootstrap draw that omits its top control lifts it to the top.
+    E2 = dict(E); E2["h1"] = 20.5; E2["l4"] = 19.5
+    Q2 = astats.compute_Q_for_contrast(E2, sbg, ctrl)
+    unres2 = astats.exact_group_separation_test(Q2, high, low)
+    loo2 = astats.group_separation_leave_one_control_out(E2, sbg, ctrl, high, low)
+    boot2 = astats.group_separation_bootstrap(E2, sbg, ctrl, high, low, n_boot=200)
+    gate2 = astats.group_separation_stability_gate(unres2, loo2, boot2)
+    assert unres2["positive"] is True
+    assert gate2["stands"] is False and gate2["outcome"] == "control_draw_sensitive_open", gate2
+    print(f"group-separation stability: 160 LOO rows, none NaN; stable case stands; fragile case "
+          f"-> control_draw_sensitive_open (LOO all positive={gate2['all_loo_positive']}, "
+          f"bootstrap {gate2['bootstrap_positive_fraction']:.2f}) -- OK")
+
+
+def test_leave_one_control_out_uses_19_controls():
+    """Bug fixed 2026-09-28: LOO dropped a control and then required 20,
+    so every recomputation was NaN and the rho gate could never pass."""
+    E, sbg, ctrl, high, low = _per_gene_fixture()
+    risk = {g: (10.0 if g in high else 1.0) + i for i, g in enumerate(high + low)}
+    loo = astats.leave_one_control_out(E, sbg, ctrl, risk, high + low)
+    assert len(loo) == 160 and loo["rho"].notna().all(), loo["rho"].isna().sum()
+    print("leave_one_control_out: 160 rows scored on 19 controls, no NaN -- OK")
+
 def main() -> None:
     test_compute_E()
     test_midrank_percentile()
@@ -422,6 +475,8 @@ def main() -> None:
     test_primary_test_reports_n()
     test_synthetic_control_table_is_structurally_valid_and_labeled_fake()
     test_end_to_end_with_synthetic_controls()
+    test_group_separation_stability()
+    test_leave_one_control_out_uses_19_controls()
     print("\nALL AMBIENT-STATS CHECKS PASSED")
 
 
