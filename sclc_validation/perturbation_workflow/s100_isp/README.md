@@ -154,3 +154,19 @@ p <= 0.05 with the high group above (minimum p 2/70 = 0.0286, i.e.
 complete separation). The eight-point Spearman is descriptive only. The
 function now enumerates the 70 splits itself because scipy's exact mode
 mishandles ties. See `retained_rows_spec_20260922.md`, Amendment 6.
+
+## Results (2026-09-28, S100 LUAD arm)
+
+Released after Stanley's independent reproduction (17:34 JST). Full statement:
+`results_s100_luad_20260928/RESULT.md`; tables and provenance in the same folder.
+
+- **Status: `negative` in both LUAD contrasts.** The four ambient-high S100 genes did not score higher against
+  their own detection-matched controls than the four ambient-low genes (exact two-sided MWU, 4 v 4:
+  p = 0.086 LUAD -> normal, 0.49 LUAD -> SCLC). At 4 v 4 only complete separation (p = 2/70) can pass.
+- The observed ordering (the ambient-low group above) is descriptive only, not `opposite_direction`. The
+  ambient-low genes' high Q was not tested and supports no claim. Never write "no effect".
+- The Spearman of Q against ambient risk (-0.539, -0.253) is descriptive only.
+- No-op: PASS per gene (0.0 on all 7,845 per-cell values, 10 genes; the two passes were identical). It does not
+  measure bf16 error.
+- Numerical floor: 147 of 608 arms at or below 0.00072, 2 of them primary arms (S100A11 delete -> normal,
+  S100B overexpress -> normal); no exclusion is registered, so none is applied.
