@@ -147,8 +147,17 @@ if [ -s "$EXTDIR/xfer_verify_$HOST.log" ]; then
 fi
 echo "R-B(ii) verified: full Amendments 1-3 environment pin (198 files: goals + fold models) unchanged"
 
-# --- R-B(iii): record the software environment for comparison against A5's ---
-"$PY" -m pip freeze > "$EXTDIR/pip_freeze_$HOST.txt"
+# --- R-B(iii): record the software environment for comparison against A5's. This is a real-launch
+#     find, not caught by any test (which stub out subprocess calls): the uv-managed venv has no `pip`
+#     module at all (`-m pip freeze` fails with ModuleNotFoundError), so package listing is done via
+#     importlib.metadata instead -- no new external tool dependency (no reliance on `uv` being on PATH
+#     either). Non-blocking (|| true): this is an informational record for comparison against A5's own
+#     environment, not a registered gating check, so a failure here must not abort the GPU run. ---
+"$PY" -c "
+import importlib.metadata as m
+for d in sorted(m.distributions(), key=lambda d: d.metadata['Name'].lower()):
+    print(f\"{d.metadata['Name']}=={d.version}\")
+" > "$EXTDIR/pip_freeze_$HOST.txt" 2>&1 || true
 "$PY" -c "import torch; print('torch', torch.__version__); print('cuda', torch.version.cuda)" > "$EXTDIR/torch_cuda_$HOST.txt" 2>&1 || true
 nvidia-smi --query-gpu=driver_version --format=csv,noheader > "$EXTDIR/driver_version_$HOST.txt"
 
