@@ -1483,3 +1483,43 @@ gap under ISP-STD-1 A.1. This is fixed before any output exists, per Stanley's g
    headline.
 6. A `stopped_not_analysed` or `no_op_failed` outcome on either run is reported as that status for that run,
    and does not override or get overridden by the other run's status.
+
+
+## Deviation note: null_analysis.py hash change (Amendment 6 run-package re-gate-2, Stanley)
+
+This note is appended after Amendment 6 s.6.7 and does not itself change Amendment 5's registered
+design, statistics, or status vocabulary. It records a pre-analysis bug fix in the Amendment 5 CPU
+analysis code, caught by Stanley while gating Amendment 6's run package, before any A5 analysis output
+existed (confirmed: no `null_analysis.py` output has ever been produced against real A5 data).
+
+**Bug**: `apply_noop_gate` read `noop_results_path` line-by-line with `json.loads(line)`. The real
+`noop_spotcheck.py` writes each result via `json.dump(..., indent=1)` with no separator, and both
+driver scripts append results with `cat "$RESULT_FILE" >> "$NOOP_RESULTS"`, so the real file is a
+stream of concatenated multi-line JSON objects glued `}{` with no line boundary between them, not one
+JSON object per line. The line-by-line parser crashes (`json.decoder.JSONDecodeError`) on the very
+first line of any real results file -- this would have made `null_analysis.py` crash before emitting
+any status for the Amendment 5 (A5) primary result, and equally for Amendment 6's combined N=200
+analysis (`null_analysis_combined.py`, which imports `apply_noop_gate` unchanged). Verified on ts1
+against A5's actual `phase8_null/noop_spotchecks_thinkstation1/results.jsonl` (65 lines, 5 concatenated
+objects, all `pass: true`): the old parser fails on line 1 with `Expecting property name`.
+
+**Fix**: `apply_noop_gate` now parses the file as a stream of JSON values (`json.JSONDecoder().raw_decode`
+in a loop, skipping whitespace between values), which accepts both the real glued/indented format and
+the compact one-line fallback format the drivers also append on a spot-check failure. `results.jsonl`
+itself is never rewritten -- it remains byte-identical and is covered by Stanley's R-C output manifest
+(sha256 `b872f8a2375b7f6da42caa9204fe3b011785f1bd13ca85040eae5e4e20860695`).
+
+**Verification**: a new test (`balanced_donor_luad/tests/test_apply_noop_gate_real_format.py`) runs the
+fixed parser against a byte copy of A5's actual `results.jsonl`, confirming 5/5 checked and passing,
+and `due` matching the real gene IDs at draw-order positions 20/40/60/80/100
+(`ENSG00000163191`/`ENSG00000105819`/`ENSG00000147669`/`ENSG00000111897`/`ENSG00000177200`) exactly --
+plus a second case with the same file plus one appended compact fallback line for a non-due gene,
+confirming the mixed-format failure path still registers correctly.
+
+**Hash change**: `null_analysis.py` sha256 changes from `835640bb428338b46078f289039588127aa0bfb93cf19f212efbc7fc396e4471`
+(Amendment 5's pinned value, R6) to `bf12d145ead61d11ae71786f76c64a7260967a916e39a4faeeca88290f1b5c9c`.
+No other line in the file changes. Per Stanley's instruction, this is reported as a deviation note
+rather than a numbered amendment, since it changes no registered design, threshold, or status
+definition -- only a parsing bug that would otherwise have prevented any status from ever being
+reported. Stanley re-passes the A5 analysis code on this one change before `null_analysis.py` is run
+for real against A5's output.

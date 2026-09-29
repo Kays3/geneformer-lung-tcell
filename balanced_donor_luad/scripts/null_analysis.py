@@ -190,11 +190,22 @@ def apply_noop_gate(primary, noop_results_path, rows):
     on a due position would make that gene both stopped_not_analysed AND (wrongly) no_op_failed."""
     checked = {}
     if os.path.exists(noop_results_path):
-        for line in open(noop_results_path):
-            line = line.strip()
-            if not line:
-                continue
-            r = json.loads(line)
+        # Stanley's re-gate-2 fix (B5): noop_spotcheck.py writes each result via json.dump(..., indent=1)
+        # with no separator or trailing newline, and both drivers append with `cat >> results.jsonl` --
+        # so the file is a stream of concatenated multi-line JSON values ('}{' glued, no per-line
+        # boundary), not one-JSON-object-per-line. A line-by-line json.loads() crashes on line 1 of any
+        # real file. Parse as a raw_decode stream instead: skip whitespace, decode one value, repeat --
+        # this accepts the real indented/glued format AND the compact one-line error-fallback format
+        # (`echo '{"gene":...}' >> results.jsonl`) the drivers also append on a spot-check failure.
+        text = open(noop_results_path).read()
+        decoder = json.JSONDecoder()
+        idx, n = 0, len(text)
+        while idx < n:
+            while idx < n and text[idx].isspace():
+                idx += 1
+            if idx >= n:
+                break
+            r, idx = decoder.raw_decode(text, idx)
             checked[r["gene"]] = r.get("pass", False)
     completed_in_order = [r["gene"] for r in rows if r["status"] != "stopped_not_analysed"]
     due = {completed_in_order[i] for i in range(len(completed_in_order)) if (i + 1) % NOOP_EVERY == 0}

@@ -26,10 +26,26 @@ unmodified.
       which is the .../out subtree), since it also covers noop_spotchecks_thinkstation1/ alongside out/.
   (f) s.6.7 pair rule: --a5-primary-result (A5's own null_analysis.py output, already produced and
       unaffected by this script) supplies the registered N=100 primary status; combine_headline()
-      below implements Amendment 6 s.6.7's 6 points.
+      below implements Amendment 6 s.6.7's 6 points. B6 (Stanley's re-gate-2): this file is NOT
+      trusted blindly -- rows[:100] (A5's genes, A5's order, already built above) are recomputed fresh
+      with na.primary_from_rows()/na.apply_noop_gate() under a freshly-seeded rng(SEED), which is
+      bit-for-bit reproducible since na.main() performs the identical computation on the identical
+      rows; any mismatch on status/rho/p_lower_tail HALTS (exit 6) before a headline is ever computed
+      from the unauthenticated file.
   (g) ambient/secondary-percentiles: unchanged mechanisms (ambient_loao_null.py, secondary_percentiles.py
       already take an arbitrary gene list / any null_analysis-shaped result file) -- run them again
       pointed at this script's --out for the combined 200-gene versions; no new code needed there.
+
+Fixes applied after Stanley's 2026-09-29 run-package re-gate-2 (B5, B6, m1):
+  B5: apply_noop_gate (in null_analysis.py, imported here unmodified) could not parse the REAL
+      noop_spotcheck.py output -- json.dump(indent=1) with no separator, concatenated by `cat >>`, so
+      the file is glued multi-line JSON objects ('}{'), not one-object-per-line. Fixed there via a
+      raw_decode streaming parser; null_analysis.py's hash changes as a result (see PHASE5
+      registration deviation note). This also fixes the A5 primary analysis itself, which had never
+      actually been run against real data before this bug was caught.
+  B6: see (f) above -- --a5-primary-result is now authenticated by recomputation, not trusted as-is.
+  m1: --ovx-index-a5 and --ovx-index-ext position-key sets are asserted disjoint before merging (a
+      collision would otherwise silently overwrite one index's entry with the other's).
 """
 import argparse
 import hashlib
@@ -188,6 +204,20 @@ def main(argv=None):
                    "n_total_a5": ix_a5["n_total"], "n_total_ext": ix_ext["n_total"]}, open(a.out, "w"), indent=1)
         print("HALTED: ovx index n_total mismatch", file=sys.stderr)
         return 4
+    # m1 (Stanley's re-gate-2, minor): the two ovx indexes' position keys must be disjoint -- a
+    # collision would otherwise silently overwrite an A5 entry with an extension one (or vice versa)
+    # in the merge below.
+    keys_a5 = set(ix_a5["positions"].keys())
+    keys_ext = set(ix_ext["positions"].keys())
+    collision = keys_a5 & keys_ext
+    if collision:
+        json.dump({"about": "HALTED: ovx-index-a5 and ovx-index-ext have overlapping position keys (m1) "
+                             "-- a collision would silently overwrite one index's entry with the other's",
+                   "n_collisions": len(collision), "example": sorted(collision)[:10]},
+                  open(a.out, "w"), indent=1)
+        print(f"HALTED: {len(collision)} ovx position key collisions between A5 and extension indexes",
+              file=sys.stderr)
+        return 7
     positions = {tuple(k.split("|")): v for k, v in ix_a5["positions"].items()}
     for k, v in ix_ext["positions"].items():
         positions[tuple(k.split("|"))] = v
@@ -216,8 +246,29 @@ def main(argv=None):
                     f.write(open(p).read())
         primary_200 = na.apply_noop_gate(primary_200, merged_noop_path, rows)
 
-    a5_primary = json.load(open(a.a5_primary_result))["primary"]
-    a5_status = a5_primary["status"]
+    # --- B6 (Stanley's re-gate-2): --a5-primary-result must not be trusted blindly -- combine_headline
+    #     would otherwise take the registered N=100 status from an arbitrary, unauthenticated JSON file.
+    #     Recompute the N=100 primary fresh from rows[:100] (the same A5-genes-in-A5-order rows already
+    #     built above by collect_gene_rows_dual) with a freshly-seeded rng(SEED) -- na.main() performs
+    #     the exact same computation on the exact same rows, so this is bit-for-bit reproducible -- and
+    #     HALT unless status/rho/p_lower_tail all match the supplied file. ---
+    a5_primary_file = json.load(open(a.a5_primary_result))["primary"]
+    a5_rows = rows[:100]
+    a5_recomputed, _, _ = na.primary_from_rows(a5_rows, np.random.default_rng(SEED))
+    if a5_recomputed.get("status") != "not_estimable":
+        a5_recomputed = na.apply_noop_gate(a5_recomputed, a.noop_results_a5, a5_rows)
+    auth_fields = ("status", "rho", "p_lower_tail")
+    mismatch_fields = [f for f in auth_fields if a5_recomputed.get(f) != a5_primary_file.get(f)]
+    if mismatch_fields:
+        json.dump({"about": "HALTED: --a5-primary-result does not match a fresh recomputation from the "
+                             "same rows (B6) -- refusing to trust an unauthenticated primary result file",
+                   "mismatch_fields": mismatch_fields,
+                   "recomputed": {k: a5_recomputed.get(k) for k in auth_fields},
+                   "supplied": {k: a5_primary_file.get(k) for k in auth_fields}},
+                  open(a.out, "w"), indent=1)
+        print(f"HALTED: B6 authentication failed, mismatch on {mismatch_fields}", file=sys.stderr)
+        return 6
+    a5_status = a5_recomputed["status"]
     headline = combine_headline(a5_status, primary_200["status"])
 
     result = {"about": __doc__.strip(), "n_registered": ng["n"],

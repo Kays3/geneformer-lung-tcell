@@ -102,7 +102,11 @@ declare -A EXPECT=(
   ["$EXT_FROZEN_200"]="da7bf511a2016b153132ad2530a6b8564b5ec2d50e6098c3f7263250161bd919"
   ["$XFER_MANIFEST"]="91f22298e7525ca957e72b837f9e6d67a0c29487c62c30e94dca9c1058c0b46a"
   ["$BD/scripts/noop_spotcheck.py"]="e9bbdfcc7e8797e437d1687e9c74c5ce49de8c57ecdfce9e04daefcffc13d5be"
-  ["$BD/scripts/null_analysis_combined.py"]="6d5c9c38d4dd0097b1c0fd9c4b64cf7a05a4bf64251500a71d508ca7c839a33d"
+  # Stanley's run-package re-gate-2 (B5/B6/m1): null_analysis.py's apply_noop_gate fix changed its hash;
+  # it was NOT previously in this EXPECT list even though null_analysis_combined.py imports it -- added
+  # per Stanley's "its EXPECT must pin both analysis files' new hashes".
+  ["$BD/scripts/null_analysis.py"]="bf12d145ead61d11ae71786f76c64a7260967a916e39a4faeeca88290f1b5c9c"
+  ["$BD/scripts/null_analysis_combined.py"]="6a372f2f7fbd95fb217849f6f10f08856314512090e5a0f527e56116fd9be949"
 )
 RUN_CONFIG="$EXTDIR/run_config_$HOST.json"
 python3 - "$RUN_CONFIG" "$HOST" "$CEILING" "${!EXPECT[@]}" <<'PYEOF' "${EXPECT[@]}"
