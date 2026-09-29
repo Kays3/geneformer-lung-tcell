@@ -178,6 +178,10 @@ It can be deleted once the rebased history is confirmed good.
 
 ### Geneformer's h5ad tokenizer path fails under pandas 3
 
+**Fix adopted 2026-09-29: the Geneformer environments pin `pandas<3`** (`requirements.txt` and every
+`geneformer_uv_setup/` template, lockfile re-resolved). The loom route described below still works. An upstream
+issue is drafted on the floor (`hive/reports/geneformer-pandas3-issue-draft-20260929.md`), not yet filed.
+
 **Symptom.** Tokenising from `.h5ad` raises `KeyError` naming
 `ensembl_id_collapsed`. The environments on both nodes carry pandas 3.0.5.
 

@@ -44,6 +44,11 @@ matplotlib 3.10.8  anndata 0.12.10  scanpy 1.12.1
 
 Stages 3 and 4 are CPU-only; the GPU is used only by stage 0.
 
+The versions above are the ones that produced this report. From 2026-09-29 the Geneformer environments pin
+`pandas<3` (`requirements.txt`, `geneformer_uv_setup/`): Geneformer's h5ad tokenizer (`tokenizer.py` lines 544 and
+547) indexes a string-indexed Series by integer position, which pandas 3 turned into a `KeyError`. See `WORKFLOW.md`,
+"Geneformer's h5ad tokenizer path fails under pandas 3".
+
 ## 3. Running the analyses
 
 Run from the repository checkout on the workstation, never from a scratch copy, so the

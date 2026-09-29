@@ -11,6 +11,9 @@ dependencies = [
   # dropped SpecialTokensMixin and makes `import geneformer` fail. Pin it here to
   # what upstream actually requires.
   "transformers==4.46",
+  # pandas 3 removed Series[int positions] on a non-integer index; Geneformer's
+  # tokenize_anndata (tokenizer.py:544,547) relies on it and raises KeyError.
+  "pandas<3",
   "ipykernel",
   "jupyterlab",
 ]
