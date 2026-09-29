@@ -1,0 +1,73 @@
+{
+ "gene": "ENSG00000166710",
+ "target_token": 3880,
+ "donor": "He_Fan_2021_P1",
+ "negative_control": true,
+ "delete": {
+  "cells_checked": 100,
+  "cells_wrong": 100,
+  "first_wrong": {
+   "orig_head": [
+    2,
+    18307,
+    3891,
+    11593,
+    3880,
+    19067,
+    4244,
+    78
+   ],
+   "pert_head": [
+    2,
+    18307,
+    3891,
+    11593,
+    3880,
+    19067,
+    4244,
+    78
+   ],
+   "len_o": 1104,
+   "len_q": 1103
+  },
+  "target_occurrences_per_cell": [
+   0,
+   1
+  ],
+  "PASS": false
+ },
+ "overexpress": {
+  "cells_checked": 100,
+  "cells_wrong": 100,
+  "first_wrong": {
+   "orig_head": [
+    2,
+    18307,
+    3891,
+    11593,
+    3880,
+    19067,
+    4244,
+    78
+   ],
+   "pert_head": [
+    2,
+    11717,
+    18307,
+    3891,
+    11593,
+    3880,
+    19067,
+    4244
+   ],
+   "len_o": 1104,
+   "len_q": 1104
+  },
+  "target_occurrences_per_cell": [
+   0,
+   1
+  ],
+  "PASS": false
+ },
+ "PASS": false
+}

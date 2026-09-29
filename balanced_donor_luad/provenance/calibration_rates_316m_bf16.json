@@ -1,0 +1,17 @@
+{
+ "purpose": "rate calibration only; model and ISP outputs discarded unread",
+ "seed": 20260924,
+ "precision": "bf16",
+ "model": "Geneformer-V2-316M",
+ "train_cells": 900,
+ "median_tokens_train": 745.0,
+ "finetune_seconds": 109.95079016685486,
+ "train_cells_per_second": 8.185480055524957,
+ "isp_cells": 300,
+ "isp_delete_seconds": 20.410143613815308,
+ "isp_delete_seconds_per_300_cells": 20.410143613815308,
+ "isp_overexpress_seconds": 18.81202006340027,
+ "isp_overexpress_seconds_per_300_cells": 18.81202006340027,
+ "total_wall_seconds": 153.75984978675842,
+ "gpu_hours_used_upper_bound": 0.04271106938521067
+}

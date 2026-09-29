@@ -1,0 +1,70 @@
+{
+ "rule": "Amendment 3h.6",
+ "n_candidates": 10785,
+ "pairs": [
+  {
+   "category": "tie_rich",
+   "gene": "ENSG00000142227",
+   "donor": "He_Fan_2021_P3",
+   "host": "thinkstation1",
+   "k": 42,
+   "mixed_tie_positives": 15
+  },
+  {
+   "category": "tie_free",
+   "gene": "ENSG00000008517",
+   "donor": "Kim_Lee_2020_P0009",
+   "host": "thinkstation1",
+   "k": 99,
+   "mixed_tie_positives": 0
+  },
+  {
+   "category": "low_k",
+   "gene": "ENSG00000042753",
+   "donor": "He_Fan_2021_P3",
+   "host": "thinkstation1",
+   "k": 11,
+   "mixed_tie_positives": 7
+  },
+  {
+   "category": "high_k",
+   "gene": "ENSG00000137154",
+   "donor": "He_Fan_2021_P4",
+   "host": "thinkstation1",
+   "k": 95,
+   "mixed_tie_positives": 6
+  },
+  {
+   "category": "tie_rich",
+   "gene": "ENSG00000140319",
+   "donor": "He_Fan_2021_P4",
+   "host": "thinkstation2",
+   "k": 56,
+   "mixed_tie_positives": 15
+  },
+  {
+   "category": "tie_free",
+   "gene": "ENSG00000075624",
+   "donor": "He_Fan_2021_P5",
+   "host": "thinkstation2",
+   "k": 99,
+   "mixed_tie_positives": 0
+  },
+  {
+   "category": "low_k",
+   "gene": "ENSG00000106829",
+   "donor": "Kim_Lee_2020_P0034",
+   "host": "thinkstation2",
+   "k": 11,
+   "mixed_tie_positives": 7
+  },
+  {
+   "category": "high_k",
+   "gene": "ENSG00000170889",
+   "donor": "He_Fan_2021_P4",
+   "host": "thinkstation2",
+   "k": 90,
+   "mixed_tie_positives": 8
+  }
+ ]
+}

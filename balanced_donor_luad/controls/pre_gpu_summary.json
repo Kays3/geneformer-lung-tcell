@@ -1,0 +1,16 @@
+{
+ "n_cells": 4300,
+ "n_donors": 43,
+ "panel_A_eligible": 2,
+ "panel_A_total": 15,
+ "panel_B_eligible": 34,
+ "panel_B_total": 36,
+ "n_strata": 19,
+ "n_strata_not_estimable": 1,
+ "n_unique_controls": 318,
+ "genes_to_run": 354,
+ "host_counts": {
+  "thinkstation1": 182,
+  "thinkstation2": 172
+ }
+}

@@ -1,0 +1,260 @@
+{
+ "He_Fan_2021_P3": {
+  "fold": 0,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold0/260925_geneformer_cellClassifier_bdl_fold0/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P3/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P3/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0008": {
+  "fold": 0,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold0/260925_geneformer_cellClassifier_bdl_fold0/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0008/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0008/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0031": {
+  "fold": 0,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold0/260925_geneformer_cellClassifier_bdl_fold0/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0031/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0031/isp_input.dataset"
+ },
+ "Lambrechts_Thienpont_2018_6149v2_4": {
+  "fold": 0,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold0/260925_geneformer_cellClassifier_bdl_fold0/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Lambrechts_Thienpont_2018_6149v2_4/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Lambrechts_Thienpont_2018_6149v2_4/isp_input.dataset"
+ },
+ "Leader_Merad_2021_460": {
+  "fold": 0,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold0/260925_geneformer_cellClassifier_bdl_fold0/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_460/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_460/isp_input.dataset"
+ },
+ "Leader_Merad_2021_578": {
+  "fold": 0,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold0/260925_geneformer_cellClassifier_bdl_fold0/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_578/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_578/isp_input.dataset"
+ },
+ "Leader_Merad_2021_593": {
+  "fold": 0,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold0/260925_geneformer_cellClassifier_bdl_fold0/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_593/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_593/isp_input.dataset"
+ },
+ "Leader_Merad_2021_596": {
+  "fold": 0,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold0/260925_geneformer_cellClassifier_bdl_fold0/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_596/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_596/isp_input.dataset"
+ },
+ "Leader_Merad_2021_626": {
+  "fold": 0,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold0/260925_geneformer_cellClassifier_bdl_fold0/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_626/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_626/isp_input.dataset"
+ },
+ "He_Fan_2021_P1": {
+  "fold": 1,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold1/260925_geneformer_cellClassifier_bdl_fold1/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P1/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P1/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0019": {
+  "fold": 1,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold1/260925_geneformer_cellClassifier_bdl_fold1/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0019/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0019/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0030": {
+  "fold": 1,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold1/260925_geneformer_cellClassifier_bdl_fold1/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0030/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0030/isp_input.dataset"
+ },
+ "Lambrechts_Thienpont_2018_6149v2_3": {
+  "fold": 1,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold1/260925_geneformer_cellClassifier_bdl_fold1/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Lambrechts_Thienpont_2018_6149v2_3/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Lambrechts_Thienpont_2018_6149v2_3/isp_input.dataset"
+ },
+ "Leader_Merad_2021_403": {
+  "fold": 1,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold1/260925_geneformer_cellClassifier_bdl_fold1/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_403/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_403/isp_input.dataset"
+ },
+ "Leader_Merad_2021_410": {
+  "fold": 1,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold1/260925_geneformer_cellClassifier_bdl_fold1/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_410/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_410/isp_input.dataset"
+ },
+ "Leader_Merad_2021_514": {
+  "fold": 1,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold1/260925_geneformer_cellClassifier_bdl_fold1/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_514/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_514/isp_input.dataset"
+ },
+ "Leader_Merad_2021_570": {
+  "fold": 1,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold1/260925_geneformer_cellClassifier_bdl_fold1/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_570/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_570/isp_input.dataset"
+ },
+ "Leader_Merad_2021_729": {
+  "fold": 1,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold1/260925_geneformer_cellClassifier_bdl_fold1/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_729/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_729/isp_input.dataset"
+ },
+ "He_Fan_2021_P2": {
+  "fold": 2,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P2/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P2/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0020": {
+  "fold": 2,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0020/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0020/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0034": {
+  "fold": 2,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0034/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0034/isp_input.dataset"
+ },
+ "Lambrechts_Thienpont_2018_6653_6": {
+  "fold": 2,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Lambrechts_Thienpont_2018_6653_6/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Lambrechts_Thienpont_2018_6653_6/isp_input.dataset"
+ },
+ "Leader_Merad_2021_406": {
+  "fold": 2,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_406/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_406/isp_input.dataset"
+ },
+ "Leader_Merad_2021_458": {
+  "fold": 2,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_458/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_458/isp_input.dataset"
+ },
+ "Leader_Merad_2021_532": {
+  "fold": 2,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_532/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_532/isp_input.dataset"
+ },
+ "Leader_Merad_2021_569": {
+  "fold": 2,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_569/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_569/isp_input.dataset"
+ },
+ "Leader_Merad_2021_572": {
+  "fold": 2,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold2/260925_geneformer_cellClassifier_bdl_fold2/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_572/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_572/isp_input.dataset"
+ },
+ "He_Fan_2021_P5": {
+  "fold": 3,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold3/260925_geneformer_cellClassifier_bdl_fold3/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P5/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P5/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0006": {
+  "fold": 3,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold3/260925_geneformer_cellClassifier_bdl_fold3/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0006/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0006/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0018": {
+  "fold": 3,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold3/260925_geneformer_cellClassifier_bdl_fold3/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0018/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0018/isp_input.dataset"
+ },
+ "Laughney_Massague_2020_LX675": {
+  "fold": 3,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold3/260925_geneformer_cellClassifier_bdl_fold3/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Laughney_Massague_2020_LX675/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Laughney_Massague_2020_LX675/isp_input.dataset"
+ },
+ "Leader_Merad_2021_378": {
+  "fold": 3,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold3/260925_geneformer_cellClassifier_bdl_fold3/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_378/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_378/isp_input.dataset"
+ },
+ "Leader_Merad_2021_408": {
+  "fold": 3,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold3/260925_geneformer_cellClassifier_bdl_fold3/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_408/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_408/isp_input.dataset"
+ },
+ "Leader_Merad_2021_564": {
+  "fold": 3,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold3/260925_geneformer_cellClassifier_bdl_fold3/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_564/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_564/isp_input.dataset"
+ },
+ "Leader_Merad_2021_581": {
+  "fold": 3,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold3/260925_geneformer_cellClassifier_bdl_fold3/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_581/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_581/isp_input.dataset"
+ },
+ "He_Fan_2021_P4": {
+  "fold": 4,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold4/260925_geneformer_cellClassifier_bdl_fold4/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P4/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/He_Fan_2021_P4/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0009": {
+  "fold": 4,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold4/260925_geneformer_cellClassifier_bdl_fold4/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0009/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0009/isp_input.dataset"
+ },
+ "Kim_Lee_2020_P0028": {
+  "fold": 4,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold4/260925_geneformer_cellClassifier_bdl_fold4/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0028/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Kim_Lee_2020_P0028/isp_input.dataset"
+ },
+ "Laughney_Massague_2020_LX682": {
+  "fold": 4,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold4/260925_geneformer_cellClassifier_bdl_fold4/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Laughney_Massague_2020_LX682/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Laughney_Massague_2020_LX682/isp_input.dataset"
+ },
+ "Leader_Merad_2021_370": {
+  "fold": 4,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold4/260925_geneformer_cellClassifier_bdl_fold4/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_370/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_370/isp_input.dataset"
+ },
+ "Leader_Merad_2021_371": {
+  "fold": 4,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold4/260925_geneformer_cellClassifier_bdl_fold4/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_371/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_371/isp_input.dataset"
+ },
+ "Leader_Merad_2021_630": {
+  "fold": 4,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold4/260925_geneformer_cellClassifier_bdl_fold4/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_630/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_630/isp_input.dataset"
+ },
+ "Leader_Merad_2021_695": {
+  "fold": 4,
+  "model_dir": "/home/kaisar/workspace/balanced_donor_luad/phase4/fold4/260925_geneformer_cellClassifier_bdl_fold4/ksplit1",
+  "goals": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_695/goals.pkl",
+  "isp_input": "/home/kaisar/workspace/balanced_donor_luad/goals/donors/Leader_Merad_2021_695/isp_input.dataset"
+ }
+}

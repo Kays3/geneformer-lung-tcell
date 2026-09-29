@@ -1,0 +1,1065 @@
+{
+ "ambient_flagged": {
+  "ENSG00000101443": true,
+  "ENSG00000106541": true,
+  "ENSG00000110492": true,
+  "ENSG00000111057": true,
+  "ENSG00000133639": false,
+  "ENSG00000135480": true,
+  "ENSG00000157765": true,
+  "ENSG00000162896": true,
+  "ENSG00000164265": true,
+  "ENSG00000168255": false,
+  "ENSG00000170421": true,
+  "ENSG00000171345": true,
+  "ENSG00000185499": true,
+  "ENSG00000206172": true,
+  "ENSG00000254772": true
+ },
+ "ambient_label": {
+  "ENSG00000101443": "CURATED_LINEAGE_FOREIGN",
+  "ENSG00000106541": "AMBIENT_FLAGGED",
+  "ENSG00000110492": "AMBIENT_FLAGGED",
+  "ENSG00000111057": "CURATED_LINEAGE_FOREIGN",
+  "ENSG00000133639": "NOT_FLAGGED",
+  "ENSG00000135480": "AMBIENT_FLAGGED",
+  "ENSG00000157765": "AMBIENT_FLAGGED",
+  "ENSG00000162896": "AMBIENT_FLAGGED",
+  "ENSG00000164265": "CURATED_LINEAGE_FOREIGN",
+  "ENSG00000168255": "NOT_FLAGGED",
+  "ENSG00000170421": "CURATED_LINEAGE_FOREIGN",
+  "ENSG00000171345": "CURATED_LINEAGE_FOREIGN",
+  "ENSG00000185499": "CURATED_LINEAGE_FOREIGN",
+  "ENSG00000206172": "CURATED_LINEAGE_FOREIGN",
+  "ENSG00000254772": "AMBIENT_FLAGGED"
+ },
+ "donor_ba": {
+  "He_Fan_2021_P1": 0.915,
+  "He_Fan_2021_P2": 0.925,
+  "He_Fan_2021_P3": 0.95,
+  "He_Fan_2021_P4": 0.905,
+  "He_Fan_2021_P5": 0.98,
+  "Kim_Lee_2020_P0006": 0.84,
+  "Kim_Lee_2020_P0008": 0.985,
+  "Kim_Lee_2020_P0009": 0.81,
+  "Kim_Lee_2020_P0018": 0.94,
+  "Kim_Lee_2020_P0019": 0.77,
+  "Kim_Lee_2020_P0020": 0.9199999999999999,
+  "Kim_Lee_2020_P0028": 0.96,
+  "Kim_Lee_2020_P0030": 0.565,
+  "Kim_Lee_2020_P0031": 0.8500000000000001,
+  "Kim_Lee_2020_P0034": 0.975,
+  "Lambrechts_Thienpont_2018_6149v2_3": 0.9299999999999999,
+  "Lambrechts_Thienpont_2018_6149v2_4": 0.915,
+  "Lambrechts_Thienpont_2018_6653_6": 0.8400000000000001,
+  "Laughney_Massague_2020_LX675": 0.96,
+  "Laughney_Massague_2020_LX682": 0.975,
+  "Leader_Merad_2021_370": 0.7849999999999999,
+  "Leader_Merad_2021_371": 0.755,
+  "Leader_Merad_2021_378": 0.64,
+  "Leader_Merad_2021_403": 0.89,
+  "Leader_Merad_2021_406": 0.86,
+  "Leader_Merad_2021_408": 0.985,
+  "Leader_Merad_2021_410": 0.7,
+  "Leader_Merad_2021_458": 0.685,
+  "Leader_Merad_2021_460": 0.83,
+  "Leader_Merad_2021_514": 0.775,
+  "Leader_Merad_2021_532": 0.74,
+  "Leader_Merad_2021_564": 0.85,
+  "Leader_Merad_2021_569": 0.6499999999999999,
+  "Leader_Merad_2021_570": 0.8899999999999999,
+  "Leader_Merad_2021_572": 0.9199999999999999,
+  "Leader_Merad_2021_578": 0.77,
+  "Leader_Merad_2021_581": 0.76,
+  "Leader_Merad_2021_593": 0.55,
+  "Leader_Merad_2021_596": 0.6000000000000001,
+  "Leader_Merad_2021_626": 0.605,
+  "Leader_Merad_2021_630": 0.64,
+  "Leader_Merad_2021_695": 0.8,
+  "Leader_Merad_2021_729": 0.88
+ },
+ "donor_fold": {
+  "He_Fan_2021_P1": 1,
+  "He_Fan_2021_P2": 2,
+  "He_Fan_2021_P3": 0,
+  "He_Fan_2021_P4": 4,
+  "He_Fan_2021_P5": 3,
+  "Kim_Lee_2020_P0006": 3,
+  "Kim_Lee_2020_P0008": 0,
+  "Kim_Lee_2020_P0009": 4,
+  "Kim_Lee_2020_P0018": 3,
+  "Kim_Lee_2020_P0019": 1,
+  "Kim_Lee_2020_P0020": 2,
+  "Kim_Lee_2020_P0028": 4,
+  "Kim_Lee_2020_P0030": 1,
+  "Kim_Lee_2020_P0031": 0,
+  "Kim_Lee_2020_P0034": 2,
+  "Lambrechts_Thienpont_2018_6149v2_3": 1,
+  "Lambrechts_Thienpont_2018_6149v2_4": 0,
+  "Lambrechts_Thienpont_2018_6653_6": 2,
+  "Laughney_Massague_2020_LX675": 3,
+  "Laughney_Massague_2020_LX682": 4,
+  "Leader_Merad_2021_370": 4,
+  "Leader_Merad_2021_371": 4,
+  "Leader_Merad_2021_378": 3,
+  "Leader_Merad_2021_403": 1,
+  "Leader_Merad_2021_406": 2,
+  "Leader_Merad_2021_408": 3,
+  "Leader_Merad_2021_410": 1,
+  "Leader_Merad_2021_458": 2,
+  "Leader_Merad_2021_460": 0,
+  "Leader_Merad_2021_514": 1,
+  "Leader_Merad_2021_532": 2,
+  "Leader_Merad_2021_564": 3,
+  "Leader_Merad_2021_569": 2,
+  "Leader_Merad_2021_570": 1,
+  "Leader_Merad_2021_572": 2,
+  "Leader_Merad_2021_578": 0,
+  "Leader_Merad_2021_581": 3,
+  "Leader_Merad_2021_593": 0,
+  "Leader_Merad_2021_596": 0,
+  "Leader_Merad_2021_626": 0,
+  "Leader_Merad_2021_630": 4,
+  "Leader_Merad_2021_695": 4,
+  "Leader_Merad_2021_729": 1
+ },
+ "donor_study": {
+  "He_Fan_2021_P1": "He_Fan_2021",
+  "He_Fan_2021_P2": "He_Fan_2021",
+  "He_Fan_2021_P3": "He_Fan_2021",
+  "He_Fan_2021_P4": "He_Fan_2021",
+  "He_Fan_2021_P5": "He_Fan_2021",
+  "Kim_Lee_2020_P0006": "Kim_Lee_2020",
+  "Kim_Lee_2020_P0008": "Kim_Lee_2020",
+  "Kim_Lee_2020_P0009": "Kim_Lee_2020",
+  "Kim_Lee_2020_P0018": "Kim_Lee_2020",
+  "Kim_Lee_2020_P0019": "Kim_Lee_2020",
+  "Kim_Lee_2020_P0020": "Kim_Lee_2020",
+  "Kim_Lee_2020_P0028": "Kim_Lee_2020",
+  "Kim_Lee_2020_P0030": "Kim_Lee_2020",
+  "Kim_Lee_2020_P0031": "Kim_Lee_2020",
+  "Kim_Lee_2020_P0034": "Kim_Lee_2020",
+  "Lambrechts_Thienpont_2018_6149v2_3": "Lambrechts_Thienpont_2018",
+  "Lambrechts_Thienpont_2018_6149v2_4": "Lambrechts_Thienpont_2018",
+  "Lambrechts_Thienpont_2018_6653_6": "Lambrechts_Thienpont_2018",
+  "Laughney_Massague_2020_LX675": "Laughney_Massague_2020",
+  "Laughney_Massague_2020_LX682": "Laughney_Massague_2020",
+  "Leader_Merad_2021_370": "Leader_Merad_2021",
+  "Leader_Merad_2021_371": "Leader_Merad_2021",
+  "Leader_Merad_2021_378": "Leader_Merad_2021",
+  "Leader_Merad_2021_403": "Leader_Merad_2021",
+  "Leader_Merad_2021_406": "Leader_Merad_2021",
+  "Leader_Merad_2021_408": "Leader_Merad_2021",
+  "Leader_Merad_2021_410": "Leader_Merad_2021",
+  "Leader_Merad_2021_458": "Leader_Merad_2021",
+  "Leader_Merad_2021_460": "Leader_Merad_2021",
+  "Leader_Merad_2021_514": "Leader_Merad_2021",
+  "Leader_Merad_2021_532": "Leader_Merad_2021",
+  "Leader_Merad_2021_564": "Leader_Merad_2021",
+  "Leader_Merad_2021_569": "Leader_Merad_2021",
+  "Leader_Merad_2021_570": "Leader_Merad_2021",
+  "Leader_Merad_2021_572": "Leader_Merad_2021",
+  "Leader_Merad_2021_578": "Leader_Merad_2021",
+  "Leader_Merad_2021_581": "Leader_Merad_2021",
+  "Leader_Merad_2021_593": "Leader_Merad_2021",
+  "Leader_Merad_2021_596": "Leader_Merad_2021",
+  "Leader_Merad_2021_626": "Leader_Merad_2021",
+  "Leader_Merad_2021_630": "Leader_Merad_2021",
+  "Leader_Merad_2021_695": "Leader_Merad_2021",
+  "Leader_Merad_2021_729": "Leader_Merad_2021"
+ },
+ "donors": [
+  "He_Fan_2021_P1",
+  "He_Fan_2021_P2",
+  "He_Fan_2021_P3",
+  "He_Fan_2021_P4",
+  "He_Fan_2021_P5",
+  "Kim_Lee_2020_P0006",
+  "Kim_Lee_2020_P0008",
+  "Kim_Lee_2020_P0009",
+  "Kim_Lee_2020_P0018",
+  "Kim_Lee_2020_P0019",
+  "Kim_Lee_2020_P0020",
+  "Kim_Lee_2020_P0028",
+  "Kim_Lee_2020_P0030",
+  "Kim_Lee_2020_P0031",
+  "Kim_Lee_2020_P0034",
+  "Lambrechts_Thienpont_2018_6149v2_3",
+  "Lambrechts_Thienpont_2018_6149v2_4",
+  "Lambrechts_Thienpont_2018_6653_6",
+  "Laughney_Massague_2020_LX675",
+  "Laughney_Massague_2020_LX682",
+  "Leader_Merad_2021_370",
+  "Leader_Merad_2021_371",
+  "Leader_Merad_2021_378",
+  "Leader_Merad_2021_403",
+  "Leader_Merad_2021_406",
+  "Leader_Merad_2021_408",
+  "Leader_Merad_2021_410",
+  "Leader_Merad_2021_458",
+  "Leader_Merad_2021_460",
+  "Leader_Merad_2021_514",
+  "Leader_Merad_2021_532",
+  "Leader_Merad_2021_564",
+  "Leader_Merad_2021_569",
+  "Leader_Merad_2021_570",
+  "Leader_Merad_2021_572",
+  "Leader_Merad_2021_578",
+  "Leader_Merad_2021_581",
+  "Leader_Merad_2021_593",
+  "Leader_Merad_2021_596",
+  "Leader_Merad_2021_626",
+  "Leader_Merad_2021_630",
+  "Leader_Merad_2021_695",
+  "Leader_Merad_2021_729"
+ ],
+ "expected_estimable": {
+  "ENSG00000013725": 38,
+  "ENSG00000020633": 37,
+  "ENSG00000030419": 0,
+  "ENSG00000049768": 0,
+  "ENSG00000081059": 30,
+  "ENSG00000101443": 6,
+  "ENSG00000105374": 43,
+  "ENSG00000106541": 2,
+  "ENSG00000110448": 25,
+  "ENSG00000110492": 2,
+  "ENSG00000110848": 43,
+  "ENSG00000111057": 4,
+  "ENSG00000113088": 43,
+  "ENSG00000113263": 34,
+  "ENSG00000115085": 37,
+  "ENSG00000116824": 43,
+  "ENSG00000126353": 33,
+  "ENSG00000127152": 38,
+  "ENSG00000133639": 43,
+  "ENSG00000135480": 2,
+  "ENSG00000138795": 21,
+  "ENSG00000139193": 41,
+  "ENSG00000141293": 40,
+  "ENSG00000145649": 43,
+  "ENSG00000153563": 39,
+  "ENSG00000157765": 2,
+  "ENSG00000160654": 43,
+  "ENSG00000162896": 1,
+  "ENSG00000163599": 14,
+  "ENSG00000163600": 32,
+  "ENSG00000164265": 8,
+  "ENSG00000167286": 43,
+  "ENSG00000168255": 40,
+  "ENSG00000168685": 43,
+  "ENSG00000170421": 4,
+  "ENSG00000171345": 5,
+  "ENSG00000172116": 34,
+  "ENSG00000172543": 40,
+  "ENSG00000172673": 27,
+  "ENSG00000173762": 43,
+  "ENSG00000178562": 18,
+  "ENSG00000180644": 38,
+  "ENSG00000182866": 43,
+  "ENSG00000185499": 4,
+  "ENSG00000188389": 13,
+  "ENSG00000188404": 26,
+  "ENSG00000198821": 43,
+  "ENSG00000198851": 43,
+  "ENSG00000206172": 1,
+  "ENSG00000213658": 43,
+  "ENSG00000254772": 8
+ },
+ "gene_stratum": {
+  "ENSG00000013725": "B07",
+  "ENSG00000020633": "B07",
+  "ENSG00000081059": "B04",
+  "ENSG00000105374": "B12",
+  "ENSG00000110448": "B03",
+  "ENSG00000110848": "B15",
+  "ENSG00000113088": "B11",
+  "ENSG00000113263": "B04",
+  "ENSG00000115085": "B04",
+  "ENSG00000116824": "B15",
+  "ENSG00000126353": "B04",
+  "ENSG00000127152": "B05",
+  "ENSG00000133639": "A01",
+  "ENSG00000138795": "B02",
+  "ENSG00000139193": "B07",
+  "ENSG00000141293": "B07",
+  "ENSG00000145649": "B12",
+  "ENSG00000153563": "B08",
+  "ENSG00000160654": "B12",
+  "ENSG00000163599": "B00",
+  "ENSG00000163600": "B05",
+  "ENSG00000167286": "B16",
+  "ENSG00000168255": "A00",
+  "ENSG00000168685": "B13",
+  "ENSG00000172116": "B06",
+  "ENSG00000172543": "B09",
+  "ENSG00000172673": "B03",
+  "ENSG00000173762": "B12",
+  "ENSG00000178562": "B02",
+  "ENSG00000180644": "B06",
+  "ENSG00000182866": "B12",
+  "ENSG00000188389": "B01",
+  "ENSG00000188404": "B04",
+  "ENSG00000198821": "B09",
+  "ENSG00000198851": "B14",
+  "ENSG00000213658": "B10"
+ },
+ "not_run_genes": [
+  "ENSG00000133639"
+ ],
+ "panel_a": [
+  {
+   "ensembl_id": "ENSG00000162896",
+   "symbol": "PIGR"
+  },
+  {
+   "ensembl_id": "ENSG00000254772",
+   "symbol": "EEF1G"
+  },
+  {
+   "ensembl_id": "ENSG00000111057",
+   "symbol": "KRT18"
+  },
+  {
+   "ensembl_id": "ENSG00000185499",
+   "symbol": "MUC1"
+  },
+  {
+   "ensembl_id": "ENSG00000106541",
+   "symbol": "AGR2"
+  },
+  {
+   "ensembl_id": "ENSG00000101443",
+   "symbol": "WFDC2"
+  },
+  {
+   "ensembl_id": "ENSG00000171345",
+   "symbol": "KRT19"
+  },
+  {
+   "ensembl_id": "ENSG00000157765",
+   "symbol": "SLC34A2"
+  },
+  {
+   "ensembl_id": "ENSG00000164265",
+   "symbol": "SCGB3A2"
+  },
+  {
+   "ensembl_id": "ENSG00000170421",
+   "symbol": "KRT8"
+  },
+  {
+   "ensembl_id": "ENSG00000135480",
+   "symbol": "KRT7"
+  },
+  {
+   "ensembl_id": "ENSG00000133639",
+   "symbol": "BTG1"
+  },
+  {
+   "ensembl_id": "ENSG00000168255",
+   "symbol": "POLR2J3"
+  },
+  {
+   "ensembl_id": "ENSG00000206172",
+   "symbol": "HBA1"
+  },
+  {
+   "ensembl_id": "ENSG00000110492",
+   "symbol": "MDK"
+  }
+ ],
+ "panel_b": [
+  {
+   "ensembl_id": "ENSG00000167286",
+   "symbol": "CD3D"
+  },
+  {
+   "ensembl_id": "ENSG00000198851",
+   "symbol": "CD3E"
+  },
+  {
+   "ensembl_id": "ENSG00000160654",
+   "symbol": "CD3G"
+  },
+  {
+   "ensembl_id": "ENSG00000198821",
+   "symbol": "CD247"
+  },
+  {
+   "ensembl_id": "ENSG00000116824",
+   "symbol": "CD2"
+  },
+  {
+   "ensembl_id": "ENSG00000110448",
+   "symbol": "CD5"
+  },
+  {
+   "ensembl_id": "ENSG00000013725",
+   "symbol": "CD6"
+  },
+  {
+   "ensembl_id": "ENSG00000173762",
+   "symbol": "CD7"
+  },
+  {
+   "ensembl_id": "ENSG00000178562",
+   "symbol": "CD28"
+  },
+  {
+   "ensembl_id": "ENSG00000182866",
+   "symbol": "LCK"
+  },
+  {
+   "ensembl_id": "ENSG00000115085",
+   "symbol": "ZAP70"
+  },
+  {
+   "ensembl_id": "ENSG00000213658",
+   "symbol": "LAT"
+  },
+  {
+   "ensembl_id": "ENSG00000113263",
+   "symbol": "ITK"
+  },
+  {
+   "ensembl_id": "ENSG00000172673",
+   "symbol": "THEMIS"
+  },
+  {
+   "ensembl_id": "ENSG00000141293",
+   "symbol": "SKAP1"
+  },
+  {
+   "ensembl_id": "ENSG00000153563",
+   "symbol": "CD8A"
+  },
+  {
+   "ensembl_id": "ENSG00000172116",
+   "symbol": "CD8B"
+  },
+  {
+   "ensembl_id": "ENSG00000168685",
+   "symbol": "IL7R"
+  },
+  {
+   "ensembl_id": "ENSG00000126353",
+   "symbol": "CCR7"
+  },
+  {
+   "ensembl_id": "ENSG00000081059",
+   "symbol": "TCF7"
+  },
+  {
+   "ensembl_id": "ENSG00000138795",
+   "symbol": "LEF1"
+  },
+  {
+   "ensembl_id": "ENSG00000188404",
+   "symbol": "SELL"
+  },
+  {
+   "ensembl_id": "ENSG00000145649",
+   "symbol": "GZMA"
+  },
+  {
+   "ensembl_id": "ENSG00000113088",
+   "symbol": "GZMK"
+  },
+  {
+   "ensembl_id": "ENSG00000180644",
+   "symbol": "PRF1"
+  },
+  {
+   "ensembl_id": "ENSG00000105374",
+   "symbol": "NKG7"
+  },
+  {
+   "ensembl_id": "ENSG00000172543",
+   "symbol": "CTSW"
+  },
+  {
+   "ensembl_id": "ENSG00000139193",
+   "symbol": "CD27"
+  },
+  {
+   "ensembl_id": "ENSG00000163600",
+   "symbol": "ICOS"
+  },
+  {
+   "ensembl_id": "ENSG00000163599",
+   "symbol": "CTLA4"
+  },
+  {
+   "ensembl_id": "ENSG00000188389",
+   "symbol": "PDCD1"
+  },
+  {
+   "ensembl_id": "ENSG00000049768",
+   "symbol": "FOXP3"
+  },
+  {
+   "ensembl_id": "ENSG00000030419",
+   "symbol": "IKZF2"
+  },
+  {
+   "ensembl_id": "ENSG00000020633",
+   "symbol": "RUNX3"
+  },
+  {
+   "ensembl_id": "ENSG00000127152",
+   "symbol": "BCL11B"
+  },
+  {
+   "ensembl_id": "ENSG00000110848",
+   "symbol": "CD69"
+  }
+ ],
+ "panel_b_not_run": [
+  {
+   "ensembl_id": "ENSG00000277734",
+   "reason": "NOT_RUN: not in V2 token dictionary",
+   "symbol": "TRAC"
+  },
+  {
+   "ensembl_id": "ENSG00000211751",
+   "reason": "NOT_RUN: not in V2 token dictionary",
+   "symbol": "TRBC1"
+  },
+  {
+   "ensembl_id": "ENSG00000211772",
+   "reason": "NOT_RUN: not in V2 token dictionary",
+   "symbol": "TRBC2"
+  }
+ ],
+ "strata": {
+  "A00": {
+   "controls": [
+    "ENSG00000062716",
+    "ENSG00000087088",
+    "ENSG00000087191",
+    "ENSG00000090273",
+    "ENSG00000099797",
+    "ENSG00000104518",
+    "ENSG00000105323",
+    "ENSG00000111276",
+    "ENSG00000111371",
+    "ENSG00000116489",
+    "ENSG00000139725",
+    "ENSG00000140740",
+    "ENSG00000146425",
+    "ENSG00000158985",
+    "ENSG00000168002",
+    "ENSG00000168003",
+    "ENSG00000197622",
+    "ENSG00000231925",
+    "ENSG00000239713",
+    "ENSG00000257103"
+   ],
+   "members": [
+    "ENSG00000168255"
+   ],
+   "status": "eligible"
+  },
+  "A01": {
+   "controls": [],
+   "members": [
+    "ENSG00000133639"
+   ],
+   "status": "not_estimable_control_stratum"
+  },
+  "B00": {
+   "controls": [
+    "ENSG00000078369",
+    "ENSG00000089012",
+    "ENSG00000104870",
+    "ENSG00000115464",
+    "ENSG00000117090",
+    "ENSG00000120071",
+    "ENSG00000122188",
+    "ENSG00000123106",
+    "ENSG00000133106",
+    "ENSG00000133318",
+    "ENSG00000133561",
+    "ENSG00000154451",
+    "ENSG00000164483",
+    "ENSG00000165949",
+    "ENSG00000167895",
+    "ENSG00000169583",
+    "ENSG00000177565",
+    "ENSG00000185658",
+    "ENSG00000198846",
+    "ENSG00000263001"
+   ],
+   "members": [
+    "ENSG00000163599"
+   ],
+   "status": "eligible"
+  },
+  "B01": {
+   "controls": [
+    "ENSG00000047849",
+    "ENSG00000078687",
+    "ENSG00000089012",
+    "ENSG00000096996",
+    "ENSG00000101096",
+    "ENSG00000104419",
+    "ENSG00000106829",
+    "ENSG00000108639",
+    "ENSG00000112378",
+    "ENSG00000114423",
+    "ENSG00000115758",
+    "ENSG00000123338",
+    "ENSG00000132670",
+    "ENSG00000143878",
+    "ENSG00000159216",
+    "ENSG00000159335",
+    "ENSG00000163513",
+    "ENSG00000164190",
+    "ENSG00000165071",
+    "ENSG00000186891"
+   ],
+   "members": [
+    "ENSG00000188389"
+   ],
+   "status": "eligible"
+  },
+  "B02": {
+   "controls": [
+    "ENSG00000075292",
+    "ENSG00000100385",
+    "ENSG00000114541",
+    "ENSG00000115419",
+    "ENSG00000117090",
+    "ENSG00000117632",
+    "ENSG00000118515",
+    "ENSG00000132530",
+    "ENSG00000143110",
+    "ENSG00000143878",
+    "ENSG00000151702",
+    "ENSG00000154217",
+    "ENSG00000163931",
+    "ENSG00000164483",
+    "ENSG00000165949",
+    "ENSG00000171735",
+    "ENSG00000171843",
+    "ENSG00000175130",
+    "ENSG00000198589",
+    "ENSG00000263001"
+   ],
+   "members": [
+    "ENSG00000138795",
+    "ENSG00000178562"
+   ],
+   "status": "eligible"
+  },
+  "B03": {
+   "controls": [
+    "ENSG00000078369",
+    "ENSG00000078589",
+    "ENSG00000091039",
+    "ENSG00000102575",
+    "ENSG00000109321",
+    "ENSG00000111537",
+    "ENSG00000115464",
+    "ENSG00000115760",
+    "ENSG00000116539",
+    "ENSG00000121858",
+    "ENSG00000129003",
+    "ENSG00000139626",
+    "ENSG00000143110",
+    "ENSG00000143185",
+    "ENSG00000148700",
+    "ENSG00000154451",
+    "ENSG00000171735",
+    "ENSG00000174373",
+    "ENSG00000186566",
+    "ENSG00000230989"
+   ],
+   "members": [
+    "ENSG00000172673",
+    "ENSG00000110448"
+   ],
+   "status": "eligible"
+  },
+  "B04": {
+   "controls": [
+    "ENSG00000027869",
+    "ENSG00000103490",
+    "ENSG00000108953",
+    "ENSG00000115523",
+    "ENSG00000116539",
+    "ENSG00000135821",
+    "ENSG00000136286",
+    "ENSG00000137309",
+    "ENSG00000139626",
+    "ENSG00000143110",
+    "ENSG00000152495",
+    "ENSG00000158517",
+    "ENSG00000164687",
+    "ENSG00000164733",
+    "ENSG00000169554",
+    "ENSG00000172216",
+    "ENSG00000180448",
+    "ENSG00000182670",
+    "ENSG00000197061",
+    "ENSG00000198771"
+   ],
+   "members": [
+    "ENSG00000188404",
+    "ENSG00000081059",
+    "ENSG00000115085",
+    "ENSG00000113263",
+    "ENSG00000126353"
+   ],
+   "status": "eligible"
+  },
+  "B05": {
+   "controls": [
+    "ENSG00000027869",
+    "ENSG00000042753",
+    "ENSG00000057608",
+    "ENSG00000109046",
+    "ENSG00000109321",
+    "ENSG00000110324",
+    "ENSG00000110934",
+    "ENSG00000111913",
+    "ENSG00000122705",
+    "ENSG00000127022",
+    "ENSG00000130313",
+    "ENSG00000131507",
+    "ENSG00000141480",
+    "ENSG00000143621",
+    "ENSG00000144381",
+    "ENSG00000164691",
+    "ENSG00000173486",
+    "ENSG00000175756",
+    "ENSG00000180817",
+    "ENSG00000198832"
+   ],
+   "members": [
+    "ENSG00000163600",
+    "ENSG00000127152"
+   ],
+   "status": "eligible"
+  },
+  "B06": {
+   "controls": [
+    "ENSG00000005810",
+    "ENSG00000027075",
+    "ENSG00000070961",
+    "ENSG00000088832",
+    "ENSG00000099860",
+    "ENSG00000107738",
+    "ENSG00000109046",
+    "ENSG00000110934",
+    "ENSG00000114861",
+    "ENSG00000127528",
+    "ENSG00000127603",
+    "ENSG00000130208",
+    "ENSG00000142347",
+    "ENSG00000145287",
+    "ENSG00000158517",
+    "ENSG00000165272",
+    "ENSG00000185811",
+    "ENSG00000187193",
+    "ENSG00000197061",
+    "ENSG00000277632"
+   ],
+   "members": [
+    "ENSG00000172116",
+    "ENSG00000180644"
+   ],
+   "status": "eligible"
+  },
+  "B07": {
+   "controls": [
+    "ENSG00000021355",
+    "ENSG00000064666",
+    "ENSG00000096060",
+    "ENSG00000107738",
+    "ENSG00000110955",
+    "ENSG00000112335",
+    "ENSG00000117592",
+    "ENSG00000123146",
+    "ENSG00000141552",
+    "ENSG00000144381",
+    "ENSG00000151366",
+    "ENSG00000163564",
+    "ENSG00000165629",
+    "ENSG00000167460",
+    "ENSG00000167815",
+    "ENSG00000175567",
+    "ENSG00000183508",
+    "ENSG00000183918",
+    "ENSG00000184557",
+    "ENSG00000197971"
+   ],
+   "members": [
+    "ENSG00000020633",
+    "ENSG00000139193",
+    "ENSG00000013725",
+    "ENSG00000141293"
+   ],
+   "status": "eligible"
+  },
+  "B08": {
+   "controls": [
+    "ENSG00000105404",
+    "ENSG00000109861",
+    "ENSG00000110324",
+    "ENSG00000113712",
+    "ENSG00000114857",
+    "ENSG00000115524",
+    "ENSG00000116030",
+    "ENSG00000116560",
+    "ENSG00000126860",
+    "ENSG00000134308",
+    "ENSG00000147548",
+    "ENSG00000160014",
+    "ENSG00000162191",
+    "ENSG00000163584",
+    "ENSG00000163660",
+    "ENSG00000165637",
+    "ENSG00000183648",
+    "ENSG00000184840",
+    "ENSG00000196776",
+    "ENSG00000215845"
+   ],
+   "members": [
+    "ENSG00000153563"
+   ],
+   "status": "eligible"
+  },
+  "B09": {
+   "controls": [
+    "ENSG00000075884",
+    "ENSG00000100453",
+    "ENSG00000102265",
+    "ENSG00000115053",
+    "ENSG00000117592",
+    "ENSG00000127528",
+    "ENSG00000134954",
+    "ENSG00000152082",
+    "ENSG00000153187",
+    "ENSG00000154723",
+    "ENSG00000166598",
+    "ENSG00000169020",
+    "ENSG00000179344",
+    "ENSG00000180353",
+    "ENSG00000182117",
+    "ENSG00000182718",
+    "ENSG00000185650",
+    "ENSG00000185811",
+    "ENSG00000189067",
+    "ENSG00000240972"
+   ],
+   "members": [
+    "ENSG00000198821",
+    "ENSG00000172543"
+   ],
+   "status": "eligible"
+  },
+  "B10": {
+   "controls": [
+    "ENSG00000054654",
+    "ENSG00000063046",
+    "ENSG00000069275",
+    "ENSG00000076662",
+    "ENSG00000090266",
+    "ENSG00000100219",
+    "ENSG00000100300",
+    "ENSG00000110934",
+    "ENSG00000117450",
+    "ENSG00000117592",
+    "ENSG00000125356",
+    "ENSG00000137575",
+    "ENSG00000143870",
+    "ENSG00000147684",
+    "ENSG00000152601",
+    "ENSG00000155368",
+    "ENSG00000164691",
+    "ENSG00000174021",
+    "ENSG00000184007",
+    "ENSG00000184076"
+   ],
+   "members": [
+    "ENSG00000213658"
+   ],
+   "status": "eligible"
+  },
+  "B11": {
+   "controls": [
+    "ENSG00000042493",
+    "ENSG00000067066",
+    "ENSG00000079246",
+    "ENSG00000092820",
+    "ENSG00000100664",
+    "ENSG00000101596",
+    "ENSG00000105939",
+    "ENSG00000109861",
+    "ENSG00000115944",
+    "ENSG00000117523",
+    "ENSG00000126777",
+    "ENSG00000130770",
+    "ENSG00000137575",
+    "ENSG00000139278",
+    "ENSG00000141522",
+    "ENSG00000163584",
+    "ENSG00000167863",
+    "ENSG00000170515",
+    "ENSG00000185088",
+    "ENSG00000235162"
+   ],
+   "members": [
+    "ENSG00000113088"
+   ],
+   "status": "eligible"
+  },
+  "B12": {
+   "controls": [
+    "ENSG00000002586",
+    "ENSG00000067560",
+    "ENSG00000077984",
+    "ENSG00000088986",
+    "ENSG00000100300",
+    "ENSG00000101182",
+    "ENSG00000118640",
+    "ENSG00000128340",
+    "ENSG00000131174",
+    "ENSG00000132341",
+    "ENSG00000135940",
+    "ENSG00000136490",
+    "ENSG00000136810",
+    "ENSG00000149925",
+    "ENSG00000164032",
+    "ENSG00000165119",
+    "ENSG00000167468",
+    "ENSG00000198258",
+    "ENSG00000198830",
+    "ENSG00000205581"
+   ],
+   "members": [
+    "ENSG00000105374",
+    "ENSG00000160654",
+    "ENSG00000173762",
+    "ENSG00000182866",
+    "ENSG00000145649"
+   ],
+   "status": "eligible"
+  },
+  "B13": {
+   "controls": [
+    "ENSG00000002586",
+    "ENSG00000101182",
+    "ENSG00000102144",
+    "ENSG00000102317",
+    "ENSG00000102879",
+    "ENSG00000106803",
+    "ENSG00000109332",
+    "ENSG00000111716",
+    "ENSG00000112081",
+    "ENSG00000117091",
+    "ENSG00000136888",
+    "ENSG00000147677",
+    "ENSG00000160932",
+    "ENSG00000163466",
+    "ENSG00000177606",
+    "ENSG00000187109",
+    "ENSG00000188243",
+    "ENSG00000198258",
+    "ENSG00000213654",
+    "ENSG00000241343"
+   ],
+   "members": [
+    "ENSG00000168685"
+   ],
+   "status": "eligible"
+  },
+  "B14": {
+   "controls": [
+    "ENSG00000051523",
+    "ENSG00000067560",
+    "ENSG00000082074",
+    "ENSG00000100097",
+    "ENSG00000103363",
+    "ENSG00000111775",
+    "ENSG00000112695",
+    "ENSG00000114942",
+    "ENSG00000126267",
+    "ENSG00000131143",
+    "ENSG00000140319",
+    "ENSG00000142227",
+    "ENSG00000149925",
+    "ENSG00000164919",
+    "ENSG00000167658",
+    "ENSG00000189043",
+    "ENSG00000197956",
+    "ENSG00000213654",
+    "ENSG00000223865",
+    "ENSG00000241343"
+   ],
+   "members": [
+    "ENSG00000198851"
+   ],
+   "status": "eligible"
+  },
+  "B15": {
+   "controls": [
+    "ENSG00000100906",
+    "ENSG00000105372",
+    "ENSG00000118181",
+    "ENSG00000120129",
+    "ENSG00000131469",
+    "ENSG00000134419",
+    "ENSG00000137154",
+    "ENSG00000140988",
+    "ENSG00000142669",
+    "ENSG00000147403",
+    "ENSG00000149273",
+    "ENSG00000156508",
+    "ENSG00000163682",
+    "ENSG00000164587",
+    "ENSG00000196405",
+    "ENSG00000213741",
+    "ENSG00000231500",
+    "ENSG00000234745",
+    "ENSG00000265972",
+    "ENSG00000271503"
+   ],
+   "members": [
+    "ENSG00000110848",
+    "ENSG00000116824"
+   ],
+   "status": "eligible"
+  },
+  "B16": {
+   "controls": [
+    "ENSG00000008517",
+    "ENSG00000075624",
+    "ENSG00000102879",
+    "ENSG00000104529",
+    "ENSG00000111229",
+    "ENSG00000112306",
+    "ENSG00000113387",
+    "ENSG00000113558",
+    "ENSG00000124614",
+    "ENSG00000130755",
+    "ENSG00000134419",
+    "ENSG00000136942",
+    "ENSG00000150991",
+    "ENSG00000156467",
+    "ENSG00000169442",
+    "ENSG00000170889",
+    "ENSG00000173812",
+    "ENSG00000196154",
+    "ENSG00000198034",
+    "ENSG00000228474"
+   ],
+   "members": [
+    "ENSG00000167286"
+   ],
+   "status": "eligible"
+  }
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "computed_utc": "2026-09-25T00:35:53Z",
+ "scope": "all 43 donors x 100 tumour analysis cells = 4300 ISP input cells",
+ "max_input_len": 2656,
+ "median_input_len": 755,
+ "min_input_len": 241,
+ "cells_at_or_above_4096": 0,
+ "model_max_position_embeddings": 4096,
+ "donor_with_max": "Lambrechts_Thienpont_2018_6653_6",
+ "conclusion": "overexpress truncation at max_len cannot occur in this run: the maximum, not the median, is below the limit; the path is irrelevant, not merely unexercised"
+}

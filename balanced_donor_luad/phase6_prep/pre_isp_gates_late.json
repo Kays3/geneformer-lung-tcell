@@ -1,0 +1,38 @@
+{
+ "run_utc_note": "run AFTER Phase 6 had started (late); see PHASE6_RUN_NOTES",
+ "donor": "He_Fan_2021_P1",
+ "gene": "ENSG00000166710 (B2M)",
+ "noop_gate": {
+  "tumor_primary": {
+   "n": 100,
+   "max_abs": 0.0,
+   "n_nonzero": 0
+  },
+  "normal_adjacent": {
+   "n": 100,
+   "max_abs": 0.0,
+   "n_nonzero": 0
+  },
+  "global_normal_adjacent": {
+   "n": 100,
+   "max_abs": 0.0,
+   "n_nonzero": 0
+  },
+  "PASS": true
+ },
+ "wrapper_equivalence": {
+  "delete": {
+   "native_dtype_cast_only": "415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c",
+   "phase6_stack_2cfe3eb_scripts": "415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c",
+   "probe_649259b": "415676655e858429f5cd3e86a324603b96423bec0f016b5bffc6e2cab9838d7c",
+   "identical": true
+  },
+  "overexpress": {
+   "native_dtype_cast_only": "d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef",
+   "phase6_stack_2cfe3eb_scripts": "d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef",
+   "probe_649259b": "d448ff87c5da3a3888f6be0e0b0b252841492c2ebe2f4dc764e16a04c50e81ef",
+   "identical": true
+  }
+ },
+ "PASS": true
+}

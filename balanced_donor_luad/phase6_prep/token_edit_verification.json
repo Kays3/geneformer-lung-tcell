@@ -1,0 +1,24 @@
+{
+ "gene": "ENSG00000166710",
+ "target_token": 11717,
+ "donor": "He_Fan_2021_P1",
+ "delete": {
+  "cells_checked": 100,
+  "cells_wrong": 0,
+  "first_wrong": null,
+  "target_occurrences_per_cell": [
+   1
+  ],
+  "PASS": true
+ },
+ "overexpress": {
+  "cells_checked": 100,
+  "cells_wrong": 0,
+  "first_wrong": null,
+  "target_occurrences_per_cell": [
+   1
+  ],
+  "PASS": true
+ },
+ "PASS": true
+}

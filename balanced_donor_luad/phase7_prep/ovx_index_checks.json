@@ -1,0 +1,7 @@
+{
+ "failures": 0,
+ "i_delete_lengths": 15142,
+ "ii_overexpress_counts": 15142,
+ "pairs_with_mixed_length_tie": 12184,
+ "pairs_with_positive": 15142
+}

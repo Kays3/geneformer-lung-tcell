@@ -1,0 +1,851 @@
+dataset_id,disease,donor_id,n
+01209dce-3575-4bed-b1df-129f57fbc031,normal,Donor1,3934
+01209dce-3575-4bed-b1df-129f57fbc031,normal,Donor2,7125
+093d3bfe-6f0f-4ac0-a7a1-829f94d0a49f,normal,A26,4043
+093d3bfe-6f0f-4ac0-a7a1-829f94d0a49f,normal,A32,41
+093d3bfe-6f0f-4ac0-a7a1-829f94d0a49f,normal,A37,1890
+093d3bfe-6f0f-4ac0-a7a1-829f94d0a49f,normal,A40,2554
+093d3bfe-6f0f-4ac0-a7a1-829f94d0a49f,normal,A41,1085
+093d3bfe-6f0f-4ac0-a7a1-829f94d0a49f,normal,A43,1461
+093d3bfe-6f0f-4ac0-a7a1-829f94d0a49f,normal,A44,2312
+093d3bfe-6f0f-4ac0-a7a1-829f94d0a49f,normal,A47,2132
+093d3bfe-6f0f-4ac0-a7a1-829f94d0a49f,normal,A48,1492
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,583B,224
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,591C,1426
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,637C,46
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,640C,38
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,689C,1936
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,768B,786
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,778C,1001
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D496,1426
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D503,6225
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D512,1586
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D520,13628
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D523,2242
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D528,732
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D529,1690
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D533,403
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D534,2821
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D543,3294
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D564,1159
+1b350d0a-4535-4879-beb6-1142f3f94947,normal,D570,697
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,637C,51
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,640C,42
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,A29,565
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,A31,339
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,A35,32
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,A36,201
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,A37,80
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,A52,287
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,D496,1238
+1b9d8702-5af8-4142-85ed-020eb06ec4f6,normal,D503,2449
+1e4214ce-7347-4ec7-97b3-fcf7c1938e8b,lung adenocarcinoma,4,199
+1e4214ce-7347-4ec7-97b3-fcf7c1938e8b,lung adenocarcinoma,5,161
+1e4214ce-7347-4ec7-97b3-fcf7c1938e8b,squamous cell lung carcinoma,3,4393
+1e4214ce-7347-4ec7-97b3-fcf7c1938e8b,squamous cell lung carcinoma,6,2093
+1e5bd3b8-6a0e-4959-8d69-cafed30fe814,normal,NL1,871
+1e5bd3b8-6a0e-4959-8d69-cafed30fe814,normal,NL2,512
+1e5bd3b8-6a0e-4959-8d69-cafed30fe814,normal,NL3,2034
+1e5bd3b8-6a0e-4959-8d69-cafed30fe814,pulmonary emphysema,Emp1,3106
+1e5bd3b8-6a0e-4959-8d69-cafed30fe814,pulmonary emphysema,Emp2,3870
+1e5bd3b8-6a0e-4959-8d69-cafed30fe814,pulmonary emphysema,Emp3,2560
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Goveia_Carmeliet_2020_patient_45,32
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Goveia_Carmeliet_2020_patient_46,23
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Goveia_Carmeliet_2020_patient_50,105
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P0616A,518
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P0616P,193
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P0617,814
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P0729,499
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P1010,701
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P1118,613
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P1120,747
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P1202,791
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P1208,208
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Guo_Zhang_2018_P1219,197
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,He_Fan_2021_P1,3763
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,He_Fan_2021_P2,5265
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,He_Fan_2021_P3,3366
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,He_Fan_2021_P4,2920
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,He_Fan_2021_P5,6698
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0001,865
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0006,2424
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0008,2526
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0009,2206
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0018,2249
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0019,2159
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0020,2973
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0025,1390
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0028,2812
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0030,2499
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0031,3547
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P0034,1206
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P1006,465
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P1028,197
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P1049,718
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Kim_Lee_2020_P1058,1282
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_338,3696
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_370,2183
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_371,2145
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_378,2442
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_393,1057
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_403,1351
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_406,1536
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_408,1517
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_410,2142
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_458,927
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_460,1272
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_464,24
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_514,2060
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_532,1826
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_558,479
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_564,2839
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_569,2620
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_570,2524
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_571,1558
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_572,2709
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_578,3348
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_581,3839
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_593,4133
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_596,6366
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_626,6534
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_630,5351
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_695,19162
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_725,3976
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_729,3895
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Leader_Merad_2021_800,1639
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH158,70
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH169,10
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH179,429
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH179_NAT,38
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH226,284
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH231,4
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH236,140
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH238,300
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH238_NAT,116
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Maynard_Bivona_2020_TH248,154
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P10,4490
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P11,4147
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P13,3833
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P14,4166
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P15,2812
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P16,2643
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P4,1320
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P5,2324
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P7,1619
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V-2_P9,3573
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V_P1,1082
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,UKIM-V_P3,2042
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P12,29
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P13,69
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P2,1
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P20,3
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P21,10
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P24,60
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P28,52
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P29,2
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P32,80
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P33,1
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P34,13
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P35,13
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P38,94
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P39,168
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P5,13
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P8,56
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Wu_Zhou_2021_P9,32
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Zilionis_Klein_2019_patient_3,1824
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Zilionis_Klein_2019_patient_4,2528
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Zilionis_Klein_2019_patient_5,578
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Zilionis_Klein_2019_patient_6,1814
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,lung adenocarcinoma,Zilionis_Klein_2019_patient_7,352
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-1,639
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-10,9467
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-11,1842
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-2,2214
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-3,5474
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-4,3116
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-5,5332
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-6,2071
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-7,2385
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-8,2216
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Chen_Zhang_2020_NSCLC-9,29
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Wu_Zhou_2021_P11,37
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,non-small cell lung carcinoma,Wu_Zhou_2021_P42,299
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Goveia_Carmeliet_2020_patient_40,70
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Goveia_Carmeliet_2020_patient_41,91
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Goveia_Carmeliet_2020_patient_42,383
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Guo_Zhang_2018_P0706,506
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Guo_Zhang_2018_P0913,825
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Guo_Zhang_2018_P1011,539
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Leader_Merad_2021_377,598
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Leader_Merad_2021_522,5086
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Leader_Merad_2021_584,3230
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Leader_Merad_2021_706,24495
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Leader_Merad_2021_714,1420
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,UKIM-V-2_P12,4400
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,UKIM-V-2_P17,704
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,UKIM-V-2_P6,2328
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,UKIM-V-2_P8,856
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,UKIM-V_P2,2104
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P1,32
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P10,36
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P14,8
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P15,1
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P18,41
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P19,41
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P22,175
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P23,16
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P25,2
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P26,39
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P27,42
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P3,8
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P30,4
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P31,3
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P36,1
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P37,30
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P4,249
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P40,247
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P41,1
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P6,27
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Wu_Zhou_2021_P7,716
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Zilionis_Klein_2019_patient_1,1550
+1e6a6ef9-7ec9-4c90-bbfb-2ad3c3165fd1,squamous cell lung carcinoma,Zilionis_Klein_2019_patient_2,76
+2672b679-8048-4f5e-9786-f1b196ccfd08,normal,343B,872
+2672b679-8048-4f5e-9786-f1b196ccfd08,normal,356C,2942
+2672b679-8048-4f5e-9786-f1b196ccfd08,normal,367C,4203
+2672b679-8048-4f5e-9786-f1b196ccfd08,normal,368C,1419
+2672b679-8048-4f5e-9786-f1b196ccfd08,normal,390C,4099
+2ac76f1b-43ef-4271-8686-2f165570989f,COVID-19,Case 1,1896
+2adb1f8a-a6b1-4909-8ee8-484814e2d4bf,normal,Donor11,21
+2adb1f8a-a6b1-4909-8ee8-484814e2d4bf,normal,Donor13,528
+2adb1f8a-a6b1-4909-8ee8-484814e2d4bf,normal,Donor38,43
+2adb1f8a-a6b1-4909-8ee8-484814e2d4bf,normal,Donor41,37
+2adb1f8a-a6b1-4909-8ee8-484814e2d4bf,normal,Donor42,938
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,101CV0ng,70
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,16E0F2ng,107
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,1A1DFBng,36
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,9JQK55ng,21
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,A9LCTZng,137
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,JVV9L8ng,144
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,KJYDM1ng,44
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,ODGS1Mng,39
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,QZY9VQng,146
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,S4ECX8ng,95
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,SHMI57ng,52
+2f132ec9-24b5-422f-9be0-ccef03b4fe28,normal,ZM3KACng,77
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR14706,25
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR14732,86
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR14774,814
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR14776,36
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR14787,1255
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR14794,197
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR14806,147
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR14815,233
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR14944,45
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR15024,207
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR15084,1
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR15111,18
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR15204,111
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR15246,1107
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR15332,740
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR15383,1905
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR15404,3
+350237e0-9f48-4cbd-9140-3b44495549f3,normal,HDBR15503,3
+3dc61ca1-ce40-46b6-8337-f27260fd9a03,normal,HDBR14804,205
+3dc61ca1-ce40-46b6-8337-f27260fd9a03,normal,HDBR14808,82
+3dc61ca1-ce40-46b6-8337-f27260fd9a03,normal,HDBR14853,64
+3dc61ca1-ce40-46b6-8337-f27260fd9a03,normal,HDBR14854,286
+3dc61ca1-ce40-46b6-8337-f27260fd9a03,normal,HDBR15167,189
+3dc61ca1-ce40-46b6-8337-f27260fd9a03,normal,HDBR15168,205
+3dc61ca1-ce40-46b6-8337-f27260fd9a03,normal,HDBR15219,222
+3dc61ca1-ce40-46b6-8337-f27260fd9a03,normal,HDBR15233,101
+3de0ad6d-4378-4f62-b37b-ec0b75a50d94,normal,D032,288
+3de0ad6d-4378-4f62-b37b-ec0b75a50d94,normal,D046,1200
+3de0ad6d-4378-4f62-b37b-ec0b75a50d94,normal,D062,231
+3de0ad6d-4378-4f62-b37b-ec0b75a50d94,normal,D088,255
+3de0ad6d-4378-4f62-b37b-ec0b75a50d94,normal,D122,120
+3de0ad6d-4378-4f62-b37b-ec0b75a50d94,normal,D139,384
+3de0ad6d-4378-4f62-b37b-ec0b75a50d94,normal,D150,146
+3de0ad6d-4378-4f62-b37b-ec0b75a50d94,normal,D175,211
+3de0ad6d-4378-4f62-b37b-ec0b75a50d94,normal,D231,265
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_1_donor,462
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_1_recipient,64
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_2_donor,461
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_3_donor,389
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_3_recipient,16
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_4_donor,1305
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_4_recipient,66
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_5_donor,527
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_5_recipient,19
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_6_donor,1556
+429d21fd-bb9a-4abf-922b-c15138524bdd,normal,case_6_recipient,24
+4ed927e9-c099-49af-b8ce-a2652d069333,normal,GTEX-13N11,338
+4ed927e9-c099-49af-b8ce-a2652d069333,normal,GTEX-15CHR,116
+4ed927e9-c099-49af-b8ce-a2652d069333,normal,GTEX-1HSMQ,157
+53d208b0-2cfd-4366-9866-c3c6114081bc,normal,TSP1,767
+53d208b0-2cfd-4366-9866-c3c6114081bc,normal,TSP14,336
+53d208b0-2cfd-4366-9866-c3c6114081bc,normal,TSP2,2041
+53d208b0-2cfd-4366-9866-c3c6114081bc,normal,TSP25,878
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1038,1670
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1057,1926
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1061,264
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1128,1256
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1134,2791
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1135,1134
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1137,605
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1170,2731
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1262,946
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU1271,192
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU653,50
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU661,3665
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU675,1182
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU676,2819
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU682,2169
+576f193c-75d0-4a11-bd25-8676587e6dc2,lung adenocarcinoma,RU684,60
+576f193c-75d0-4a11-bd25-8676587e6dc2,normal,RU675,1222
+576f193c-75d0-4a11-bd25-8676587e6dc2,normal,RU682,1445
+576f193c-75d0-4a11-bd25-8676587e6dc2,normal,RU684,1883
+576f193c-75d0-4a11-bd25-8676587e6dc2,normal,RU685,2080
+576f193c-75d0-4a11-bd25-8676587e6dc2,small cell lung carcinoma,RU1066,900
+576f193c-75d0-4a11-bd25-8676587e6dc2,small cell lung carcinoma,RU1108,92
+576f193c-75d0-4a11-bd25-8676587e6dc2,small cell lung carcinoma,RU1144,113
+576f193c-75d0-4a11-bd25-8676587e6dc2,small cell lung carcinoma,RU1145,1031
+576f193c-75d0-4a11-bd25-8676587e6dc2,small cell lung carcinoma,RU1181,1
+576f193c-75d0-4a11-bd25-8676587e6dc2,small cell lung carcinoma,RU1195,1055
+576f193c-75d0-4a11-bd25-8676587e6dc2,small cell lung carcinoma,RU1229,272
+576f193c-75d0-4a11-bd25-8676587e6dc2,small cell lung carcinoma,RU1311,112
+576f193c-75d0-4a11-bd25-8676587e6dc2,small cell lung carcinoma,RU426,322
+6c87755e-a671-41a8-9c7e-4e43b850a57b,breast cancer,HTAPP-988,497
+6e00ccf7-0749-46ef-a999-dba785630d52,anencephaly,D038,141
+6e00ccf7-0749-46ef-a999-dba785630d52,anencephaly,D051,49
+7b55fe5c-d5c8-48e0-a1a3-54c5b9074f3f,COVID-19,Case 3,7223
+7c497c66-c2e2-4291-8b96-339e5e65f314,COVID-19,Case 4,23364
+7f7faf6b-f11d-4f07-bc1c-188a4472748d,COVID-19,Case 2,8216
+8c42cfd0-0b0a-46d5-910c-fc833d83c45e,normal,1,532
+8c42cfd0-0b0a-46d5-910c-fc833d83c45e,normal,2,1510
+8c42cfd0-0b0a-46d5-910c-fc833d83c45e,normal,3,2847
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,chronic obstructive pulmonary disease,JK05,496
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,chronic obstructive pulmonary disease,JK07,541
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,chronic obstructive pulmonary disease,JK08,725
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,chronic obstructive pulmonary disease,JK09,1338
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,chronic obstructive pulmonary disease,JK10,922
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,chronic obstructive pulmonary disease,JK19,686
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,chronic obstructive pulmonary disease,JK21,387
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,chronic obstructive pulmonary disease,JK24,347
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,chronic obstructive pulmonary disease,JK27,282
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,normal,JK03,1978
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,normal,JK04,1859
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,normal,JK06,768
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,normal,JK11,741
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,normal,JK12,959
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,normal,JK26,2712
+8fbed309-d3d4-441b-b3ff-e2dcbcec2d35,normal,JK29,760
+9dbab10c-118d-496b-966a-67f1763a6b7d,COVID-19,P-S001,5178
+9dbab10c-118d-496b-966a-67f1763a6b7d,COVID-19,P-S006,2
+9dbab10c-118d-496b-966a-67f1763a6b7d,COVID-19,P-S008,50
+9dbab10c-118d-496b-966a-67f1763a6b7d,COVID-19,P-S009,27
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL009,25
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL012,17
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL013,23
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL014,423
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL015,23
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL016,51
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL020,93
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL021,38
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL022,60
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL023,488
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL024,87
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL025,59
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL026,152
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL027,39
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL031,1018
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL032,13
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL034,102
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL035,176
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL037,47
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL039,70
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL040,173
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Case_1,1141
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D1,169
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D10,173
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D11,114
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D12,453
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D13,218
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D14,627
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D15,94
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D16,272
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D17,117
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D2,1
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D3,12
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D4,169
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D5,448
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D6,437
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D7,914
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D8,11
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747M1,850
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747M2,856
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747M3,123
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747PMB_1,164
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747PMB_2,799
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747S1,453
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747S2,1375
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747S3,40
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747S4,135
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747S5,580
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747S6,406
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_1,1702
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_2,589
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_3,2878
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_4,903
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_5,1207
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_7,1462
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_8,3545
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_9,1119
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_A,1019
+9f222629-9e39-47d0-b83f-e08d610c7479,COVID-19,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Wunderink2021_subject_B,107
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747052CO,1162
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747056CO,653
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747152CO,397
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747153CO,47
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747178CO,438
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747184CO,1069
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747186CO,395
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747192CO,1584
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747193CO,1125
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747194CO,518
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747207CO,278
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747217CO,427
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747235CO,285
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747237CO,183
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747238CO,180
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_48374723CO,140
+9f222629-9e39-47d0-b83f-e08d610c7479,chronic obstructive pulmonary disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_4837478CO,56
+9f222629-9e39-47d0-b83f-e08d610c7479,cystic fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BG9_27,3
+9f222629-9e39-47d0-b83f-e08d610c7479,cystic fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BG9_34,2
+9f222629-9e39-47d0-b83f-e08d610c7479,cystic fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BG9_36,1
+9f222629-9e39-47d0-b83f-e08d610c7479,cystic fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BG9_7,1
+9f222629-9e39-47d0-b83f-e08d610c7479,hypersensitivity pneumonitis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747HP_01,216
+9f222629-9e39-47d0-b83f-e08d610c7479,hypersensitivity pneumonitis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD54,8
+9f222629-9e39-47d0-b83f-e08d610c7479,hypersensitivity pneumonitis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD58,266
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Myositis-ILD_01,60
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SCD1,84
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SCD2,77
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SSc-ILD_01,16
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SSc-ILD_02,26
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SSc_1,209
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SSc_2,101
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SSc_3,571
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SSc_4,771
+9f222629-9e39-47d0-b83f-e08d610c7479,interstitial lung disease,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747TILD019,32
+9f222629-9e39-47d0-b83f-e08d610c7479,lung adenocarcinoma,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lambrechts_3,4650
+9f222629-9e39-47d0-b83f-e08d610c7479,lung adenocarcinoma,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lambrechts_4,7944
+9f222629-9e39-47d0-b83f-e08d610c7479,lung adenocarcinoma,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lambrechts_6,1473
+9f222629-9e39-47d0-b83f-e08d610c7479,lung large cell carcinoma,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lambrechts_5,6021
+9f222629-9e39-47d0-b83f-e08d610c7479,lymphangioleiomyomatosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN12574693,128
+9f222629-9e39-47d0-b83f-e08d610c7479,lymphangioleiomyomatosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN12574699,393
+9f222629-9e39-47d0-b83f-e08d610c7479,non-specific interstitial pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD55,293
+9f222629-9e39-47d0-b83f-e08d610c7479,non-specific interstitial pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD62,322
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747001C,35
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747002C,29
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747003C,202
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747034C,19
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747065C,22
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747081C,2
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747084C,8
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747092C,14
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747098C,956
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747133C,303
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_4837471372C,133
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747137C,37
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747160C,115
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747192C,74
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747208C,38
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747218C,234
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747222C,968
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747226C,403
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747244C,14
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747253C,52
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747284C,68
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747290B,178
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747292B,51
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747296C,109
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747298C,177
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747302C,8
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747388C,41
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747396C,4
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747439C,1161
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747454C,84
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747465C,797
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747483C,26
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747484C,189
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747D239,639
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747DD046Q,944
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747DD047Q,300
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747DD073R,717
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Donor_01,17
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Donor_02,13
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Donor_03,7
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Donor_05,3
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Donor_06,100
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Donor_07,21
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Donor_08,3
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747GSM4593897,223
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747HC1,44
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747HC3,334
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747LuT_437,587
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747LuT_553,1858
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747LuT_580,85
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747ND17494,6
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NML1,2
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NML2,216
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NML3,328
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NP13,216
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NP14,4
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NP18,55
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NP31,218
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NP35,120
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NP39,176
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NP44,117
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NU_CZI01,351
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747NU_CZI02,39
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Patient_1,914
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Patient_2,219
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Patient_3,1053
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Patient_4,642
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Patient_5,792
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Patient_6,1354
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Patient_7,252
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN15153955,30
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN15153956,384
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN15153957,324
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN15153958,769
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN15153959,125
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN15153960,325
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN15153961,243
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN15153962,244
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747SAMN15153963,362
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0001,14
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0005,321
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0006,36
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0007,15
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0008,306
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0009,1
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0010,1
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0012,2
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0014,1
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0015,1
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0019,23
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747THD0020,1
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD071,352
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD072,44
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD073,63
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD076,1
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD077,18
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD078,57
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD080,159
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD101,1019
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD103,48
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD104,241
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD105,1
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD106,54
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD107,214
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD66,343
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD67,2786
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD68,141
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD69,754
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD70,8
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD84,394
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD85,73
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD92,1308
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD94,1683
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD95,1474
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUHD98,690
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747cc05p,1
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lafy_donor_1,240
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lafy_donor_2,363
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lafy_donor_3,544
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lafy_donor_4,1003
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lafy_donor_5,340
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lafy_donor_6,1079
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc10380,1106
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc3843,158
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc4658,51
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc4659,17
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc5103,75
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc5105,34
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc5212,200
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc5213,232
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc5288,7
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc9832,76
+9f222629-9e39-47d0-b83f-e08d610c7479,normal,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc9833,331
+9f222629-9e39-47d0-b83f-e08d610c7479,pleomorphic carcinoma,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lambrechts_8,1726
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL002,136
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL010,86
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL011,15
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL017,45
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL018,26
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL019,282
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL028,3
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL029,86
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL030,39
+9f222629-9e39-47d0-b83f-e08d610c7479,pneumonia,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747BAL038,172
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747010I,376
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747021I,334
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747022I,362
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747025I,27
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747034I,144
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747040I,256
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747041I,152
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747051I,469
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747053I,438
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747063I,41
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747123I,122
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747135I,367
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747138I,241
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747145I,734
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747157I,479
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747158I,1048
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747166I,166
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747174I,467
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747177I,214
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747179I,291
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747209I,159
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747210I,125
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747212I,264
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747214I,8
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747221I,147
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747222I,761
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747225I,219
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747228I,152
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_48374729I,31
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_48374747I,108
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_48374749I,470
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_48374759I,151
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747Cryobiopsy_01,258
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747IPF1,3
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747IPF2,234
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747IPF3,269
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747IPF_01,91
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747IPF_02,347
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747IPF_03,27
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747IPF_04,1
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747TILD001,2
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747TILD006,25
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747TILD010,2
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747TILD015,990
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747TILD028,139
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD53,4
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD59,193
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD60,428
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD61,162
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD63,474
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD64,11
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD65,16
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc10381,445
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc8257,554
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary fibrosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747muc9826,187
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary sarcoidosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747TILD030,1
+9f222629-9e39-47d0-b83f-e08d610c7479,pulmonary sarcoidosis,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747VUILD57,173
+9f222629-9e39-47d0-b83f-e08d610c7479,squamous cell lung carcinoma,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lambrechts_1,658
+9f222629-9e39-47d0-b83f-e08d610c7479,squamous cell lung carcinoma,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lambrechts_2,763
+9f222629-9e39-47d0-b83f-e08d610c7479,squamous cell lung carcinoma,homosapiens_None_2023_None_sikkemalisa_002_d10_1101_2022_03_10_483747lambrechts_7,2766
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,lung cancer,Nieto_P1,212
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,lung cancer,QianLUAD_LC_1,677
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,lung cancer,QianLUAD_LC_2,909
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,lung cancer,QianLUAD_LC_3,3275
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,lung cancer,QianLUAD_LC_4,7163
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,lung cancer,QianLUAD_LC_5,4736
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,lung cancer,QianLUAD_LC_7,2650
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,normal,QianLUAD_LC_3,1641
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,normal,QianLUAD_LC_4,1372
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,normal,QianLUAD_LC_5,2414
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,normal,QianLUAD_LC_6,1101
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,normal,QianLUAD_LC_7,930
+b617ee1b-f8c8-4de9-b82b-e803ab93550d,normal,QianLUAD_LC_8,547
+b61a921b-7fa3-4b42-b455-aaaf32447920,normal,N10,1999
+b61a921b-7fa3-4b42-b455-aaaf32447920,normal,N2,153
+b61a921b-7fa3-4b42-b455-aaaf32447920,normal,N4,2110
+b61a921b-7fa3-4b42-b455-aaaf32447920,normal,N6,579
+b61a921b-7fa3-4b42-b455-aaaf32447920,normal,N8,965
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1001,1518
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1002,1892
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1005,2686
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1006,1097
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1007,579
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1009,1078
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1011,193
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1013,1659
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1014,3416
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1016,1088
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1017,2515
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1019,2204
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1020,2348
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1023,933
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1024,3240
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1025,1468
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1026,919
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1027,548
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1028,621
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1029,3657
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1030,760
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1031,1911
+d41f45c1-1b7b-4573-a998-ac5c5acb1647,lung adenocarcinoma,HTA8_1032,453
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D015,75
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D039,107
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D053,51
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D086,173
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D115,677
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D141,443
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D169,436
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D170,534
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D184,1158
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D227,303
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D251,172
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D319,491
+d68a8b48-abf0-4bd5-8834-155d34ec448a,bronchopulmonary dysplasia,D352,469
+d68a8b48-abf0-4bd5-8834-155d34ec448a,normal,D011,400
+d68a8b48-abf0-4bd5-8834-155d34ec448a,normal,D031,152
+d68a8b48-abf0-4bd5-8834-155d34ec448a,normal,D079,424
+d68a8b48-abf0-4bd5-8834-155d34ec448a,normal,D090,374
+d68a8b48-abf0-4bd5-8834-155d34ec448a,normal,D094,349
+d68a8b48-abf0-4bd5-8834-155d34ec448a,normal,D095,141
+d68a8b48-abf0-4bd5-8834-155d34ec448a,normal,D105,49
+d68a8b48-abf0-4bd5-8834-155d34ec448a,normal,D113,102
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L01cov,305
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L03cov,315
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L04cov,363
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L04covaddon,565
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L05cov,97
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L06cov,423
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L07cov,1649
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L08cov,653
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L09cov,99
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L10cov,28
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L11cov,205
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L12cov,465
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L13cov,250
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L15cov,287
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L16cov,181
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L17cov,189
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L18cov,26
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L19cov,42
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L21cov,793
+d8da613f-e681-4c69-b463-e94f5e66847f,COVID-19,L22cov,1131
+d8da613f-e681-4c69-b463-e94f5e66847f,normal,C51ctr,1241
+d8da613f-e681-4c69-b463-e94f5e66847f,normal,C52ctr,118
+d8da613f-e681-4c69-b463-e94f5e66847f,normal,C53ctr,938
+d8da613f-e681-4c69-b463-e94f5e66847f,normal,C54ctr,588
+d8da613f-e681-4c69-b463-e94f5e66847f,normal,C55ctr,413
+d8da613f-e681-4c69-b463-e94f5e66847f,normal,C56ctr,236
+d8da613f-e681-4c69-b463-e94f5e66847f,normal,C57ctr,196
+e04daea4-4412-45b5-989e-76a9be070a89,normal,1,290
+e04daea4-4412-45b5-989e-76a9be070a89,normal,2,22
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,CCHMC_SMG_Donor27,304
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,CCHMC_SMG_Donor28,121
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,CCHMC_SMG_Donor29,5
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,CCHMC_SMG_Donor33,49
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,CCHMC_SMG_Donor38,308
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0004,2
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0055,2
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0056,1
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0058,6
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0070,2
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0078,29
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0191,10
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0328,1
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0423,11
+eb499fd8-7000-419f-8854-926b9b61b11f,normal,UPENN0424,16
+f14bc322-1322-4184-8d16-409557525ea5,anthracosis,VUILD85,343
+f14bc322-1322-4184-8d16-409557525ea5,anthracosis,VUILD86,245
+f14bc322-1322-4184-8d16-409557525ea5,anthracosis,VUILD89,855
+f14bc322-1322-4184-8d16-409557525ea5,hypersensitivity pneumonitis,TILD102,6
+f14bc322-1322-4184-8d16-409557525ea5,hypersensitivity pneumonitis,VUILD54,9
+f14bc322-1322-4184-8d16-409557525ea5,hypersensitivity pneumonitis,VUILD58,277
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD001,2
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD006,12
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD010,2
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD015,1169
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD019,44
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD028,137
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD037,31
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD039,21
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD041,20
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD049,13
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD051,14
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD055,204
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD059,25
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD060,4
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD080,4
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD084,44
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD103,75
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD113,831
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD116,17
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD123,64
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD126,72
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,TILD136,128
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD102,8
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD104,1183
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD53,2
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD59,206
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD60,522
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD61,207
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD63,454
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD64,12
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD67,250
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD68,437
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD69,25
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD73,3621
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD77,95
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD79,337
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD83,186
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD84,427
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD87,78
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD88,64
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD90,112
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD91,163
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD92 More,514
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD93,270
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD95,33
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD97,79
+f14bc322-1322-4184-8d16-409557525ea5,interstitial lung disease,VUILD98,150
+f14bc322-1322-4184-8d16-409557525ea5,lymphoid interstitial pneumonia,VUILD100,183
+f14bc322-1322-4184-8d16-409557525ea5,lymphoid interstitial pneumonia,VUILD82,477
+f14bc322-1322-4184-8d16-409557525ea5,non-specific interstitial pneumonia,VUILD108,32
+f14bc322-1322-4184-8d16-409557525ea5,non-specific interstitial pneumonia,VUILD48,1
+f14bc322-1322-4184-8d16-409557525ea5,non-specific interstitial pneumonia,VUILD55,437
+f14bc322-1322-4184-8d16-409557525ea5,non-specific interstitial pneumonia,VUILD62,389
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0006,13
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0007,7
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0008,194
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0009,1
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0014,1
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0015,1
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0019,21
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0021,23
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0022,2
+f14bc322-1322-4184-8d16-409557525ea5,normal,THD0026,3
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD072,29
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD073,51
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD077,1
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD078,9
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD080,125
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD101 (We wrote VUHD103 on day of processing),760
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD103,2
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD104,34
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD107,32
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD108,696
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD109,5
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD111,258
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD112,56
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD113,247
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD115,6
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD117,345
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD84,31
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD85,49
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD92,438
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD94,259
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD95,93
+f14bc322-1322-4184-8d16-409557525ea5,normal,VUHD98,281
+f14bc322-1322-4184-8d16-409557525ea5,pulmonary sarcoidosis,TILD030,2
+f14bc322-1322-4184-8d16-409557525ea5,pulmonary sarcoidosis,TILD062,249
+f14bc322-1322-4184-8d16-409557525ea5,pulmonary sarcoidosis,VUILD57,305
+f14bc322-1322-4184-8d16-409557525ea5,pulmonary sarcoidosis,VUILD96,105

@@ -1,0 +1,11 @@
+{
+ "n_cells": 25700,
+ "n_genes_scored": 10072,
+ "n_ambient_anchors_scored": 32,
+ "n_tcell_anchors_scored": 39,
+ "loao_auc": 0.9767628205128206,
+ "valid": true,
+ "threshold_p25_ambient_loao": 0.851617767499218,
+ "median_loao_ambient": 0.9453746800653895,
+ "median_loao_tcell": 0.02624156312755622
+}

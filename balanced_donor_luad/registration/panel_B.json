@@ -1,0 +1,246 @@
+{
+ "panel": "B",
+ "source": "KNOWN_TCELL in sclc_validation/primary_test_perturbation/scripts/ambient_risk_diagnostic.py",
+ "source_sha256": "6be4bebe69a21a6fc1f4f4a9a76743ae2ccdcc219cbd4cc2fc56943f5862be0c",
+ "source_commit": "d69f56b",
+ "mapping": "LuCA extended raw/var.feature_name -> index (unique for all 39)",
+ "token_dictionary": "token_dictionary_gc104M.pkl",
+ "n_listed": 39,
+ "n_perturbable": 36,
+ "genes": [
+  {
+   "symbol": "CD3D",
+   "ensembl_id": "ENSG00000167286",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD3E",
+   "ensembl_id": "ENSG00000198851",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD3G",
+   "ensembl_id": "ENSG00000160654",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD247",
+   "ensembl_id": "ENSG00000198821",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "TRAC",
+   "ensembl_id": "ENSG00000277734",
+   "perturbable": false,
+   "status_if_not": "NOT_RUN: not in V2 token dictionary"
+  },
+  {
+   "symbol": "TRBC1",
+   "ensembl_id": "ENSG00000211751",
+   "perturbable": false,
+   "status_if_not": "NOT_RUN: not in V2 token dictionary"
+  },
+  {
+   "symbol": "TRBC2",
+   "ensembl_id": "ENSG00000211772",
+   "perturbable": false,
+   "status_if_not": "NOT_RUN: not in V2 token dictionary"
+  },
+  {
+   "symbol": "CD2",
+   "ensembl_id": "ENSG00000116824",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD5",
+   "ensembl_id": "ENSG00000110448",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD6",
+   "ensembl_id": "ENSG00000013725",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD7",
+   "ensembl_id": "ENSG00000173762",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD28",
+   "ensembl_id": "ENSG00000178562",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "LCK",
+   "ensembl_id": "ENSG00000182866",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "ZAP70",
+   "ensembl_id": "ENSG00000115085",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "LAT",
+   "ensembl_id": "ENSG00000213658",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "ITK",
+   "ensembl_id": "ENSG00000113263",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "THEMIS",
+   "ensembl_id": "ENSG00000172673",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "SKAP1",
+   "ensembl_id": "ENSG00000141293",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD8A",
+   "ensembl_id": "ENSG00000153563",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD8B",
+   "ensembl_id": "ENSG00000172116",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "IL7R",
+   "ensembl_id": "ENSG00000168685",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CCR7",
+   "ensembl_id": "ENSG00000126353",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "TCF7",
+   "ensembl_id": "ENSG00000081059",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "LEF1",
+   "ensembl_id": "ENSG00000138795",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "SELL",
+   "ensembl_id": "ENSG00000188404",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "GZMA",
+   "ensembl_id": "ENSG00000145649",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "GZMK",
+   "ensembl_id": "ENSG00000113088",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "PRF1",
+   "ensembl_id": "ENSG00000180644",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "NKG7",
+   "ensembl_id": "ENSG00000105374",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CTSW",
+   "ensembl_id": "ENSG00000172543",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD27",
+   "ensembl_id": "ENSG00000139193",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "ICOS",
+   "ensembl_id": "ENSG00000163600",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CTLA4",
+   "ensembl_id": "ENSG00000163599",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "PDCD1",
+   "ensembl_id": "ENSG00000188389",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "FOXP3",
+   "ensembl_id": "ENSG00000049768",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "IKZF2",
+   "ensembl_id": "ENSG00000030419",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "RUNX3",
+   "ensembl_id": "ENSG00000020633",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "BCL11B",
+   "ensembl_id": "ENSG00000127152",
+   "perturbable": true,
+   "status_if_not": null
+  },
+  {
+   "symbol": "CD69",
+   "ensembl_id": "ENSG00000110848",
+   "perturbable": true,
+   "status_if_not": null
+  }
+ ]
+}

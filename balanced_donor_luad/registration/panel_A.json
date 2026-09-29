@@ -1,0 +1,100 @@
+{
+ "panel": "A",
+ "source": "current_workflow/perturbation_statistics/source_tables/top_goal_shift_genes.csv",
+ "source_sha256": "f7c915c9171fff38917835ff8920f90bd0092c8c68cecdd6b5a90dd9d2ce5416",
+ "source_commit": "c783e3e",
+ "rule": "all rows with comparison == luad_to_normal",
+ "n": 15,
+ "genes": [
+  {
+   "july_rank": 1,
+   "ensembl_id": "ENSG00000162896",
+   "symbol": "PIGR",
+   "ambient": "TO_BE_SCORED_LOAO"
+  },
+  {
+   "july_rank": 2,
+   "ensembl_id": "ENSG00000254772",
+   "symbol": "EEF1G",
+   "ambient": "TO_BE_SCORED_LOAO"
+  },
+  {
+   "july_rank": 3,
+   "ensembl_id": "ENSG00000111057",
+   "symbol": "KRT18",
+   "ambient": "CURATED_LINEAGE_FOREIGN"
+  },
+  {
+   "july_rank": 4,
+   "ensembl_id": "ENSG00000185499",
+   "symbol": "MUC1",
+   "ambient": "CURATED_LINEAGE_FOREIGN"
+  },
+  {
+   "july_rank": 5,
+   "ensembl_id": "ENSG00000106541",
+   "symbol": "AGR2",
+   "ambient": "TO_BE_SCORED_LOAO"
+  },
+  {
+   "july_rank": 6,
+   "ensembl_id": "ENSG00000101443",
+   "symbol": "WFDC2",
+   "ambient": "CURATED_LINEAGE_FOREIGN"
+  },
+  {
+   "july_rank": 7,
+   "ensembl_id": "ENSG00000171345",
+   "symbol": "KRT19",
+   "ambient": "CURATED_LINEAGE_FOREIGN"
+  },
+  {
+   "july_rank": 8,
+   "ensembl_id": "ENSG00000157765",
+   "symbol": "SLC34A2",
+   "ambient": "TO_BE_SCORED_LOAO"
+  },
+  {
+   "july_rank": 9,
+   "ensembl_id": "ENSG00000164265",
+   "symbol": "SCGB3A2",
+   "ambient": "CURATED_LINEAGE_FOREIGN"
+  },
+  {
+   "july_rank": 10,
+   "ensembl_id": "ENSG00000170421",
+   "symbol": "KRT8",
+   "ambient": "CURATED_LINEAGE_FOREIGN"
+  },
+  {
+   "july_rank": 11,
+   "ensembl_id": "ENSG00000135480",
+   "symbol": "KRT7",
+   "ambient": "TO_BE_SCORED_LOAO"
+  },
+  {
+   "july_rank": 12,
+   "ensembl_id": "ENSG00000133639",
+   "symbol": "BTG1",
+   "ambient": "TO_BE_SCORED_LOAO"
+  },
+  {
+   "july_rank": 13,
+   "ensembl_id": "ENSG00000168255",
+   "symbol": "POLR2J3",
+   "ambient": "TO_BE_SCORED_LOAO"
+  },
+  {
+   "july_rank": 14,
+   "ensembl_id": "ENSG00000206172",
+   "symbol": "HBA1",
+   "ambient": "CURATED_LINEAGE_FOREIGN"
+  },
+  {
+   "july_rank": 15,
+   "ensembl_id": "ENSG00000110492",
+   "symbol": "MDK",
+   "ambient": "TO_BE_SCORED_LOAO"
+  }
+ ]
+}
