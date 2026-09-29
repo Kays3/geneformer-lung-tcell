@@ -1062,3 +1062,19 @@ below is a **hard, monitored ceiling**, not a promise that all 200 genes will ru
 - **Everything else in s.4.7 is unchanged:** the 10 GPU-h ceiling, the monitor design (read the same
   `"seconds"` field live during the run, `ps -o pid,pgid,cmd` targeting, GPU-arm-only accounting, no wall-clock
   stall trigger from the CPU analysis phase), and `stopped_not_analysed` for anything past the ceiling.
+
+### 4.7-correction-2 — s.4.7-correction's "~149 genes fit" was an arithmetic error; corrected (2026-09-29T10:31Z)
+
+- **Error, stated plainly:** s.4.7-correction computed "10 GPU-h / (43 x 6.705 s) = 149.4". That division is
+  wrong. `43 x 6.705 = 288.315` (seconds per gene, both ops, all 43 donors); `36,000 / 288.315 = 124.86`, not
+  149.4. Caught while preparing material for god on 2026-09-29, before Stanley's sign-off was acted on and
+  before any GPU output.
+- **Corrected:** at the conservative curated-panel-level rate (s.4.7-correction's 1.846 + 4.859 s/call),
+  **~124 genes**, not ~149, fit under the registered 10 GPU-h ceiling. The 200-genes-at-this-rate total
+  (~16.0 GPU-h) was computed independently and is unaffected: `200 x 288.315 s = 57,663 s = 16.02 GPU-h`.
+  **This 16.0 GPU-h planning estimate for the full 200-gene design is the number that exceeds the registered
+  10 GPU-h ceiling and is being taken to the human**, per ISP-STD-1 E.3/the human's own rule ("if the estimate
+  exceeds 10 GPU-h, tell me before launch").
+- No other number in s.4.7 or s.4.7-correction is affected. This correction changes only the "how many genes
+  fit under 10 GPU-h at the conservative rate" figure, which is background context for s.4.5's power table,
+  not the registered design (200 genes) or the registered ceiling (10 GPU-h) itself.
