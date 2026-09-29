@@ -1,0 +1,34 @@
+{
+ "about": "Amendment 5 (ISP-STD-1 E.5): fixed + per-cell GPU-arm cost model, fit from Phase 6's own\nrecorded per-call data. Least squares: seconds ~ a + b * n_token_cells, separately per operation.\nReads run_isp.py's own \"seconds\" and \"n_token_cells\" fields from *.complete.json markers -- never\nwall clock, never an inferred rate. CPU only.",
+ "sources": [
+  "/home/kaisar/workspace/balanced_donor_luad/phase6"
+ ],
+ "fit": {
+  "delete": {
+   "n_calls": 7783,
+   "intercept_a": 0.06882597376841214,
+   "slope_b_per_cell": 0.05369383579775297,
+   "mean_n_cells": 31.21624052421945,
+   "max_n_cells": 100.0,
+   "rmse": 3.3034234317239655,
+   "mean_resid": 1.432953717138704e-14,
+   "p95_abs_resid": 1.794203854805108,
+   "max_resid": 67.37841745905472,
+   "sum_actual_gpu_h": 3.7724755899773705,
+   "sum_predicted_gpu_h": 3.7724755899773394
+  },
+  "overexpress": {
+   "n_calls": 7783,
+   "intercept_a": 4.308666114667163,
+   "slope_b_per_cell": 0.00955226518881067,
+   "mean_n_cells": 31.21624052421945,
+   "max_n_cells": 100.0,
+   "rmse": 1.733175994492759,
+   "mean_resid": 4.294479029956972e-15,
+   "p95_abs_resid": 4.135177640366265,
+   "max_resid": 14.860444264124808,
+   "sum_actual_gpu_h": 9.95975791990757,
+   "sum_predicted_gpu_h": 9.959757919907561
+  }
+ }
+}

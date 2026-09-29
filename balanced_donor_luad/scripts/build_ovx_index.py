@@ -1,4 +1,5 @@
-"""Amendment 3h: token-positive positions for every overexpress call, plus the two COUNT checks.
+"""Amendment 3h (extended by Amendment 5 P1/R4 with --genes-file, backward compatible; default
+behaviour unchanged): token-positive positions for every overexpress call, plus the two COUNT checks.
 
   (i)  delete: the replayed token-positive count equals each delete pickle's per-cell length
   (ii) overexpress: the reconstructed positive count equals the marker's n_token_cells
@@ -35,9 +36,17 @@ def main(argv=None):
     ap.add_argument("--manifest", required=True, help="goals/donor_manifest.json (isp_input per donor)")
     ap.add_argument("--token-dict", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--genes-file", default=None,
+                     help="Amendment 5: null_genes.json (or a limited prefix) to index instead of "
+                          "the registered panel/control genes; reads its draw_order key")
+    ap.add_argument("--genes-limit", type=int, default=None, help="with --genes-file, first N of draw_order")
     a = ap.parse_args(argv)
     design = an.Design(**json.load(open(a.design)))
-    genes = an.genes_to_load(design)
+    if a.genes_file:
+        draw = json.load(open(a.genes_file))["draw_order"]
+        genes = draw[: a.genes_limit] if a.genes_limit else draw
+    else:
+        genes = an.genes_to_load(design)
     tok = pickle.load(open(a.token_dict, "rb"))
     manifest = json.load(open(a.manifest))
     orders = io.donor_orders(manifest, design.donors)

@@ -1078,3 +1078,159 @@ below is a **hard, monitored ceiling**, not a promise that all 200 genes will ru
 - No other number in s.4.7 or s.4.7-correction is affected. This correction changes only the "how many genes
   fit under 10 GPU-h at the conservative rate" figure, which is background context for s.4.5's power table,
   not the registered design (200 genes) or the registered ceiling (10 GPU-h) itself.
+
+## Amendment 5 — capped, gate-fixed genome-wide null (N = 100 ESTIMABLE genes), supersedes Amendment 4's N=200 (appended 2026-09-29T10:50Z)
+
+**This Amendment overrides Amendment 4 s.4.2-4.3's N=200 design.** Reason: the human ruled 2026-09-29 19:31
+JST (10:31Z, card `geneformer-balanced-donor-analysis-20260924`): "allow 16 GPU-h for the null and focus on
+100 genes." Read literally against the seed-20260929 draw, the first 100 genes give only 5 estimable genes
+(Amendment 4's own eligibility gate: >=10 donors each with >=10 of 100 token-positive cells) -- god's
+independent reading, and Stanley's, agree the human meant **100 estimable genes**, not 100 drawn genes, since
+a 5-gene sample cannot be what "focus on 100 genes" was meant to deliver. This Amendment registers that
+reading. **No output exists for this Amendment's design; Amendment 4's own GPU output (none) is unaffected.**
+This also incorporates every item from Stanley's 2026-09-29 gate (`2026-09-29T10-55-00-000Z-a4-gate`,
+NOT PASSED, 9 run-package items + 6 registration items) and his two follow-up messages.
+
+### 5.1 N = 100 estimable genes, not 100 drawn (R2, confirmed feasible before any GPU output)
+- **Population, restated (Stanley item 1):** "eligible random genes detectable in LUAD tumor T cells" (>=10 of
+  43 donors with >=10 of 100 token-positive cells) -- **never "genome-wide"** (ISP-STD-1 B.9: the claim is
+  limited to what is tested). This is the same eligibility gate the 120 existing matched controls already had
+  to pass, so the comparison in s.4.1/RESULTS.md s.4 stays like-for-like.
+- **Same seed, longer prefix, not a new draw:** Amendment 4's `null_genes.json` (200 genes, seed 20260929,
+  committed sha256 `bdd46e8b...`) is extended to 1,000 genes under the **identical seed and shuffle** --
+  verified: the first 200 entries of the 1,000-gene list are byte-identical to the committed 200. Committed as
+  `balanced_donor_luad/phase8_null/null_genes_1000.json`.
+- **Walk, don't re-rank:** `select_estimable_prefix.py` walks that order gene by gene, computing each gene's
+  real per-donor token-positive count (`n_pos = sum(tok[g] in s for s in token_sets[d])`, the exact quantity
+  `run_isp.py` itself computes -- CPU only, no GPU, no model load). A gene failing the eligibility gate is
+  recorded `not_estimable` with its full per-donor counts and **is never sent to the GPU**. Walking stops at
+  the 100th estimable gene.
+- **Result (real, computed, not projected): the 100th estimable gene sits at position 984** of the seeded
+  order (884 genes skipped as pre-GPU-ineligible, 100 pass). Committed as
+  `balanced_donor_luad/phase8_null/frozen_100_estimable.json`: all 984 rows, each gene's `estimable` flag,
+  `n_estimable_donors`, and full per-donor `npos_by_donor` -- **the complete pre-GPU freeze Stanley's item 3
+  requires**, hashed before any GPU output.
+- **"A random order filtered by a pre-registered rule is still a random sample of estimable genes"** (god's
+  framing, agreed): the filter (eligibility) was fixed in Amendment 4 before any of these 1,000 genes was
+  drawn: it is not tuned to hit 100, only walked until 100 is reached.
+
+### 5.2 Gate identity (Stanley item 2)
+- The pre-GPU count in `frozen_100_estimable.json` and the post-GPU marker's `n_token_cells` (written by
+  `run_isp.py`, unchanged) must agree exactly for every (gene, donor) pair among the 100 estimable genes.
+  `null_analysis.py` asserts this per gene before counting it in the primary statistic (P2/R2 fix, s.5.5);
+  a mismatch is not silently ignored -- it halts that gene's inclusion and is reported as a named check
+  failure, not folded into `not_estimable` or `stopped_not_analysed`.
+
+### 5.3 Budget: real numbers on the actual 100 genes, not the 200-gene draw average (Stanley item 4)
+- **Fitted cost model** (ISP-STD-1 E.5, fixed + per-cell, from `run_isp.py`'s own recorded `"seconds"` and
+  `"n_token_cells"` fields, least-squares, thinkstation1's Phase 6 markers, n=7,783 calls per op --
+  `fit_cost_model.py`, committed):
+  - delete: `seconds = 0.06883 + 0.05369 * n_token_cells` (RMSE 3.30s, p95 |residual| 1.79s, max residual 67.4s)
+  - overexpress: `seconds = 4.30867 + 0.00955 * n_token_cells` (RMSE 1.73s, p95 |residual| 4.14s, max residual 14.9s)
+  - Both fits are unbiased in aggregate (mean residual ~0; predicted sum equals actual sum on the fitting data
+    by construction of least squares).
+- **Predicted cost for exactly the 100 estimable genes** (their real per-donor counts, both ops, all 43
+  donors, `no_token_cells` donors at 0 s): **6.75 GPU-h**.
+- **Margin (Stanley item 4, god's request):** a flat **1.5x** multiplicative margin, chosen over the
+  RMSE-based standard error of the sum (which is under 0.1 GPU-h and only covers sampling noise, not
+  model-form risk) because it is easier to check by eye and is deliberately conservative given the fit's
+  occasional large single-call residuals. **Predicted cost with margin: 10.12 GPU-h.**
+- **Registered hard ceiling: 16 GPU-h**, per the human's ruling, total across whichever single host runs this
+  (s.5.6), counted in GPU arms via `run_isp.py`'s own recorded `"seconds"` field (never wall clock), verified
+  against the real process group (`ps -o pid,pgid,cmd`, never `pgrep -f`). 10.12 GPU-h of margin-adjusted
+  estimate leaves **5.9 GPU-h of headroom** under the ceiling. If the ceiling is still reached (a genuine
+  calibration miss beyond the margin), remaining genes in the frozen 984-row order are `stopped_not_analysed`,
+  and `null_analysis.py` is required to handle that without crashing (s.5.5, P2 fix).
+
+### 5.4 Detection range vs the 120 existing controls (Stanley item 5, descriptive only)
+- Real, computed (mean per-donor detect fraction over the donor's 100 analysis cells):
+
+  | set | n | mean | median | p10 | p90 |
+  |---|---:|---:|---:|---:|---:|
+  | 100 estimable null genes | 100 | 0.208 | 0.136 | 0.075 | 0.413 |
+  | 318 existing matched controls (union across 19 strata) | 318 | 0.319 | 0.233 | 0.084 | 0.712 |
+
+- The 100 estimable null genes skew **lower**, not higher, in detection than the existing matched controls --
+  the opposite of the a priori expectation. Reported as observed; **no stratification is invented after the
+  fact** (s.4.4's rule extends here), and no claim beyond this descriptive comparison is made (ISP-STD-1 B.9).
+
+### 5.5 Run-package fixes (Stanley's P1-P9)
+- **P1 (ovx index for the drawn genes):** `build_ovx_index.py` extended with an optional `--genes-file`
+  (reads a `draw_order`-shaped JSON) and `--genes-limit`; default behaviour (the registered panel/control
+  genes) is unchanged. Run against `frozen_100_estimable.json`'s 100 estimable genes before any GPU use.
+- **P2 (ceiling stop must not crash analysis):** `null_analysis.py` rewritten: a gene counts as run only if
+  all 86 markers (43 donors x 2 ops) exist; anything else is `stopped_not_analysed`, never passed to
+  `load_all` (which would otherwise raise `IncompleteRun` uncaught).
+- **P3 (leave-one-out must recompute p, not just sign):** every leave-one-out now reruns the full permutation
+  test (H1: rho<0) and requires both the sign and `p<=alpha`, using `N_PERM_SECONDARY` (s.5.7).
+- **P4 (opposite_direction unreachable):** now tested with its own **upper-tail** permutation p
+  (`P(rho_perm >= rho_obs)`), only evaluated when the observed rho is positive; the earlier undefined
+  "against the two-sided extreme" language is removed.
+- **P5 (status vocabulary):** fixed per R1 (s.5.6).
+- **P6 (PGID race):** `run_phase8_null.sh` now polls (bounded retries, 5s) until the child's own pgid equals
+  its pid before arming the ceiling kill; if it never matches, the child is killed directly and the driver
+  aborts rather than risk killing the wrong process group.
+- **P7 (inputs not hash-checked at launch):** the driver now reads the **committed**
+  `balanced_donor_luad/phase8_null/null_genes.json` path (not a `$DATA` working copy), verifies its sha256
+  and every other pinned input's sha256 (runner, `analyse.py`, `dtype_cast.py`, `model_cache.py`,
+  `inproc_map.py`, the token dictionary) before any GPU call, and refuses to start on any mismatch. Writes
+  `run_config.json` recording every hash checked.
+- **P8 (no-op claim was false):** implemented. `noop_spotcheck.py` runs two independent `run_isp.py`
+  subprocesses (fresh model load each time, never a reused tensor) on the same (gene, donor) for every 20th
+  completed gene in the run order, and requires exact (bitwise) agreement; a failure is `no_op_failed` and
+  halts the run for review.
+- **P9 (host/ceiling duplication):** this run is registered for **thinkstation1 only** (it holds the more
+  complete Phase 6 copy and is the source of the fitted cost model in s.5.3, for consistency).
+  `run_phase8_null.sh` writes a claim file and refuses to start if a different host has already claimed the
+  same output directory, preventing the accidental two-full-copies duplication noted in s.4.9's open item and
+  Amendment 4's correction history.
+
+### 5.6 Status vocabulary, corrected (Stanley's R1)
+Amendment 4 s.4.8 had the vocabulary inverted. Corrected:
+- `positive`: the registered primary criterion is met -- rho < 0, permutation p <= 0.05, stable in every
+  leave-one-out and in >= 95% of bootstrap draws.
+- `negative`: the registered criterion is **not** met (whatever the sign of rho), reported as "primary not
+  met: direction rho=[x], p=[y], n=[z]" -- **never "no effect"** (ISP-STD-1 A.6).
+- `opposite_direction`: rho > 0 with its own upper-tail permutation p <= 0.05 (s.5.5 P4). Never counted as a
+  pass (ISP-STD-1 B.6).
+- `control_draw_sensitive_open`: the primary criterion is met but the stability gate (leave-one-out or
+  bootstrap) fails.
+- `not_estimable`: fewer than 10 genes reach the primary statistic (practically not expected at n=100, kept
+  for completeness) or an individual gene fails the per-gene eligibility gate.
+- `no_op_failed`: as s.5.5 P8.
+- `stopped_not_analysed`: any gene in the frozen 984-row order not reached before the 16 GPU-h ceiling.
+
+### 5.7 Registered constants (Stanley's R5)
+- Primary test permutations: `N_PERM = 100,000` (min attainable p = 1/100,001).
+- Leave-one-out and bootstrap inner-test permutations: `N_PERM_SECONDARY = 2,000` (min attainable p =
+  1/2,001), used identically in both.
+- Bootstrap draws: `N_BOOT = 10,000` gene-level resamples.
+- Seed: `20260929` throughout (draw, primary permutation RNG, bootstrap RNG) -- a single `numpy.random.default_rng(20260929)`
+  instance is threaded through the whole analysis run, so the full result is reproducible from the seed alone.
+
+### 5.8 Positive-control analogue (Stanley's R3)
+ISP-STD-1 C.2 (positive controls) has no direct analogue for a background/null-distribution study: there is
+no gene expected a priori to show a strong delete/overexpress correlation the way a T-cell lineage marker is
+expected to respond to a T-cell-state perturbation. The closest analogue, registered instead: **a validity
+check that re-runs the identical raw-shift/permutation pipeline on the 120 already-computed matched controls**
+(existing Phase 6 GPU output, no new GPU use) and requires its rho to be negative, compatible in sign with
+RESULTS.md s.4's control-adjusted rho = -0.62 (not the same quantity -- s.4.4 -- so only the sign is compared,
+never the magnitude, per ISP-STD-1 B.9). If this validity check does not recover a negative rho, the new
+100-estimable-gene result is not trusted regardless of what it shows, and this is reported explicitly rather
+than silently proceeding.
+
+### 5.9 Helper hashes (Stanley's R6) and external validation (E.6)
+- `dtype_cast.py` sha256 `ac7acc383786a23c0dfa97f23a21b4a3057cb8b538125b64c81cd5112ae3ec89`
+- `model_cache.py` sha256 `3cbaaf8e333f39d26372703934578cd0d7f5348b70d86cc464d785259b31a0e8`
+- `inproc_map.py` sha256 `7d419a36ead0bbf6ecda469f27470c4b571e0592f714ed19b3ffe31c0998f517`
+- (all three independently recomputed by Phyllis on thinkstation1, not copied from Stanley's message text)
+- **External validation plan: N/A.** This is a design-property test (does this design's delete/overexpress
+  correlation generalise beyond the matched controls), not a discovery claim against an external ground truth;
+  there is no independent dataset or experiment that tests "the top k" because there is no top k -- the
+  output is a single correlation statistic over a background sample. Stated here per ISP-STD-1 E.6 rather than
+  left silent.
+
+### 5.10 Sign-off
+Stanley signs off (1) this Amendment (s.5.1-5.9, hashes named at resubmission) and (2) the refreshed run
+package (every file in s.5.5, hash-named) before any GPU use, per ISP-STD-1 A.5. Any change to a named hash
+after sign-off voids it.
