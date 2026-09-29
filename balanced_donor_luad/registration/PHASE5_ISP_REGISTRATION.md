@@ -1347,3 +1347,121 @@ the two never diverge. Verified with a synthetic fixture matching Stanley's exac
 position) `stopped_not_analysed`, all other due genes (20, 40, 60, 80) present and passing -- the result is
 `positive` (or whatever the statistics say), never `no_op_failed`. A separate regression check confirms the
 happy-path case (no ceiling stop, all due genes present and passing) is unaffected by the signature change.
+
+
+## Amendment 6 — confirmatory extension to N = 200 estimable genes, A5's N=100 primary unchanged (appended 2026-09-29T17:26Z)
+
+**This Amendment does not override Amendment 5.** Reason: the human ruled 2026-09-29 20:45 JST (11:45Z, card
+`geneformer-balanced-donor-analysis-20260924`), relayed by god: "let phyllis do extended work for more genes
+and gpu if needed" -- a request to extend the null study, not to replace it. god's GO to register this
+(`2026-09-29T17-25-00-204Z-f4a438`) confirms: Amendment 5's N=100 analysis remains the registered **primary**
+result; this Amendment registers a separate, pre-specified **confirmatory extension** to N=200 total estimable
+genes, committed and pushed **before A5's GPU run finished and before any A5 analysis output was read** --
+`null_analysis.py` has not been executed against A5's markers at the time of this commit.
+
+### 6.1 Design: same seed, longer prefix, not a new draw
+
+Continuing exactly Amendment 4/5's construction: the seed-20260929 draw (`random.Random(20260929).shuffle` on
+the 19,902-gene sampling frame) is extended from 1,000 to 3,000 entries via `select_null_genes.py` with
+`--n-draw 3000`, identical inputs (token dictionary, Panel A, Panel B, `design.json`). Verified: the first
+1,000 entries of the 3,000-entry draw are byte-identical to the committed `null_genes_1000.json`. Committed as
+`balanced_donor_luad/phase8_null/null_genes_3000.json`.
+
+`select_estimable_prefix.py` (same script, same eligibility gate as Amendment 5: >=10 of 43 donors with >=10
+of 100 token-positive cells, `n_pos = sum(tok[g] in s for s in token_sets[d])`, CPU only, no GPU) walked this
+order to `--target-estimable 200`: **the 200th estimable gene sits at position 1791** (1,591 ineligible genes
+skipped cumulatively -- 884 already recorded in Amendment 5's `frozen_100_estimable.json`, 707 newly walked
+for this extension). Committed as `balanced_donor_luad/phase8_null/frozen_200_estimable.json` (all 1,791
+rows, full per-donor `npos_by_donor`, same schema as Amendment 5's frozen file) and
+`balanced_donor_luad/phase8_null/null_genes_200_estimable.json` (the 200-gene draw-order list, `{"n": 200,
+"draw_order": [...]}`, same derivation pattern as `make_100_estimable_draw_order.py` -> extended to assert
+`len==200` and the last row is `position==1791, estimable==True`). The first 100 entries of
+`null_genes_200_estimable.json`'s `draw_order` are byte-identical to the committed
+`null_genes_100_estimable.json`'s `draw_order` -- the extension is a strict continuation, not a re-draw.
+
+### 6.2 GPU scope: only the 100 NEW genes are run; A5's markers are reused, not re-run
+
+The combined N=200 analysis consumes: (a) A5's already-computed Phase 8 markers for the 100 estimable genes at
+positions 1-984 (unchanged, read-only), and (b) new Phase 8 markers for the 100 estimable genes at positions
+985-1791, produced by a new, extension-only GPU run. **No GPU time is spent re-running positions 1-984.**
+
+This reuse assumes an identical environment between the A5 run and the A6 extension run (same commit-pinned
+scripts, same model weights, same token dictionary, same Python environment). Per god's instruction, this is
+**hash-checked at A6 launch, not merely asserted**: `run_phase8_null.sh`'s existing EXPECT hash-check (which
+A5 already ran) is re-verified byte-for-byte immediately before the extension's GPU run starts --
+`run_isp.py`, `analyse.py`, `dtype_cast.py`, `model_cache.py`, `inproc_map.py`,
+`token_dictionary_gc104M.pkl`, and `goals/donor_manifest.json` must match the exact hashes A5's own
+`run_config_thinkstation1.json` recorded. A mismatch on any of these **halts the extension before any GPU
+call** -- it is a pipeline-integrity failure, not an ISP-STD-1 A.6 status, exactly as Amendment 5 s.5.2's
+gate-identity halt is treated. The one component this check depends on that is outside script/data hashing --
+the Python environment itself (`~/workspace/geneformer-uv-starter/sclc_analysis/.venv`, currently pandas
+3.0.5) -- is held unchanged by Oscar (oscar-mtpf36q4) at Phyllis's request until this extension's post-run
+checks clear; Oscar has confirmed this hold.
+
+### 6.3 Budget: extension-only, fitted model, 1.5x margin (god's rule)
+
+Using the same fitted cost model A5 used (`cost_fit_thinkstation1.json`: delete `seconds = 0.06883 + 0.05369 *
+n_token_cells`, overexpress `seconds = 4.30867 + 0.00955 * n_token_cells`), computed on the real per-donor
+`n_token_cells` counts for positions 985-1791 (the 100 NEW estimable genes only):
+
+- Cumulative predicted cost for all 200 estimable genes (positions 1-1791): 13.5477 GPU-h raw.
+- A5 already covers positions 1-984: 6.7493 GPU-h raw (Amendment 5 s.5.3, unchanged).
+- **Extension-only predicted cost (positions 985-1791, the 100 NEW genes): 6.7984 GPU-h raw.**
+- **Registered ceiling, per god's rule (ceiling = prediction x 1.5): 6.7984 x 1.5 = 10.1976 GPU-h, rounded up
+  to a hard stop of 10.20 GPU-h = 36,720 seconds.** This is under god's 16 GPU-h line, so per god's own
+  instruction no escalation was needed before registering or launching.
+- The ceiling is counted in GPU arms via `run_isp.py`'s own recorded `"seconds"` field (never wall clock),
+  verified against the real process group (`ps -o pid,pgid,cmd`, never `pgrep -f`), identical to Amendment 5
+  s.5.3 / ISP-STD-1 E.5. If the ceiling is reached (a genuine calibration miss beyond the margin), remaining
+  genes in the frozen 1,791-row order are `stopped_not_analysed`, and `null_analysis.py` must handle the
+  combined N=200 set without crashing, exactly as Amendment 5 s.5.5 (P2) already requires for the N=100 case.
+- For the record, cheaper alternatives computed at proposal time and not chosen: N=150 total (extension 3.38 /
+  5.07 GPU-h raw/margin), N=175 total (5.11 / 7.66 GPU-h). N=200 was chosen for materially better power (s.6.4)
+  at a cost still well under the 16 GPU-h line.
+
+### 6.4 Statistical design: confirmatory, not a replacement -- alpha and power by simulation
+
+The extension uses the identical primary test as Amendment 5 (s.5, unchanged): one-sided Spearman correlation
+between each gene's raw (non-control-adjusted) donor-level delete-median and overexpress-median across the N
+estimable genes, H1: rho < 0, **alpha = 0.05 one-sided**, N_PERM = 100,000 (primary permutation test),
+N_PERM_SECONDARY = 2,000, N_BOOT = 10,000 -- same constants, same status vocabulary (s.5.6).
+
+**This is registered as a pre-specified confirmatory extension, not a replacement of the N=100 primary**: if
+the N=100 and N=200 analyses disagree in status, **both are reported**, and neither silently supersedes the
+other (ISP-STD-1 A.6 / B.9). The N=200 result is reported as "confirmatory (N=200)" alongside the "primary
+(N=100)" result, never merged into one number.
+
+**Power by simulation** (script: local Monte Carlo, not requiring GPU -- for each N, the empirical
+alpha=0.05 one-sided critical value on Spearman's rho is estimated from 40,000 null simulations of
+independent continuous data; power for a given true Spearman rho is then estimated from 20,000 simulations
+per effect size, generated via a Gaussian-copula construction (`r = 2*sin(rho_S * pi/6)` mapping a target
+Spearman rho to the Pearson r of the underlying bivariate normal), as the fraction of simulated datasets whose
+observed rho falls at or below the critical value):
+
+| N | crit. rho (alpha=.05, 1-sided) | power at true rho=-0.15 | rho=-0.20 | rho=-0.25 | rho=-0.30 |
+|---:|---:|---:|---:|---:|---:|
+| 100 (A5, primary) | -0.1665 | 0.43 | 0.64 | 0.81 | 0.92 |
+| 200 (A6, confirmatory) | -0.1165 | 0.69 | 0.88 | 0.97 | 1.00 |
+
+N=200 gives a materially better chance of detecting a modest systematic pipeline artifact (rho around -0.15 to
+-0.20) than N=100 alone, which is the reason this extension is worth its extra ~6.8 GPU-h.
+
+### 6.5 Everything else unchanged
+
+No new stratification, panel, or control set is introduced. The following apply identically, extended to the
+combined N=200 gene set once both marker sets exist: the detection-range comparison (s.5.4); the R3 validity
+check against the 318 existing matched control genes (reuses already-computed Phase 6 data, no new GPU); the
+no-op spot-check cadence (every 20th gene of the run-order genes that are not `stopped_not_analysed`, s.5.13);
+the gate-identity check (s.5.2); the ambient LOAO merge (R4); and the secondary-percentile hook (C2). The
+single-host claim lock (`claimed_by_host.txt`) continues to apply -- this extension also runs on
+thinkstation1 only, never overlapping with A5.
+
+### 6.6 Sign-off and sequencing
+
+Stanley gates (a) this registration (append-only diff, `git diff --numstat` 0 deletions, byte-prefix hash
+check against the pre-amendment file) and (b) the extension's run package (the launch invocation, the
+pre-launch hash-check covering the Amendment 5 file list plus `null_genes_200_estimable.json` and
+`frozen_200_estimable.json`) before any GPU time is spent on the extension. Launch proceeds strictly in this
+order, per god's instruction: (1) Amendment 5's GPU run completes; (2) Stanley clears Amendment 5's post-run
+checks (ISP-STD-1 E.4); (3) Stanley PASSes this Amendment 6 registration and its run package. No step is
+skipped and no GPU time for the extension is spent before all three are satisfied.
