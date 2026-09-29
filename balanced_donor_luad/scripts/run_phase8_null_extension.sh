@@ -21,6 +21,16 @@
 #            20,40,60,80,100 within these 100 new genes) -- distinct from A5's already-checked
 #            overall positions 20,40,60,80,100.
 #
+# Stanley's run-package re-gate (2026-09-29T17-41-03Z-a6-runpkg-gate) added:
+#   B2 goals/xfer_sha256.txt is itself pinned in EXPECT (a `sha256sum -c` pass proves nothing if the
+#      manifest file itself can silently change).
+#   B3 refuses unless A5 has actually finished: phase8_null/out/stop_reason_<host>.txt must exist AND
+#      no run_isp.py process may be running (checked via `ps`, never `pgrep -f`) -- this is the very
+#      first check, before anything else, so an unfinished A5 can never be bridged against and two GPU
+#      runs can never overlap.
+#   B4 noop_spotcheck.py (executed by this driver) and null_analysis_combined.py (the combined-analysis
+#      code this run package exists to feed) are both pinned in EXPECT too.
+#
 # Usage: run_phase8_null_extension.sh <host> <repo_worktree> <data_root> <geneformer_root> <venv_python> <ceiling_seconds>
 set -euo pipefail
 HOST="$1"; REPO="$2"; DATA="$3"; GF="$4"; PY="$5"; CEILING="${6:-36720}"
@@ -41,6 +51,22 @@ XFER_MANIFEST="$DATA/goals/xfer_sha256.txt"
 A5_DIR="$DATA/phase8_null"; A5_WORK="$A5_DIR/out"
 EXTDIR="$DATA/phase8_null_ext"; WORK="$EXTDIR/out"
 mkdir -p "$WORK"
+
+# --- B3: refuse unless A5 has actually finished -- stop_reason file exists AND no run_isp.py process
+#     is running (ps, never pgrep -f). This is the very first check: an unfinished A5 must never be
+#     bridged against, and two GPU runs on this host must never overlap. ---
+A5_STOP_REASON="$A5_WORK/stop_reason_$HOST.txt"
+if [ ! -f "$A5_STOP_REASON" ]; then
+  echo "REFUSING (B3): $A5_STOP_REASON does not exist -- A5 has not finished yet." >&2
+  exit 1
+fi
+A5_STILL_RUNNING=$(ps -eo pid,cmd | grep -c "[r]un_isp\.py" || true)
+if [ "$A5_STILL_RUNNING" != "0" ]; then
+  echo "REFUSING (B3): a run_isp.py process is still running on $HOST -- A5 (or something else) is" \
+       "not finished. Refusing to bridge or launch until it exits." >&2
+  exit 1
+fi
+echo "B3 verified: A5 finished (stop_reason=$(cat "$A5_STOP_REASON")), no run_isp.py process running"
 
 # --- gene list check: 200 total, first 100 identical to A5's committed list ---
 python3 -c "
@@ -74,6 +100,9 @@ declare -A EXPECT=(
   ["$A5_FROZEN"]="5bd018b039831d4d04815a5dbee2b3758b51aff031fe05affea2edb9cee08976"
   ["$EXT_NULL_GENES_200"]="9c3ad015e56c90277401e83f892eea2cf9127071ac24eaaa0b76789bf44c0f02"
   ["$EXT_FROZEN_200"]="da7bf511a2016b153132ad2530a6b8564b5ec2d50e6098c3f7263250161bd919"
+  ["$XFER_MANIFEST"]="91f22298e7525ca957e72b837f9e6d67a0c29487c62c30e94dca9c1058c0b46a"
+  ["$BD/scripts/noop_spotcheck.py"]="e9bbdfcc7e8797e437d1687e9c74c5ce49de8c57ecdfce9e04daefcffc13d5be"
+  ["$BD/scripts/null_analysis_combined.py"]="6d5c9c38d4dd0097b1c0fd9c4b64cf7a05a4bf64251500a71d508ca7c839a33d"
 )
 RUN_CONFIG="$EXTDIR/run_config_$HOST.json"
 python3 - "$RUN_CONFIG" "$HOST" "$CEILING" "${!EXPECT[@]}" <<'PYEOF' "${EXPECT[@]}"
@@ -93,7 +122,11 @@ json.dump({"host": host, "ceiling_seconds": float(ceiling), "hashes": recorded, 
            "note_rd": "the ceiling monitor below globs $WORK (phase8_null_ext/out) only -- A5's "
                       "phase8_null/out tree is never summed, by construction of the separate directory.",
            "note_re": "no-op due positions for this run are OVERALL order 120,140,160,180,200 "
-                      "(new-list index 20,40,60,80,100), distinct from A5's already-checked 20,40,60,80,100."},
+                      "(new-list index 20,40,60,80,100), distinct from A5's already-checked 20,40,60,80,100.",
+           "note_ceiling_scope": "Stanley's minor note: the bridge check (3 calls) and the no-op spot "
+                      "checks (~5 calls) run outside this ceiling_seconds figure, same disclosed pattern "
+                      "as A5's C3/note_c3 -- their GPU seconds are small relative to the ceiling and are "
+                      "not counted toward it."},
            open(out_path, "w"), indent=1)
 if mismatches:
     print("HASH MISMATCH, refusing to launch:", mismatches, file=sys.stderr)
