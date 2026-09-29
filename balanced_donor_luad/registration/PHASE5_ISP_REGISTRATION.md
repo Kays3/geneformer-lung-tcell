@@ -1254,3 +1254,78 @@ after sign-off voids it.
   have per-donor `n_token_cells` ranging over [1, 100] (max **exactly 100**, mean 20.8) -- entirely inside the
   fitting range on both ends. **No extrapolation beyond the fitted domain occurs**, in either the run host's
   own fit or the out-of-sample host.
+
+### 5.12 Second re-gate fixes (Stanley, 2026-09-29T11:45Z): B1-B4 blocking, C1-C3 conditions
+
+Stanley's second gate on Amendment 5 @ 3c4a5a4 verified every number and the design as registered, but
+found four wiring defects that would have made the driver run Amendment 4's original 200-gene draw (12
+estimable) instead of the 100 estimable genes this Amendment registers, among other issues. Fixed below,
+before any GPU output.
+
+**B1 (wrong gene list).** `frozen_100_estimable.json` has `rows`, not `draw_order`; every script that reads
+`draw_order` was still pointed at Amendment 4's `null_genes.json` (200-gene draw, 12 estimable). Fixed:
+`balanced_donor_luad/scripts/make_100_estimable_draw_order.py` (new, committed) derives
+`balanced_donor_luad/phase8_null/null_genes_100_estimable.json` from `frozen_100_estimable.json`'s estimable
+rows, asserting `len == 100` and that the frozen prefix's last row is both `estimable` and at `position ==
+984` before writing -- a stale or wrong frozen file is refused, not silently accepted.
+`run_phase8_null.sh`'s `COMMITTED_NULL_GENES` now points at this new file (hash pinned in `EXPECT`),
+and asserts `n == 100` at the top of the script before any other step. The driver's optional gene-count
+override is removed entirely (Stanley: "NGENES either absent or required to equal 100" -- simplest correct
+fix is no override at all, since the committed list is already exactly 100).
+`build_ovx_index.py --genes-file`, `ambient_loao_null.py --genes-file` and `null_analysis.py --null-genes`
+are all invoked against this same new file in the run package's launch instructions.
+
+**B2 (gate-identity check was described, not implemented).** `null_analysis.py` now takes a required
+`--frozen` argument (`frozen_100_estimable.json`) and, for every gene it analyses, compares each marker's
+recorded `n_token_cells` (both operations, every donor) against the frozen pre-GPU `npos_by_donor` for that
+gene. **Any mismatch halts the entire analysis**: no primary status is emitted, `main()` exits non-zero, and a
+diagnostic file records every mismatch. This is a pipeline-integrity failure (something upstream would have
+had to change between the freeze and the run), not one of the ISP-STD-1 A.6 outcome statuses, and is reported
+directly rather than folded into any registered status word. Verified with a synthetic fixture: a deliberately
+corrupted frozen count is caught and halts with exit code 2, before touching any statistics.
+
+**B3 (no-op result never consumed; wrong interpreter).** `null_analysis.py` now takes a required
+`--noop-results` argument (`noop_spotchecks_<host>/results.jsonl`) and computes which genes were *due* a spot
+check (every 20th gene in run order, s.5.5). Any due gene that is missing from the results, or present with
+`pass: false`, forces the primary status to `no_op_failed`, overriding the statistical result. `s.5.5`'s
+"halts the run" language is corrected here: the no-op check in fact runs *after* the main GPU run stops and
+gates the *analysis*, not the run itself -- stated plainly rather than left inconsistent with the code.
+Separately, `run_phase8_null.sh` invoked `noop_spotcheck.py` with the bare `python3` instead of `"$PY"` (the
+pinned venv interpreter); on a host whose system Python lacks `numpy`/`datasets` this would produce a false
+`no_op_failed`. Fixed to use `"$PY"`. Verified with a synthetic fixture: all-pass stays `positive`; one failed
+or one missing due check both correctly force `no_op_failed`.
+
+**B4 (launch-time hash check incomplete).** `run_phase8_null.sh`'s `EXPECT` now also pins
+`null_genes_100_estimable.json` (B1) and `frozen_100_estimable.json` (B2), plus `goals/donor_manifest.json`
+(sha256 `3cdd83a648c67cbd71d522ee59f1173e33a717b1f21cd93d3453ee32af794623`, this host, unchanged since Phase 6).
+**Not added, with reason:** the ovx index for the 100 genes cannot be pinned before launch -- it is built by
+`build_ovx_index.py` from Phase 8's own GPU output (marker files and pickle lengths that do not exist until
+after this run completes), so it is inherently a post-GPU artifact. Its integrity gate remains
+`build_ovx_index.py`'s own count checks (0 failures required, unchanged since Amendment 3h.5), and its hash is
+recorded in `run_config.json` once built, before `null_analysis.py` reads it -- named here so the omission from
+the pre-launch `EXPECT` is a stated design choice, not an oversight. Fold-model and goal-centroid identity
+remain pinned by Amendments 1-3 (`phase4_results/`, `goals/`), unchanged by this Amendment.
+
+**C1 (wording: "120 controls" is wrong; two different quantities).** Corrected throughout `null_analysis.py`
+and this registration: the validity check (s.5.8) runs on the **318 unique control genes** in
+`design.json` (union across 19 strata) -- RESULTS.md s.4's rho = -0.62 is a *different* quantity, computed
+over 360 control-by-stratum entries with stratum-relative adjustment. Both numbers are real; they are not
+interchangeable, and only the sign of the validity check's rho is compared against -0.62's sign (never the
+magnitude -- s.4.4/R3). If the validity check does not recover a negative rho, the top-level result now
+carries `"validity_check_failed": true` and an explicit `"WARNING"` string: the primary result is still
+computed and reported, but marked not trusted until the discrepancy is resolved.
+
+**C2 (secondary-percentile join was an unwritten hook).** Committed:
+`balanced_donor_luad/scripts/secondary_percentiles.py`. For every closed-analysis panel gene with status
+`T_CELL_SIGNAL_TOWARD` or `T_CELL_SIGNAL_AWAY` (`outcome_rows.json`), it recomputes that gene's **raw**
+(non-control-adjusted) donor-level median shift -- the same raw quantity this null study uses, not the
+control-adjusted value RESULTS.md reports, so the comparison is raw-vs-raw -- and reports its percentile rank
+within this null's raw delete/overexpress distributions. Descriptive only; gates no status (ISP-STD-1 B.9,
+s.4.3). Runs after `null_analysis.py` produces its distribution; no new GPU.
+
+**C3 (post-launch confirmation).** Noted as an operational commitment, not a code change: within 2-3 minutes
+of launch, before walking away, Phyllis will confirm and report to Stanley (1) `pgid_<host>.txt` shows
+`pgid == pid`, (2) `ceiling_monitor_<host>.log` shows rising `spent_s` across successive lines, (3)
+`run_config_<host>.json` has `mismatches: []`. `run_config.json` now also carries an explicit note (added to
+the hash-check script's output) that the no-op spot checks' GPU seconds (~10 calls) are not counted
+toward the 16 GPU-h ceiling, since they run in a separate output directory after the main run stops.

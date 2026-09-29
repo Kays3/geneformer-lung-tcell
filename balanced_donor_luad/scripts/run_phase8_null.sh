@@ -1,19 +1,27 @@
 #!/usr/bin/env bash
 # Amendment 5 driver: runs balanced_donor_luad/scripts/run_isp.py, UNCHANGED, against the frozen
-# null_genes.json draw order, under a hard GPU-arm budget ceiling. Fixes applied after Stanley's
-# 2026-09-29 gate: P6 (PGID race), P7 (hash-verified inputs + run_config.json, reads the committed
-# null_genes.json), P8 (no-op spot check every 20th gene), P9 (single-host claim lock).
+# null_genes_100_estimable.json draw order (the 100 ESTIMABLE genes, Amendment 5 B1 -- NOT
+# Amendment 4's original 200-gene null_genes.json, which has only 12 estimable), under a hard GPU-arm
+# budget ceiling. Fixes applied after Stanley's 2026-09-29 gates: B1 (this file now points at the
+# right gene list), P6 (PGID race), P7/B4 (hash-verified inputs incl. the new gene list, the frozen
+# freeze, and donor_manifest.json + run_config.json), P8/B3 (no-op spot check every 20th gene, run
+# with the pinned venv python, not bare python3), P9 (single-host claim lock).
 #
 # The ceiling is enforced by reading the SAME "seconds" field run_isp.py writes into every
 # *.complete.json marker (ISP-STD-1 E.3: count GPU arms, not wall clock).
 #
-# Usage: run_phase8_null.sh <host> <repo_worktree> <data_root> <geneformer_root> <venv_python> <ceiling_seconds> <n_genes>
+# Usage: run_phase8_null.sh <host> <repo_worktree> <data_root> <geneformer_root> <venv_python> <ceiling_seconds>
 set -euo pipefail
-HOST="$1"; REPO="$2"; DATA="$3"; GF="$4"; PY="$5"; CEILING="${6:-57600}"; NGENES="${7:-}"
+HOST="$1"; REPO="$2"; DATA="$3"; GF="$4"; PY="$5"; CEILING="${6:-57600}"
 BD="$REPO/balanced_donor_luad"
-COMMITTED_NULL_GENES="$BD/phase8_null/null_genes.json"   # P7: the git-tracked copy, not a $DATA working copy
+COMMITTED_NULL_GENES="$BD/phase8_null/null_genes_100_estimable.json"   # B1: the 100 ESTIMABLE genes, git-tracked
+FROZEN="$BD/phase8_null/frozen_100_estimable.json"                     # B2: gate-identity source, git-tracked
+DONOR_MANIFEST="$DATA/goals/donor_manifest.json"
 NULLDIR="$DATA/phase8_null"; WORK="$NULLDIR/out"
 mkdir -p "$WORK"
+
+N_CHECK=$(python3 -c "import json; d=json.load(open('$COMMITTED_NULL_GENES')); assert d['n']==100 and len(d['draw_order'])==100, d['n']; print(d['n'])")
+echo "gene list verified: N=$N_CHECK (must be 100)"
 
 # --- P9: single-host claim, refuse if another host already claimed this run ---
 CLAIM="$NULLDIR/claimed_by_host.txt"
@@ -33,8 +41,17 @@ declare -A EXPECT=(
   ["$BD/scripts/model_cache.py"]="3cbaaf8e333f39d26372703934578cd0d7f5348b70d86cc464d785259b31a0e8"
   ["$BD/scripts/inproc_map.py"]="7d419a36ead0bbf6ecda469f27470c4b571e0592f714ed19b3ffe31c0998f517"
   ["$GF/geneformer/token_dictionary_gc104M.pkl"]="67c445f4385127adfc48dcc072320cd65d6822829bf27dd38070e6e787bc597f"
-  ["$COMMITTED_NULL_GENES"]="bdd46e8b550dd41d71cbf7872b055d01723bf91d8b9aea3eb1c463a5bac855e0"
+  ["$COMMITTED_NULL_GENES"]="246b17bf279ff1a2028bffc98681416dd3162b0497b61191c57946a7c5902642"
+  ["$FROZEN"]="5bd018b039831d4d04815a5dbee2b3758b51aff031fe05affea2edb9cee08976"
+  ["$DONOR_MANIFEST"]="3cdd83a648c67cbd71d522ee59f1173e33a717b1f21cd93d3453ee32af794623"
 )
+# B4, noted rather than added here: the ovx index for these 100 genes cannot be pinned pre-launch --
+# it is built from Phase 8's own GPU output (build_ovx_index.py reads *.complete.json markers and
+# pickle lengths that do not exist until after this run), so it is inherently a post-GPU artifact.
+# Its integrity gate is build_ovx_index.py's own count checks (0 failures required, unchanged from
+# Amendment 3h), and its hash is recorded in run_config.json AFTER it is built, before null_analysis.py
+# reads it -- not in this pre-launch EXPECT. Fold-model and goal-centroid identity are pinned in
+# Amendments 1-3 (phase4_results/, goals/) and unchanged by this Amendment.
 RUN_CONFIG="$NULLDIR/run_config_$HOST.json"
 python3 - "$RUN_CONFIG" "$HOST" "$CEILING" "${!EXPECT[@]}" <<'PYEOF' "${EXPECT[@]}"
 import hashlib, json, sys
@@ -49,7 +66,11 @@ for path, exp in zip(paths, expected):
     recorded[path] = {"expected": exp, "actual": h, "match": h == exp}
     if h != exp:
         mismatches.append(path)
-json.dump({"host": host, "ceiling_seconds": float(ceiling), "hashes": recorded, "mismatches": mismatches},
+json.dump({"host": host, "ceiling_seconds": float(ceiling), "hashes": recorded, "mismatches": mismatches,
+           "note_c3": "the ~10 no-op spot-check calls (P8) run in a separate output directory "
+                      "(noop_spotchecks_<host>/) AFTER the main run stops, and their GPU seconds are NOT "
+                      "counted toward ceiling_seconds above -- disclosed per Stanley's C3, not fixed, since "
+                      "the no-op overhead is small (~10 calls) relative to the ceiling."},
            open(out_path, "w"), indent=1)
 if mismatches:
     print("HASH MISMATCH, refusing to launch:", mismatches, file=sys.stderr)
@@ -57,12 +78,7 @@ if mismatches:
 print("all pinned inputs verified:", list(recorded.keys()))
 PYEOF
 
-GENES_ALL=$(python3 -c "import json; print(','.join(json.load(open('$COMMITTED_NULL_GENES'))['draw_order']))")
-if [ -n "$NGENES" ]; then
-  GENES=$(python3 -c "print(','.join('$GENES_ALL'.split(',')[:$NGENES]))")
-else
-  GENES="$GENES_ALL"
-fi
+GENES=$(python3 -c "import json; print(','.join(json.load(open('$COMMITTED_NULL_GENES'))['draw_order']))")
 
 nvidia-smi --query-gpu=timestamp,name,driver_version,utilization.gpu,memory.used,power.draw \
   --format=csv -l 60 >> "$WORK/nvidia_smi_samples_$HOST.csv" 2>&1 &
@@ -154,7 +170,7 @@ for g in "${NOOP_GENES[@]}"; do
   MARK_O="$WORK/overexpress/$g/${FIRST_DONOR//\//_}.complete.json"
   if [ -f "$MARK_D" ] && [ -f "$MARK_O" ]; then
     RESULT_FILE="$NOOP_DIR/${g}_result.json"
-    PYTHONPATH="$GF" python3 "$BD/scripts/noop_spotcheck.py" --gene "$g" --donor "$FIRST_DONOR" --host "$HOST" \
+    PYTHONPATH="$GF" "$PY" "$BD/scripts/noop_spotcheck.py" --gene "$g" --donor "$FIRST_DONOR" --host "$HOST" \
       --run-isp-args "$BASE_RUN_ISP_ARGS" --work "$NOOP_DIR/${g}_work" --out "$RESULT_FILE" \
       >> "$NOOP_DIR/run.log" 2>&1 && cat "$RESULT_FILE" >> "$NOOP_RESULTS" || echo "{\"gene\":\"$g\",\"pass\":false,\"error\":\"noop_spotcheck.py failed, see run.log\"}" >> "$NOOP_RESULTS"
   fi
