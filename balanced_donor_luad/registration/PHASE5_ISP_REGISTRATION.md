@@ -814,3 +814,214 @@ This is **reported only. No registered or headline status ever changes on it.** 
   - +2e-3 in one cell: FAIL;
   - reversed order: FAIL, rho -0.16 to 0.02.
 - This control was run late, not before the gate.
+
+## Amendment 4 — genome-wide null distribution of delete/overexpress concordance (appended 2026-09-29T10:18:31Z)
+
+**Trigger.** The human ruled 2026-09-29 18:55 JST (09:55Z, card `geneformer-balanced-donor-analysis-20260924`):
+"register and run the genome-wide control distribution." Source finding: RESULTS.md s.4, and
+`hive/standards/isp-outcome-criteria.md` (**ISP-STD-1 v1.1**), which this Amendment is written to satisfy in
+full. Every rule cited below is quoted or paraphrased from that file as it read at this Amendment's commit;
+its own sha256 is recorded in s.4.9 below. No number in this Amendment is cited without its source file,
+commit and quantity (ISP-STD-1 scope clause).
+
+### 4.1 What this is, and what it is not
+
+- RESULTS.md s.4 reported that the existing 120 matched controls show delete/overexpress shift **anti-correlated**
+  (Spearman rho = -0.62, 360 control entries), and that a different cohort's whole-genome screen (PR #16,
+  104M fp32, class-centroid goal, cell-weighted, `allgene_delete_overexpress_shift.csv`) shows the same sign
+  over 10,779+ genes (rho -0.08 to -0.30) but **cannot serve as this design's null** (different model size,
+  precision, goal definition, weighting).
+- This Amendment registers a **proper null, in this exact design**: same 316M bf16 fold models, same
+  per-donor own-normal-tissue goal centroids, same token-positive-cell rule for both operations
+  (Amendment 3h Option A), same donor-level statistic — applied to a large, **unbiased, randomly drawn**
+  sample of genes that were never chosen for detection-matching or panel relevance.
+- **Primary question:** is the negative delete/overexpress correlation observed on the 120 matched controls a
+  generic property of this design, or an artifact of how those 120 genes were chosen (detection- and
+  rank-matched to the panel)?
+- **This is not** a re-test of Panel A or Panel B. No panel status changes. No registered threshold, panel,
+  test or outcome row from Amendments 1-3h is touched (0 deletions, checked below).
+
+### 4.2 Sampling frame and draw (ISP-STD-1 A.1: registered before any output; genes by ensembl_id only)
+
+- **Universe:** every ensembl_id key in the pinned V2 token dictionary
+  (`token_dictionary_gc104M.pkl`, the same file Phase 6 used — see s.4.9 for its sha256), minus the four
+  special tokens (`<pad> <mask> <cls> <eos>`) = **20,271 genes**.
+- **Excluded** (so the null cannot be inflated or deflated by genes this analysis already has a stake in):
+  Panel A (15), Panel B listed (39, of which 36 are perturbable and 3 are absent from the dictionary — excluded
+  harmlessly), and every gene ever used as a matched control across the 19 strata in
+  `phase7_results/design.json` (318 unique control ids) plus that file's `members` (36, the Panel B genes
+  already counted). **Union excluded: 372. Sampling frame: 19,902 genes.**
+- **Draw:** simple random sample without replacement, `random.Random(seed=20260929).shuffle`, Python's
+  Mersenne Twister, applied to the frame sorted lexicographically by ensembl_id (a deterministic input order,
+  so the draw is reproducible from the seed alone). **200 genes drawn; the draw order is frozen before any
+  GPU output** in `balanced_donor_luad/phase8_null/null_genes.json` (committed in the same push as this
+  Amendment). The order is also the **run order** — genes are perturbed in that order, so a budget stop always
+  produces a well-defined prefix of "run" and a well-defined suffix of `stopped_not_analysed`, never a
+  scattered subset chosen after seeing results.
+- **Script:** `balanced_donor_luad/scripts/select_null_genes.py`, committed alongside. It is deterministic and
+  re-runnable: running it again with the same seed against the same pinned dictionary reproduces the identical
+  200-gene list, which is the check.
+
+### 4.3 Primary test (ISP-STD-1 A.1, A.2)
+
+- **Unit:** each drawn gene gets one donor-level statistic per operation: the **median across donors of the raw
+  per-donor shift** (no stratum control-adjustment — see s.4.4 for why), computed only over donors where the
+  gene is estimable (>= 10 token-positive cells among that donor's 100 analysis cells, the existing
+  `control_min_cells` rule). A gene needs >= 10 estimable donors to enter the primary statistic (the existing
+  `d_min` rule for controls); genes below that are `not_estimable` and excluded from n, with the count reported.
+- **Statistic:** Spearman's rho between (median delete shift) and (median overexpress shift), across all
+  estimable drawn genes that completed both operations for all their estimable donors.
+- **Sidedness and direction (own clause):** **one-sided**. **H1: rho < 0** (predicted direction, from the two
+  independent prior observations in s.4.1: the 120-control cloud and the PR #16 corroboration, both negative).
+  **H0: rho >= 0.**
+- **Alpha:** 0.05.
+- **p-value method:** a two-variable permutation test, not the asymptotic Spearman p. 100,000 permutations of
+  the overexpress-side vector, relative to the fixed delete-side vector; `p = (1 + #{rho_perm <= rho_obs}) /
+  100,001` (the standard conservative Monte Carlo estimator, never 0). **Minimum attainable p = 1/100,001 =
+  9.9997e-6**, independent of n (for any n >= 4, a rank correlation is defined), so **attainability is
+  satisfied for any realized n >= 4** (ISP-STD-1 A.2). No "exact" library routine is used, so the ties-in-exact
+  -test failure mode (scipy's exact Mann-Whitney ignoring ties) does not apply here; ties in the shift values
+  (continuous floats) are not expected, and if any occur, `scipy.stats.spearmanr`'s average-rank tie handling
+  computes the observed statistic identically for the permutation comparison.
+- **Family:** a single primary test. No multiple-testing correction is needed (ISP-STD-1 A.1's family
+  requirement is satisfied by naming the family as size 1).
+- **Secondary, descriptive only, not gating any status:** for every panel gene with a TOWARD or AWAY call in
+  RESULTS.md, its percentile within this null's raw-shift distribution (both operations), stated as
+  contextualising, not as a second test of that gene (ISP-STD-1 B.9's "claims are limited to what the test
+  compares").
+
+### 4.4 Why raw shift, not control-adjusted (a registered design choice, not an oversight)
+
+- The existing control-adjustment (`export_figure_data.py`) subtracts, per donor, the median of the *other*
+  controls in the *same* 0.5-log2-detection stratum. That adjustment exists to let a **panel gene** be compared
+  fairly against genes at its own detection level.
+- The 200 drawn genes are **not** assigned to any stratum — assigning them to one after the fact would require
+  a matching rule invented post hoc, which ISP-STD-1 B.1's registered-seed control rule is written to prevent.
+- Using the **raw** shift instead is the more conservative and more generic quantity: it does not presuppose
+  that detection-matching is even necessary for the correlation to hold. If raw shift still replicates the
+  anti-correlation, that is a stronger, not weaker, claim about genericity.
+
+### 4.5 Power by simulation (ISP-STD-1 C.3)
+
+Simulated (bivariate normal, rank-correlation preserved under monotone transform, so Gaussian is a
+conservative proxy for the permutation test's power): 200 simulated draws per cell, 500 permutations each,
+seed 20260929, one-sided alpha 0.05. Cross-checked against the closed-form Fisher-z approximation
+(`z = atanh(rho)`, SE = 1/sqrt(n-3)); the two agree within Monte Carlo noise.
+
+| realized n (estimable, both ops complete) | power if true rho = -0.30 (PR #16 cohort's weaker end) | power if true rho = -0.60 (this analysis's own 120 controls) |
+|---:|---:|---:|
+| 20  | 0.34 (analytic 0.36) | 0.82 (analytic 0.89) |
+| 30  | 0.39 (analytic 0.49) | 0.95 (analytic 0.98) |
+| 50  | 0.61 (analytic 0.68) | 0.99 (analytic 1.00) |
+| 70  | 0.73 (analytic 0.81) | 1.00 |
+| 100 | 0.91 (analytic 0.92) | 1.00 |
+| 150 | 0.95 (analytic 0.98) | 1.00 |
+| 200 | 1.00 (analytic 1.00) | 1.00 |
+
+**Read honestly:** if the budget stop (s.4.7) binds early and realized n lands near 20-30, this study is
+well-powered only for an effect as strong as our own 120 controls (rho ~ -0.6), not for the weaker PR #16
+cohort's low end. That is disclosed now, not after the result is seen. The result will report the table row
+nearest the realized n.
+
+### 4.6 Eligibility, controls rule, stability gate (ISP-STD-1 B, C.1)
+
+- **Eligibility (per gene):** >= 10 donors each with >= 10 token-positive analysis cells (same `control_min_cells`
+  and `d_min` as the closed analysis). Below that: `not_estimable`, reported with the reason, excluded from n.
+- **Matched-controls rule (B.1) does not apply as written:** there is no panel gene being matched here — the
+  200 drawn genes are themselves the units under test, not controls for something else. Stated plainly rather
+  than silently skipped.
+- **No-op (B.3):** reused from the closed analysis (two independent forward passes, identical input, shift = 0
+  exact, deterministic bf16) — not re-run per gene here, since it is a property of the runner and fold models,
+  already demonstrated 5 times (one per fold) and unchanged by this Amendment. If any gene in this draw
+  produces a non-zero no-op check by chance during the run (the driver spot-checks one call in twenty), that
+  gene's status is `no_op_failed` and the run stops for review.
+- **Ambient/circular flag (B.4):** every drawn gene is scored against the existing LOAO ambient classifier and
+  reported per gene (flag, not exclusion) — an unbiased draw should include ambient-flagged genes, since
+  excluding them would be its own selection bias.
+- **Same cell set both arms (B.2):** reused unchanged from Amendment 3h Option A.
+- **Stability gate (B.8):** leave-one-gene-out recomputation of the primary rho (each of the up-to-200 genes
+  held out once) and 10,000 bootstrap draws over genes; the result (direction and p <= alpha) must hold in
+  every leave-one-out and in >= 95% of bootstrap draws, else `control_draw_sensitive_open`.
+- **Donors, not cells (B.5):** already the unit by construction (s.4.3).
+
+### 4.7 Budget: calibrated estimate and hard ceiling (ISP-STD-1 E.3, E.5; god's instruction)
+
+**Calibration source (fixed + per-cell), from this exact runner and design, not inferred:**
+
+| source | op | measured rate |
+|---|---|---|
+| Phase 6 driver (181 genes x 43 donors, cached model, in-driver) | delete | 14.247 GPU-h / 7,783 calls = **6.59 s/call** |
+| Phase 6 driver (same) | overexpress | 15.017 GPU-h / 7,783 calls = **6.95 s/call** |
+| Cold single-call calibration (`calibration_rates.json`, no caching, one gene x 300-cell pool) | delete | 20.4 s |
+| Cold single-call calibration (same) | overexpress | 18.8 s |
+
+The Phase 6 rate is treated as the **planning estimate**, and it is almost certainly an **overestimate** for
+this draw: the 181 genes it was measured on are the curated Panel A/B genes plus detection-matched controls,
+selected to be reasonably expressed in T cells. The 200 genes drawn here come from an **unrestricted** 19,902-
+gene frame, most of which are not expressed in T cells at all (near-zero token-positive cells, near-zero
+per-call cost). No measurement of the unrestricted frame's real rate exists, which is exactly why the budget
+below is a **hard, monitored ceiling**, not a promise that all 200 genes will run.
+
+- **Planning estimate (upper bound, all 200 genes at the Phase 6 rate):** 200 genes x 86 calls/gene
+  (43 donors x 2 ops) x ~6.8 s/call (mean of delete/overexpress) = 98,320 s = **~27.3 GPU-h** if every gene
+  cost as much as the curated set. This is not expected, and is not the budget.
+- **Registered ceiling: 10 GPU-h.** Per the human's instruction, this run does not exceed it without asking
+  first. If the realized rate implies fewer than 200 genes fit, the run stops in draw order and the remainder
+  is `stopped_not_analysed` (ISP-STD-1 A.6), not silently dropped or re-ordered.
+- **Monitor (E.3):** the same GPU-hour meter and `nvidia-smi` sampling used in Phase 6, verified against the
+  real process group via `ps -o pid,pgid,cmd` (never `pgrep -f` — the repeated self-match trap from Phase 6).
+  It counts **GPU arms only**: a post-GPU CPU phase (the permutation test, bootstrap, reporting) does not
+  extend the meter or trigger a stall alarm.
+- **If the ceiling binds:** report the realized n, its row in the power table (s.4.5), and the exact GPU-h
+  spent. The human is told before launch only if the estimate itself is revised upward past 10 GPU-h before
+  any GPU runs; the ceiling stopping the run mid-flight is the registered outcome, not a new ask.
+
+### 4.8 Status vocabulary for this study (ISP-STD-1 A.6, mapped)
+
+- `negative`: rho < 0, permutation p <= 0.05 (the predicted direction — "negative" names the correlation sign,
+  not an outcome polarity judgement).
+- `opposite_direction`: rho > 0 with p <= 0.05 against the two-sided extreme (reported, never counted as a
+  pass, per B.6).
+- `not_estimable`: realized n < 4 (correlation undefined) or, practically, too few genes complete both ops
+  for the stability gate to be meaningful (stated threshold: n < 10).
+- `control_draw_sensitive_open`: primary passes but fails the stability gate.
+- `no_op_failed`: as s.4.6.
+- `stopped_not_analysed`: any gene in the 200-gene draw order not reached before the 10 GPU-h ceiling.
+- Never "no effect": a non-significant or positive-sign result is reported as "primary not met, direction
+  \[x\], p = \[y\], n = \[z\]", per ISP-STD-1 A.6's ban.
+
+### 4.9 Reproducibility (ISP-STD-1 E)
+
+- **Runner:** `balanced_donor_luad/scripts/run_isp.py`, unchanged since Amendment 3h.
+  sha256 `f440ec9c98bd56ee2ea6425abad7f1705e43779762990265e27cde50acbf2910` (ts2 worktree,
+  `analysis/balanced-donor-luad` @ 65e6fd0). **Re-pin check after PR #36** (`159ae22b`, "Refuse a model
+  pointer outside FINETUNE_ROOT, and check it before loading", merged 2026-09-28 17:25 JST): PR #36's diff
+  touches only `sclc_validation/perturbation_workflow/targeted_panel/run_targeted_panel.py` and
+  `sclc_validation/immune_axis_test/run_t4_overexpression.py` (verified via `gh pr view 36 --json files`,
+  2 files, 62 insertions). Neither is imported by `run_isp.py` (its only imports are argparse, json, os,
+  pickle, sys, time, pandas, and the `datasets`/`geneformer` libraries — checked directly). **The runner is
+  unaffected by PR #36; this hash is unchanged from Amendment 3h's pin, re-verified today for the record.**
+- **`analyse.py`** sha256 `ab7c552f38b29432445d0a85bef21553dc693fb5ebe3c75c1f26773c64628b36` (same commit),
+  reused unchanged for the eligibility/stability-gate machinery; the new permutation-test primary is separate
+  code, `balanced_donor_luad/scripts/null_analysis.py` (committed alongside, not yet written at commit time of
+  this Amendment text — its own sha256 is recorded in the run package sent to Stanley, not here, since ISP-STD-1
+  A.5 requires hashes to be named at sign-off, and code not yet written cannot be pinned in the registration
+  itself).
+- **Token dictionary:** `token_dictionary_gc104M.pkl`, sha256
+  `67c445f4385127adfc48dcc072320cd65d6822829bf27dd38070e6e787bc597f`, 20,275 entries (20,271 genes + 4 special
+  tokens), read on thinkstation1 at `~/workspace/geneformer-uv-starter/Geneformer/geneformer/`. Same file
+  Phase 6 used (`run_phase6.sh` s.0 launch command, unchanged path).
+- **Model weights, tokenised dataset, fold models, goal centroids:** unchanged from the closed analysis;
+  their sha256 pins from Amendments 1-3 apply unmodified.
+- **ISP-STD-1 itself:** `hive/standards/isp-outcome-criteria.md`, v1.1, as read at 2026-09-29T09:57Z (agent
+  clock, verified against `date -u`).
+- **This Amendment's append-only check:** `PHASE5_ISP_REGISTRATION.md` before this Amendment: 816 lines,
+  sha256 `567679c4545563e4ace3ce9665f18266c6462fb6b8c9739b62e28db57fee59d6`. After: verified by
+  `git diff --numstat` on the commit (0 deletions) and by the prefix of the new file matching this sha256
+  over its first 816 lines, both checked before push.
+
+### 4.10 Gatekeeper (ISP-STD-1 A.5)
+
+- Stanley signs off (1) this registration (s.4.1-4.9, hash above) and (2) the run package (`select_null_genes.py`,
+  `null_genes.json`, the driver script and `null_analysis.py`, each hash-named) **before any GPU use**.
+- Any change to a named hash after sign-off voids it; a fresh sign-off is required.
