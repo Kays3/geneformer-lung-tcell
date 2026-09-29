@@ -1465,3 +1465,21 @@ pre-launch hash-check covering the Amendment 5 file list plus `null_genes_200_es
 order, per god's instruction: (1) Amendment 5's GPU run completes; (2) Stanley clears Amendment 5's post-run
 checks (ISP-STD-1 E.4); (3) Stanley PASSes this Amendment 6 registration and its run package. No step is
 skipped and no GPU time for the extension is spent before all three are satisfied.
+
+
+### 6.7 Decision rule for reading the N=100 / N=200 pair (Stanley's R-A, required before any A5 output is read)
+
+Section 6.4's "both are reported, neither supersedes" leaves the headline open, which is a family/multiplicity
+gap under ISP-STD-1 A.1. This is fixed before any output exists, per Stanley's gate on commit `1b2f2fe`:
+
+1. The study's registered status is the **Amendment 5 N=100 primary**, alpha 0.05.
+2. The N=200 set is a **nested extension** that contains the primary 100 genes. It is **not** an independent
+   replication, and no report from this study may call it one.
+3. If the primary is positive **and** N=200 is positive: report **"positive, confirmed at N=200."**
+4. If the primary is positive **and** N=200 is not positive: report **"positive (N=100), not confirmed at
+   N=200."**
+5. If the primary is not positive: the headline stays **"negative (primary)."** A positive N=200 result is
+   reported as **"N=200 extension positive, not a registered primary result"** and never upgrades the
+   headline.
+6. A `stopped_not_analysed` or `no_op_failed` outcome on either run is reported as that status for that run,
+   and does not override or get overridden by the other run's status.
