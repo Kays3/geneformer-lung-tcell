@@ -1234,3 +1234,23 @@ than silently proceeding.
 Stanley signs off (1) this Amendment (s.5.1-5.9, hashes named at resubmission) and (2) the refreshed run
 package (every file in s.5.5, hash-named) before any GPU use, per ISP-STD-1 A.5. Any change to a named hash
 after sign-off voids it.
+
+### 5.11 Out-of-sample and extrapolation checks (Stanley, 2026-09-29T11:30Z, before re-gate)
+
+- **Out-of-sample:** the s.5.3 fit was estimated on thinkstation1's 7,783 calls per op. Scored, unrefit, against
+  thinkstation2's independent 7,396 calls per op (real Phase 6 data, not used in fitting):
+
+  | op | actual GPU-h | predicted GPU-h (thinkstation1's fit) | error |
+  |---|---:|---:|---:|
+  | delete | 4.011 | 3.670 | -8.5% |
+  | overexpress | 10.528 | 9.480 | -10.0% |
+
+  Both under Stanley's 50% refit threshold; the fit generalises across hosts (it slightly underpredicts on
+  thinkstation2, by <10%, which is already inside the s.5.3 margin's slack). **This run uses thinkstation1
+  (s.5.5 P9) -- the same host the fit was estimated on** -- so no refit is triggered either by rule or by this
+  check.
+- **Extrapolation:** the fitting data's per-call `n_token_cells` ranges over [0, 100] (thinkstation1: max
+  100.0, by construction of the 100-cell-per-donor analysis cap). The 100 estimable genes selected in s.5.1
+  have per-donor `n_token_cells` ranging over [1, 100] (max **exactly 100**, mean 20.8) -- entirely inside the
+  fitting range on both ends. **No extrapolation beyond the fitted domain occurs**, in either the run host's
+  own fit or the out-of-sample host.
