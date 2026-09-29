@@ -1025,3 +1025,40 @@ below is a **hard, monitored ceiling**, not a promise that all 200 genes will ru
 - Stanley signs off (1) this registration (s.4.1-4.9, hash above) and (2) the run package (`select_null_genes.py`,
   `null_genes.json`, the driver script and `null_analysis.py`, each hash-named) **before any GPU use**.
 - Any change to a named hash after sign-off voids it; a fresh sign-off is required.
+
+### 4.7-correction — the s.4.7 calibration numbers above were wrong; corrected before any GPU output (2026-09-29T10:31Z)
+
+- **Error, stated plainly:** s.4.7's "Phase 6 driver" rates (6.59 s/call delete, 6.95 s/call overexpress) were
+  derived from wall-clock GPU-hour totals divided by call counts. That divides in the segment start/stop
+  overhead, log flushes and per-gene `verify()` checksum re-derivation, which are real time but are not the
+  per-call `isp.perturb_data()` cost. **Additionally, and separately from the arithmetic error:** both hosts'
+  local `phase6/` marker directories hold a complete or near-complete copy of the run (thinkstation1: 15,566
+  markers = 181 genes x 43 donors x 2 ops exactly; thinkstation2: 14,792), each with `"host"` recorded as its
+  own hostname on every marker, so the two are two largely-independent completions cross-checked for
+  bit-identity, not a gene-disjoint split of one one workload. The docstring phrase "split by gene" describes
+  `run_isp.py`'s host-map mechanism, not necessarily what the actual launch invocation used; this Amendment
+  does not resolve that history further because it does not change what is registered here.
+- **Correct source: the `"seconds"` field `run_isp.py` itself writes into every `*.complete.json` marker**
+  (`t0 = time.time()` immediately before `isp.perturb_data()`, `"seconds": time.time() - t0` immediately
+  after — `run_isp.py` s.78-90, sha256 in s.4.9). This is exactly the ISP-STD-1 E.3 quantity ("count GPU arms,
+  not wall clock"), read directly, not derived.
+- **Recomputed, both hosts' markers, 2026-09-29:**
+
+  | op | n calls (both hosts) | sum of recorded seconds | s/call |
+  |---|---:|---:|---:|
+  | delete | 15,179 | 28,020.9 | **1.846** |
+  | overexpress | 15,179 | 73,757.4 | **4.859** |
+
+- **Corrected planning estimate (s.4.7's upper bound, all 200 drawn genes, curated-panel-level rate as the
+  conservative case):** 200 genes x 43 donors x (1.846 + 4.859) s = 200 x 43 x 6.705 s = 57,663 s =
+  **~16.0 GPU-h** if every drawn gene costs as much as the curated Panel/control set. This is lower than
+  s.4.7's incorrect ~27.3 GPU-h figure but **still above the registered 10 GPU-h ceiling**, so the ceiling is
+  still expected to bind before all 200 genes complete, and the same reasoning in s.4.7 (genome-wide random
+  genes should cost less on average than the curated set, because most of the 19,902-gene frame is not
+  expressed in T cells) still applies, now to a better-calibrated starting point. **At the corrected rate,
+  roughly 149 genes** (10 GPU-h / (43 x 6.705 s) = 149.4) **would fit even under the conservative curated-rate
+  assumption** — nearly 3x more than s.4.7's incorrect estimate implied, which matters for the power table in
+  s.4.5 (n in the 100-150 range is now a realistic, not merely best-case, expectation).
+- **Everything else in s.4.7 is unchanged:** the 10 GPU-h ceiling, the monitor design (read the same
+  `"seconds"` field live during the run, `ps -o pid,pgid,cmd` targeting, GPU-arm-only accounting, no wall-clock
+  stall trigger from the CPU analysis phase), and `stopped_not_analysed` for anything past the ceiling.
