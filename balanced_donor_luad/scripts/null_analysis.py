@@ -179,9 +179,15 @@ def primary_from_rows(rows, rng):
     return out, x, y
 
 
-def apply_noop_gate(primary, noop_results_path, expected_genes):
+def apply_noop_gate(primary, noop_results_path, rows):
     """B3: consume noop_spotcheck.py's results. Any fail, or a missing check for a gene that was due
-    one (every NOOP_EVERY-th gene in run order), forces no_op_failed regardless of the statistics."""
+    one (every NOOP_EVERY-th gene in run order), forces no_op_failed regardless of the statistics.
+
+    Stanley's re-gate-3 fix: `due` is computed over genes in run order EXCLUDING any
+    stopped_not_analysed (a ceiling stop is always a contiguous run-order suffix, so filtering first
+    and then taking every 20th coincides exactly with what the driver actually spot-checked -- it only
+    ever runs a check when that gene's markers exist). Without this, a ceiling stop that lands exactly
+    on a due position would make that gene both stopped_not_analysed AND (wrongly) no_op_failed."""
     checked = {}
     if os.path.exists(noop_results_path):
         for line in open(noop_results_path):
@@ -190,7 +196,8 @@ def apply_noop_gate(primary, noop_results_path, expected_genes):
                 continue
             r = json.loads(line)
             checked[r["gene"]] = r.get("pass", False)
-    due = {expected_genes[i] for i in range(len(expected_genes)) if (i + 1) % NOOP_EVERY == 0}
+    completed_in_order = [r["gene"] for r in rows if r["status"] != "stopped_not_analysed"]
+    due = {completed_in_order[i] for i in range(len(completed_in_order)) if (i + 1) % NOOP_EVERY == 0}
     missing = sorted(due - set(checked))
     failed = sorted(g for g, ok in checked.items() if not ok)
     noop_report = {"due": sorted(due), "checked": checked, "missing": missing, "failed": failed}
@@ -242,7 +249,7 @@ def main(argv=None):
     primary, x, y = primary_from_rows(rows, rng)
     if primary.get("status") != "not_estimable":
         noop_path = a.noop_results
-        primary = apply_noop_gate(primary, noop_path, ng["draw_order"])
+        primary = apply_noop_gate(primary, noop_path, rows)
 
     result = {"about": __doc__.strip(), "n_registered": ng["n"], "rows": rows, "primary": primary}
 

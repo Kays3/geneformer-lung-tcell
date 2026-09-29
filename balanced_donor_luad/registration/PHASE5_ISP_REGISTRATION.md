@@ -1329,3 +1329,21 @@ of launch, before walking away, Phyllis will confirm and report to Stanley (1) `
 `run_config_<host>.json` has `mismatches: []`. `run_config.json` now also carries an explicit note (added to
 the hash-check script's output) that the no-op spot checks' GPU seconds (~10 calls) are not counted
 toward the 16 GPU-h ceiling, since they run in a separate output directory after the main run stops.
+
+### 5.13 Third re-gate fix (Stanley, 2026-09-29T12:05Z): no-op `due` set must exclude stopped genes
+
+Stanley's third gate found one remaining defect in the B3 fix (s.5.12): `apply_noop_gate`'s `due` set was
+computed over the full registered 100-gene order, not over the genes actually reached before a possible
+budget-ceiling stop. Since a ceiling stop is always a contiguous run-order suffix (genes run sequentially),
+a due position (every 20th gene) that happened to fall on a `stopped_not_analysed` gene would be reported as
+"missing" from the no-op results and wrongly force `no_op_failed` on an otherwise-valid, registered
+`stopped_not_analysed` outcome (ISP-STD-1 A.6).
+
+**Fixed:** `apply_noop_gate` now takes `rows` (not the raw registered gene list) and computes `due` over the
+subsequence of genes whose status is not `stopped_not_analysed`, preserving run order, before taking every
+20th. Because the stopped genes are always the trailing suffix of a sequential run, this is exactly the set
+the driver actually attempted to spot-check (it only ever runs a check when that gene's markers exist), so
+the two never diverge. Verified with a synthetic fixture matching Stanley's exact case: gene 100 (a due
+position) `stopped_not_analysed`, all other due genes (20, 40, 60, 80) present and passing -- the result is
+`positive` (or whatever the statistics say), never `no_op_failed`. A separate regression check confirms the
+happy-path case (no ceiling stop, all due genes present and passing) is unaffected by the signature change.
