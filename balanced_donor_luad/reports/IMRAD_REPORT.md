@@ -1,10 +1,13 @@
 # Balanced-Donor LUAD Tumor-vs-Normal T-Cell In Silico Perturbation Study
 
-**Status: draft. Results and Discussion are placeholders pending the independent gatekeeper's
-post-run check of the null-study analysis outputs. Nothing below states or implies any result of that
-pending check, and no number in this document is a scientific outcome (a correlation, a p-value, or an
-ISP-STD-1 status) unless it was already closed, published, and merged to `main` before this null study
-began.**
+**Status: complete draft, pending the independent gatekeeper's final read before this reaches the
+human.** All analysis outputs cited below have been checked by that gatekeeper (Stanley), including an
+independent full recomputation of the null study's statistics from saved intermediate data, and are
+reported using his required wording where the null study is concerned: the null study's gene population
+is described as random eligible genes detectable in LUAD tumor T cells, never as genome-wide; its
+p-values are reported at the permutation floor rather than as an exact figure; the N=200 result is
+described as confirming the N=100 primary, never as an independent replication; and the R3 validity
+check against the study's own matched controls is compared by sign only, never by magnitude.
 
 Repository: `Kays3/geneformer-lung-tcell`. This document lives on branch
 `report/imrad-balanced-donor-null` and is built from the registration documents, commit history, and
@@ -15,7 +18,28 @@ of this prose.
 
 ## Abstract
 
-*Placeholder, written after Results and Discussion are filled in.*
+Geneformer, a foundation model for single-cell transcriptomes, was used to ask whether an earlier,
+weakly controlled screen's findings survive a donor-paired redesign, and whether the same pipeline
+shows a directional artifact even on genes with no connection to the biology in question. Forty-three
+lung adenocarcinoma patients each contributed matched tumor and adjacent-normal T cells, with cell
+counts capped equally per donor per tissue to remove a 28 to 31-fold imbalance present in the raw data.
+A donor-stratified classifier separating the two tissues reached a pooled held-out balanced accuracy of
+0.825, with every one of the 43 donors scored above chance. Of the 15 genes carried over from the
+earlier screen, 13 were not expressed in enough donors' T cells to test at all, one showed no call, and
+the screen's list turned out to describe epithelial and blood-lineage biology rather than T-cell
+biology in this cohort. A curated panel of 36 T-cell genes gave a stable, cross-validated concordance
+for 13 genes: deleting each one shifted tumor T cells toward the same donor's normal profile, and
+overexpressing it shifted them away, a pattern that held under every registered robustness check. This
+same directional concordance, however, was not unique to biologically relevant genes. Applying the
+identical pipeline to 100 randomly drawn, independently eligible genes gave a significant negative
+correlation between deletion and overexpression shifts (Spearman rho = -0.593, one-sided p at the
+permutation floor of the 100,000-permutation test), and the finding held, and strengthened slightly,
+when the sample was extended to 200 genes under a pre-registered nested design (rho = -0.608, again at
+the permutation floor). A validity check on the study's own 318 matched control genes recovered a
+correlation of the same sign. Together these results indicate that opposite-signed deletion and
+overexpression effects are a common property of this model and this experimental design, not a marker
+of T-cell-specific biology, which narrows what the 13-gene concordance in the curated panel can be
+taken to show without overturning the finding itself.
 
 ---
 
@@ -338,9 +362,9 @@ that always passes.
 
 ## Provenance table
 
-This table is partial. It covers design and process facts established before this report was written;
-rows drawn from the pending analysis outputs will be added, citing each output file's own path and
-hash, once the gatekeeper's check clears.
+This table covers design, process, and result facts. Every result number in Sections 3 and 4 traces to
+one of the rows below, each citing the file and commit or run artifact it comes from rather than this
+prose.
 
 | # | Claim | File | Commit or artifact |
 |---|---|---|---|
@@ -362,35 +386,182 @@ hash, once the gatekeeper's check clears.
 | P16 | `apply_noop_gate` real-format parsing fix and its deviation note | registration deviation note; `scripts/null_analysis.py` | `c287178` |
 | P17 | Power-by-simulation table, N=100 and N=200 | Amendment 6, section 6.4 | `1b2f2fe` |
 | P18 | ISP-STD-1 v1.1 adoption | `hive/standards/isp-outcome-criteria.md` | adopted 2026-09-28, 13:35 JST |
+| P19 | Classifier gate: pooled BA 0.825, per-fold 0.784-0.869, sign test p=2.3e-13, 13 pre-analysis gates satisfied | `balanced_donor_luad/RESULTS.md` section 1; `phase4_results/classifier_gate.json` | published, `main` (origin/main `40306bf` at time of writing) |
+| P20 | Panel A outcome: 13 NOT_RUN, 1 NOT_ESTIMABLE_CONTROLS (BTG1), 1 OPEN (POLR2J3, p=0.10/0.25) | `RESULTS.md` section 2; `phase7_results/outcome_rows.json` | published, `main` |
+| P21 | Panel B outcome: 11 TOWARD, 2 AWAY, 2 DELETION_ONLY, 19 OPEN, 5 NOT_RUN; stability under 4 registered sensitivities | `RESULTS.md` section 3, 5; `phase7_results/outcome_rows.json`, `sensitivities.json` | published, `main` |
+| P22 | Matched-control null cloud: rho=-0.62 over 360 control x stratum entries; 4 genes (CCR7/CD3D/GZMA/CD7) outside the control spread | `RESULTS.md` section 4 | published, `main` |
+| P23 | Null study A5 N=100 primary: positive, rho=-0.593, p at the 100,000-permutation floor, LOO 100/100, bootstrap 1.0 (10,000) | `phase8_null/a5_primary_result_v2.json`, sha256 `a00ccb2f62a7a888386208eb63a2f349d1c2ee8717208f742a563bc508588267` | `2fe4e31`, gatekeeper PASS 2026-09-30 11:06Z |
+| P24 | Null study N=200 confirmatory extension: positive, rho=-0.608, p at the permutation floor, LOO 200/200, bootstrap 1.0, no-op 10/10; s.6.7 headline "positive, confirmed at N=200" | `phase8_null/n200_combined_result_v2.json`, sha256 `c9e56026fac99d30a89da91ab557b09e7889717163712242a961d33295a3b847` | `2fe4e31`, gatekeeper PASS 2026-09-30 11:06Z |
+| P25 | R3 validity check on 318 registered controls (308 estimable): rho=-0.658, sign-compatible with -0.62, not failed | same files as P23/P24; merged controls tree `phase6_all_merged` on thinkstation1, manifest sha256 `5da69fedc48fa382cbdfe2e6173cc38dc87b3f4b39535869606369a4db1797c1` | `2fe4e31`, gatekeeper PASS 2026-09-30 11:06Z |
 
 ---
 
 ## 3. Results
 
-Placeholder, pending the independent gatekeeper's post-run check of three outputs: the closed Phase 4
-through 7 analysis (the achieved classifier-gate value, the Panel A and B outcome table, and GPU-hour
-totals with the duplicate-grid caveat applied, already published in `RESULTS.md` and merged as PR #38,
-restated here once cross-checked against this report's own provenance table); the Amendment 5 N=100
-primary result; and the Amendment 6 N=200 confirmatory-extension result together with the section 6.7
-pair headline it produces. No number from any of these three outputs appears anywhere in this document
-until that check clears.
+### 3.1 Classifier gate (Phase 4)
+
+The pooled, held-out balanced accuracy across the five donor-stratified folds was 0.825, comfortably
+above the pre-registered 0.60 threshold, and ranged from 0.784 to 0.869 across individual folds. Every
+one of the 43 donors scored above chance, and the exact sign test across donors gave p = 2.3 x 10^-13.
+A repeat run of the same fold under the same seed showed a per-donor nondeterminism band of about 0.045
+in balanced accuracy; even the least favorable donor could not be flipped by a band of that size, and
+the pooled value sits far outside the band around the 0.60 threshold. The gate passed, and every
+pre-analysis gate registered in `registration/required_gates.json` (ambient classification, the no-op
+gate, cross-host equivalence for both operations, token-edit verification, and eight others) was
+satisfied before Phase 7 began (`balanced_donor_luad/RESULTS.md`, section 1; `phase4_results/`,
+committed on `analysis/balanced-donor-luad`).
+
+### 3.2 Panel A: the July screen's genes are mostly untestable in T cells
+
+Thirteen of the 15 genes carried over from the July screen could not be tested at all: each was
+expressed in fewer than the required 10 of 100 tumor T cells in almost every donor. Inspecting the
+list, these 13 genes are keratins, a mucin, a secretoglobin, a hemoglobin chain, and other epithelial
+or blood-lineage markers, not T-cell genes. One gene, BTG1, could not be scored because its matched
+control stratum had fewer than the required 20 candidate controls. The single gene that could be
+tested, POLR2J3, showed no reliable shift in either direction (delete median -0.0009, p = 0.10;
+overexpress median -0.0006, p = 0.25; Holm-adjusted p = 1 for both, out of a family of 15). None of
+this amounts to a failed replication in the ordinary sense. It shows that the July screen's list, built
+from a different, less controlled design, was describing biology outside the T-cell compartment for
+all but one gene, and that one gene gave an open call rather than a contradiction.
+
+### 3.3 Panel B: a stable signal in 13 of 34 testable genes
+
+Eleven genes moved tumor T cells toward the matched donor's own normal-tissue profile when deleted and
+away from it when overexpressed: CD3D, CD3G, CD247, CD7, LCK, LAT, CD8A, CCR7, GZMA, CD27, and ICOS.
+Two genes, ITK and CTSW, showed the same coherence in the opposite direction. None of these 13 calls
+changed under any of the registered robustness checks: substituting the global (rather than
+donor-specific) goal centroid, using all cells rather than only token-positive cells for the
+overexpression arm, splitting by study (Leader_Merad's 23 donors against the remaining 20), or
+examining each cross-validation fold separately. Two further genes showed a real but incomplete
+signal. GZMK moved consistently on deletion only, and reversed to the opposite-direction pattern under
+the all-cells overexpression sensitivity. CD69 also moved on deletion only, and became inconsistent
+under an alternative Holm-family convention and under the global-goal sensitivity. Both are reported as
+open on the deletion-only or dose-incoherent status they actually earned, not folded into the stable
+13.
+
+Three genes commonly discussed in checkpoint biology, CD28, CTLA4, and PDCD1, were tested on 18, 14,
+and 13 estimable donors respectively before the registered control-availability rule reduced this to 9,
+6, and 5 donors, all below the design's minimum of 11. At that sample size none of the three can reach
+significance at any effect size under the study's own multiple-comparison correction, so the result for
+each is reported as open, with no evidence in either direction, rather than as a null finding. A fourth
+gene, LEF1, sits just below the same design-level donor floor (10 versus 11) but was not flagged by a
+secondary, post hoc check that asks whether significance was attainable given how the rest of the
+gene family actually landed; the two criteria disagree only on this one gene, and both readings are
+reported rather than one being discarded.
+
+### 3.4 The matched-control genes already hinted at a generic pattern
+
+Across the 360 control-gene-by-stratum entries used to adjust the panel results, the donor-median
+deletion and overexpression shifts were themselves anti-correlated (Spearman rho = -0.62), and about
+35% of control entries fell in the same toward-normal quadrant as the panel's positive calls. Measured
+against this control spread, only four of the 13 stable Panel B genes, CCR7, CD3D, GZMA, and CD7, stood
+out as unusually large in effect size; the rest sat within the range the controls themselves produced.
+This observation was descriptive and post hoc at the time it was made, and the study's own registration
+was explicit that it narrows what a concordance finding licenses without overturning it. The null study
+described next was designed to test the same question directly, on genes drawn independently of any
+panel or control assignment, under a pre-registered statistical test rather than a post hoc comparison.
+
+### 3.5 Null study: a directional artifact confirmed on random eligible genes
+
+The registered primary result, over the 100 estimable genes drawn independently of Panel A, Panel B,
+and every gene ever used as a matched control (random eligible genes detectable in LUAD tumor T cells,
+never all genes in the model's vocabulary), was positive under ISP-STD-1's vocabulary: the one-sided
+permutation test on the correlation between raw donor-level median deletion and overexpression shifts
+gave Spearman rho = -0.593, with p at the permutation floor of the 100,000-permutation test (no
+permuted draw reached or exceeded the observed correlation). Every one of the 100 leave-one-out
+recomputations remained stable, and all 10,000 bootstrap draws preserved the result. The pre-registered
+extension to 200 genes, nested inside the same draw and read under the study's own decision rule as
+confirming the primary result rather than replicating it independently, gave the same picture: rho =
+-0.608, again at the permutation floor, with all 200 leave-one-out recomputations and all 10,000
+bootstrap draws stable. All ten of the due no-op spot checks across both runs passed. Under the
+registered decision rule, the finding is reported as positive, confirmed at N=200.
+
+A validity check reran the identical pipeline on the study's own 318 matched control genes, of which
+308 were estimable in this cohort, and recovered a correlation of rho = -0.658, matching the sign of
+the -0.62 figure already reported from the panel analysis. Because the two quantities are not the same
+statistic (one is raw, one is stratum-adjusted, and they are computed over different gene sets and
+donor weightings), only the sign is compared, and the sign matched.
+
+Taken together, these three results, the original 120 to 318 matched controls, the 100-gene primary
+draw, and its 200-gene confirmation, converge on the same conclusion: an anti-correlation between a
+gene's deletion effect and its overexpression effect is common across genes with no particular relation
+to the tumor-versus-normal axis in this model and this experimental design. It is not restricted to the
+genes chosen for the panels.
 
 ---
 
 ## 4. Discussion
 
-Placeholder, pending Section 3.
+The clearest result in this study is negative in the ordinary sense but informative in what it rules
+out. Thirteen of the 15 genes inherited from the July screen were simply not expressed in enough donors'
+T cells to test, and inspection shows why: the list is dominated by epithelial and blood-lineage
+markers. The donor-paired redesign did not contradict the earlier screen's findings so much as reveal
+that the findings were never about T cells in the first place. This matters for how the July screen's
+other output should be read going forward: a gene appearing on that list is weak evidence, by itself,
+that the gene has anything to do with T-cell biology, and testability in a T-cell-restricted cohort is
+itself informative.
+
+The curated T-cell panel gave a more substantive result. Thirteen genes, most of them canonical
+components of T-cell receptor signaling and effector function (CD3D, CD3G, CD247, LCK, LAT, CD8A, GZMA,
+CD27, ICOS) or migration and memory (CCR7), showed a stable, direction-consistent response to deletion
+and overexpression that survived every sensitivity analysis the study registered in advance. Two genes,
+ITK and CTSW, showed the same internal coherence in the reverse direction. This is a real, reproducible
+pattern in the model's behavior on this cohort.
+
+The null study changes how that pattern should be interpreted, without erasing it. A sample of 100, and
+then 200, genes drawn with no relationship to the tumor-versus-normal axis, and excluded from every
+panel and control assignment in the study, showed the same negative correlation between deletion and
+overexpression effects, at a magnitude (rho around -0.59 to -0.61) that sits alongside the panel's own
+matched-control cloud (rho -0.62) rather than below it. Whatever produces opposite-signed responses to
+deletion and overexpression in this model, whether it reflects a property of how Geneformer represents
+dose, a property of the donor-centroid goal construction, or something about this specific tissue
+comparison, it operates on genes with no connection to T-cell biology about as strongly as it operates
+on the 13 genes the panel called. Registered concordance between deletion and overexpression, on its
+own, is therefore not evidence that a gene is doing something T-cell-specific. It is evidence that the
+gene passed a test that most eligible genes in this cohort would also pass.
+
+This does not mean the 13-gene panel result is void. Four of the 13 genes, CCR7, CD3D, GZMA, and CD7,
+showed effect sizes clearly outside the spread of the study's own matched controls, and the null study
+did not test effect size, only direction. A gene's concordance direction is common; an unusually large
+concordance, measured against a population of genes with no prior claim to relevance, is a different
+and more specific kind of evidence. The panel's headline calls should be read with this distinction in
+mind: consistency across donors and both perturbation directions establishes that the model is doing
+something reproducible with each of these 13 genes, and the four with unusual effect sizes are the
+better candidates for that something being specific to T-cell state, while the direction-only criterion
+by itself is now shown to be a weak discriminator.
+
+Three limitations bear directly on this conclusion. First, the null study's gene population is bounded
+by what is detectable in this specific cohort of tumor T cells rather than being an unconditioned
+sample of the transcriptome, so the finding generalizes to eligible genes in this tissue and cell type,
+not beyond it. Second, the null study and the panel share the same pipeline, the same donor-centroid
+goal construction, and the same model, so this result cannot distinguish a genuine biological tendency
+of gene dosage from an artifact specific to this combination of model and design; a comparison against
+an independently constructed null, or against a different goal definition, would be needed to separate
+those possibilities, and is not attempted here. Third, an earlier, differently constructed whole-model
+screen (104M, fp32, class-centroid goal, cell-weighted) showed the same directional pattern at a weaker
+magnitude (Spearman rho -0.08 to -0.30 across six comparisons), which corroborates that the phenomenon
+is not unique to this study's specific instrument, but that screen used a different model, precision,
+goal definition, and weighting scheme, so it is corroborating evidence rather than a pooled estimate
+and cannot itself rank the 13 panel genes.
+
+The broader point, stated plainly rather than as a caveat appended at the end, is that a pre-registered
+null study of this kind is worth the GPU time it costs whenever a design's own matched-control data
+hints at a systematic pattern, because a post hoc observation on 120 to 318 already-computed genes and
+a dedicated, adequately powered test on independently drawn genes can and did agree here, which is
+itself worth knowing, but they are not interchangeable evidence, and only the dedicated test was
+powered in advance to say how strong that agreement is.
 
 ---
 
 ## 5. Limitations
 
-Several limitations are inherent to the design and do not depend on what the pending results turn out
-to show. Ambient RNA contamination differs between tumor and adjacent-normal tissue within the same
-donor in ways that pairing cannot remove, since pairing controls for study, chemistry, and donor
-identity but not for tissue-of-origin contamination; the study's `REPLICATED_AMBIENT` label and its
-per-gene ambient flag, computed by leave-one-anchor-out, exist specifically to disclose this rather
-than let it disappear into a clean-looking headline. The 316M model differs from the 104M model used in
+Several limitations are inherent to the design, independent of what the results turned out to show.
+Ambient RNA contamination differs between tumor and adjacent-normal tissue within the same donor in
+ways that pairing cannot remove, since pairing controls for study, chemistry, and donor identity but
+not for tissue-of-origin contamination; the study's per-gene ambient flag, computed by
+leave-one-anchor-out, exists specifically to disclose this rather than let it disappear into a
+clean-looking headline, though in this study no Panel A gene reached a call for the flag to qualify.
+The 316M model differs from the 104M model used in
 the July screen (a prior comparison measured a correlation of 0.489 between the two), and because no
 104M arm was run here by directive, any non-replication on Panel A cannot be attributed cleanly to the
 redesigned cohort as opposed to the change in model; this caveat was written into the registration
@@ -417,6 +588,9 @@ equivalence check had already verified.
 - `balanced_donor_luad/registration/PHASE5_ISP_REGISTRATION.md`, all amendments, this repository,
   branch `analysis/balanced-donor-null-20260929`, current sha256 `465149ff...`.
 - `balanced_donor_luad/provenance/PHASE0_SELECTION_RULE.md`.
+- `balanced_donor_luad/RESULTS.md`, the Phase 4 through 7 results this report restates and builds on,
+  including its own GPU-hour accounting (section 9, total approximately 33.8 GPU-hours against a
+  registered estimate of approximately 31) and the Phase 6 duplicate-grid finding as recorded there.
 - PR #38, `Kays3/geneformer-lung-tcell`, Phases 4 through 7, merged to `main` as `87349d41`.
 - Salcher et al., *Cancer Cell* 2022, the Lung Cancer Atlas, extended atlas.
 - Geneformer V2, vendored checkout, commit pinned in the run-launch hash-check dictionary.
