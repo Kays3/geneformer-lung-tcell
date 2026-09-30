@@ -409,7 +409,7 @@ prose.
 | P26 | Figures 1-8 unchanged since original generation, verified by sha256 against the copy on `main` | `figures/fig1_design.png` through `fig8_outcome_table.png` | `a6bf6d0`, no commit since has touched `figures/` on `main` |
 | P27 | Figures 9-12 (null study), generated only from the two files in P23/P24, hash-checked before plotting; figure 10 is a reference distribution (independent-data simulation), not the registered test's own stored permutation draws | `scripts/make_null_study_figures.py` | committed alongside this report; construction confirmed valid by Stanley 2026-09-30 |
 | P28 | Earlier whole-model screen (104M, fp32, class-centroid, cell-weighted): Spearman rho -0.08 to -0.30 across 6 comparisons, about half of genes opposite-signed | `RESULTS.md` section 4; `sclc_validation/primary_test_perturbation/tables/allgene_delete_overexpress_shift.csv` | published, `main` |
-| P29 | R4 ambient LOAO and C2 secondary-percentile join, run at N=100 and N=200 (registered, Amendment 5 P/R4 and C2; extended by Amendment 6) | `phase8_null/ambient_loao_n100.json`, `ambient_loao_n200.json`, `secondary_percentiles_n100.json`, `secondary_percentiles_n200.json` | run 2026-09-30 at `2fe4e31`; pending gatekeeper check before content is reported |
+| P29 | R4 ambient LOAO (3/100, 4/200 flagged) and C2 secondary-percentile join (13 panel genes, N=100 and N=200), registered under Amendment 5 P/R4 and C2, extended by Amendment 6; scripts `ambient_loao_null.py` (sha256 `a09197f1...`) and `secondary_percentiles.py` (sha256 `67f6a959...`), unchanged since Amendment 5 | `phase8_null/ambient_loao_n100.json` (`4e9d2fff...`), `ambient_loao_n200.json` (`a3ee8724...`), `secondary_percentiles_n100.json` (`f7f15d35...`), `secondary_percentiles_n200.json` (`f8cc67d6...`) | run 2026-09-30 at `2fe4e31`; independently reproduced byte-identical and PASSED by the gatekeeper 2026-09-30 11:31Z |
 
 ---
 
@@ -607,14 +607,43 @@ T-cell-specific.
 The null test itself is a population-level rank correlation across genes; it was not designed to, and
 does not, measure what fraction of individual genes would pass the panel's own per-gene concordance
 criterion (Holm-adjusted, per-donor, control-adjusted), since that criterion was never applied to the
-null genes. Two pieces of evidence bear on per-gene prevalence, and both are post hoc and corroborating
+null genes. Three pieces of evidence bear on per-gene prevalence. Two are post hoc and corroborating
 rather than part of the registered test: 35% of the study's own control-by-stratum entries fall in the
 same toward-normal quadrant as the panel's positive calls (Results 3.4), and an earlier, independently
 constructed whole-model screen found about half of tested genes opposite-signed between its own delete
-and overexpress arms (below). Registered secondary analyses that place each of the 13 panel genes'
-raw shifts within the null distribution directly (the ambient LOAO flag and the secondary-percentile
-join, both pre-registered under Amendments 5 and 6) have been computed and are pending the gatekeeper's
-check; they are not yet reported here, and the headline above does not depend on them.
+and overexpress arms (below). The third is a registered secondary (Amendment 5 C2, extended to N=200 by
+Amendment 6): for each of the 13 T-cell panel genes with a stable call, its own raw donor-median
+deletion and overexpression shifts were placed at their percentile within the null distribution of raw
+shifts, comparing raw to raw, never against the panel's control-adjusted statuses or the -0.62 control
+figure. All 13 genes sit at an extreme percentile on at least one arm:
+
+| Gene | Panel status | Delete percentile | Overexpress percentile |
+|---|---|---|---|
+| CCR7 | toward | 1.00 | 0.01 |
+| CD3D | toward | 0.99 | 0.005 |
+| GZMA | toward | 0.99 | 0.005 |
+| CD8A | toward | 0.975 | 0.055 |
+| CD7 | toward | 0.965 | 0.01 |
+| CD27 | toward | 0.955 | 0.03 |
+| CD3G | toward | 0.93 | 0.13 |
+| CD247 | toward | 0.93 | 0.06 |
+| LCK | toward | 0.93 | 0.1 |
+| ICOS | toward | 0.90 | 0.105 |
+| LAT | toward | 0.90 | 0.115 |
+| CTSW | away | 0.10 | 0.92 |
+| ITK | away | 0.035 | 0.96 |
+
+*(percentiles against the N=200 null distribution; the N=100 distribution places the same 13 genes
+consistently, within a few percentile points)*
+
+This is the effect-size evidence the previous paragraph's distinction calls for, read carefully: a panel
+gene sitting at an extreme percentile of the null distribution shows an unusually large raw effect size
+among random eligible genes on that arm, not a demonstration of a T-cell-specific mechanism, and no
+threshold has been applied to turn these percentiles into a new post hoc significant class. Separately,
+the same leave-one-anchor-out ambient classifier used for Panel A's own ambient flag was run on the null
+genes themselves: 3 of the 100 primary genes and 4 of the 200 extension genes (a superset of the same 3)
+were flagged. This is a disclosure about the null gene population's composition, not a correction; it
+changes no status and no reported rho.
 
 This does not mean the 13-gene panel result is void. Four of the 13 genes, CCR7, CD3D, GZMA, and CD7
 (and CD27 on its overexpression arm), showed effect sizes clearly outside the spread of the study's own
