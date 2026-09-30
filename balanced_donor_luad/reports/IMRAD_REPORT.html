@@ -1032,20 +1032,33 @@ itself mark a gene as doing something T-cell-specific.</p>
 genes; it was not designed to, and does not, measure what fraction of
 individual genes would pass the panel’s own per-gene concordance
 criterion (Holm-adjusted, per-donor, control-adjusted), since that
-criterion was never applied to the null genes. Three pieces of evidence
-bear on per-gene prevalence. Two are post hoc and corroborating rather
-than part of the registered test: 35% of the study’s own
+criterion was never applied to the null genes. Two pieces of evidence
+bear on per-gene prevalence, and both are post hoc and corroborating
+rather than part of the registered test: 35% of the study’s own
 control-by-stratum entries fall in the same toward-normal quadrant as
 the panel’s positive calls (Results 3.4), and an earlier, independently
 constructed whole-model screen found about half of tested genes
-opposite-signed between its own delete and overexpress arms (below). The
-third is a registered secondary (Amendment 5 C2, extended to N=200 by
-Amendment 6): for each of the 13 T-cell panel genes with a stable call,
-its own raw donor-median deletion and overexpression shifts were placed
-at their percentile within the null distribution of raw shifts,
-comparing raw to raw, never against the panel’s control-adjusted
-statuses or the -0.62 control figure. All 13 genes sit at an extreme
-percentile on at least one arm:</p>
+opposite-signed between its own delete and overexpress arms (below).</p>
+<p>Separately, the same leave-one-anchor-out ambient classifier used for
+Panel A’s own ambient flag was run on the null genes themselves: 3 of
+the 100 primary genes and 4 of the 200 extension genes (a superset of
+the same 3) were flagged. This is a disclosure about the null gene
+population’s composition, not a correction; it changes no status and no
+reported rho.</p>
+<p>This does not mean the 13-gene panel result is void. Four of the 13
+genes, CCR7, CD3D, GZMA, and CD7 (and CD27 on its overexpression arm),
+showed effect sizes clearly outside the spread of the study’s own
+matched controls, and the null study did not test effect size, only
+direction. An unusually large effect size, measured against a population
+of genes with no prior claim to relevance, is a more specific kind of
+evidence than concordance direction alone.</p>
+<p>A registered secondary (Amendment 5 C2, extended to N=200 by
+Amendment 6) measures this directly, against the null distribution
+rather than only against the study’s own controls: for each of the 13
+T-cell panel genes with a stable call, its own raw donor-median deletion
+and overexpression shifts were placed at their percentile within the
+null distribution of raw shifts, comparing raw to raw, never against the
+panel’s control-adjusted statuses or the -0.62 control figure.</p>
 <table>
 <thead>
 <tr>
@@ -1139,30 +1152,24 @@ percentile on at least one arm:</p>
 <p><em>(percentiles against the N=200 null distribution; the N=100
 distribution places the same 13 genes consistently, within a few
 percentile points)</em></p>
-<p>This is the effect-size evidence the previous paragraph’s distinction
-calls for, read carefully: a panel gene sitting at an extreme percentile
-of the null distribution shows an unusually large raw effect size among
-random eligible genes on that arm, not a demonstration of a
-T-cell-specific mechanism, and no threshold has been applied to turn
-these percentiles into a new post hoc significant class. Separately, the
-same leave-one-anchor-out ambient classifier used for Panel A’s own
-ambient flag was run on the null genes themselves: 3 of the 100 primary
-genes and 4 of the 200 extension genes (a superset of the same 3) were
-flagged. This is a disclosure about the null gene population’s
-composition, not a correction; it changes no status and no reported
-rho.</p>
-<p>This does not mean the 13-gene panel result is void. Four of the 13
-genes, CCR7, CD3D, GZMA, and CD7 (and CD27 on its overexpression arm),
-showed effect sizes clearly outside the spread of the study’s own
-matched controls, and the null study did not test effect size, only
-direction. An unusually large effect size, measured against a population
-of genes with no prior claim to relevance, is a more specific kind of
-evidence than concordance direction alone. The panel’s headline calls
-should be read with this distinction in mind: consistency across donors
-and both perturbation directions establishes that the model is doing
-something reproducible with each of these 13 genes, and the genes with
-unusual effect sizes are the better candidates for that something being
-specific to T-cell state.</p>
+<p>On the deletion arm, 6 of the 11 toward-called genes (CCR7, CD3D,
+GZMA, CD8A, CD7, CD27) sit above the null distribution’s 95th
+percentile; that cutoff is descriptive, stated here for orientation, not
+a registered threshold, and no threshold has been applied anywhere to
+turn these percentiles into a new post hoc significant class. Because
+these 13 genes were selected by a significance test on these same delete
+and overexpress shifts (control-adjusted, but computed from the same
+underlying pickles), their placement toward the upper or lower tail here
+is partly a consequence of that selection: a random gene that had passed
+the same panel test would also tend to sit at a similarly extreme
+percentile. The percentiles describe each gene’s raw effect size
+relative to random eligible genes; they are not an independent test of
+specificity.</p>
+<p>The panel’s headline calls should be read with this distinction in
+mind: consistency across donors and both perturbation directions
+establishes that the model is doing something reproducible with each of
+these 13 genes, and the genes with unusual effect sizes are the better
+candidates for that something being specific to T-cell state.</p>
 <p>Three limitations bear directly on this conclusion. First, the null
 study’s gene population is bounded by what is detectable in this
 specific cohort of tumor T cells rather than being an unconditioned
