@@ -1,0 +1,18 @@
+{
+ "tumor_primary": {
+  "n": 100,
+  "max_abs": 0.0,
+  "n_nonzero": 0
+ },
+ "normal_adjacent": {
+  "n": 100,
+  "max_abs": 0.0,
+  "n_nonzero": 0
+ },
+ "global_normal_adjacent": {
+  "n": 100,
+  "max_abs": 0.0,
+  "n_nonzero": 0
+ },
+ "PASS": true
+}
