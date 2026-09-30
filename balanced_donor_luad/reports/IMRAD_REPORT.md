@@ -119,6 +119,12 @@ Geneformer V2 with a median of 755 tokens per cell; the observed maximum of 2,65
 inside the model's 4,096-token context, so no truncation occurred. This cohort was committed on
 `analysis/balanced-donor-luad` at `3af3ca98` (provenance row P3).
 
+![Figure 1](../figures/fig1_design.png)
+
+*Figure 1. The paired-donor design: per-donor T-cell counts before the 100-cell cap (a 28 to 31-fold
+range across donors) and after it (every donor weighs exactly 1/43). Source:
+`balanced_donor_luad/scripts/make_figures.py`, committed `a6bf6d0` on `main`.*
+
 Three groups of cells were excluded, and the reasons are worth stating plainly rather than glossing
 over. LUSC tumor tissue was excluded because only 9 donors qualify on 10x chemistry within LuCA,
 short of the registered floor of 12; a broader public-data survey for a third class was scoped as a
@@ -339,6 +345,12 @@ reported if the two disagree. A validity check reruns the identical raw-shift pi
 own 318 already-computed control genes as the closest available positive control; recovering a negative
 correlation there is a precondition for treating the null-study result as trustworthy.
 
+![Figure 12](../figures/fig12_amendment_flow.png)
+
+*Figure 12. The null study's amendments and gates, in the order they occurred, each box giving its
+commit hash and a one-line summary. Source: `scripts/make_null_study_figures.py`, committed alongside
+this report; process history only, drawn from the commits cited throughout this section.*
+
 ### 2.6 Reproducibility and provenance discipline
 
 Every amendment to the registration document is append-only, verified both by `git diff --numstat`
@@ -393,6 +405,8 @@ prose.
 | P23 | Null study A5 N=100 primary: positive, rho=-0.593, p at the 100,000-permutation floor, LOO 100/100, bootstrap 1.0 (10,000) | `phase8_null/a5_primary_result_v2.json`, sha256 `a00ccb2f62a7a888386208eb63a2f349d1c2ee8717208f742a563bc508588267` | `2fe4e31`, gatekeeper PASS 2026-09-30 11:06Z |
 | P24 | Null study N=200 confirmatory extension: positive, rho=-0.608, p at the permutation floor, LOO 200/200, bootstrap 1.0, no-op 10/10; s.6.7 headline "positive, confirmed at N=200" | `phase8_null/n200_combined_result_v2.json`, sha256 `c9e56026fac99d30a89da91ab557b09e7889717163712242a961d33295a3b847` | `2fe4e31`, gatekeeper PASS 2026-09-30 11:06Z |
 | P25 | R3 validity check on 318 registered controls (308 estimable): rho=-0.658, sign-compatible with -0.62, not failed | same files as P23/P24; merged controls tree `phase6_all_merged` on thinkstation1, manifest sha256 `5da69fedc48fa382cbdfe2e6173cc38dc87b3f4b39535869606369a4db1797c1` | `2fe4e31`, gatekeeper PASS 2026-09-30 11:06Z |
+| P26 | Figures 1-8 unchanged since original generation, verified by sha256 against the copy on `main` | `figures/fig1_design.png` through `fig8_outcome_table.png` | `a6bf6d0`, no commit since has touched `figures/` on `main` |
+| P27 | Figures 9-12 (null study), generated only from the two files in P23/P24, hash-checked before plotting; figure 10 is a labeled illustrative reference, not a reconstruction of the actual permutation draws | `scripts/make_null_study_figures.py` | committed alongside this report |
 
 ---
 
@@ -405,7 +419,15 @@ above the pre-registered 0.60 threshold, and ranged from 0.784 to 0.869 across i
 one of the 43 donors scored above chance, and the exact sign test across donors gave p = 2.3 x 10^-13.
 A repeat run of the same fold under the same seed showed a per-donor nondeterminism band of about 0.045
 in balanced accuracy; even the least favorable donor could not be flipped by a band of that size, and
-the pooled value sits far outside the band around the 0.60 threshold. The gate passed, and every
+the pooled value sits far outside the band around the 0.60 threshold.
+
+![Figure 2](../figures/fig2_classifier_gate.png)
+
+*Figure 2. Per-donor held-out balanced accuracy, one point per fold plus the pooled value, against the
+0.60 gate threshold. Source: `balanced_donor_luad/scripts/make_figures.py`, committed `a6bf6d0` on
+`main`.*
+
+The gate passed, and every
 pre-analysis gate registered in `registration/required_gates.json` (ambient classification, the no-op
 gate, cross-host equivalence for both operations, token-edit verification, and eight others) was
 satisfied before Phase 7 began (`balanced_donor_luad/RESULTS.md`, section 1; `phase4_results/`,
@@ -424,6 +446,12 @@ this amounts to a failed replication in the ordinary sense. It shows that the Ju
 from a different, less controlled design, was describing biology outside the T-cell compartment for
 all but one gene, and that one gene gave an open call rather than a contradiction.
 
+![Figure 3](../figures/fig3_panel_a_testability.png)
+
+*Figure 3. Why 13 of the 15 Panel A genes could not be tested: estimable donor counts against the
+design minimum of 10. Source: `balanced_donor_luad/scripts/make_figures.py`, committed `a6bf6d0` on
+`main`.*
+
 ### 3.3 Panel B: a stable signal in 13 of 34 testable genes
 
 Eleven genes moved tumor T cells toward the matched donor's own normal-tissue profile when deleted and
@@ -439,6 +467,24 @@ under an alternative Holm-family convention and under the global-goal sensitivit
 open on the deletion-only or dose-incoherent status they actually earned, not folded into the stable
 13.
 
+![Figure 6](../figures/fig6_panel_b_forest.png)
+
+*Figure 6. Panel B forest plot: median control-adjusted shift with exact 95% confidence intervals for
+deletion and overexpression, colored by status. Source: `balanced_donor_luad/scripts/make_figures.py`,
+committed `a6bf6d0` on `main`.*
+
+![Figure 5](../figures/fig5_per_donor.png)
+
+*Figure 5. Per-donor paired values for every gene with a significant arm, so donor-level spread is
+visible rather than only the summary median. Source: `balanced_donor_luad/scripts/make_figures.py`,
+committed `a6bf6d0` on `main`.*
+
+![Figure 7](../figures/fig7_sensitivities.png)
+
+*Figure 7. The four registered sensitivity analyses (global goal, study split, per-fold, and
+cell-versus-donor weighting), none of which downgraded a stable Panel B call. Source:
+`balanced_donor_luad/scripts/make_figures.py`, committed `a6bf6d0` on `main`.*
+
 Three genes commonly discussed in checkpoint biology, CD28, CTLA4, and PDCD1, were tested on 18, 14,
 and 13 estimable donors respectively before the registered control-availability rule reduced this to 9,
 6, and 5 donors, all below the design's minimum of 11. At that sample size none of the three can reach
@@ -448,6 +494,12 @@ gene, LEF1, sits just below the same design-level donor floor (10 versus 11) but
 secondary, post hoc check that asks whether significance was attainable given how the rest of the
 gene family actually landed; the two criteria disagree only on this one gene, and both readings are
 reported rather than one being discarded.
+
+![Figure 8](../figures/fig8_outcome_table.png)
+
+*Figure 8. All 54 registered rows (Panel A and Panel B) with status, concordance, ambient label,
+estimable donor count, and Holm-adjusted p per arm. Source:
+`balanced_donor_luad/scripts/make_figures.py`, committed `a6bf6d0` on `main`.*
 
 ### 3.4 The matched-control genes already hinted at a generic pattern
 
@@ -460,6 +512,12 @@ This observation was descriptive and post hoc at the time it was made, and the s
 was explicit that it narrows what a concordance finding licenses without overturning it. The null study
 described next was designed to test the same question directly, on genes drawn independently of any
 panel or control assignment, under a pre-registered statistical test rather than a post hoc comparison.
+
+![Figure 4](../figures/fig4_dose_concordance.png)
+
+*Figure 4. Median deletion shift against median overexpression shift, one point per gene; the panel
+genes are shown against the grey cloud of matched control genes, which shows the same anti-correlated
+shape. Source: `balanced_donor_luad/scripts/make_figures.py`, committed `a6bf6d0` on `main`.*
 
 ### 3.5 Null study: a directional artifact confirmed on random eligible genes
 
@@ -475,6 +533,28 @@ confirming the primary result rather than replicating it independently, gave the
 -0.608, again at the permutation floor, with all 200 leave-one-out recomputations and all 10,000
 bootstrap draws stable. All ten of the due no-op spot checks across both runs passed. Under the
 registered decision rule, the finding is reported as positive, confirmed at N=200.
+
+![Figure 9](../figures/fig9_null_scatter.png)
+
+*Figure 9. Raw donor-median deletion versus overexpression shift, one point per gene, for the N=100
+primary and the N=200 confirmatory extension (random eligible genes detectable in LUAD tumor T cells).
+Axes are symmetric-log scaled; one gene's shift is roughly an order of magnitude larger than the rest
+and would otherwise compress the remaining points. Source:
+`balanced_donor_luad/scripts/make_null_study_figures.py`, reading only the two files the gatekeeper
+signed (sha256 `a00ccb2f...` and `c9e56026...`).*
+
+![Figure 10](../figures/fig10_null_reference_distribution.png)
+
+*Figure 10. A reference distribution of Spearman rho under independence at the same sample sizes,
+shown for illustration only: the signed output files record the observed correlation and that its
+one-sided p sits at the permutation floor of the registered 100,000-permutation test, not the individual
+permuted values, so the histogram here is a fresh simulation of independent data at matching n, not a
+reconstruction of the actual test. Source: `scripts/make_null_study_figures.py`.*
+
+![Figure 11](../figures/fig11_null_loo_stability.png)
+
+*Figure 11. Leave-one-out and bootstrap stability for both runs: every held-out recomputation and every
+bootstrap draw preserved the result. Source: `scripts/make_null_study_figures.py`.*
 
 A validity check reran the identical pipeline on the study's own 318 matched control genes, of which
 308 were estimable in this cohort, and recovered a correlation of rho = -0.658, matching the sign of
