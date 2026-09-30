@@ -115,6 +115,7 @@ A copy of the balanced-donor script with only the file prefix changed: Geneforme
 | Base model | Geneformer-V2-316M, `model.safetensors` sha256 `965ceccea81953d362081ef3843560a0e4fef88d396c28017881f1e94b1246f3` |
 | Token dictionary | `token_dictionary_gc104M.pkl`, sha256 `67c445f4385127adfc48dcc072320cd65d6822829bf27dd38070e6e787bc597f` |
 | Precision | bf16 (dtype_cast), deterministic kernels off, as in the balanced-donor study |
+| Package set | sorted `uv pip freeze` without the editable Geneformer line, recorded 2026-10-01 before any GPU call: 208 lines, sha256 `acf2c2d83cfa3cb6fe85cf22ea3a32d2021898b34f789e257a3b42af800a4c05` (`provenance/env_freeze_ts1_sorted.txt`). It differs from the LUAD-run freeze (`353d6596cbcab16c…`, `balanced_donor_luad/provenance/ENVIRONMENTS.md`) in one line only: pandas 3.0.5 (LUAD) versus 2.3.3 (now, Oscar's pandas < 3 downgrade after A6). Replacing that single line in the current freeze reproduces `353d6596cbcab16c…` exactly. datasets 5.0.1, pyarrow 25.0.1, torch 2.13.0, transformers 4.46.0 and numpy 2.5.2 are unchanged. |
 
 Before each GPU step the driver re-checks the pinned files (`registration/pins_prep.sha256`,
 `registration/pins_isp.sha256`) and refuses on any mismatch. The GPU is checked free before launch; no
@@ -216,8 +217,10 @@ Result: the 100th estimable gene sits at position 787 of the draw (687 walked ge
 6. **No-op spot checks** (`noop_spotcheck.py`): every 20th gene of the null list and of the panel+control
    list, first donor, two independent runs; the shift difference must be exactly 0.
 
-**GPU budget.** Predicted ISP cost from the balanced-donor per-call fit: 12.3 (369 genes: 100 null, 28 panel, 241 controls; x 19 donors x 2 operations; `controls/isp_run_order.json`). The Amendment 5 and 6 runs came in at about two-thirds of this model's prediction, so the real figure is likely lower GPU-hours; fine-tunes
-about 1.5 (13 training donors per fold, about 6,200 cells, at the measured 8.19 cells per second, plus scoring) GPU-hours; goals under 0.5. The authorised ceiling is 52 GPU-hours in total. The ISP
+**GPU budget.** Predicted ISP: 12.3 GPU-hours (369 genes, of which 100 null, 28 panel and 241 controls, x 19
+donors x 2 operations; the balanced-donor Phase 6 per-call fit applied to the actual token-positive counts;
+`controls/isp_run_order.json`). Fine-tunes about 1.5 GPU-hours (13 training donors per fold, about 6,200
+cells, at the measured 8.19 cells per second, plus scoring); goals under 0.5. The authorised ceiling is 52 GPU-hours in total. The ISP
 driver enforces a hard ceiling equal to 52 hours minus the GPU time already used by steps 1 to 4 (measured,
 recorded at launch), summed from the markers' own `seconds` field. If a stop is reached, the run halts, no
 partial arm is analysed, and god is told.
@@ -270,7 +273,9 @@ T_CELL_SIGNAL_TOWARD or T_CELL_SIGNAL_AWAY in `balanced_donor_luad/phase7_result
 (sha256 `083b1ef0e83682c093486b58224a2081f8b41641b51430b45991ff79582ad471`): CCR7, CD247, CD27, CD3D, CD3G, CD7, CD8A, GZMA, ICOS, LAT, LCK (TOWARD) and
 CTSW, ITK (AWAY). Among those tested in E2 (a control-adjusted deletion median exists), count the genes
 whose E2 deletion median has the same sign as in LUAD (zero counts as not agreeing). Exact one-sided
-binomial test against 1/2.
+binomial test against 1/2. With the expected n = 10 (s.5.2), `pattern_holds` needs at least 9 of 10 genes
+with the LUAD sign (P(X >= 9) = 11/1024 = 0.0107; P(X >= 8) = 56/1024 = 0.0547). The bar is strict and is
+stated here before any number exists.
 
 | Reading | Rule |
 |---|---|
@@ -320,6 +325,11 @@ sensitivity for the processing imbalance and would need its own registration.
   a gene that is OPEN in colon is not evidence against its LUAD status.
 - The within-donor ambient difference between tumour and normal tissue remains, as in LUAD; no ambient
   classifier is fitted for colon.
+- The E2 null genes are a more highly detected population than the LUAD null genes. The unchanged
+  estimable rule (>= 10 token-positive cells in >= 10 donors) asks for detection in more than half of 19
+  donors, against 10 of 43 in LUAD; E2 reached its 100th estimable gene at draw position 787, LUAD A5 at
+  984. An E2 H2b result that differs from LUAD may partly reflect this difference in the gene
+  population, not only tissue.
 - Nothing here establishes that any gene has a causal role in T-cell state.
 
 ## 11. Differences from the design document (s.6 of the alt-dataset design)
@@ -331,8 +341,9 @@ sensitivity for the processing imbalance and would need its own registration.
   120 or 318.
 - The 5-fold design is kept; eval donors per fold 2 instead of 4 (s.5.1).
 - One host instead of two; the Amendment 3h GPU identity check of the overexpress position replay is not
-  re-run (identical code and library versions to the run where it passed); the two count checks in
-  `build_ovx_index.py` still run on every call.
+  re-run. The code is identical and the package set has one change (pandas 3.0.5 -> 2.3.3, s.3); the
+  libraries 3h depends on (datasets, pyarrow, torch) and transformers are unchanged, so the identity check
+  is not re-run. The two count checks in `build_ovx_index.py` still run on every call.
 
 ## 12. Deviation log (dated entries only; empty at registration)
 
