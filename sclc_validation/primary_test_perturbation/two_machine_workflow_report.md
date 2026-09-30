@@ -7,8 +7,8 @@
 
 The distributed workflow is running normally on two machines. The machines use the same prepared dataset and model assets, but split the perturbation types across GPUs:
 
-- `thinkstation2` (`192.168.100.2`) runs **gene deletion** perturbations.
-- `thinkstation1` (`192.168.100.1`) runs **gene overexpression** perturbations.
+- `thinkstation2` (`<NODE2_IP>`) runs **gene deletion** perturbations.
+- `thinkstation1` (`<NODE1_IP>`) runs **gene overexpression** perturbations.
 
 Both jobs are actively producing output files. Overall progress is approximately **733 of 752 shard markers complete (97.5%)**.
 
@@ -44,7 +44,7 @@ The temporary local GPU idle readings are expected between shards or batches; th
 
 ## Network Use
 
-The workflow uses the direct `enp1s0f0np0` link between `192.168.100.2` and `192.168.100.1` for SSH orchestration, monitoring, and asset synchronization. A two-second traffic sample showed very low active transfer:
+The workflow uses the direct `<IFACE>` link between `<NODE2_IP>` and `<NODE1_IP>` for SSH orchestration, monitoring, and asset synchronization. A two-second traffic sample showed very low active transfer:
 
 - `thinkstation2`: approximately 0.001 MB/s received and near-zero transmitted.
 - `thinkstation1`: approximately 0.001 MB/s received and 0.001 MB/s transmitted.

@@ -13,13 +13,13 @@ ANALYSIS_ROOT="$WORKSPACE_ROOT/KD/sclc_luad_normal_htan_heldout_allgene_perturba
 FINETUNE_ROOT="$WORKSPACE_ROOT/KD/sclc_luad_normal_htan_finetune"
 RUNNER="$ANALYSIS_ROOT/scripts/run_heldout_allgene.py"
 
-REMOTE_USER=${REMOTE_USER:-thinkstation1}
-REMOTE_IP=${REMOTE_IP:-192.168.100.1}
+REMOTE_USER=${REMOTE_USER:-<SSH_USER>}
+REMOTE_IP=${REMOTE_IP:-<NODE1_IP>}
 REMOTE_HOME=${REMOTE_HOME:-/home/thinkstation1}
 REMOTE_WORKSPACE=${REMOTE_WORKSPACE:-$REMOTE_HOME/workspace}
 REMOTE_PYTHON=${REMOTE_PYTHON:-$REMOTE_WORKSPACE/geneformer-uv-starter/.venv/bin/python}
 LOCAL_PYTHON=${LOCAL_PYTHON:-$WORKSPACE_ROOT/geneformer-uv-starter/.venv/bin/python}
-IFACE=${IFACE:-enp1s0f0np0}
+IFACE=${IFACE:-<IFACE>}
 REMOTE_SSH="$REMOTE_USER@$REMOTE_IP"
 REMOTE_ANALYSIS_ROOT="$REMOTE_WORKSPACE/KD/sclc_luad_normal_htan_heldout_allgene_perturbation"
 REMOTE_FINETUNE_ROOT="$REMOTE_WORKSPACE/KD/sclc_luad_normal_htan_finetune"

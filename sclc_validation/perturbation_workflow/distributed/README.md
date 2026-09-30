@@ -7,7 +7,7 @@ GPU and overexpression to the other. The direct 200G interface is used for
 asset transfer and result synchronization.
 
 On `thinkstation2` (the local node), after confirming SSH access to
-`thinkstation1` over `192.168.100.1`:
+`thinkstation1` over the direct link (`<NODE1_IP>`):
 
 ```bash
 cd ~/workspace/geneformer-lung-tcell
@@ -23,13 +23,17 @@ After both arms report all shards complete:
 ./sclc_validation/perturbation_workflow/distributed/run_2node_allgene.sh stats
 ```
 
-The launcher defaults to the documented topology and can be overridden without
-editing it:
+The launcher's network settings are placeholders. Set them for your machines
+without editing the script:
 
 ```bash
-REMOTE_USER=thinkstation1 REMOTE_IP=192.168.100.1 IFACE=enp1s0f0np0 \
+REMOTE_USER=<SSH_USER> REMOTE_IP=<NODE1_IP> IFACE=<IFACE> \
   ./sclc_validation/perturbation_workflow/distributed/run_2node_allgene.sh status
 ```
+
+Fill in the placeholders: `<SSH_USER>` is the SSH user on the remote node, `<NODE1_IP>` its address on the
+direct link, and `<IFACE>` the local interface of that link (`ip -br addr` lists them). Export them once per
+shell or prefix each command as above; `monitor_2node_progress.sh` reads the same `REMOTE_USER` and `REMOTE_IP`.
 
 `prepare` transfers the fine-tune workspace and analysis inputs, then runs one
 delete and one overexpression smoke test. `start` is resumable through the
