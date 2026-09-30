@@ -1,7 +1,7 @@
 # Balanced-Donor LUAD Tumor-vs-Normal T-Cell In Silico Perturbation Study
 
-**Status: complete draft, pending the independent gatekeeper's final read before this reaches the
-human.** All analysis outputs cited below have been checked by that gatekeeper (Stanley), including an
+**Status: FINAL PASS from the independent gatekeeper (Stanley), commit `0e1faf721aed59580c85c2cc3a3b68833861ea8b`, 2026-09-30 20:46 JST (11:46Z); signed file hashes: md `21971f31...`, html `06bd4c32...`, pdf `c2fb2200...`. Ready for the human's review; merge is the human's decision alone.**
+All analysis outputs cited below have been checked by that gatekeeper (Stanley), including an
 independent full recomputation of the null study's statistics from saved intermediate data, and are
 reported using his required wording where the null study is concerned: the null study's gene population
 is described as random eligible genes detectable in LUAD tumor T cells, never as genome-wide; its
