@@ -30,8 +30,9 @@ the screen's list turned out to describe epithelial and blood-lineage biology ra
 biology in this cohort. A curated panel of 36 T-cell genes gave a stable, cross-validated concordance
 for 13 genes: deleting each one shifted tumor T cells toward the same donor's normal profile, and
 overexpressing it shifted them away, a pattern that held under every registered robustness check. A
-separate, pre-registered test asked whether the same direction-consistent concordance appears among
-genes with no a priori relationship to the tumor-versus-normal axis. Applying the identical pipeline to
+separate, pre-registered test asked whether deletion and overexpression shifts are anti-correlated
+across genes with no a priori relationship to the tumor-versus-normal axis. Applying the identical
+pipeline to
 100 randomly drawn, independently eligible genes gave a significant negative rank correlation between
 deletion and overexpression shifts (Spearman rho = -0.593, one-sided p at the permutation floor of the
 100,000-permutation test), confirmed on a pre-registered nested extension to 200 genes (rho = -0.608,
@@ -551,10 +552,11 @@ signed (sha256 `a00ccb2f...` and `c9e56026...`).*
 
 *Figure 10. The reference distribution of Spearman rho at each sample size: for continuous, untied data
 the permutation null does not depend on the data values, so a fresh simulation of independent data at
-the same n samples the same reference distribution the registered permutation test itself drew from.
-The registered test's own 100,000 permuted values are not stored in the signed output files, so they
-are not plotted directly; the observed rho and its permutation-floor p are taken from those files
-unchanged. Source: `scripts/make_null_study_figures.py`, verified by Stanley 2026-09-30.*
+the same n samples the same reference distribution the registered permutation test itself drew from
+(N=100: no ties; N=200: 3 tied deletion values out of 200, a negligible effect). The registered test's
+own 100,000 permuted values are not stored in the signed output files, so they are not plotted directly;
+the observed rho and its permutation-floor p are taken from those files unchanged. Source:
+`scripts/make_null_study_figures.py`, verified by Stanley 2026-09-30.*
 
 ![Figure 11](../figures/fig11_null_loo_stability.png)
 
@@ -673,7 +675,7 @@ The broader point, stated plainly rather than as a caveat appended at the end, i
 null study of this kind is worth the GPU time it costs whenever a design's own matched-control data
 hints at a systematic pattern. One pre-registered test, confirmed on a nested extension, agreeing in
 sign with an earlier post hoc observation, is worth knowing; the two are not interchangeable evidence,
-and only the pre-registered test was powered in advance to say how strong that agreement is.
+and only the pre-registered test was powered in advance to detect that correlation.
 
 ---
 
