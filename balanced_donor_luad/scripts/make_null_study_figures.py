@@ -8,10 +8,13 @@ number plotted is read directly from the signed files' own fields.
 
 The one exception is figure (b), the reference null distribution: the signed files do not store the
 100,000 individual permutation draws, only the observed rho and that p sits at the permutation floor
-(no draw reached it). Figure (b) therefore draws an illustrative reference distribution of Spearman rho
-under independence at the same n, from a fresh simulation of independent random data -- never from the
-study's own gene data -- exactly the same construction the registration's own power-by-simulation
-methodology (Amendment 6 s.6.4) already uses, and the caption says so explicitly.
+(no draw reached it). Figure (b) therefore draws a reference distribution of Spearman rho under
+independence at the same n, from a fresh simulation of independent random data -- never from the
+study's own gene data. Per Stanley's review (2026-09-30), this is more than illustrative: for
+continuous, untied data the Spearman permutation null does not depend on the data values, so an
+independent-data simulation at matching n samples the same reference distribution the registered
+permutation test itself drew from -- exactly the same construction the registration's own
+power-by-simulation methodology (Amendment 6 s.6.4) already uses. The caption says this explicitly.
 
 Captions follow Stanley's 2026-09-30T11-06-43Z wording rules: "random eligible genes detectable in LUAD
 tumour T cells", never "genome-wide"; p reported as "at the permutation floor", never as an exact
@@ -89,9 +92,9 @@ def fig_null_reference(a5, n200, out_path):
         ax.set_title(f"{label}: reference null (independent data, illustrative)", fontsize=9.5)
         ax.set_xlabel("Spearman rho")
         ax.set_ylabel("count (20,000 simulated draws)")
-    fig.suptitle("Reference null distribution of Spearman rho under independence -- illustrative only;\n"
-                 "the registered test permuted the study's own 100,000 times and found no draw at or beyond "
-                 "the observed value", fontsize=10)
+    fig.suptitle("Reference null distribution of Spearman rho (independent data, same n) -- for untied data\n"
+                 "this does not depend on the data values; the registered test permuted the study's gene "
+                 "values 100,000 times and found no draw at or beyond the observed value", fontsize=10)
     fig.tight_layout(rect=(0, 0, 1, 0.90))
     fig.savefig(out_path, dpi=150)
     plt.close(fig)

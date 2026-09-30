@@ -29,17 +29,17 @@ earlier screen, 13 were not expressed in enough donors' T cells to test at all, 
 the screen's list turned out to describe epithelial and blood-lineage biology rather than T-cell
 biology in this cohort. A curated panel of 36 T-cell genes gave a stable, cross-validated concordance
 for 13 genes: deleting each one shifted tumor T cells toward the same donor's normal profile, and
-overexpressing it shifted them away, a pattern that held under every registered robustness check. This
-same directional concordance, however, was not unique to biologically relevant genes. Applying the
-identical pipeline to 100 randomly drawn, independently eligible genes gave a significant negative
-correlation between deletion and overexpression shifts (Spearman rho = -0.593, one-sided p at the
-permutation floor of the 100,000-permutation test), and the finding held, and strengthened slightly,
-when the sample was extended to 200 genes under a pre-registered nested design (rho = -0.608, again at
-the permutation floor). A validity check on the study's own 318 matched control genes recovered a
-correlation of the same sign. Together these results indicate that opposite-signed deletion and
-overexpression effects are a common property of this model and this experimental design, not a marker
-of T-cell-specific biology, which narrows what the 13-gene concordance in the curated panel can be
-taken to show without overturning the finding itself.
+overexpressing it shifted them away, a pattern that held under every registered robustness check. A
+separate, pre-registered test asked whether the same direction-consistent concordance appears among
+genes with no a priori relationship to the tumor-versus-normal axis. Applying the identical pipeline to
+100 randomly drawn, independently eligible genes gave a significant negative rank correlation between
+deletion and overexpression shifts (Spearman rho = -0.593, one-sided p at the permutation floor of the
+100,000-permutation test), confirmed on a pre-registered nested extension to 200 genes (rho = -0.608,
+again at the permutation floor). A validity check on the study's own 318 matched control genes recovered
+a correlation of the same sign. Together these results indicate that a generic, gene-independent
+anti-correlation between deletion and overexpression shifts exists in this model and this experimental
+design, which narrows what direction-consistent concordance in the curated panel, on its own, can be
+taken to show, without overturning the panel's finding itself.
 
 ---
 
@@ -228,9 +228,10 @@ that claim as a cost-accounting boundary.
 ### 2.5 Null study design (Amendments 4 through 6)
 
 The motivation for the null study came directly from the study's own matched-control data. The
-delete-overexpress raw-shift pipeline already showed a negative correlation across the 120 to 318
-matched control genes used elsewhere in the study (a stratum-adjusted correlation of roughly −0.62 is
-reported in `RESULTS.md`). Because the stratum-adjustment machinery does not extend to genes outside
+delete-overexpress raw-shift pipeline already showed a negative correlation across the study's 318
+unique matched control genes (360 control-by-stratum entries, since a gene can serve more than one
+stratum; a stratum-adjusted correlation of roughly −0.62 is reported in `RESULTS.md`). Because the
+stratum-adjustment machinery does not extend to genes outside
 any registered control stratum, the null study asks the same concordance question on genes drawn
 independently of any panel or control assignment, using the raw, non-stratum-adjusted shift.
 Stratum-adjusting a newly drawn gene would require inventing a post-hoc matching rule, which the
@@ -406,7 +407,9 @@ prose.
 | P24 | Null study N=200 confirmatory extension: positive, rho=-0.608, p at the permutation floor, LOO 200/200, bootstrap 1.0, no-op 10/10; s.6.7 headline "positive, confirmed at N=200" | `phase8_null/n200_combined_result_v2.json`, sha256 `c9e56026fac99d30a89da91ab557b09e7889717163712242a961d33295a3b847` | `2fe4e31`, gatekeeper PASS 2026-09-30 11:06Z |
 | P25 | R3 validity check on 318 registered controls (308 estimable): rho=-0.658, sign-compatible with -0.62, not failed | same files as P23/P24; merged controls tree `phase6_all_merged` on thinkstation1, manifest sha256 `5da69fedc48fa382cbdfe2e6173cc38dc87b3f4b39535869606369a4db1797c1` | `2fe4e31`, gatekeeper PASS 2026-09-30 11:06Z |
 | P26 | Figures 1-8 unchanged since original generation, verified by sha256 against the copy on `main` | `figures/fig1_design.png` through `fig8_outcome_table.png` | `a6bf6d0`, no commit since has touched `figures/` on `main` |
-| P27 | Figures 9-12 (null study), generated only from the two files in P23/P24, hash-checked before plotting; figure 10 is a labeled illustrative reference, not a reconstruction of the actual permutation draws | `scripts/make_null_study_figures.py` | committed alongside this report |
+| P27 | Figures 9-12 (null study), generated only from the two files in P23/P24, hash-checked before plotting; figure 10 is a reference distribution (independent-data simulation), not the registered test's own stored permutation draws | `scripts/make_null_study_figures.py` | committed alongside this report; construction confirmed valid by Stanley 2026-09-30 |
+| P28 | Earlier whole-model screen (104M, fp32, class-centroid, cell-weighted): Spearman rho -0.08 to -0.30 across 6 comparisons, about half of genes opposite-signed | `RESULTS.md` section 4; `sclc_validation/primary_test_perturbation/tables/allgene_delete_overexpress_shift.csv` | published, `main` |
+| P29 | R4 ambient LOAO and C2 secondary-percentile join, run at N=100 and N=200 (registered, Amendment 5 P/R4 and C2; extended by Amendment 6) | `phase8_null/ambient_loao_n100.json`, `ambient_loao_n200.json`, `secondary_percentiles_n100.json`, `secondary_percentiles_n200.json` | run 2026-09-30 at `2fe4e31`; pending gatekeeper check before content is reported |
 
 ---
 
@@ -436,7 +439,7 @@ committed on `analysis/balanced-donor-luad`).
 ### 3.2 Panel A: the July screen's genes are mostly untestable in T cells
 
 Thirteen of the 15 genes carried over from the July screen could not be tested at all: each was
-expressed in fewer than the required 10 of 100 tumor T cells in almost every donor. Inspecting the
+estimable in at most 8 of the 43 patients, short of the design's minimum of 10. Inspecting the
 list, these 13 genes are keratins, a mucin, a secretoglobin, a hemoglobin chain, and other epithelial
 or blood-lineage markers, not T-cell genes. One gene, BTG1, could not be scored because its matched
 control stratum had fewer than the required 20 candidate controls. The single gene that could be
@@ -506,8 +509,9 @@ estimable donor count, and Holm-adjusted p per arm. Source:
 Across the 360 control-gene-by-stratum entries used to adjust the panel results, the donor-median
 deletion and overexpression shifts were themselves anti-correlated (Spearman rho = -0.62), and about
 35% of control entries fell in the same toward-normal quadrant as the panel's positive calls. Measured
-against this control spread, only four of the 13 stable Panel B genes, CCR7, CD3D, GZMA, and CD7, stood
-out as unusually large in effect size; the rest sat within the range the controls themselves produced.
+against this control spread, four of the 13 stable Panel B genes, CCR7, CD3D, GZMA, and CD7 (and CD27 on
+its overexpression arm), stood out as unusually large in effect size; the rest sat within the range the
+controls themselves produced.
 This observation was descriptive and post hoc at the time it was made, and the study's own registration
 was explicit that it narrows what a concordance finding licenses without overturning it. The null study
 described next was designed to test the same question directly, on genes drawn independently of any
@@ -545,11 +549,12 @@ signed (sha256 `a00ccb2f...` and `c9e56026...`).*
 
 ![Figure 10](../figures/fig10_null_reference_distribution.png)
 
-*Figure 10. A reference distribution of Spearman rho under independence at the same sample sizes,
-shown for illustration only: the signed output files record the observed correlation and that its
-one-sided p sits at the permutation floor of the registered 100,000-permutation test, not the individual
-permuted values, so the histogram here is a fresh simulation of independent data at matching n, not a
-reconstruction of the actual test. Source: `scripts/make_null_study_figures.py`.*
+*Figure 10. The reference distribution of Spearman rho at each sample size: for continuous, untied data
+the permutation null does not depend on the data values, so a fresh simulation of independent data at
+the same n samples the same reference distribution the registered permutation test itself drew from.
+The registered test's own 100,000 permuted values are not stored in the signed output files, so they
+are not plotted directly; the observed rho and its permutation-floor p are taken from those files
+unchanged. Source: `scripts/make_null_study_figures.py`, verified by Stanley 2026-09-30.*
 
 ![Figure 11](../figures/fig11_null_loo_stability.png)
 
@@ -562,11 +567,10 @@ the -0.62 figure already reported from the panel analysis. Because the two quant
 statistic (one is raw, one is stratum-adjusted, and they are computed over different gene sets and
 donor weightings), only the sign is compared, and the sign matched.
 
-Taken together, these three results, the original 120 to 318 matched controls, the 100-gene primary
-draw, and its 200-gene confirmation, converge on the same conclusion: an anti-correlation between a
-gene's deletion effect and its overexpression effect is common across genes with no particular relation
-to the tumor-versus-normal axis in this model and this experimental design. It is not restricted to the
-genes chosen for the panels.
+This is one pre-registered test, at N=100 and confirmed at N=200 on a nested extension of the same
+draw, not three independent results. Its finding, a negative rank correlation between deletion and
+overexpression shifts among random eligible genes, is consistent in sign with the earlier, post hoc
+observation on the study's own matched control genes.
 
 ---
 
@@ -585,30 +589,41 @@ The curated T-cell panel gave a more substantive result. Thirteen genes, most of
 components of T-cell receptor signaling and effector function (CD3D, CD3G, CD247, LCK, LAT, CD8A, GZMA,
 CD27, ICOS) or migration and memory (CCR7), showed a stable, direction-consistent response to deletion
 and overexpression that survived every sensitivity analysis the study registered in advance. Two genes,
-ITK and CTSW, showed the same internal coherence in the reverse direction. This is a real, reproducible
-pattern in the model's behavior on this cohort.
+ITK and CTSW, showed the same internal coherence in the reverse direction. This pattern is reproducible
+across donors, folds, and the registered sensitivities.
 
 The null study changes how that pattern should be interpreted, without erasing it. A sample of 100, and
 then 200, genes drawn with no relationship to the tumor-versus-normal axis, and excluded from every
-panel and control assignment in the study, showed the same negative correlation between deletion and
-overexpression effects, at a magnitude (rho around -0.59 to -0.61) that sits alongside the panel's own
-matched-control cloud (rho -0.62) rather than below it. Whatever produces opposite-signed responses to
-deletion and overexpression in this model, whether it reflects a property of how Geneformer represents
-dose, a property of the donor-centroid goal construction, or something about this specific tissue
-comparison, it operates on genes with no connection to T-cell biology about as strongly as it operates
-on the 13 genes the panel called. Registered concordance between deletion and overexpression, on its
-own, is therefore not evidence that a gene is doing something T-cell-specific. It is evidence that the
-gene passed a test that most eligible genes in this cohort would also pass.
+panel and control assignment in the study, showed a negative rank correlation between deletion and
+overexpression effects on its own terms (rho -0.593, confirmed at rho -0.608 on the N=200 extension).
+Whatever produces this correlation, whether it reflects a property of how Geneformer represents dose, a
+property of the donor-centroid goal construction, or something about this specific tissue comparison,
+each remains an untested possibility this study does not distinguish between. What the correlation does
+establish is that a generic, gene-independent anti-correlation between deletion and overexpression
+shifts exists in this model and this design. A per-gene concordance call is therefore expected to arise
+under that generic tendency on its own, and cannot by itself mark a gene as doing something
+T-cell-specific.
 
-This does not mean the 13-gene panel result is void. Four of the 13 genes, CCR7, CD3D, GZMA, and CD7,
-showed effect sizes clearly outside the spread of the study's own matched controls, and the null study
-did not test effect size, only direction. A gene's concordance direction is common; an unusually large
-concordance, measured against a population of genes with no prior claim to relevance, is a different
-and more specific kind of evidence. The panel's headline calls should be read with this distinction in
-mind: consistency across donors and both perturbation directions establishes that the model is doing
-something reproducible with each of these 13 genes, and the four with unusual effect sizes are the
-better candidates for that something being specific to T-cell state, while the direction-only criterion
-by itself is now shown to be a weak discriminator.
+The null test itself is a population-level rank correlation across genes; it was not designed to, and
+does not, measure what fraction of individual genes would pass the panel's own per-gene concordance
+criterion (Holm-adjusted, per-donor, control-adjusted), since that criterion was never applied to the
+null genes. Two pieces of evidence bear on per-gene prevalence, and both are post hoc and corroborating
+rather than part of the registered test: 35% of the study's own control-by-stratum entries fall in the
+same toward-normal quadrant as the panel's positive calls (Results 3.4), and an earlier, independently
+constructed whole-model screen found about half of tested genes opposite-signed between its own delete
+and overexpress arms (below). Registered secondary analyses that place each of the 13 panel genes'
+raw shifts within the null distribution directly (the ambient LOAO flag and the secondary-percentile
+join, both pre-registered under Amendments 5 and 6) have been computed and are pending the gatekeeper's
+check; they are not yet reported here, and the headline above does not depend on them.
+
+This does not mean the 13-gene panel result is void. Four of the 13 genes, CCR7, CD3D, GZMA, and CD7
+(and CD27 on its overexpression arm), showed effect sizes clearly outside the spread of the study's own
+matched controls, and the null study did not test effect size, only direction. An unusually large
+effect size, measured against a population of genes with no prior claim to relevance, is a more specific
+kind of evidence than concordance direction alone. The panel's headline calls should be read with this
+distinction in mind: consistency across donors and both perturbation directions establishes that the
+model is doing something reproducible with each of these 13 genes, and the genes with unusual effect
+sizes are the better candidates for that something being specific to T-cell state.
 
 Three limitations bear directly on this conclusion. First, the null study's gene population is bounded
 by what is detectable in this specific cohort of tumor T cells rather than being an unconditioned
@@ -618,18 +633,18 @@ goal construction, and the same model, so this result cannot distinguish a genui
 of gene dosage from an artifact specific to this combination of model and design; a comparison against
 an independently constructed null, or against a different goal definition, would be needed to separate
 those possibilities, and is not attempted here. Third, an earlier, differently constructed whole-model
-screen (104M, fp32, class-centroid goal, cell-weighted) showed the same directional pattern at a weaker
-magnitude (Spearman rho -0.08 to -0.30 across six comparisons), which corroborates that the phenomenon
-is not unique to this study's specific instrument, but that screen used a different model, precision,
-goal definition, and weighting scheme, so it is corroborating evidence rather than a pooled estimate
-and cannot itself rank the 13 panel genes.
+screen (104M, fp32, class-centroid goal, cell-weighted; `sclc_validation/primary_test_perturbation/tables/allgene_delete_overexpress_shift.csv`)
+showed the same directional pattern at a weaker magnitude (Spearman rho -0.08 to -0.30 across six
+comparisons, about half of genes opposite-signed), which corroborates that the phenomenon is not unique
+to this study's specific instrument, but that screen used a different model, precision, goal
+definition, and weighting scheme, so it is corroborating evidence rather than a pooled estimate and
+cannot itself rank the 13 panel genes.
 
 The broader point, stated plainly rather than as a caveat appended at the end, is that a pre-registered
 null study of this kind is worth the GPU time it costs whenever a design's own matched-control data
-hints at a systematic pattern, because a post hoc observation on 120 to 318 already-computed genes and
-a dedicated, adequately powered test on independently drawn genes can and did agree here, which is
-itself worth knowing, but they are not interchangeable evidence, and only the dedicated test was
-powered in advance to say how strong that agreement is.
+hints at a systematic pattern. One pre-registered test, confirmed on a nested extension, agreeing in
+sign with an earlier post hoc observation, is worth knowing; the two are not interchangeable evidence,
+and only the pre-registered test was powered in advance to say how strong that agreement is.
 
 ---
 
