@@ -141,3 +141,6 @@ poster/posterdown_draft*
 
 # R session leftovers
 .Rhistory
+
+# ONNX Runtime telemetry session file, written to the working directory by sandboxed mempalace calls
+:memory:.ses
