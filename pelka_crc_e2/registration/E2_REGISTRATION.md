@@ -347,4 +347,12 @@ sensitivity for the processing imbalance and would need its own registration.
 
 ## 12. Deviation log (dated entries only; empty at registration)
 
-(none)
+**D1, 2026-10-01 12:50 JST (03:50 UTC). ISP per-gene cost above the s.5.4 prediction. Not a protocol deviation.**
+Nothing in the registered procedure, order, ceiling or analysis changes. The s.5.4 prediction of 12.3 ISP GPU-hours
+(about 120 GPU-s per gene averaged over 369 genes) underestimated the measured cost. The 100 null genes used 29,382
+GPU-s (293.8 s per gene; the markers' own `seconds` field, `run_log_thinkstation1.jsonl`), and the first 19.5 panel genes
+used 5,573 s. Projected ISP total at this rate: about 30 GPU-hours, or about 32 with the 2.0-hour prep. That is inside
+the authorised 52 GPU-hours, and the driver's hard ceiling (180,020 ISP GPU-s, recorded at launch) is unchanged and in
+force. Likely reason, not tested: the prediction applied the balanced-donor per-call fit, and the E2 null genes are a more
+highly detected population (s.10), so each call has more token-positive cells. The miss is recorded here as the
+gatekeeper advised on 2026-10-01; it has no bearing on any reading.
