@@ -1,0 +1,994 @@
+{
+ "S1_global_goal": {
+  "ENSG00000167286": {
+   "status": "NOT_ESTIMABLE_CONTROLS",
+   "del_median": null
+  },
+  "ENSG00000198851": {
+   "status": "OPEN",
+   "del_median": -0.0009025167370601442
+  },
+  "ENSG00000160654": {
+   "status": "OPEN",
+   "del_median": -0.0018552842160281515
+  },
+  "ENSG00000198821": {
+   "status": "DELETION_ONLY",
+   "del_median": 0.00212228098259143
+  },
+  "ENSG00000116824": {
+   "status": "NOT_ESTIMABLE_CONTROLS",
+   "del_median": null
+  },
+  "ENSG00000110448": {
+   "status": "OPEN",
+   "del_median": -0.0018935979523273727
+  },
+  "ENSG00000013725": {
+   "status": "OPEN",
+   "del_median": -4.7024135395259026e-05
+  },
+  "ENSG00000173762": {
+   "status": "NOT_ESTIMABLE_CONTROLS",
+   "del_median": null
+  },
+  "ENSG00000178562": {
+   "status": "OPEN",
+   "del_median": -0.0006909880252409053
+  },
+  "ENSG00000182866": {
+   "status": "OPEN",
+   "del_median": -2.094310192938797e-05
+  },
+  "ENSG00000115085": {
+   "status": "OPEN",
+   "del_median": 0.0011936720648030642
+  },
+  "ENSG00000213658": {
+   "status": "OPEN",
+   "del_median": -0.0006477230926173233
+  },
+  "ENSG00000113263": {
+   "status": "DELETION_ONLY",
+   "del_median": 0.0036782324463502506
+  },
+  "ENSG00000172673": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000141293": {
+   "status": "OPEN",
+   "del_median": -0.000346080902688129
+  },
+  "ENSG00000153563": {
+   "status": "OPEN",
+   "del_median": -0.0018177233738067896
+  },
+  "ENSG00000172116": {
+   "status": "OPEN",
+   "del_median": -0.0005613926934847585
+  },
+  "ENSG00000168685": {
+   "status": "OPEN",
+   "del_median": 0.0019375706433665094
+  },
+  "ENSG00000126353": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000081059": {
+   "status": "OPEN",
+   "del_median": -0.002385715861896892
+  },
+  "ENSG00000138795": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000188404": {
+   "status": "OPEN",
+   "del_median": 0.003433759324856544
+  },
+  "ENSG00000145649": {
+   "status": "OPEN",
+   "del_median": 0.002661072247701396
+  },
+  "ENSG00000113088": {
+   "status": "OPEN",
+   "del_median": 0.0032876279854596297
+  },
+  "ENSG00000180644": {
+   "status": "T_CELL_SIGNAL_TOWARD",
+   "del_median": 0.0041458004831843275
+  },
+  "ENSG00000105374": {
+   "status": "OPEN",
+   "del_median": 0.0006582867817155789
+  },
+  "ENSG00000172543": {
+   "status": "OPEN",
+   "del_median": 0.0003144397928993585
+  },
+  "ENSG00000139193": {
+   "status": "DELETION_ONLY",
+   "del_median": -0.002023712192959666
+  },
+  "ENSG00000163600": {
+   "status": "OPEN",
+   "del_median": -0.0004592385731861386
+  },
+  "ENSG00000163599": {
+   "status": "OPEN",
+   "del_median": 0.0005177209938889083
+  },
+  "ENSG00000188389": {
+   "status": "OPEN",
+   "del_median": -0.0017538843088922434
+  },
+  "ENSG00000049768": {
+   "status": "OPEN",
+   "del_median": 0.0006976111925316743
+  },
+  "ENSG00000030419": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000020633": {
+   "status": "OPEN",
+   "del_median": -0.00013505817681639808
+  },
+  "ENSG00000127152": {
+   "status": "OPEN",
+   "del_median": 0.00045335001416421075
+  },
+  "ENSG00000110848": {
+   "status": "NOT_ESTIMABLE_CONTROLS",
+   "del_median": null
+  },
+  "ENSG00000277734": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000211751": {
+   "status": "NOT_RUN",
+   "del_median": null
+  },
+  "ENSG00000211772": {
+   "status": "NOT_RUN",
+   "del_median": null
+  }
+ },
+ "A3h_B_all_cells_overexpress": {
+  "status_changes": {},
+  "ovx_median": {
+   "ENSG00000198851": 0.01297114372253418,
+   "ENSG00000160654": 0.011590328216552735,
+   "ENSG00000198821": -0.0015128135681152345,
+   "ENSG00000110448": -0.00238525390625,
+   "ENSG00000013725": 0.0007366013526916503,
+   "ENSG00000178562": -0.00043322086334228525,
+   "ENSG00000182866": 0.008223209381103515,
+   "ENSG00000115085": 0.00021345138549804681,
+   "ENSG00000213658": 0.0025452613830566403,
+   "ENSG00000113263": -0.004805405139923096,
+   "ENSG00000141293": 0.0031443214416503906,
+   "ENSG00000153563": -2.0751953124999774e-05,
+   "ENSG00000172116": 0.003277590274810791,
+   "ENSG00000168685": -0.0063773441314697275,
+   "ENSG00000081059": 0.006485977172851562,
+   "ENSG00000188404": -0.020070557594299314,
+   "ENSG00000145649": -0.011792898178100586,
+   "ENSG00000113088": -0.001939640045166016,
+   "ENSG00000180644": -0.017131953239440917,
+   "ENSG00000105374": -0.008044548034667968,
+   "ENSG00000172543": -0.0045156097412109375,
+   "ENSG00000139193": -0.000902729034423828,
+   "ENSG00000163600": 0.00027904510498046855,
+   "ENSG00000163599": -0.005167121887207031,
+   "ENSG00000188389": -0.0016178512573242188,
+   "ENSG00000049768": -0.007831344604492188,
+   "ENSG00000020633": -0.0040512561798095705,
+   "ENSG00000127152": 0.0024819087982177737
+  },
+  "note": "Amendment 3h sensitivity B, unregistered: overexpress over all 100 perturbed cells (mostly insertion into non-expressing cells); delete unchanged; never changes a status"
+ },
+ "A3g_alternative_rules": {
+  "rule1_any_control": {
+   "rules": {
+    "control_min_cells": 1,
+    "min_controls_per_donor": 1,
+    "holm_m": "panel"
+   },
+   "status_changes": {
+    "ENSG00000113263": {
+     "registered": "OPEN",
+     "alternative": "DELETION_ONLY"
+    }
+   },
+   "note": "sensitivity line only (Amendment 3g); no registered status changes on it"
+  },
+  "rule2_holm_tested": {
+   "rules": {
+    "control_min_cells": 10,
+    "min_controls_per_donor": 10,
+    "holm_m": "tested"
+   },
+   "status_changes": {},
+   "note": "sensitivity line only (Amendment 3g); no registered status changes on it"
+  }
+ },
+ "S2_leader_merad_vs_rest": {
+  "ENSG00000198851|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0006011141484936109,
+   "n_others": 19
+  },
+  "ENSG00000198851|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.01161162214724379,
+   "n_others": 19
+  },
+  "ENSG00000160654|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.001437161471341159,
+   "n_others": 19
+  },
+  "ENSG00000160654|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.010012933187098526,
+   "n_others": 19
+  },
+  "ENSG00000198821|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0016045847649851556,
+   "n_others": 19
+  },
+  "ENSG00000198821|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0006751083746189024,
+   "n_others": 19
+  },
+  "ENSG00000110448|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0021893455868675594,
+   "n_others": 13
+  },
+  "ENSG00000110448|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.003546463815789474,
+   "n_others": 13
+  },
+  "ENSG00000013725|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -5.8184746528467804e-05,
+   "n_others": 19
+  },
+  "ENSG00000013725|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.002219460227272727,
+   "n_others": 19
+  },
+  "ENSG00000178562|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.000699990828407002,
+   "n_others": 11
+  },
+  "ENSG00000178562|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0007714425167588716,
+   "n_others": 11
+  },
+  "ENSG00000182866|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.00013473752945188496,
+   "n_others": 19
+  },
+  "ENSG00000182866|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0076509632168604595,
+   "n_others": 19
+  },
+  "ENSG00000115085|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0005290557186304164,
+   "n_others": 16
+  },
+  "ENSG00000115085|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0001838595669467251,
+   "n_others": 16
+  },
+  "ENSG00000213658|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0003250340834313396,
+   "n_others": 19
+  },
+  "ENSG00000213658|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0015647843567251462,
+   "n_others": 19
+  },
+  "ENSG00000113263|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.003102874755859375,
+   "n_others": 13
+  },
+  "ENSG00000113263|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0031254755986201295,
+   "n_others": 13
+  },
+  "ENSG00000141293|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 7.149268840921335e-05,
+   "n_others": 19
+  },
+  "ENSG00000141293|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.001063999376798931,
+   "n_others": 19
+  },
+  "ENSG00000153563|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.000490210005862943,
+   "n_others": 18
+  },
+  "ENSG00000153563|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.00021579969260893304,
+   "n_others": 18
+  },
+  "ENSG00000172116|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.00010891618399784487,
+   "n_others": 15
+  },
+  "ENSG00000172116|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0035690452938988097,
+   "n_others": 15
+  },
+  "ENSG00000168685|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0014747783009840404,
+   "n_others": 19
+  },
+  "ENSG00000168685|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.007132244499362245,
+   "n_others": 19
+  },
+  "ENSG00000081059|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.001010502866824314,
+   "n_others": 12
+  },
+  "ENSG00000081059|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0034323087719638954,
+   "n_others": 12
+  },
+  "ENSG00000188404|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.002185997596153846,
+   "n_others": 11
+  },
+  "ENSG00000188404|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.006325877796519886,
+   "n_others": 11
+  },
+  "ENSG00000145649|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0021922768339185904,
+   "n_others": 19
+  },
+  "ENSG00000145649|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.004026235260578416,
+   "n_others": 19
+  },
+  "ENSG00000113088|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0009516665810032895,
+   "n_others": 11
+  },
+  "ENSG00000113088|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0014148591694078945,
+   "n_others": 11
+  },
+  "ENSG00000180644|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0031314744506599048,
+   "n_others": 18
+  },
+  "ENSG00000180644|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.012111339064844887,
+   "n_others": 18
+  },
+  "ENSG00000105374|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.00046373146417582993,
+   "n_others": 19
+  },
+  "ENSG00000105374|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.002907743908110119,
+   "n_others": 19
+  },
+  "ENSG00000172543|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0006281491263725939,
+   "n_others": 14
+  },
+  "ENSG00000172543|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0019419438085514747,
+   "n_others": 14
+  },
+  "ENSG00000139193|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0013517618510583682,
+   "n_others": 19
+  },
+  "ENSG00000139193|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0015425101093862249,
+   "n_others": 19
+  },
+  "ENSG00000163600|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0009967191338378248,
+   "n_others": 18
+  },
+  "ENSG00000163600|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.0004241781073558546,
+   "n_others": 18
+  },
+  "ENSG00000163599|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 6.633854713760504e-05,
+   "n_others": 18
+  },
+  "ENSG00000163599|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.00033646986677221563,
+   "n_others": 18
+  },
+  "ENSG00000188389|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.002268021195023148,
+   "n_others": 15
+  },
+  "ENSG00000188389|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0005657783973174284,
+   "n_others": 15
+  },
+  "ENSG00000049768|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0005633318865740741,
+   "n_others": 9
+  },
+  "ENSG00000049768|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0007694180164272936,
+   "n_others": 9
+  },
+  "ENSG00000020633|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0001181246054292929,
+   "n_others": 19
+  },
+  "ENSG00000020633|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": -0.0025981662826420893,
+   "n_others": 19
+  },
+  "ENSG00000127152|delete": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.00028483072916666663,
+   "n_others": 19
+  },
+  "ENSG00000127152|overexpress": {
+   "leader_merad_median": null,
+   "n_lm": 0,
+   "others_median": 0.003163213315217391,
+   "n_others": 19
+  }
+ },
+ "S4_cell_weighted": {
+  "ENSG00000198851|delete": {
+   "cell_weighted_mean_shift": -0.0016756132831723671,
+   "n_cells": 1397,
+   "donor_median_a": -0.0008080551415880494,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000198851|overexpress": {
+   "cell_weighted_mean_shift": 0.004806305565147973,
+   "n_cells": 1397,
+   "donor_median_a": 0.012898921596459967,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000160654|delete": {
+   "cell_weighted_mean_shift": -0.0018521102471870025,
+   "n_cells": 1021,
+   "donor_median_a": -0.0016104226801606455,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000160654|overexpress": {
+   "cell_weighted_mean_shift": 0.00564151879739341,
+   "n_cells": 1021,
+   "donor_median_a": 0.010044228669856946,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000198821|delete": {
+   "cell_weighted_mean_shift": 0.0016440725396971935,
+   "n_cells": 677,
+   "donor_median_a": 0.0017648553182873145,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000198821|overexpress": {
+   "cell_weighted_mean_shift": -0.0018033995410012002,
+   "n_cells": 677,
+   "donor_median_a": -0.0003846415414580239,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000110448|delete": {
+   "cell_weighted_mean_shift": -0.0021704714834404905,
+   "n_cells": 209,
+   "donor_median_a": -0.0019012212987116017,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000110448|overexpress": {
+   "cell_weighted_mean_shift": -0.0020616887288800838,
+   "n_cells": 209,
+   "donor_median_a": -0.002845488342584348,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000013725|delete": {
+   "cell_weighted_mean_shift": -0.0005924782915440256,
+   "n_cells": 499,
+   "donor_median_a": -0.00011094373503067604,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000013725|overexpress": {
+   "cell_weighted_mean_shift": 0.0012630967195621711,
+   "n_cells": 499,
+   "donor_median_a": 0.001983342729173265,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000178562|delete": {
+   "cell_weighted_mean_shift": -0.0015142459680538365,
+   "n_cells": 202,
+   "donor_median_a": -0.0005130887102222738,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000178562|overexpress": {
+   "cell_weighted_mean_shift": 0.001182329536664604,
+   "n_cells": 202,
+   "donor_median_a": -3.902971893922423e-05,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000182866|delete": {
+   "cell_weighted_mean_shift": -1.3740510596722308e-05,
+   "n_cells": 1054,
+   "donor_median_a": 0.00023573229516755278,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000182866|overexpress": {
+   "cell_weighted_mean_shift": 0.004260321948288514,
+   "n_cells": 1054,
+   "donor_median_a": 0.008195805293019554,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000115085|delete": {
+   "cell_weighted_mean_shift": 0.0009400338837594697,
+   "n_cells": 297,
+   "donor_median_a": 0.0011997467194027323,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000115085|overexpress": {
+   "cell_weighted_mean_shift": 0.001543578074034617,
+   "n_cells": 297,
+   "donor_median_a": 0.00043244492456342347,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000213658|delete": {
+   "cell_weighted_mean_shift": -0.0016339155671848803,
+   "n_cells": 671,
+   "donor_median_a": -0.0005545081922761772,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000213658|overexpress": {
+   "cell_weighted_mean_shift": 0.001200828040587742,
+   "n_cells": 671,
+   "donor_median_a": 0.0018267073304537949,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000113263|delete": {
+   "cell_weighted_mean_shift": 0.001858867096066011,
+   "n_cells": 257,
+   "donor_median_a": 0.0033912044408432717,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000113263|overexpress": {
+   "cell_weighted_mean_shift": -0.002186867977394668,
+   "n_cells": 257,
+   "donor_median_a": -0.0026769745804767417,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000141293|delete": {
+   "cell_weighted_mean_shift": -0.0007407613044237569,
+   "n_cells": 548,
+   "donor_median_a": -3.3228169077876484e-05,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000141293|overexpress": {
+   "cell_weighted_mean_shift": 0.0010448650722085994,
+   "n_cells": 548,
+   "donor_median_a": 0.0013019761170631147,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000153563|delete": {
+   "cell_weighted_mean_shift": -0.0011705375579466302,
+   "n_cells": 498,
+   "donor_median_a": -0.0018983586932247482,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000153563|overexpress": {
+   "cell_weighted_mean_shift": 0.00030715207019484184,
+   "n_cells": 498,
+   "donor_median_a": 0.0004047518300707699,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172116|delete": {
+   "cell_weighted_mean_shift": -0.0010032471577832653,
+   "n_cells": 314,
+   "donor_median_a": -0.000550316786895667,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172116|overexpress": {
+   "cell_weighted_mean_shift": 0.004344624318894308,
+   "n_cells": 314,
+   "donor_median_a": 0.003911802239152855,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000168685|delete": {
+   "cell_weighted_mean_shift": 0.0010506284748849693,
+   "n_cells": 815,
+   "donor_median_a": 0.0014050597356446565,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000168685|overexpress": {
+   "cell_weighted_mean_shift": -0.011964388420245399,
+   "n_cells": 815,
+   "donor_median_a": -0.008456009240979622,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000081059|delete": {
+   "cell_weighted_mean_shift": -0.002558625050080128,
+   "n_cells": 195,
+   "donor_median_a": -0.0024167239851625713,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000081059|overexpress": {
+   "cell_weighted_mean_shift": 0.005092992538060897,
+   "n_cells": 195,
+   "donor_median_a": 0.003271141712799733,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000188404|delete": {
+   "cell_weighted_mean_shift": 0.002935124539780891,
+   "n_cells": 174,
+   "donor_median_a": 0.003077371888078191,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000188404|overexpress": {
+   "cell_weighted_mean_shift": -0.009720374797952586,
+   "n_cells": 174,
+   "donor_median_a": -0.010163809688739337,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000145649|delete": {
+   "cell_weighted_mean_shift": 0.0014294722547562812,
+   "n_cells": 903,
+   "donor_median_a": 0.002383653799206159,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000145649|overexpress": {
+   "cell_weighted_mean_shift": -0.004921077757842781,
+   "n_cells": 903,
+   "donor_median_a": -0.004445453334394038,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000113088|delete": {
+   "cell_weighted_mean_shift": 0.0008028555607450181,
+   "n_cells": 207,
+   "donor_median_a": 0.0025504702613467264,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000113088|overexpress": {
+   "cell_weighted_mean_shift": 0.0008761456623169535,
+   "n_cells": 207,
+   "donor_median_a": -4.323323567708326e-05,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000180644|delete": {
+   "cell_weighted_mean_shift": 0.003122924210189225,
+   "n_cells": 462,
+   "donor_median_a": 0.003438763342263548,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000180644|overexpress": {
+   "cell_weighted_mean_shift": -0.012963819297361167,
+   "n_cells": 462,
+   "donor_median_a": -0.01401167373820467,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000105374|delete": {
+   "cell_weighted_mean_shift": -0.00015322804614963033,
+   "n_cells": 727,
+   "donor_median_a": 0.0003015507993259904,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000105374|overexpress": {
+   "cell_weighted_mean_shift": -0.007711187517462604,
+   "n_cells": 727,
+   "donor_median_a": -0.0061322610966801075,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172543|delete": {
+   "cell_weighted_mean_shift": -0.00026143256144307966,
+   "n_cells": 398,
+   "donor_median_a": 0.0002240835838765421,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000172543|overexpress": {
+   "cell_weighted_mean_shift": -0.002774377564089981,
+   "n_cells": 398,
+   "donor_median_a": -0.0019419438085514747,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000139193|delete": {
+   "cell_weighted_mean_shift": -0.0019779013766448843,
+   "n_cells": 697,
+   "donor_median_a": -0.0016120383129016283,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000139193|overexpress": {
+   "cell_weighted_mean_shift": 0.002008153513138058,
+   "n_cells": 697,
+   "donor_median_a": 0.0014837397498306938,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000163600|delete": {
+   "cell_weighted_mean_shift": -0.001536224150825161,
+   "n_cells": 427,
+   "donor_median_a": -0.0008014288127508339,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000163600|overexpress": {
+   "cell_weighted_mean_shift": 0.0003422328404017857,
+   "n_cells": 427,
+   "donor_median_a": 0.0007488272567858665,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000163599|delete": {
+   "cell_weighted_mean_shift": 0.000348798930644989,
+   "n_cells": 512,
+   "donor_median_a": 0.00033891125832762026,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000163599|overexpress": {
+   "cell_weighted_mean_shift": 2.6576220989227295e-05,
+   "n_cells": 512,
+   "donor_median_a": 0.00035935476149578964,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000188389|delete": {
+   "cell_weighted_mean_shift": -0.002150257846765351,
+   "n_cells": 285,
+   "donor_median_a": -0.0015694160148431308,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000188389|overexpress": {
+   "cell_weighted_mean_shift": 0.0006512290553042763,
+   "n_cells": 285,
+   "donor_median_a": -0.0004939970249562102,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000049768|delete": {
+   "cell_weighted_mean_shift": -0.0007264464051573426,
+   "n_cells": 143,
+   "donor_median_a": 0.0008191050535614598,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000049768|overexpress": {
+   "cell_weighted_mean_shift": 5.057808402534965e-05,
+   "n_cells": 143,
+   "donor_median_a": -0.0011098829584089594,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000020633|delete": {
+   "cell_weighted_mean_shift": -0.0011728726900540865,
+   "n_cells": 520,
+   "donor_median_a": -0.00029178049045242287,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000020633|overexpress": {
+   "cell_weighted_mean_shift": -0.00372009827540471,
+   "n_cells": 520,
+   "donor_median_a": -0.0025647289138193956,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000127152|delete": {
+   "cell_weighted_mean_shift": -0.00020574418985226499,
+   "n_cells": 367,
+   "donor_median_a": 0.0006180199953410372,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  },
+  "ENSG00000127152|overexpress": {
+   "cell_weighted_mean_shift": 0.001184853286119508,
+   "n_cells": 367,
+   "donor_median_a": 0.0028592646080546806,
+   "note": "pooled per-cell raw shift (not control-adjusted); InSilicoPerturberStats not run"
+  }
+ },
+ "A3f_accuracy_vs_effect": {
+  "ENSG00000198851|overexpress": {
+   "spearman_ba_vs_a": -0.2711715925816371,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000160654|overexpress": {
+   "spearman_ba_vs_a": -0.2711715925816371,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000198821|delete": {
+   "spearman_ba_vs_a": -0.11057482415950252,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000182866|overexpress": {
+   "spearman_ba_vs_a": -0.2860904180634748,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000168685|overexpress": {
+   "spearman_ba_vs_a": 0.009653357664718473,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000180644|delete": {
+   "spearman_ba_vs_a": -0.2168301786115761,
+   "conditioned_on_significance": true
+  },
+  "ENSG00000180644|overexpress": {
+   "spearman_ba_vs_a": 0.29943215141598606,
+   "conditioned_on_significance": true
+  },
+  "panel_A|delete": {
+   "spearman_ba_vs_panel_median_a": null,
+   "n_donors": 0,
+   "conditioned_on_significance": false,
+   "n_genes_per_donor": {},
+   "note": "per-donor value = median of a over a VARYING number of genes"
+  },
+  "panel_B|delete": {
+   "spearman_ba_vs_panel_median_a": 0.33260205044802743,
+   "n_donors": 19,
+   "conditioned_on_significance": false,
+   "n_genes_per_donor": {
+    "C107": 25,
+    "C110": 24,
+    "C111": 26,
+    "C123": 20,
+    "C125": 27,
+    "C126": 24,
+    "C129": 16,
+    "C130": 22,
+    "C132": 24,
+    "C134": 22,
+    "C135": 28,
+    "C137": 22,
+    "C140": 25,
+    "C142": 27,
+    "C143": 22,
+    "C155": 24,
+    "C157": 27,
+    "C162": 26,
+    "C170": 28
+   },
+   "note": "per-donor value = median of a over a VARYING number of genes"
+  },
+  "panel_A|overexpress": {
+   "spearman_ba_vs_panel_median_a": null,
+   "n_donors": 0,
+   "conditioned_on_significance": false,
+   "n_genes_per_donor": {},
+   "note": "per-donor value = median of a over a VARYING number of genes"
+  },
+  "panel_B|overexpress": {
+   "spearman_ba_vs_panel_median_a": -0.00702062375615889,
+   "n_donors": 19,
+   "conditioned_on_significance": false,
+   "n_genes_per_donor": {
+    "C107": 25,
+    "C110": 24,
+    "C111": 26,
+    "C123": 20,
+    "C125": 27,
+    "C126": 24,
+    "C129": 16,
+    "C130": 22,
+    "C132": 24,
+    "C134": 22,
+    "C135": 28,
+    "C137": 22,
+    "C140": 25,
+    "C142": 27,
+    "C143": 22,
+    "C155": 24,
+    "C157": 27,
+    "C162": 26,
+    "C170": 28
+   },
+   "note": "per-donor value = median of a over a VARYING number of genes"
+  }
+ },
+ "A3f_low_ba_donors": []
+}
