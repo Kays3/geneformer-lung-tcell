@@ -1,0 +1,171 @@
+/home/kaisar/workspace/pelka_crc_e2/data/tokenized/pelka_crc_e2_pool300.dataset/data-00000-of-00001.arrow: OK
+/home/kaisar/workspace/pelka_crc_e2/data/tokenized/pelka_crc_e2_pool300.dataset/dataset_info.json: OK
+/home/kaisar/workspace/pelka_crc_e2/data/tokenized/pelka_crc_e2_pool300.dataset/state.json: OK
+/home/kaisar/workspace/geneformer-uv-starter/Geneformer/Geneformer-V2-316M/model.safetensors: OK
+/home/kaisar/workspace/geneformer-uv-starter/Geneformer/geneformer/token_dictionary_gc104M.pkl: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/cohort/folds.json: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/cohort/cohort_cells.csv: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/sclc_validation/bf16_bench/dtype_cast.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/sclc_validation/bf16_bench/eval_tie_fix.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/scripts/model_cache.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/scripts/inproc_map.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/scripts/run_isp.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/scripts/noop_spotcheck.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/scripts/isp_order.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/scripts/build_ovx_index.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/scripts/analyse.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/scripts/stats_core.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/scripts/null_analysis.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/registration/phase7_rules.json: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/registration/panel_B.json: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/balanced_donor_luad/phase7_results/outcome_rows.json: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/controls/isp_run_order.json: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/controls/pre_gpu_eligibility.csv: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/controls/pre_gpu_strata.json: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/controls/pre_gpu_host_map.csv: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/null/null_genes_100_estimable.json: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/null/frozen_100_estimable.json: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/scripts/run_e2_isp.sh: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/scripts/run_e2_analysis.sh: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/scripts/build_design_e2.py: OK
+/home/kaisar/workspace/geneformer-lung-tcell-worktrees/e2-pelka/pelka_crc_e2/scripts/compare_panel_b.py: OK
+{"panel_a": 0, "panel_b": 36, "panel_b_not_run": 3, "donors": 19, "panel_genes_run": 28, "strata": 16}
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 23555.57 examples/s]
+/home/kaisar/workspace/geneformer-uv-starter/sclc_analysis/.venv/lib/python3.12/site-packages/pyarrow/compute.py:230: FutureWarning: Specifying null_placement in SortOptions is deprecated as of 25.0.0. Specify null_placement per sort_key instead.
+  return options_class(*args, **kwargs)
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 24927.52 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 20449.05 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 30378.10 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 21756.95 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 21288.72 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 21088.56 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 24302.13 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 23726.12 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 25048.10 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 24014.11 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 25520.56 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 24265.57 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 5238.56 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 18054.77 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 21458.63 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 18975.32 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 23611.26 examples/s]
+Filter:   0%|          | 0/100 [00:00<?, ? examples/s]Filter: 100%|██████████| 100/100 [00:00<00:00, 20074.20 examples/s]
+{"i_delete_lengths": 5097, "ii_overexpress_counts": 5097, "failures": 0, "pairs_with_positive": 5097, "pairs_with_mixed_length_tie": 3774}
+{"i_delete_lengths": 1900, "ii_overexpress_counts": 1900, "failures": 0, "pairs_with_positive": 1900, "pairs_with_mixed_length_tie": 1237}
+{
+ "ENSG00000167286": "NOT_ESTIMABLE_CONTROLS",
+ "ENSG00000198851": "OPEN",
+ "ENSG00000160654": "OPEN",
+ "ENSG00000198821": "DELETION_ONLY",
+ "ENSG00000116824": "NOT_ESTIMABLE_CONTROLS",
+ "ENSG00000110448": "OPEN",
+ "ENSG00000013725": "OPEN",
+ "ENSG00000173762": "NOT_ESTIMABLE_CONTROLS",
+ "ENSG00000178562": "OPEN",
+ "ENSG00000182866": "OPEN",
+ "ENSG00000115085": "OPEN",
+ "ENSG00000213658": "OPEN",
+ "ENSG00000113263": "OPEN",
+ "ENSG00000172673": "NOT_RUN",
+ "ENSG00000141293": "OPEN",
+ "ENSG00000153563": "OPEN",
+ "ENSG00000172116": "OPEN",
+ "ENSG00000168685": "OPEN",
+ "ENSG00000126353": "NOT_RUN",
+ "ENSG00000081059": "OPEN",
+ "ENSG00000138795": "NOT_RUN",
+ "ENSG00000188404": "OPEN",
+ "ENSG00000145649": "OPEN",
+ "ENSG00000113088": "OPEN",
+ "ENSG00000180644": "T_CELL_SIGNAL_TOWARD",
+ "ENSG00000105374": "OPEN",
+ "ENSG00000172543": "OPEN",
+ "ENSG00000139193": "OPEN",
+ "ENSG00000163600": "OPEN",
+ "ENSG00000163599": "OPEN",
+ "ENSG00000188389": "OPEN",
+ "ENSG00000049768": "OPEN",
+ "ENSG00000030419": "NOT_RUN",
+ "ENSG00000020633": "OPEN",
+ "ENSG00000127152": "OPEN",
+ "ENSG00000110848": "NOT_ESTIMABLE_CONTROLS",
+ "ENSG00000277734": "NOT_RUN",
+ "ENSG00000211751": "NOT_RUN",
+ "ENSG00000211772": "NOT_RUN"
+}
+{
+ "about": "Amendment 4/5 primary analysis: null distribution of delete/overexpress concordance over eligible\nrandom genes detectable in LUAD tumor T cells (never \"genome-wide\" -- ISP-STD-1 B.9, Stanley C1).\n\nCPU only. Reads the completed phase8 markers (same shape as Phase 6's), computes each gene's raw\ndonor-level median shift per operation (no stratum control-adjustment -- Amendment 4 s.4.4), then the\none-sided permutation test on Spearman rho (H1: rho < 0), leave-one-out, and a gene-level bootstrap.\nNever reads Shift_to_goal_end; reads the raw per-cell pickles via analyse.py, unchanged.\n\nFixes applied after Stanley's 2026-09-29 re-gate (B2, B3, C1; P2-P5/R1/R3-R5 from the first gate):\n  B2: --frozen (frozen_100_estimable.json) is required. Every run gene's marker n_token_cells is\n      compared against the frozen pre-GPU npos_by_donor for that (gene, donor). Any mismatch HALTS\n      the analysis (exit nonzero, a diagnostic file is written, no primary status is emitted) -- this\n      is a pipeline-integrity failure, not one of the ISP-STD-1 A.6 outcome statuses.\n  B3: --noop-results (noop_spotchecks_<host>/results.jsonl) is required. Any failed spot check, or a\n      missing spot check for a gene that should have one (every 20th gene, s.5.5), forces the primary\n      status to `no_op_failed`, overriding whatever the statistics alone would have said.\n  C1: the validity check runs on the 318 unique control genes in design.json (union across 19 strata),\n      not \"120\" -- corrected everywhere. If it does not recover a negative rho, the top-level result\n      carries `validity_check_failed: true` and a `WARNING` string; the primary status is still\n      reported, but the human-readable summary says the result is not trusted.\n  P2/R2: a gene counts as RUN only if all 86 markers (43 donors x 2 ops) exist; anything else is\n         stopped_not_analysed, never fed to load_all (which would raise IncompleteRun uncaught).\n  P3:    every leave-one-out recomputes the full permutation p, not just the sign of rho.\n  P4:    opposite_direction uses its own upper-tail permutation p, not the primary's lower-tail p.\n  P5/R1: status vocabulary per ISP-STD-1 A.6: `positive` = registered criterion met; `negative` = not\n         met, reported with direction/p/n, never \"no effect\"; `opposite_direction`,\n         `control_draw_sensitive_open`, `not_estimable`, `no_op_failed`, `stopped_not_analysed`.\n  R5:    bootstrap and leave-one-out both use N_PERM_SECONDARY=2,000 permutations (min p=1/2,001);\n         the primary test alone uses N_PERM=100,000.",
+ "n_registered": 100,
+ "primary": {
+  "n_estimable": 100,
+  "n_stopped_not_analysed": 0,
+  "n_not_estimable": 0,
+  "status": "control_draw_sensitive_open",
+  "rho": -0.24522052205220518,
+  "p_lower_tail": 0.006739932600673993,
+  "n_perm_primary": 100000,
+  "n_perm_secondary": 2000,
+  "loo_stable": true,
+  "loo_n_pass": 100,
+  "loo_n": 100,
+  "bootstrap_fraction_stable": 0.7791,
+  "n_bootstrap": 10000,
+  "alpha": 0.05,
+  "sidedness": "one-sided, H1: rho<0",
+  "no_op_detail": {
+   "due": [
+    "ENSG00000078668",
+    "ENSG00000083099",
+    "ENSG00000091542",
+    "ENSG00000114956",
+    "ENSG00000197956"
+   ],
+   "checked": {
+    "ENSG00000091542": true,
+    "ENSG00000083099": true,
+    "ENSG00000197956": true,
+    "ENSG00000114956": true,
+    "ENSG00000078668": true,
+    "ENSG00000172543": true,
+    "ENSG00000064666": true,
+    "ENSG00000091039": true,
+    "ENSG00000105583": true,
+    "ENSG00000112851": true,
+    "ENSG00000120738": true,
+    "ENSG00000130731": true,
+    "ENSG00000143933": true,
+    "ENSG00000158195": true,
+    "ENSG00000164691": true,
+    "ENSG00000172349": true,
+    "ENSG00000187239": true,
+    "ENSG00000205220": true
+   },
+   "missing": [],
+   "failed": []
+  }
+ },
+ "validity_check_318_control_genes": {
+  "about": "same raw-shift/permutation pipeline applied to the 318 unique control genes already computed in design.json (union across 19 strata); sign should be compatible with RESULTS.md s.4's control-adjusted rho=-0.62 over 360 control x stratum entries (not the same quantity -- s.4.4/R3/Stanley C1 -- so magnitudes are not compared, sign only).",
+  "rho": -0.5313672050503975,
+  "n_estimable": 231,
+  "status": "positive",
+  "sign_compatible_with_minus_0_62": true
+ },
+ "validity_check_failed": false,
+ "ambient_flag": {
+  "status": "SKIPPED",
+  "reason": "no --ambient given"
+ }
+}
+null_analysis exit 0
+{
+ "reference_genes": 13,
+ "n_tested": 10,
+ "del_agree": 3,
+ "ovx_agree_descriptive": 2,
+ "p_one_sided": 0.9453125,
+ "p_exact": "121/128",
+ "reading": "pattern_not_replicated"
+}
+E2_ANALYSIS_DONE
