@@ -1,0 +1,1 @@
+isp_gpu_seconds_sum_markers=110082.99868321419 n_markers=14022 ceiling_s=180020 prep_s=7180 started_utc=2026-09-30T17:42:37Z finished_utc=2026-10-02T01:20:55Z

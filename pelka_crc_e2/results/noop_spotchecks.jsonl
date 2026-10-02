@@ -1,0 +1,235 @@
+{
+ "gene": "ENSG00000091542",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000083099",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000197956",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000114956",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000078668",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000172543",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000064666",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000091039",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000105583",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000112851",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000120738",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000130731",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000143933",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000158195",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000164691",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000172349",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000187239",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}{
+ "gene": "ENSG00000205220",
+ "donor": "C107",
+ "host": "thinkstation1",
+ "max_abs_delta_by_state": {
+  "delete/global_normal_adjacent": 0.0,
+  "delete/normal_adjacent": 0.0,
+  "delete/tumor_primary": 0.0,
+  "overexpress/global_normal_adjacent": 0.0,
+  "overexpress/normal_adjacent": 0.0,
+  "overexpress/tumor_primary": 0.0
+ },
+ "pass": true
+}

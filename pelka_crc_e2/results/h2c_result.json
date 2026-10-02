@@ -1,0 +1,738 @@
+{
+ "reference_genes": 13,
+ "n_tested": 10,
+ "del_agree": 3,
+ "ovx_agree_descriptive": 2,
+ "p_one_sided": 0.9453125,
+ "p_exact": "121/128",
+ "reading": "pattern_not_replicated",
+ "per_gene": [
+  {
+   "gene": "ENSG00000113263",
+   "symbol": "ITK",
+   "luad_status": "T_CELL_SIGNAL_AWAY",
+   "luad_del_median": -0.0036508490984956737,
+   "luad_ovx_median": 0.009507399338942308,
+   "e2_status": "OPEN",
+   "e2_tested": true,
+   "e2_del_median": 0.0033912044408432717,
+   "e2_ovx_median": -0.0026769745804767417,
+   "del_agree": false,
+   "ovx_agree": false
+  },
+  {
+   "gene": "ENSG00000126353",
+   "symbol": "CCR7",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.02034721401650455,
+   "luad_ovx_median": -0.03227542381926829,
+   "e2_status": "NOT_RUN",
+   "e2_tested": false,
+   "e2_del_median": null,
+   "e2_ovx_median": null
+  },
+  {
+   "gene": "ENSG00000139193",
+   "symbol": "CD27",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.003932411748828401,
+   "luad_ovx_median": -0.019314178145135974,
+   "e2_status": "OPEN",
+   "e2_tested": true,
+   "e2_del_median": -0.0016120383129016283,
+   "e2_ovx_median": 0.0014837397498306938,
+   "del_agree": false,
+   "ovx_agree": false
+  },
+  {
+   "gene": "ENSG00000145649",
+   "symbol": "GZMA",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.006145041938468634,
+   "luad_ovx_median": -0.041646140726143074,
+   "e2_status": "OPEN",
+   "e2_tested": true,
+   "e2_del_median": 0.002383653799206159,
+   "e2_ovx_median": -0.004445453334394038,
+   "del_agree": true,
+   "ovx_agree": true
+  },
+  {
+   "gene": "ENSG00000153563",
+   "symbol": "CD8A",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.0034327398401238505,
+   "luad_ovx_median": -0.010487128713562041,
+   "e2_status": "OPEN",
+   "e2_tested": true,
+   "e2_del_median": -0.0018983586932247482,
+   "e2_ovx_median": 0.0004047518300707699,
+   "del_agree": false,
+   "ovx_agree": false
+  },
+  {
+   "gene": "ENSG00000160654",
+   "symbol": "CD3G",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.0020513441839291034,
+   "luad_ovx_median": -0.00370615826376115,
+   "e2_status": "OPEN",
+   "e2_tested": true,
+   "e2_del_median": -0.0016104226801606455,
+   "e2_ovx_median": 0.010044228669856946,
+   "del_agree": false,
+   "ovx_agree": false
+  },
+  {
+   "gene": "ENSG00000163600",
+   "symbol": "ICOS",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.002772102386986849,
+   "luad_ovx_median": -0.008032248081426658,
+   "e2_status": "OPEN",
+   "e2_tested": true,
+   "e2_del_median": -0.0008014288127508339,
+   "e2_ovx_median": 0.0007488272567858665,
+   "del_agree": false,
+   "ovx_agree": false
+  },
+  {
+   "gene": "ENSG00000167286",
+   "symbol": "CD3D",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.006435301686201068,
+   "luad_ovx_median": -0.041872839013808644,
+   "e2_status": "NOT_ESTIMABLE_CONTROLS",
+   "e2_tested": false,
+   "e2_del_median": null,
+   "e2_ovx_median": null
+  },
+  {
+   "gene": "ENSG00000172543",
+   "symbol": "CTSW",
+   "luad_status": "T_CELL_SIGNAL_AWAY",
+   "luad_del_median": -0.0027840998244502272,
+   "luad_ovx_median": 0.007300682973822107,
+   "e2_status": "OPEN",
+   "e2_tested": true,
+   "e2_del_median": 0.0002240835838765421,
+   "e2_ovx_median": -0.0019419438085514747,
+   "del_agree": false,
+   "ovx_agree": false
+  },
+  {
+   "gene": "ENSG00000173762",
+   "symbol": "CD7",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.004205669711746147,
+   "luad_ovx_median": -0.032149003610391316,
+   "e2_status": "NOT_ESTIMABLE_CONTROLS",
+   "e2_tested": false,
+   "e2_del_median": null,
+   "e2_ovx_median": null
+  },
+  {
+   "gene": "ENSG00000182866",
+   "symbol": "LCK",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.0022604510183002586,
+   "luad_ovx_median": -0.004516454423250826,
+   "e2_status": "OPEN",
+   "e2_tested": true,
+   "e2_del_median": 0.00023573229516755278,
+   "e2_ovx_median": 0.008195805293019554,
+   "del_agree": true,
+   "ovx_agree": false
+  },
+  {
+   "gene": "ENSG00000198821",
+   "symbol": "CD247",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.001855540086725433,
+   "luad_ovx_median": -0.007034600233715393,
+   "e2_status": "DELETION_ONLY",
+   "e2_tested": true,
+   "e2_del_median": 0.0017648553182873145,
+   "e2_ovx_median": -0.0003846415414580239,
+   "del_agree": true,
+   "ovx_agree": true
+  },
+  {
+   "gene": "ENSG00000213658",
+   "symbol": "LAT",
+   "luad_status": "T_CELL_SIGNAL_TOWARD",
+   "luad_del_median": 0.002117386539688786,
+   "luad_ovx_median": -0.005776528244919347,
+   "e2_status": "OPEN",
+   "e2_tested": true,
+   "e2_del_median": -0.0005545081922761772,
+   "e2_ovx_median": 0.0018267073304537949,
+   "del_agree": false,
+   "ovx_agree": false
+  }
+ ],
+ "descriptive": {
+  "status_table": [
+   {
+    "gene": "ENSG00000013725",
+    "symbol": "CD6",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000020633",
+    "symbol": "RUNX3",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000030419",
+    "symbol": "IKZF2",
+    "luad_status": "NOT_RUN",
+    "e2_status": "NOT_RUN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000049768",
+    "symbol": "FOXP3",
+    "luad_status": "NOT_RUN",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000081059",
+    "symbol": "TCF7",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000105374",
+    "symbol": "NKG7",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000110448",
+    "symbol": "CD5",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000110848",
+    "symbol": "CD69",
+    "luad_status": "DELETION_ONLY",
+    "e2_status": "NOT_ESTIMABLE_CONTROLS",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000113088",
+    "symbol": "GZMK",
+    "luad_status": "DELETION_ONLY",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000113263",
+    "symbol": "ITK",
+    "luad_status": "T_CELL_SIGNAL_AWAY",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000115085",
+    "symbol": "ZAP70",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000116824",
+    "symbol": "CD2",
+    "luad_status": "OPEN",
+    "e2_status": "NOT_ESTIMABLE_CONTROLS",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000126353",
+    "symbol": "CCR7",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "NOT_RUN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000127152",
+    "symbol": "BCL11B",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000138795",
+    "symbol": "LEF1",
+    "luad_status": "OPEN",
+    "e2_status": "NOT_RUN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000139193",
+    "symbol": "CD27",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000141293",
+    "symbol": "SKAP1",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000145649",
+    "symbol": "GZMA",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000153563",
+    "symbol": "CD8A",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000160654",
+    "symbol": "CD3G",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000163599",
+    "symbol": "CTLA4",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000163600",
+    "symbol": "ICOS",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000167286",
+    "symbol": "CD3D",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "NOT_ESTIMABLE_CONTROLS",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000168685",
+    "symbol": "IL7R",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000172116",
+    "symbol": "CD8B",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000172543",
+    "symbol": "CTSW",
+    "luad_status": "T_CELL_SIGNAL_AWAY",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000172673",
+    "symbol": "THEMIS",
+    "luad_status": "OPEN",
+    "e2_status": "NOT_RUN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000173762",
+    "symbol": "CD7",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "NOT_ESTIMABLE_CONTROLS",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000178562",
+    "symbol": "CD28",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000180644",
+    "symbol": "PRF1",
+    "luad_status": "OPEN",
+    "e2_status": "T_CELL_SIGNAL_TOWARD",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000182866",
+    "symbol": "LCK",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000188389",
+    "symbol": "PDCD1",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000188404",
+    "symbol": "SELL",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000198821",
+    "symbol": "CD247",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "DELETION_ONLY",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000198851",
+    "symbol": "CD3E",
+    "luad_status": "OPEN",
+    "e2_status": "OPEN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000211751",
+    "symbol": "TRBC1",
+    "luad_status": "NOT_RUN",
+    "e2_status": "NOT_RUN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000211772",
+    "symbol": "TRBC2",
+    "luad_status": "NOT_RUN",
+    "e2_status": "NOT_RUN",
+    "same_status": true
+   },
+   {
+    "gene": "ENSG00000213658",
+    "symbol": "LAT",
+    "luad_status": "T_CELL_SIGNAL_TOWARD",
+    "e2_status": "OPEN",
+    "same_status": false
+   },
+   {
+    "gene": "ENSG00000277734",
+    "symbol": "TRAC",
+    "luad_status": "NOT_RUN",
+    "e2_status": "NOT_RUN",
+    "same_status": true
+   }
+  ],
+  "del_median_spearman_luad_vs_e2": {
+   "n": 27,
+   "rho": -0.2881562881562881
+  },
+  "mmr_split_del_median": {
+   "ENSG00000198851": {
+    "MMRd": {
+     "n": 9,
+     "median": -0.00026988916213203603
+    },
+    "MMRp": {
+     "n": 10,
+     "median": -0.0012650110038468143
+    }
+   },
+   "ENSG00000160654": {
+    "MMRd": {
+     "n": 9,
+     "median": -0.0010255464918676933
+    },
+    "MMRp": {
+     "n": 10,
+     "median": -0.0016482943363112493
+    }
+   },
+   "ENSG00000198821": {
+    "MMRd": {
+     "n": 9,
+     "median": 0.0011528562632878029
+    },
+    "MMRp": {
+     "n": 10,
+     "median": 0.003029901597798365
+    }
+   },
+   "ENSG00000110448": {
+    "MMRd": {
+     "n": 5,
+     "median": -0.0010018242730034722
+    },
+    "MMRp": {
+     "n": 8,
+     "median": -0.0033669607979910712
+    }
+   },
+   "ENSG00000013725": {
+    "MMRd": {
+     "n": 9,
+     "median": 5.6482417322261064e-05
+    },
+    "MMRp": {
+     "n": 10,
+     "median": -0.00010672055291447238
+    }
+   },
+   "ENSG00000178562": {
+    "MMRd": {
+     "n": 3,
+     "median": -0.000699990828407002
+    },
+    "MMRp": {
+     "n": 8,
+     "median": -0.0002167196834788604
+    }
+   },
+   "ENSG00000182866": {
+    "MMRd": {
+     "n": 9,
+     "median": 0.00013473752945188496
+    },
+    "MMRp": {
+     "n": 10,
+     "median": 3.968099548249399e-05
+    }
+   },
+   "ENSG00000115085": {
+    "MMRd": {
+     "n": 8,
+     "median": -0.00014063782744355257
+    },
+    "MMRp": {
+     "n": 8,
+     "median": 0.0017152199474162579
+    }
+   },
+   "ENSG00000213658": {
+    "MMRd": {
+     "n": 9,
+     "median": -0.0004548923943632392
+    },
+    "MMRp": {
+     "n": 10,
+     "median": -0.00032427442379247414
+    }
+   },
+   "ENSG00000113263": {
+    "MMRd": {
+     "n": 6,
+     "median": 0.002965418497721354
+    },
+    "MMRp": {
+     "n": 7,
+     "median": 0.004088199499881628
+    }
+   },
+   "ENSG00000141293": {
+    "MMRd": {
+     "n": 9,
+     "median": 7.149268840921335e-05
+    },
+    "MMRp": {
+     "n": 10,
+     "median": -6.977057535008195e-05
+    }
+   },
+   "ENSG00000153563": {
+    "MMRd": {
+     "n": 9,
+     "median": 0.0005807166454614488
+    },
+    "MMRp": {
+     "n": 9,
+     "median": -0.005858296182899993
+    }
+   },
+   "ENSG00000172116": {
+    "MMRd": {
+     "n": 9,
+     "median": 0.0003511937459309896
+    },
+    "MMRp": {
+     "n": 6,
+     "median": -0.002514318683082331
+    }
+   },
+   "ENSG00000168685": {
+    "MMRd": {
+     "n": 9,
+     "median": -0.0003372474952980325
+    },
+    "MMRp": {
+     "n": 10,
+     "median": 0.0017746961730399258
+    }
+   },
+   "ENSG00000081059": {
+    "MMRd": {
+     "n": 4,
+     "median": -0.0007345328584385379
+    },
+    "MMRp": {
+     "n": 8,
+     "median": -0.0025557409755943986
+    }
+   },
+   "ENSG00000188404": {
+    "MMRd": {
+     "n": 3,
+     "median": 0.002185997596153846
+    },
+    "MMRp": {
+     "n": 8,
+     "median": 0.002727689535281827
+    }
+   },
+   "ENSG00000145649": {
+    "MMRd": {
+     "n": 9,
+     "median": 0.002777082673982034
+    },
+    "MMRp": {
+     "n": 10,
+     "median": 0.0018002633861334376
+    }
+   },
+   "ENSG00000113088": {
+    "MMRd": {
+     "n": 7,
+     "median": -0.0011323474702380951
+    },
+    "MMRp": {
+     "n": 4,
+     "median": 0.005086045211962345
+    }
+   },
+   "ENSG00000180644": {
+    "MMRd": {
+     "n": 9,
+     "median": 0.0033074139374230293
+    },
+    "MMRp": {
+     "n": 9,
+     "median": 0.00295553496389678
+    }
+   },
+   "ENSG00000105374": {
+    "MMRd": {
+     "n": 9,
+     "median": 0.0004701556581439395
+    },
+    "MMRp": {
+     "n": 10,
+     "median": 0.0003986390121119274
+    }
+   },
+   "ENSG00000172543": {
+    "MMRd": {
+     "n": 8,
+     "median": 0.0003280330205364424
+    },
+    "MMRp": {
+     "n": 6,
+     "median": 0.0022325106330843636
+    }
+   },
+   "ENSG00000139193": {
+    "MMRd": {
+     "n": 9,
+     "median": -0.0013517618510583682
+    },
+    "MMRp": {
+     "n": 10,
+     "median": -0.001776770677200252
+    }
+   },
+   "ENSG00000163600": {
+    "MMRd": {
+     "n": 8,
+     "median": -0.0003726346611815747
+    },
+    "MMRp": {
+     "n": 10,
+     "median": -0.001189202609388665
+    }
+   },
+   "ENSG00000163599": {
+    "MMRd": {
+     "n": 8,
+     "median": -0.0004156282229189172
+    },
+    "MMRp": {
+     "n": 10,
+     "median": 0.001091750986846812
+    }
+   },
+   "ENSG00000188389": {
+    "MMRd": {
+     "n": 9,
+     "median": -0.00258727535124748
+    },
+    "MMRp": {
+     "n": 6,
+     "median": -0.001160589853922526
+    }
+   },
+   "ENSG00000049768": {
+    "MMRd": {
+     "n": 2,
+     "median": -0.00640402810450912
+    },
+    "MMRp": {
+     "n": 7,
+     "median": 0.002578585755591299
+    }
+   },
+   "ENSG00000020633": {
+    "MMRd": {
+     "n": 9,
+     "median": -0.00020565649475714164
+    },
+    "MMRp": {
+     "n": 10,
+     "median": 2.783803163784512e-05
+    }
+   },
+   "ENSG00000127152": {
+    "MMRd": {
+     "n": 9,
+     "median": 0.002744474865141369
+    },
+    "MMRp": {
+     "n": 10,
+     "median": -0.0005487882173978366
+    }
+   }
+  },
+  "note": "descriptive only; no reading changes on these"
+ }
+}

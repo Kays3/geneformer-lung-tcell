@@ -1,0 +1,26 @@
+{
+ "classifier_gate": {
+  "path": "phase4_results/classifier_gate.json",
+  "sha256": "48e93ee555b0ad9720311e5892b54ff4ec58cca7e3a32851cbf5fe27460a1ca2"
+ },
+ "eligibility": {
+  "path": "controls/pre_gpu_eligibility.csv",
+  "sha256": "4993cce7451fe574ccbf820f2d924e6f1e437eee9ab3fa98634779834ad06425"
+ },
+ "folds": {
+  "path": "cohort/folds.json",
+  "sha256": "55eb21c29a054c3f22ed2634530e4f10582df15935a2b854804d49c39f73bed7"
+ },
+ "host_map": {
+  "path": "controls/pre_gpu_host_map.csv",
+  "sha256": "078a825b3ab78381435d79e578bfe469a22ae82ca05270680803bc098db97dd5"
+ },
+ "panel_b": {
+  "path": "../balanced_donor_luad/registration/panel_B.json",
+  "sha256": "51b528b73ad3f9d5aa28ed881f4014e32a8c7a6f96b44f3894acf0d75ca407cd"
+ },
+ "strata": {
+  "path": "controls/pre_gpu_strata.json",
+  "sha256": "e0e3c9d744f8ac985ca9269d2a751de015bf2c36018e8c13e0fc60d85c6c0602"
+ }
+}
