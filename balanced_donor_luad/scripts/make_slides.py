@@ -102,7 +102,7 @@ def main(argv=None):
     d.text(s, "Paired tumour-vs-normal T cells from 43 patients: which genes does a foundation model read as T-cell state?",
            M, 1000000, CW, 1400000, size=30, bold=True, color=NAVY, font="Cambria")
     d.text(s, [[("Kaisar Dauyey", True), ("  ·  ", False), ("Shinji Nakaoka", True)]], M, 2750000, CW, 300000, size=14, color=NAVY)
-    d.text(s, "Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University", M, 3080000, CW, 300000, size=11, color=MUTED)
+    d.text(s, "Laboratory of Mathematical Biology, Hokkaido University, Japan", M, 3080000, CW, 300000, size=11, color=MUTED)
     bw = (CW - 2 * 380000) // 3
     for i, (t, c) in enumerate((("43 donors, both tissues,\n100 cells each", TEAL), ("Delete AND overexpress,\ndonor's own normal as goal", PURPLE),
                                 ("Registered before any number;\nall 54 rows reported", RED))):
