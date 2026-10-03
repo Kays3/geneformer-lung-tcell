@@ -146,13 +146,13 @@
 <circle cx="840" cy="31" r="11" fill="#ff8fb1" fill-opacity="0.05"/>
 <circle cx="1248" cy="250" r="31" fill="none" stroke="#7fb7ff" stroke-opacity="0.09" stroke-width="2.5"/>
 <circle cx="1250" cy="254" r="11" fill="#7fb7ff" fill-opacity="0.04"/>
-<text x="40.0" y="58.0" font-size="30" font-weight="800" fill="#f1eef8" text-anchor="start" >Does a Geneformer T-cell perturbation screen transfer from lung to colon?</text>
-<text x="40.0" y="84.0" font-size="16" font-weight="400" fill="#b3abc8" text-anchor="start" >Balanced-donor design, Geneformer-V2-316M, re-run unchanged on Pelka 2021 colorectal cancer (E2)</text>
+<text x="40.0" y="58.0" font-size="30" font-weight="800" fill="#f1eef8" text-anchor="start" >Do Geneformer's published perturbation criteria hold in T cells?</text>
+<text x="40.0" y="84.0" font-size="16" font-weight="400" fill="#b3abc8" text-anchor="start" >Criteria of the Geneformer protocol (Zhang, Venkatesh &amp; Theodoris, Nat Protoc 2026) under donor-level tests: 43 lung and 19 colon donors, Geneformer-V2-316M</text>
 <rect x="40" y="96" width="490" height="600" rx="26" fill="#0d0a18" fill-opacity="0.74" stroke="#c9b8f0" stroke-opacity="0.22"/>
 <circle cx="92" cy="140" r="20" fill="none" stroke="#ffc857" stroke-width="2"/>
 <text x="92.0" y="147.0" font-size="20" font-weight="800" fill="#ffc857" text-anchor="middle" >1</text>
-<text x="124.0" y="135.0" font-size="14" font-weight="800" fill="#ffc857" text-anchor="start" letter-spacing="3">THE CLASSIFIER</text>
-<text x="124.0" y="158.0" font-size="19" font-weight="700" fill="#f1eef8" text-anchor="start" >Tumour vs normal T cells, same donor</text>
+<text x="124.0" y="135.0" font-size="13" font-weight="800" fill="#ffc857" text-anchor="start" letter-spacing="1.2">CRITERION 1 · HELD-OUT PATIENTS</text>
+<text x="124.0" y="158.0" font-size="19" font-weight="700" fill="#f1eef8" text-anchor="start" >Tumour vs normal T cells: met</text>
 <line x1="110" y1="505.0" x2="490" y2="505.0" stroke="#b3abc8" stroke-opacity="0.55" stroke-dasharray="4 5"/>
 <text x="102.0" y="509.0" font-size="12" font-weight="400" fill="#b3abc8" text-anchor="end" >0.5</text>
 <line x1="110" y1="450.0" x2="490" y2="450.0" stroke="#b3abc8" stroke-opacity="0.55" />
@@ -233,13 +233,13 @@
 <text x="395.0" y="610.0" font-size="13" font-weight="400" fill="#b3abc8" text-anchor="middle" >19 donors · pooled 0.904</text>
 <text x="70.0" y="395.0" font-size="12" font-weight="600" fill="#b3abc8" text-anchor="middle" transform="rotate(-90 70 395.0)">balanced accuracy per held-out donor</text>
 <rect x="80" y="624" width="410" height="58" rx="14" fill="#170f2b" stroke="#ffc857" stroke-opacity="0.55"/>
-<text x="285.0" y="649.0" font-size="16" font-weight="700" fill="#ffc857" text-anchor="middle" >Transfers: every donor above chance</text>
-<text x="285.0" y="670.0" font-size="13" font-weight="400" fill="#b3abc8" text-anchor="middle" >fresh fold models, same recipe, no LUAD weights reused</text>
+<text x="285.0" y="649.0" font-size="16" font-weight="700" fill="#ffc857" text-anchor="middle" >Met: every held-out donor above chance</text>
+<text x="285.0" y="670.0" font-size="13" font-weight="400" fill="#b3abc8" text-anchor="middle" >protocol reference: macro F1 0.85, cardiomyocytes, 3 classes</text>
 <rect x="555" y="96" width="490" height="600" rx="26" fill="#0d0a18" fill-opacity="0.74" stroke="#c9b8f0" stroke-opacity="0.22"/>
 <circle cx="607" cy="140" r="20" fill="none" stroke="#ffc857" stroke-width="2"/>
 <text x="607.0" y="147.0" font-size="20" font-weight="800" fill="#ffc857" text-anchor="middle" >2</text>
-<text x="639.0" y="135.0" font-size="14" font-weight="800" fill="#ffc857" text-anchor="start" letter-spacing="3">RANDOM GENES</text>
-<text x="639.0" y="158.0" font-size="19" font-weight="700" fill="#f1eef8" text-anchor="start" >Built-in anti-correlation, weaker in colon</text>
+<text x="639.0" y="135.0" font-size="13" font-weight="800" fill="#ffc857" text-anchor="start" letter-spacing="1.2">CRITERION 2 · SHIFT VS RANDOM GENES</text>
+<text x="639.0" y="158.0" font-size="19" font-weight="700" fill="#f1eef8" text-anchor="start" >Random genes already shift both ways</text>
 <rect x="625" y="210" width="370" height="340" fill="none" stroke="#b3abc8" stroke-opacity="0.25"/>
 <line x1="730.3" y1="210" x2="730.3" y2="550" stroke="#b3abc8" stroke-opacity="0.35"/>
 <line x1="625" y1="282.5" x2="995" y2="282.5" stroke="#b3abc8" stroke-opacity="0.35"/>
@@ -349,14 +349,14 @@
 <text x="985.0" y="232.0" font-size="13" font-weight="700" fill="#ff8fb1" text-anchor="end" >100 random genes, colon</text>
 <text x="595.0" y="600.0" font-size="17" font-weight="800" fill="#ff8fb1" text-anchor="start" >Colon rho −0.245 (p = 0.0067)</text>
 <text x="1005.0" y="600.0" font-size="17" font-weight="800" fill="#7fb7ff" text-anchor="end" >Lung rho −0.593</text>
-<rect x="595" y="624" width="410" height="58" rx="14" fill="#170f2b" stroke="#ffc857" stroke-opacity="0.55"/>
-<text x="800.0" y="649.0" font-size="16" font-weight="700" fill="#ffc857" text-anchor="middle" >control_draw_sensitive_open</text>
-<text x="800.0" y="670.0" font-size="13" font-weight="400" fill="#b3abc8" text-anchor="middle" >same direction as lung; 78% of bootstraps stable vs a 95% bar</text>
+<rect x="595" y="624" width="410" height="58" rx="14" fill="#170f2b" stroke="#ff8a5b" stroke-opacity="0.55"/>
+<text x="800.0" y="649.0" font-size="16" font-weight="700" fill="#ff8a5b" text-anchor="middle" >Not sufficient on its own</text>
+<text x="800.0" y="670.0" font-size="13" font-weight="400" fill="#b3abc8" text-anchor="middle" >opposed deletion/overexpression shifts are the baseline</text>
 <rect x="1070" y="96" width="490" height="600" rx="26" fill="#0d0a18" fill-opacity="0.74" stroke="#c9b8f0" stroke-opacity="0.22"/>
 <circle cx="1122" cy="140" r="20" fill="none" stroke="#ffc857" stroke-width="2"/>
 <text x="1122.0" y="147.0" font-size="20" font-weight="800" fill="#ffc857" text-anchor="middle" >3</text>
-<text x="1154.0" y="135.0" font-size="14" font-weight="800" fill="#ffc857" text-anchor="start" letter-spacing="3">CURATED T-CELL GENES</text>
-<text x="1154.0" y="158.0" font-size="19" font-weight="700" fill="#f1eef8" text-anchor="start" >The lung gene pattern does not replicate</text>
+<text x="1154.0" y="135.0" font-size="13" font-weight="800" fill="#ffc857" text-anchor="start" letter-spacing="1.2">CRITERION 3 · CANDIDATE GENES</text>
+<text x="1154.0" y="158.0" font-size="19" font-weight="700" fill="#f1eef8" text-anchor="start" >Lung hits do not carry to colon</text>
 <rect x="1150" y="215" width="350" height="330" fill="none" stroke="#b3abc8" stroke-opacity="0.25"/>
 <rect x="1325.0" y="215" width="175.0" height="165.0" fill="#7fb7ff" fill-opacity="0.06"/>
 <rect x="1150" y="380.0" width="175.0" height="165.0" fill="#7fb7ff" fill-opacity="0.06"/>
@@ -404,8 +404,9 @@
 <circle cx="1408" cy="594" r="6" fill="#8f8aa3"/>
 <text x="1420.0" y="598.0" font-size="12" font-weight="600" fill="#f1eef8" text-anchor="start" >other panel gene</text>
 <rect x="1110" y="624" width="410" height="58" rx="14" fill="#170f2b" stroke="#ffc857" stroke-opacity="0.55"/>
-<text x="1315.0" y="649.0" font-size="16" font-weight="700" fill="#ffc857" text-anchor="middle" >3 of 10 lung hits keep their sign</text>
+<text x="1315.0" y="649.0" font-size="16" font-weight="700" fill="#ffc857" text-anchor="middle" >Not reproduced: 3 of 10 lung hits keep their sign</text>
 <text x="1315.0" y="670.0" font-size="13" font-weight="400" fill="#b3abc8" text-anchor="middle" >pattern_not_replicated · 27 shared genes, rho −0.29</text>
 <rect x="0" y="738" width="1600" height="62" fill="#07050e" fill-opacity="0.85"/>
-<text x="800.0" y="775.0" font-size="16" font-weight="600" fill="#b3abc8" text-anchor="middle" >Pre-registered readings · donor cross-fitting · study, chemistry and annotation also differ between cohorts, so tissue is not the only explanation</text>
+<text x="800.0" y="766.0" font-size="15" font-weight="700" fill="#ffc857" text-anchor="middle" >Next, E3 (designed, not yet run): the protocol's criteria beside donor-level tests in T cells of the protocol's own heart atlas (Chaffin 2022)</text>
+<text x="800.0" y="787.0" font-size="13" font-weight="400" fill="#b3abc8" text-anchor="middle" >Pre-registered readings · donor cross-fitting · lung and colon also differ in study, chemistry and annotation</text>
 </svg>

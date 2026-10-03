@@ -33,9 +33,15 @@ the failed strict titration criterion without changing the approved wording.
 
 ## Latest studies: balanced-donor LUAD and E2 colorectal
 
-Two pre-registered studies rebuilt the screen around donor-paired tumour and
-normal T cells, then asked whether its results hold outside lung. Both final
-reports passed independent review.
+This repository tests the evaluation criteria that the Geneformer protocol
+([Zhang, Venkatesh & Theodoris, *Nature Protocols* 2026](https://doi.org/10.1038/s41596-026-01364-8))
+uses for a fine-tuned classifier and its in silico perturbation: held-out-patient
+classification, each gene's shift toward the goal state against random genes,
+and candidate targets. Two pre-registered studies rebuilt the screen around
+donor-paired tumour and normal T cells, then asked whether its results hold
+outside lung. Both final reports passed independent review. The classifier
+criterion held in both; the random-gene comparison and the candidate genes did
+not.
 
 ![Graphical abstract: lung-to-colon transfer of the balanced-donor design](docs/graphical-abstract/graphical-abstract.png)
 
@@ -47,6 +53,14 @@ reports passed independent review.
 A different result in colon cannot be put down to tissue alone. Study,
 dissociation, chemistry, annotation, the null-gene population and the fold
 models all differ, and 19 donors give less power per gene than 43.
+
+**Next, E3 (designed, not yet run).** Both cohorts are cancer T cells, a setting
+the protocol itself flags. E3 applies the protocol's criteria exactly as
+published, next to this repository's donor-level tests, to T cells of the
+protocol's own example atlas, the Chaffin et al. 2022 cardiomyopathy hearts. It
+first checks that the pipeline reproduces the protocol's cardiomyocyte result
+(macro F1 0.85, GSN). The design waits for a GO on the data download and GPU
+time: [`protocol_criteria_e3/E3_DESIGN.md`](protocol_criteria_e3/E3_DESIGN.md).
 
 This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
 21,000 naturally balanced CD4/CD8 T cells, a three-state LUAD/LUSC/normal
@@ -199,6 +213,7 @@ sclc_validation/                SCLC audit, SCLC/LUAD/normal perturbation, spati
 sclc_validation/immune_axis_test/  immune-axis tests, T2–T5 results, and T4 summaries
 balanced_donor_luad/            balanced-donor LUAD study: registration, results, IMRaD report
 pelka_crc_e2/                   E2 colorectal replication: registration, results, reports
+protocol_criteria_e3/           E3 design: protocol criteria in T cells of the Chaffin heart atlas
 docs/graphical-abstract/        graphical abstract and its generator
 archive/prior_nsclc_workflow/   Step1-Step7 notebooks and earlier evidence
 requirements.txt                lightweight environment specification

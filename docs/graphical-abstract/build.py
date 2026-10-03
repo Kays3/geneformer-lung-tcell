@@ -69,6 +69,8 @@ in_readme(f"rho {prim['rho']:.3f} (p = {prim['p_lower_tail']:.4f})".replace("-",
 in_readme(f"only {round(100 * prim['bootstrap_fraction_stable'])}% of gene bootstraps")
 in_readme(f"`{prim['status']}`")
 in_readme("(rho −0.593)")
+in_readme("E3")
+in_readme("Chaffin")
 
 h2c = load("pelka_crc_e2/results/h2c_result.json")
 luad = {x["symbol"]: x for x in load("balanced_donor_luad/phase7_results/outcome_rows.json")
@@ -116,7 +118,7 @@ def frame(x0: float, num: str, kicker: str, title: str) -> str:
         f'stroke="#c9b8f0" stroke-opacity="0.22"/>',
         f'<circle cx="{x0 + 52}" cy="140" r="20" fill="none" stroke="{GOLD}" stroke-width="2"/>',
         text(x0 + 52, 147, num, 20, 800, GOLD, "middle"),
-        text(x0 + 84, 135, kicker, 14, 800, GOLD, extra='letter-spacing="3"'),
+        text(x0 + 84, 135, kicker, 13, 800, GOLD, extra='letter-spacing="1.2"'),
         text(x0 + 84, 158, title, 19, 700),
     ])
 
@@ -131,7 +133,7 @@ def callout(x0, y, line1, line2, col=GOLD):
 
 # ------------------------------------------------------------------ panel 1
 def panel_classifier(x0: float) -> str:
-    out = [frame(x0, "1", "THE CLASSIFIER", "Tumour vs normal T cells, same donor")]
+    out = [frame(x0, "1", "CRITERION 1 · HELD-OUT PATIENTS", "Tumour vs normal T cells: met")]
     lo, hi = 0.4, 1.0
     sy = lambda v: 560 - 330 * (v - lo) / (hi - lo)
     for v in (0.5, 0.6, 0.8, 1.0):
@@ -152,13 +154,13 @@ def panel_classifier(x0: float) -> str:
         out.append(text(cx, 610, f"{len(vals)} donors · pooled {pooled:.3f}", 13, 400, MUTED, "middle"))
     out.append(text(x0 + 30, sy(0.7), "balanced accuracy per held-out donor", 12, 600, MUTED, "middle",
                     f'transform="rotate(-90 {x0 + 30} {sy(0.7):.1f})"'))
-    out.append(callout(x0, 624, "Transfers: every donor above chance", "fresh fold models, same recipe, no LUAD weights reused"))
+    out.append(callout(x0, 624, "Met: every held-out donor above chance", "protocol reference: macro F1 0.85, cardiomyocytes, 3 classes"))
     return "\n".join(out)
 
 
 # ------------------------------------------------------------------ panel 2
 def panel_null(x0: float) -> str:
-    out = [frame(x0, "2", "RANDOM GENES", "Built-in anti-correlation, weaker in colon")]
+    out = [frame(x0, "2", "CRITERION 2 · SHIFT VS RANDOM GENES", "Random genes already shift both ways")]
     pad = 0.08
     xs, ys = dele, ovx
     xr = (min(xs), max(xs)); yr = (min(ys), max(ys))
@@ -182,14 +184,14 @@ def panel_null(x0: float) -> str:
     out.append(text(x0 + 430, 232, f"100 random genes, colon", 13, 700, COLON, "end"))
     out.append(text(x0 + 40, 600, f"Colon rho {prim['rho']:.3f} (p = {prim['p_lower_tail']:.4f})".replace("-", "\u2212"), 17, 800, COLON))
     out.append(text(x0 + 450, 600, "Lung rho −0.593", 17, 800, LUNG, "end"))
-    out.append(callout(x0, 624, "control_draw_sensitive_open",
-                       f"same direction as lung; {round(100 * prim['bootstrap_fraction_stable'])}% of bootstraps stable vs a 95% bar"))
+    out.append(callout(x0, 624, "Not sufficient on its own",
+                       "opposed deletion/overexpression shifts are the baseline", CORAL))
     return "\n".join(out)
 
 
 # ------------------------------------------------------------------ panel 3
 def panel_genes(x0: float) -> str:
-    out = [frame(x0, "3", "CURATED T-CELL GENES", "The lung gene pattern does not replicate")]
+    out = [frame(x0, "3", "CRITERION 3 · CANDIDATE GENES", "Lung hits do not carry to colon")]
     xs = [luad[g]["del_median"] for g in shared]
     ys = [crc[g]["del_median"] for g in shared]
     lim = max(abs(v) for v in xs + ys) * 1.08
@@ -226,7 +228,7 @@ def panel_genes(x0: float) -> str:
         cx = lx + 8 + j * 145
         out.append(f'<circle cx="{cx}" cy="{ly - 4}" r="6" fill="{col}"/>')
         out.append(text(cx + 12, ly, lab, 12, 600))
-    out.append(callout(x0, 624, f"{len(agree)} of {len(tested)} lung hits keep their sign",
+    out.append(callout(x0, 624, f"Not reproduced: {len(agree)} of {len(tested)} lung hits keep their sign",
                        f"pattern_not_replicated · {len(shared)} shared genes, rho {rho_b:.2f}".replace("-", "\u2212").replace("pattern\u2212not\u2212replicated", "pattern_not_replicated")))
     return "\n".join(out)
 
@@ -243,12 +245,12 @@ def svg() -> str:
     return "\n".join([
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
         f'font-family="Inter, \'Liberation Sans\', \'DejaVu Sans\', sans-serif">', DEFS, backdrop(),
-        text(40, 58, "Does a Geneformer T-cell perturbation screen transfer from lung to colon?", 30, 800),
-        text(40, 84, "Balanced-donor design, Geneformer-V2-316M, re-run unchanged on Pelka 2021 colorectal cancer (E2)", 16, 400, MUTED),
+        text(40, 58, "Do Geneformer's published perturbation criteria hold in T cells?", 30, 800),
+        text(40, 84, "Criteria of the Geneformer protocol (Zhang, Venkatesh & Theodoris, Nat Protoc 2026) under donor-level tests: 43 lung and 19 colon donors, Geneformer-V2-316M", 16, 400, MUTED),
         panel_classifier(40), panel_null(555), panel_genes(1070),
         f'<rect x="0" y="{H - 62}" width="{W}" height="62" fill="#07050e" fill-opacity="0.85"/>',
-        text(W / 2, H - 25, "Pre-registered readings · donor cross-fitting · study, chemistry and annotation also "
-             "differ between cohorts, so tissue is not the only explanation", 16, 600, MUTED, "middle"),
+        text(W / 2, H - 34, "Next, E3 (designed, not yet run): the protocol's criteria beside donor-level tests in T cells of the protocol's own heart atlas (Chaffin 2022)", 15, 700, GOLD, "middle"),
+        text(W / 2, H - 13, "Pre-registered readings · donor cross-fitting · lung and colon also differ in study, chemistry and annotation", 13, 400, MUTED, "middle"),
         "</svg>"])
 
 
