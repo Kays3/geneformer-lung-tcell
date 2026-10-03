@@ -213,9 +213,10 @@ def main() -> None:
 
     n_panel_hk = targeted.drop_duplicates("Gene_name")["is_hk"].sum()
     print(f"Targeted panel: {n_panel_hk}/50 genes flagged HK/ubiquitous by family or reference list")
-    print(f"  of which top_driver-sourced: "
-          f"{targeted.drop_duplicates('Gene_name').query('is_hk and gene_source == \"top_driver_luad_lusc_normal\"').shape[0]}"
-          f" / {targeted.drop_duplicates('Gene_name').query('gene_source == \"top_driver_luad_lusc_normal\"').shape[0]}")
+    panel = targeted.drop_duplicates("Gene_name")
+    n_top_driver = panel.query("gene_source == 'top_driver_luad_lusc_normal'").shape[0]
+    n_top_driver_hk = panel.query("is_hk and gene_source == 'top_driver_luad_lusc_normal'").shape[0]
+    print(f"  of which top_driver-sourced: {n_top_driver_hk} / {n_top_driver}")
 
     print("\nWhole-genome delete-vs-overexpress: HK enrichment among concordant hits")
     print(pd.read_csv(OUT / "allgene_dvo_hk_enrichment.csv")[
