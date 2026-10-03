@@ -31,6 +31,23 @@ These drafts are not canonical deliverables and do not replace
 non-collinear geometry, the positive-but-null-inseparable exhaustion shift, and
 the failed strict titration criterion without changing the approved wording.
 
+## Latest studies: balanced-donor LUAD and E2 colorectal
+
+Two pre-registered studies rebuilt the screen around donor-paired tumour and
+normal T cells, then asked whether its results hold outside lung. Both final
+reports passed independent review.
+
+![Graphical abstract: lung-to-colon transfer of the balanced-donor design](docs/graphical-abstract/graphical-abstract.png)
+
+| Study | Design | Result | Report |
+|---|---|---|---|
+| Balanced-donor LUAD, final 30 September 2026 | 43 lung adenocarcinoma donors; matched tumour and adjacent-normal T cells, equal cells per donor per tissue | The classifier separates tumour from normal T cells of the same donor: pooled held-out balanced accuracy 0.825, 43 of 43 donors above chance. Across random genes, deletion and overexpression shifts are anti-correlated (rho −0.593), so opposed effects in the two arms are the baseline expectation. 13 of 34 testable curated T-cell genes reach a stable, dose-concordant status | [`IMRAD_REPORT.md`](balanced_donor_luad/reports/IMRAD_REPORT.md) |
+| E2, Pelka 2021 colorectal, final 2 October 2026 | The same design, unchanged, on 19 donors: tumour against normal colon | H2a PASS: balanced accuracy 0.904, 19 of 19 donors above chance. H2b `control_draw_sensitive_open`: rho −0.245 (p = 0.0067), the same direction as lung, but only 78% of gene bootstraps stay significant against a 95% bar. H2c `pattern_not_replicated`: 3 of 10 LUAD reference genes keep their deletion sign (p = 0.95), and PRF1 is the only dose-concordant gene in colon | [`geneformer-e2-pelka-20261002.md`](pelka_crc_e2/reports/geneformer-e2-pelka-20261002.md) |
+
+A different result in colon cannot be put down to tissue alone. Study,
+dissociation, chemistry, annotation, the null-gene population and the fold
+models all differ, and 19 donors give less power per gene than 43.
+
 This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
 21,000 naturally balanced CD4/CD8 T cells, a three-state LUAD/LUSC/normal
 classifier, and an all-gene in silico deletion screen.
@@ -180,6 +197,9 @@ archived models and provide context for today's T-cell-specific workflow.
 current_workflow/               active fine-tuning, results, monitor, visuals
 sclc_validation/                SCLC audit, SCLC/LUAD/normal perturbation, spatial validation
 sclc_validation/immune_axis_test/  immune-axis tests, T2–T5 results, and T4 summaries
+balanced_donor_luad/            balanced-donor LUAD study: registration, results, IMRaD report
+pelka_crc_e2/                   E2 colorectal replication: registration, results, reports
+docs/graphical-abstract/        graphical abstract and its generator
 archive/prior_nsclc_workflow/   Step1-Step7 notebooks and earlier evidence
 requirements.txt                lightweight environment specification
 ```
