@@ -4,7 +4,9 @@
 [`E3_DESIGN.md`](E3_DESIGN.md) from "the protocol's criteria in T cells of the protocol's atlas" to a full
 cross-evaluation: each set of criteria is judged on each other's data. The criteria are listed with
 IDs in [`CRITERIA_INVENTORY.md`](CRITERIA_INVENTORY.md): P1 to P10 from the Geneformer protocol (Zhang,
-Venkatesh & Theodoris, *Nature Protocols* 2026), O1 to O19 from this repository.
+Venkatesh & Theodoris, *Nature Protocols* 2026), O1 to O19 from this repository. A third set,
+the balanced ISP-BAL-1 in [`BALANCED_CRITERIA.md`](BALANCED_CRITERIA.md), combines them. It has
+executable checks and unit tests, and is scored beside P and O in every phase.
 
 ## 1. The question
 
@@ -89,6 +91,9 @@ Phase 0 is signed off. It also gives the first results.
   (`genes_to_perturb="all"`). Here it is the 100 random null genes, and as a sensitivity, the null genes
   pooled with the controls. Both are stated with every P4 number.
 - **Not applicable.** P5 (alternative state) does not apply to two-class LUAD and E2.
+- **ISP-BAL-1 on the same outputs.** `criteria/isp_criteria.py::evaluate_genes` is run on the same
+  per-cell tables. This gives each gene's balanced evidence level next to its P4 and O verdicts, and the
+  D2 calibration verdict for each run.
 - **Output.** `phase1_results/` tables and a short report.
 
 ### Phase 2: the Chaffin atlas, Stage 0 (CPU, about 1 day after the download)
@@ -172,8 +177,11 @@ Run on Chaffin cardiomyocytes, and on T cells if Phase 4 runs:
 
 ### Phase 6: synthesis (CPU)
 
-- **The scorecard.** Every P and O criterion is scored on calibration, sensitivity, reproducibility and
-  transfer, with the numbers and the benchmark behind each cell.
+- **The scorecard.** Every P, O and ISP-BAL-1 criterion is scored on calibration, sensitivity,
+  reproducibility and transfer, with the numbers and the benchmark behind each cell.
+- **The adoption decision for ISP-BAL-1.** It is adopted only if its false-positive rate on null genes is
+  no higher than O's, and GSN passes under it whenever it passes under O
+  ([`BALANCED_CRITERIA.md`](BALANCED_CRITERIA.md)).
 - **A report in this repository's IMRaD format.**
 - **An updated graphical abstract,** built from the result files as now.
 - **A dated amendment to ISP-STD-1** proposing changes, if the scorecard shows that one of our criteria

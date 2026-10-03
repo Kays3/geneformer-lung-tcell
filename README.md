@@ -66,6 +66,8 @@ cardiomyocyte result, including whether its validated target GSN survives our
 criteria. Nothing has run yet; the plan waits for a GO on the data download and
 GPU time: [`EXECUTION_PLAN.md`](protocol_criteria_e3/EXECUTION_PLAN.md),
 [`CRITERIA_INVENTORY.md`](protocol_criteria_e3/CRITERIA_INVENTORY.md),
+[`BALANCED_CRITERIA.md`](protocol_criteria_e3/BALANCED_CRITERIA.md) (ISP-BAL-1, a balanced set built
+from both, with executable checks and unit tests),
 [`E3_DESIGN.md`](protocol_criteria_e3/E3_DESIGN.md).
 
 This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
