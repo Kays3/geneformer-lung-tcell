@@ -1,6 +1,8 @@
 # E3 design: the Geneformer protocol's evaluation criteria in T cells of the protocol's own atlas
 
-**Status: DRAFT DESIGN, not registered. Nothing has been downloaded, tokenised, fine-tuned or
+**Status: DRAFT DESIGN, not registered. The full cross-evaluation it belongs to is planned in
+[`EXECUTION_PLAN.md`](EXECUTION_PLAN.md), with the criteria listed in
+[`CRITERIA_INVENTORY.md`](CRITERIA_INVENTORY.md). Nothing has been downloaded, tokenised, fine-tuned or
 perturbed for E3.** Three things must happen before any compute:
 
 1. the human's GO for the data download (Stage 0, s.3) and for the GPU budget (s.7);
@@ -50,8 +52,8 @@ Then, in the T cells of the same hearts, it reports P1 to P3 next to the ISP-STD
 
 - **H3a (pipeline check, gating).** On Chaffin cardiomyocytes, the protocol's single-task recipe
   reproduces its reported performance on held-out patients. The reading is `REPRODUCED` if macro F1 is
-  at least 0.80 (protocol: 0.85). The P2 run on DCM cardiomyocytes must also place GSN among genes with
-  `Sig` = 1 that shift toward NF. If either fails, E3 stops and is reported as a pipeline mismatch,
+  at least 0.80 (protocol: 0.85). The perturbation run on DCM cardiomyocytes, with the protocol's multi-task
+  model (its source of Fig. 2b), must also place GSN among genes with `Sig` = 1 that shift toward NF. If either fails, E3 stops and is reported as a pipeline mismatch,
   because nothing downstream could then be blamed on T cells.
 - **H3b (P1 in T cells).** A classifier fine-tuned on the atlas's T cells (or lymphocytes, s.3)
   separates NF, HCM and DCM on held-out patients. It is reported with the protocol's metrics (confusion

@@ -59,8 +59,14 @@ the protocol itself flags. E3 applies the protocol's criteria exactly as
 published, next to this repository's donor-level tests, to T cells of the
 protocol's own example atlas, the Chaffin et al. 2022 cardiomyopathy hearts. It
 first checks that the pipeline reproduces the protocol's cardiomyocyte result
-(macro F1 0.85, GSN). The design waits for a GO on the data download and GPU
-time: [`protocol_criteria_e3/E3_DESIGN.md`](protocol_criteria_e3/E3_DESIGN.md).
+(macro F1 0.85, GSN). E3 is part of a planned cross-evaluation that scores the
+protocol's criteria and this repository's own on each other's data: first on
+the existing lung and colon outputs (CPU only), then on the protocol's
+cardiomyocyte result, including whether its validated target GSN survives our
+criteria. Nothing has run yet; the plan waits for a GO on the data download and
+GPU time: [`EXECUTION_PLAN.md`](protocol_criteria_e3/EXECUTION_PLAN.md),
+[`CRITERIA_INVENTORY.md`](protocol_criteria_e3/CRITERIA_INVENTORY.md),
+[`E3_DESIGN.md`](protocol_criteria_e3/E3_DESIGN.md).
 
 This branch prioritizes the **17 July 2026** donor-held-out Geneformer workflow:
 21,000 naturally balanced CD4/CD8 T cells, a three-state LUAD/LUSC/normal
